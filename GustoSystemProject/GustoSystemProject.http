@@ -1,0 +1,6 @@
+@GustoSystemProject_HostAddress = http://localhost:5081
+
+GET {{GustoSystemProject_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
