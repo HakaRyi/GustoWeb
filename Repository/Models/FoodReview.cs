@@ -19,6 +19,10 @@ public partial class FoodReview
 
     public string Description { get; set; }
 
+    public string ImageUrl { get; set; }
+
+    public bool? IsAnonymous { get; set; }
+
     public virtual DinerProfile Diner { get; set; }
 
     public virtual RestaurantMenu Food { get; set; }

@@ -23,5 +23,9 @@ public partial class RestaurantTable
 
     public bool? IsVip { get; set; }
 
+    public decimal? MinCharge { get; set; }
+
+    public decimal? Deposit { get; set; }
+
     public virtual RestaurantProfile Account { get; set; }
 }

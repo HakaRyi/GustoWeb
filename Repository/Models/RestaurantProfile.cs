@@ -33,6 +33,8 @@ public partial class RestaurantProfile
 
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 
+    public virtual ICollection<Promotion> Promotions { get; set; } = new List<Promotion>();
+
     public virtual ICollection<RestaurantLayout> RestaurantLayouts { get; set; } = new List<RestaurantLayout>();
 
     public virtual ICollection<RestaurantMenu> RestaurantMenus { get; set; } = new List<RestaurantMenu>();

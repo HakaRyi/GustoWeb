@@ -40,6 +40,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[Promotion]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Restaurant_Layout]",
          "ObjectType": 0
       },

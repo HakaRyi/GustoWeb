@@ -13,6 +13,8 @@ public partial class Favourite
 
     public short RestaurantId { get; set; }
 
+    public DateTime? CreatedAt { get; set; }
+
     public virtual DinerProfile Diner { get; set; }
 
     public virtual RestaurantProfile Restaurant { get; set; }

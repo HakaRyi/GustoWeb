@@ -15,5 +15,7 @@ public partial class RestaurantLayout
 
     public string LayoutUrl { get; set; }
 
+    public string Description { get; set; }
+
     public virtual RestaurantProfile Account { get; set; }
 }

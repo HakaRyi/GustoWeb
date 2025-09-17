@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Repository.Models;
 
 namespace Repository.DBContext;
@@ -31,6 +30,8 @@ public partial class GustoSystemContext : DbContext
 
     public virtual DbSet<OrderDetail> OrderDetails { get; set; }
 
+    public virtual DbSet<Promotion> Promotions { get; set; }
+
     public virtual DbSet<RestaurantLayout> RestaurantLayouts { get; set; }
 
     public virtual DbSet<RestaurantMenu> RestaurantMenus { get; set; }
@@ -41,32 +42,19 @@ public partial class GustoSystemContext : DbContext
 
     public virtual DbSet<Role> Roles { get; set; }
 
-    //    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-    //        => optionsBuilder.UseSqlServer("Data Source=MSI;Initial Catalog=GustoSystem;Persist Security Info=True;User ID=sa;Password=12345;Encrypt=False");
-    public static string GetConnectionString(string connectionStringName)
-    {
-        var config = new ConfigurationBuilder()
-            .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-            .AddJsonFile("appsettings.json")
-            .Build();
-
-        string connectionString = config.GetConnectionString(connectionStringName);
-        return connectionString;
-    }
-
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer(GetConnectionString("DefaultConnection")).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
-    
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Data Source=MSI;Initial Catalog=GustoSystem;Persist Security Info=True;User ID=sa;Password=12345;Encrypt=False");
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Account>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Account__3214EC0727AC0534");
+            entity.HasKey(e => e.Id).HasName("PK__Account__3214EC0776A2605F");
 
             entity.ToTable("Account");
 
-            entity.HasIndex(e => e.UserName, "UQ__Account__C9F28456BFF45555").IsUnique();
+            entity.HasIndex(e => e.UserName, "UQ__Account__C9F28456F513453C").IsUnique();
 
             entity.Property(e => e.CreateAt)
                 .HasDefaultValueSql("(getdate())")
@@ -91,7 +79,7 @@ public partial class GustoSystemContext : DbContext
 
         modelBuilder.Entity<DinerProfile>(entity =>
         {
-            entity.HasKey(e => e.AccountId).HasName("PK__Diner_Pr__349DA5A6CCBD2753");
+            entity.HasKey(e => e.AccountId).HasName("PK__Diner_Pr__349DA5A6228352C5");
 
             entity.ToTable("Diner_Profile");
 
@@ -112,6 +100,7 @@ public partial class GustoSystemContext : DbContext
                 .HasMaxLength(10)
                 .IsUnicode(false)
                 .IsFixedLength();
+            entity.Property(e => e.RewardPoints).HasDefaultValue(0);
             entity.Property(e => e.TiktokUrl)
                 .HasMaxLength(255)
                 .HasColumnName("TiktokURL");
@@ -124,10 +113,14 @@ public partial class GustoSystemContext : DbContext
 
         modelBuilder.Entity<Favourite>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Favourit__3214EC0724C13283");
+            entity.HasKey(e => e.Id).HasName("PK__Favourit__3214EC0787218C0A");
 
             entity.ToTable("Favourite");
 
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("Created_At");
             entity.Property(e => e.DinerId).HasColumnName("Diner_Id");
             entity.Property(e => e.RestaurantId).HasColumnName("Restaurant_Id");
 
@@ -144,7 +137,7 @@ public partial class GustoSystemContext : DbContext
 
         modelBuilder.Entity<FoodReview>(entity =>
         {
-            entity.HasKey(e => e.ReviewId).HasName("PK__Food_Rev__F85DA78B164D90F5");
+            entity.HasKey(e => e.ReviewId).HasName("PK__Food_Rev__F85DA78B1422B2D9");
 
             entity.ToTable("Food_Review");
 
@@ -155,6 +148,8 @@ public partial class GustoSystemContext : DbContext
             entity.Property(e => e.Description).HasMaxLength(255);
             entity.Property(e => e.DinerId).HasColumnName("Diner_Id");
             entity.Property(e => e.FoodId).HasColumnName("Food_Id");
+            entity.Property(e => e.ImageUrl).HasMaxLength(255);
+            entity.Property(e => e.IsAnonymous).HasDefaultValue(false);
 
             entity.HasOne(d => d.Diner).WithMany(p => p.FoodReviews)
                 .HasForeignKey(d => d.DinerId)
@@ -169,7 +164,7 @@ public partial class GustoSystemContext : DbContext
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasKey(e => e.OrderId).HasName("PK__Order__F1E4607BEFCB2A6B");
+            entity.HasKey(e => e.OrderId).HasName("PK__Order__F1E4607B55F56FF8");
 
             entity.ToTable("Order");
 
@@ -178,6 +173,11 @@ public partial class GustoSystemContext : DbContext
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
             entity.Property(e => e.DinerId).HasColumnName("Diner_Id");
+            entity.Property(e => e.DiscountAmount)
+                .HasDefaultValue(0m)
+                .HasColumnType("decimal(10, 2)");
+            entity.Property(e => e.FinalPrice).HasColumnType("decimal(10, 2)");
+            entity.Property(e => e.PromotionId).HasColumnName("Promotion_Id");
             entity.Property(e => e.RestaurantId).HasColumnName("Restaurant_Id");
             entity.Property(e => e.Status).HasMaxLength(20);
             entity.Property(e => e.TotalPrice).HasColumnType("decimal(10, 2)");
@@ -187,6 +187,10 @@ public partial class GustoSystemContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Order_Diner");
 
+            entity.HasOne(d => d.Promotion).WithMany(p => p.Orders)
+                .HasForeignKey(d => d.PromotionId)
+                .HasConstraintName("FK_Order_Promotion");
+
             entity.HasOne(d => d.Restaurant).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.RestaurantId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -195,7 +199,7 @@ public partial class GustoSystemContext : DbContext
 
         modelBuilder.Entity<OrderDetail>(entity =>
         {
-            entity.HasKey(e => e.OrderDetailId).HasName("PK__Order_De__53D88080F8B19999");
+            entity.HasKey(e => e.OrderDetailId).HasName("PK__Order_De__53D880806B74D24D");
 
             entity.ToTable("Order_Detail");
 
@@ -217,13 +221,38 @@ public partial class GustoSystemContext : DbContext
                 .HasConstraintName("FK_OrderDetail_Order");
         });
 
+        modelBuilder.Entity<Promotion>(entity =>
+        {
+            entity.HasKey(e => e.PromotionId).HasName("PK__Promotio__DAF79ADB99551C45");
+
+            entity.ToTable("Promotion");
+
+            entity.HasIndex(e => e.Code, "UQ__Promotio__A25C5AA7766F8A96").IsUnique();
+
+            entity.Property(e => e.PromotionId).HasColumnName("Promotion_Id");
+            entity.Property(e => e.Code)
+                .IsRequired()
+                .HasMaxLength(50);
+            entity.Property(e => e.CreatedByAdmin).HasDefaultValue(false);
+            entity.Property(e => e.Description).HasMaxLength(255);
+            entity.Property(e => e.DiscountAmount).HasColumnType("decimal(10, 2)");
+            entity.Property(e => e.EndDate).HasColumnType("datetime");
+            entity.Property(e => e.MinOrderValue).HasColumnType("decimal(10, 2)");
+            entity.Property(e => e.StartDate).HasColumnType("datetime");
+
+            entity.HasOne(d => d.Account).WithMany(p => p.Promotions)
+                .HasForeignKey(d => d.AccountId)
+                .HasConstraintName("FK_Promotion_Restaurant");
+        });
+
         modelBuilder.Entity<RestaurantLayout>(entity =>
         {
-            entity.HasKey(e => e.LayoutId).HasName("PK__Restaura__839DF101CA71D397");
+            entity.HasKey(e => e.LayoutId).HasName("PK__Restaura__839DF101E2BFD6FE");
 
             entity.ToTable("Restaurant_Layout");
 
             entity.Property(e => e.LayoutId).HasColumnName("Layout_Id");
+            entity.Property(e => e.Description).HasMaxLength(255);
             entity.Property(e => e.LayoutUrl)
                 .HasMaxLength(255)
                 .HasColumnName("LayoutURL");
@@ -239,19 +268,23 @@ public partial class GustoSystemContext : DbContext
 
         modelBuilder.Entity<RestaurantMenu>(entity =>
         {
-            entity.HasKey(e => e.FoodId).HasName("PK__Restaura__B350059C484AD8EC");
+            entity.HasKey(e => e.FoodId).HasName("PK__Restaura__B350059CED6F6A0F");
 
             entity.ToTable("Restaurant_Menu");
 
             entity.Property(e => e.FoodId).HasColumnName("Food_Id");
             entity.Property(e => e.Description).HasMaxLength(255);
+            entity.Property(e => e.EndDiscount).HasColumnType("datetime");
             entity.Property(e => e.FoodUrl)
                 .HasMaxLength(255)
                 .HasColumnName("FoodURL");
+            entity.Property(e => e.IsRecommended).HasDefaultValue(false);
             entity.Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(100);
+            entity.Property(e => e.OldPrice).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.Price).HasColumnType("decimal(10, 2)");
+            entity.Property(e => e.StartDiscount).HasColumnType("datetime");
             entity.Property(e => e.Status).HasDefaultValue(true);
             entity.Property(e => e.Type).HasMaxLength(50);
 
@@ -263,7 +296,7 @@ public partial class GustoSystemContext : DbContext
 
         modelBuilder.Entity<RestaurantProfile>(entity =>
         {
-            entity.HasKey(e => e.AccountId).HasName("PK__Restaura__349DA5A6550847CD");
+            entity.HasKey(e => e.AccountId).HasName("PK__Restaura__349DA5A6EB86B71C");
 
             entity.ToTable("Restaurant_Profile");
 
@@ -295,15 +328,17 @@ public partial class GustoSystemContext : DbContext
 
         modelBuilder.Entity<RestaurantTable>(entity =>
         {
-            entity.HasKey(e => e.TableId).HasName("PK__Restaura__BAB7E67653CC6F1D");
+            entity.HasKey(e => e.TableId).HasName("PK__Restaura__BAB7E676B2394FE4");
 
             entity.ToTable("Restaurant_Table");
 
             entity.Property(e => e.TableId).HasColumnName("Table_Id");
+            entity.Property(e => e.Deposit).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.Description).HasMaxLength(255);
             entity.Property(e => e.IsVip)
                 .HasDefaultValue(false)
                 .HasColumnName("isVIP");
+            entity.Property(e => e.MinCharge).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(50);
@@ -318,7 +353,7 @@ public partial class GustoSystemContext : DbContext
 
         modelBuilder.Entity<Role>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Role__3214EC07B52D9B7F");
+            entity.HasKey(e => e.Id).HasName("PK__Role__3214EC077D7B7296");
 
             entity.ToTable("Role");
 

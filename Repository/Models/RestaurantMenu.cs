@@ -15,6 +15,16 @@ public partial class RestaurantMenu
 
     public decimal Price { get; set; }
 
+    public decimal? OldPrice { get; set; }
+
+    public int? DiscountPercent { get; set; }
+
+    public DateTime? StartDiscount { get; set; }
+
+    public DateTime? EndDiscount { get; set; }
+
+    public bool? IsRecommended { get; set; }
+
     public bool? Status { get; set; }
 
     public string Type { get; set; }

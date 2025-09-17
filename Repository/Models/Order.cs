@@ -13,15 +13,23 @@ public partial class Order
 
     public short RestaurantId { get; set; }
 
+    public short? PromotionId { get; set; }
+
     public DateTime Date { get; set; }
 
     public decimal? TotalPrice { get; set; }
+
+    public decimal? DiscountAmount { get; set; }
+
+    public decimal? FinalPrice { get; set; }
 
     public string Status { get; set; }
 
     public virtual DinerProfile Diner { get; set; }
 
     public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
+
+    public virtual Promotion Promotion { get; set; }
 
     public virtual RestaurantProfile Restaurant { get; set; }
 }

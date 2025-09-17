@@ -1,0 +1,18 @@
+# Build results
+bin/
+obj/
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Visual Studio cache
+.vs/
+
+# Others
+*.dll
+*.exe
+*.pdb
+*.cache

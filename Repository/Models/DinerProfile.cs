@@ -31,6 +31,8 @@ public partial class DinerProfile
 
     public string TiktokUrl { get; set; }
 
+    public int? RewardPoints { get; set; }
+
     public virtual Account Account { get; set; }
 
     public virtual ICollection<Favourite> Favourites { get; set; } = new List<Favourite>();
