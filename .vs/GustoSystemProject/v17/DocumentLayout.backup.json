@@ -3,10 +3,6 @@
   "WorkspaceRootPath": "E:\\code\\CSharp\\GustoSystemProject\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{573DA25D-0776-4223-A3A6-9041084AAE12}|Repository\\Repository.csproj|e:\\code\\csharp\\gustosystemproject\\repository\\dbcontext\\gustosystemcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{573DA25D-0776-4223-A3A6-9041084AAE12}|Repository\\Repository.csproj|solutionrelative:repository\\dbcontext\\gustosystemcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{573DA25D-0776-4223-A3A6-9041084AAE12}|Repository\\Repository.csproj|e:\\code\\csharp\\gustosystemproject\\repository\\models\\restaurantmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{573DA25D-0776-4223-A3A6-9041084AAE12}|Repository\\Repository.csproj|solutionrelative:repository\\models\\restaurantmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -21,25 +17,12 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedHeight": 404,
+          "DockedHeight": 305,
           "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "GustoSystemContext.cs",
-              "DocumentMoniker": "E:\\code\\CSharp\\GustoSystemProject\\Repository\\DBContext\\GustoSystemContext.cs",
-              "RelativeDocumentMoniker": "Repository\\DBContext\\GustoSystemContext.cs",
-              "ToolTip": "E:\\code\\CSharp\\GustoSystemProject\\Repository\\DBContext\\GustoSystemContext.cs",
-              "RelativeToolTip": "Repository\\DBContext\\GustoSystemContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-17T17:24:48.191Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
               "Title": "RestaurantMenu.cs",
               "DocumentMoniker": "E:\\code\\CSharp\\GustoSystemProject\\Repository\\Models\\RestaurantMenu.cs",
               "RelativeDocumentMoniker": "Repository\\Models\\RestaurantMenu.cs",
@@ -60,7 +43,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "E:\\code\\CSharp\\GustoSystemProject\\GustoSystemProject\\Program.cs",
               "RelativeDocumentMoniker": "GustoSystemProject\\Program.cs",
@@ -74,7 +57,7 @@
           ]
         },
         {
-          "DockedHeight": 119,
+          "DockedHeight": 218,
           "SelectedChildIndex": -1,
           "Children": [
             {

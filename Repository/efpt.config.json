@@ -20,6 +20,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[Booking]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Diner_Profile]",
          "ObjectType": 0
       },
@@ -32,6 +36,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[Notification]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Order]",
          "ObjectType": 0
       },
@@ -41,6 +49,10 @@
       },
       {
          "Name": "[dbo].[Promotion]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Refresh_Token]",
          "ObjectType": 0
       },
       {

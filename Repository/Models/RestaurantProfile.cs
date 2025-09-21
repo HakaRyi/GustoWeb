@@ -29,6 +29,8 @@ public partial class RestaurantProfile
 
     public virtual Account Account { get; set; }
 
+    public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
+
     public virtual ICollection<Favourite> Favourites { get; set; } = new List<Favourite>();
 
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();

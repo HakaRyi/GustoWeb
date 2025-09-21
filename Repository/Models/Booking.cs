@@ -5,33 +5,23 @@ using System.Collections.Generic;
 
 namespace Repository.Models;
 
-public partial class Order
+public partial class Booking
 {
-    public short OrderId { get; set; }
+    public int BookingId { get; set; }
 
     public short DinerId { get; set; }
 
     public short RestaurantId { get; set; }
 
-    public short? PromotionId { get; set; }
+    public short? TableId { get; set; }
 
-    public DateTime Date { get; set; }
-
-    public decimal? TotalPrice { get; set; }
-
-    public decimal? DiscountAmount { get; set; }
-
-    public decimal? FinalPrice { get; set; }
+    public DateTime BookingTime { get; set; }
 
     public string Status { get; set; }
 
-    public short? TableId { get; set; }
+    public DateTime? CreatedAt { get; set; }
 
     public virtual DinerProfile Diner { get; set; }
-
-    public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
-
-    public virtual Promotion Promotion { get; set; }
 
     public virtual RestaurantProfile Restaurant { get; set; }
 
