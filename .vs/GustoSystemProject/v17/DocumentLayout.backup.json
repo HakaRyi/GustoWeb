@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "E:\\code\\CSharp\\GustoSystemProject\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{573DA25D-0776-4223-A3A6-9041084AAE12}|Repository\\Repository.csproj|e:\\code\\csharp\\gustosystemproject\\repository\\models\\restaurantmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{573DA25D-0776-4223-A3A6-9041084AAE12}|Repository\\Repository.csproj|solutionrelative:repository\\models\\restaurantmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{16E5B9E1-3C97-4410-9897-57E399403C70}|GustoSystemProject\\GustoSystemProject.csproj|e:\\code\\csharp\\gustosystemproject\\gustosystemproject\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{16E5B9E1-3C97-4410-9897-57E399403C70}|GustoSystemProject\\GustoSystemProject.csproj|solutionrelative:gustosystemproject\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{16E5B9E1-3C97-4410-9897-57E399403C70}|GustoSystemProject\\GustoSystemProject.csproj|e:\\code\\csharp\\gustosystemproject\\gustosystemproject\\restaurantprofilecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{16E5B9E1-3C97-4410-9897-57E399403C70}|GustoSystemProject\\GustoSystemProject.csproj|solutionrelative:gustosystemproject\\restaurantprofilecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{149C3D95-551C-4A45-B91B-2622F0AEE94E}|Service\\Service.csproj|e:\\code\\csharp\\gustosystemproject\\service\\restaurantprofileservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{149C3D95-551C-4A45-B91B-2622F0AEE94E}|Service\\Service.csproj|solutionrelative:service\\restaurantprofileservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -17,22 +21,9 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedHeight": 305,
-          "SelectedChildIndex": 0,
+          "DockedHeight": 432,
+          "SelectedChildIndex": 2,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "RestaurantMenu.cs",
-              "DocumentMoniker": "E:\\code\\CSharp\\GustoSystemProject\\Repository\\Models\\RestaurantMenu.cs",
-              "RelativeDocumentMoniker": "Repository\\Models\\RestaurantMenu.cs",
-              "ToolTip": "E:\\code\\CSharp\\GustoSystemProject\\Repository\\Models\\RestaurantMenu.cs",
-              "RelativeToolTip": "Repository\\Models\\RestaurantMenu.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAkwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-17T17:24:12.591Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
@@ -43,21 +34,47 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Program.cs",
               "DocumentMoniker": "E:\\code\\CSharp\\GustoSystemProject\\GustoSystemProject\\Program.cs",
               "RelativeDocumentMoniker": "GustoSystemProject\\Program.cs",
-              "ToolTip": "E:\\code\\CSharp\\GustoSystemProject\\GustoSystemProject\\Program.cs",
-              "RelativeToolTip": "GustoSystemProject\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAkAAAAAAAAAA==",
+              "ToolTip": "E:\\code\\CSharp\\GustoSystemProject\\GustoSystemProject\\Program.cs*",
+              "RelativeToolTip": "GustoSystemProject\\Program.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-17T15:53:20.966Z",
+              "WhenOpened": "2025-09-21T10:54:37.802Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "RestaurantProfileController.cs",
+              "DocumentMoniker": "E:\\code\\CSharp\\GustoSystemProject\\GustoSystemProject\\RestaurantProfileController.cs",
+              "RelativeDocumentMoniker": "GustoSystemProject\\RestaurantProfileController.cs",
+              "ToolTip": "E:\\code\\CSharp\\GustoSystemProject\\GustoSystemProject\\RestaurantProfileController.cs",
+              "RelativeToolTip": "GustoSystemProject\\RestaurantProfileController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-21T10:50:17.813Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "RestaurantProfileService.cs",
+              "DocumentMoniker": "E:\\code\\CSharp\\GustoSystemProject\\Service\\RestaurantProfileService.cs",
+              "RelativeDocumentMoniker": "Service\\RestaurantProfileService.cs",
+              "ToolTip": "E:\\code\\CSharp\\GustoSystemProject\\Service\\RestaurantProfileService.cs",
+              "RelativeToolTip": "Service\\RestaurantProfileService.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAB4AAABHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-21T09:58:31.921Z",
               "EditorCaption": ""
             }
           ]
         },
         {
-          "DockedHeight": 218,
+          "DockedHeight": 91,
           "SelectedChildIndex": -1,
           "Children": [
             {
