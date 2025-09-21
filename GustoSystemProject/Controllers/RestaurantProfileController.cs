@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Repository.Models;
 using Service;
 
-namespace GustoSystemProject
+namespace GustoSystemProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
