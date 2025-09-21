@@ -12,6 +12,7 @@ namespace Repository
     public class RestaurantProfileRepository
     {
         private readonly GustoSystemContext context;
+        
         public RestaurantProfileRepository(GustoSystemContext context)
         {
             this.context = context;

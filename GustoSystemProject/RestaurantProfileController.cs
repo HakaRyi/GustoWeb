@@ -22,7 +22,6 @@ namespace GustoSystemProject
             return await service.GetAllAsync1();
         }
         [HttpGet("getAllResPro")]
-        [Authorize]
         public async Task<IActionResult> GetAllAccounts()
         {
             var profiles = await service.GetAllAsync2();
