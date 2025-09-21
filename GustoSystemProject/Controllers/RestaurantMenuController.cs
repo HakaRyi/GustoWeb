@@ -9,19 +9,19 @@ namespace GustoSystemProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RestaurantProfileController : ControllerBase
+    public class RestaurantMenuController : ControllerBase
     {
-        private readonly RestaurantProfileService service;
-        public RestaurantProfileController(RestaurantProfileService service)
+        private readonly RestaurantMenuService service;
+        public RestaurantMenuController(RestaurantMenuService service)
         {
             this.service = service;
         }
         //[HttpGet]
-        //public async Task<List<RestaurantProfile>> GetAll()
+        //public async Task<List<RestaurantMenu>> GetAll()
         //{
         //    return await service.GetAllAsync1();
         //}
-        [HttpGet("getAllResPro")]
+        [HttpGet("getAllResMenu")]
         public async Task<IActionResult> GetAllProfiles()
         {
             var profiles = await service.GetAllAsync2();
@@ -32,12 +32,12 @@ namespace GustoSystemProject.Controllers
             return Ok(profiles);
         }
         //[HttpGet("{id}")]
-        //public async Task<RestaurantProfile> GetByIdAsync([FromRoute] int id)
+        //public async Task<RestaurantMenu> GetByIdAsync([FromRoute] int id)
         //{
         //    return await service.GetByIdAsync(id);
         //}
         [HttpGet("getById/{id}")]
-        public async Task<IActionResult> GetByProfileIdAsync([FromRoute] int id)
+        public async Task<IActionResult> GetByMenuIdAsync([FromRoute] int id)
         {
             var item = await service.GetByIdAsync2(id);
             if (item == null)

@@ -11,7 +11,7 @@ namespace Repository
         {
             this.context = context;
         }
-        public async Task<List<RestaurantLayout>> GetAll()
+        public async Task<List<RestaurantLayout>> GetAllAsync()
         {
             return await context.RestaurantLayouts
                 .Include(r=>r.Account)

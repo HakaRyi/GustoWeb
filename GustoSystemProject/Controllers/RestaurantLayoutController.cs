@@ -9,19 +9,19 @@ namespace GustoSystemProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RestaurantProfileController : ControllerBase
+    public class RestaurantLayoutController : ControllerBase
     {
-        private readonly RestaurantProfileService service;
-        public RestaurantProfileController(RestaurantProfileService service)
+        private readonly RestaurantLayoutService service;
+        public RestaurantLayoutController(RestaurantLayoutService service)
         {
             this.service = service;
         }
         //[HttpGet]
-        //public async Task<List<RestaurantProfile>> GetAll()
+        //public async Task<List<RestaurantLayout>> GetAll()
         //{
         //    return await service.GetAllAsync1();
         //}
-        [HttpGet("getAllResPro")]
+        [HttpGet("getAllResLayout")]
         public async Task<IActionResult> GetAllProfiles()
         {
             var profiles = await service.GetAllAsync2();
@@ -32,12 +32,12 @@ namespace GustoSystemProject.Controllers
             return Ok(profiles);
         }
         //[HttpGet("{id}")]
-        //public async Task<RestaurantProfile> GetByIdAsync([FromRoute] int id)
+        //public async Task<RestaurantLayout> GetByIdAsync([FromRoute] int id)
         //{
         //    return await service.GetByIdAsync(id);
         //}
         [HttpGet("getById/{id}")]
-        public async Task<IActionResult> GetByProfileIdAsync([FromRoute] int id)
+        public async Task<IActionResult> GetByLayoutIdAsync([FromRoute] int id)
         {
             var item = await service.GetByIdAsync2(id);
             if (item == null)

@@ -9,42 +9,42 @@ namespace GustoSystemProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RestaurantProfileController : ControllerBase
+    public class RestaurantTableController : ControllerBase
     {
-        private readonly RestaurantProfileService service;
-        public RestaurantProfileController(RestaurantProfileService service)
+        private readonly RestaurantTableService service;
+        public RestaurantTableController(RestaurantTableService service)
         {
             this.service = service;
         }
         //[HttpGet]
-        //public async Task<List<RestaurantProfile>> GetAll()
+        //public async Task<List<RestaurantTable>> GetAll()
         //{
         //    return await service.GetAllAsync1();
         //}
-        [HttpGet("getAllResPro")]
+        [HttpGet("getAllResTable")]
         public async Task<IActionResult> GetAllProfiles()
         {
-            var profiles = await service.GetAllAsync2();
-            if (profiles == null || !profiles.Any())
+            var table = await service.GetAllAsync2();
+            if (table == null || !table.Any())
             {
                 return NotFound();
             }
-            return Ok(profiles);
+            return Ok(table);
         }
         //[HttpGet("{id}")]
-        //public async Task<RestaurantProfile> GetByIdAsync([FromRoute] int id)
+        //public async Task<RestaurantTable> GetByIdAsync([FromRoute] int id)
         //{
         //    return await service.GetByIdAsync(id);
         //}
-        [HttpGet("getById/{id}")]
-        public async Task<IActionResult> GetByProfileIdAsync([FromRoute] int id)
+        [HttpGet("getByTableId/{id}")]
+        public async Task<IActionResult> GetByTableIdAsync([FromRoute] int id)
         {
-            var item = await service.GetByIdAsync2(id);
-            if (item == null)
+            var table = await service.GetByIdAsync2(id);
+            if (table == null)
             {
                 return NotFound();
             }
-            return Ok(item);
+            return Ok(table);
         }
     }
 }
