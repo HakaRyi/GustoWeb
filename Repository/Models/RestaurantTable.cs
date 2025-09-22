@@ -28,4 +28,8 @@ public partial class RestaurantTable
     public decimal? Deposit { get; set; }
 
     public virtual RestaurantProfile Account { get; set; }
+
+    public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
+
+    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 }

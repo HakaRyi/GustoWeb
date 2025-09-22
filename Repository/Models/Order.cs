@@ -25,6 +25,8 @@ public partial class Order
 
     public string Status { get; set; }
 
+    public short? TableId { get; set; }
+
     public virtual DinerProfile Diner { get; set; }
 
     public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
@@ -32,4 +34,6 @@ public partial class Order
     public virtual Promotion Promotion { get; set; }
 
     public virtual RestaurantProfile Restaurant { get; set; }
+
+    public virtual RestaurantTable Table { get; set; }
 }

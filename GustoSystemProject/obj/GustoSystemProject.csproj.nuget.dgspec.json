@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "E:\\code\\CSharp\\GustoSystemProject\\GustoSystemProject\\GustoSystemProject.csproj": {}
+    "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\GustoSystemProject\\GustoSystemProject.csproj": {}
   },
   "projects": {
-    "E:\\code\\CSharp\\GustoSystemProject\\GustoSystemProject\\GustoSystemProject.csproj": {
+    "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\GustoSystemProject\\GustoSystemProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\code\\CSharp\\GustoSystemProject\\GustoSystemProject\\GustoSystemProject.csproj",
+        "projectUniqueName": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\GustoSystemProject\\GustoSystemProject.csproj",
         "projectName": "GustoSystemProject",
-        "projectPath": "E:\\code\\CSharp\\GustoSystemProject\\GustoSystemProject\\GustoSystemProject.csproj",
-        "packagesPath": "C:\\Users\\dangv\\.nuget\\packages\\",
-        "outputPath": "E:\\code\\CSharp\\GustoSystemProject\\GustoSystemProject\\obj\\",
+        "projectPath": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\GustoSystemProject\\GustoSystemProject.csproj",
+        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
+        "outputPath": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\GustoSystemProject\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\dangv\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -33,8 +33,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "E:\\code\\CSharp\\GustoSystemProject\\Service\\Service.csproj": {
-                "projectPath": "E:\\code\\CSharp\\GustoSystemProject\\Service\\Service.csproj"
+              "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\Service\\Service.csproj": {
+                "projectPath": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\Service\\Service.csproj"
               }
             }
           }
@@ -55,6 +55,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.6.2, )"
@@ -79,24 +83,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "E:\\code\\CSharp\\GustoSystemProject\\Repository\\Repository.csproj": {
+    "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\Repository\\Repository.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\code\\CSharp\\GustoSystemProject\\Repository\\Repository.csproj",
+        "projectUniqueName": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\Repository\\Repository.csproj",
         "projectName": "Repository",
-        "projectPath": "E:\\code\\CSharp\\GustoSystemProject\\Repository\\Repository.csproj",
-        "packagesPath": "C:\\Users\\dangv\\.nuget\\packages\\",
-        "outputPath": "E:\\code\\CSharp\\GustoSystemProject\\Repository\\obj\\",
+        "projectPath": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\Repository\\Repository.csproj",
+        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
+        "outputPath": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\Repository\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\dangv\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -169,24 +173,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "E:\\code\\CSharp\\GustoSystemProject\\Service\\Service.csproj": {
+    "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\Service\\Service.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\code\\CSharp\\GustoSystemProject\\Service\\Service.csproj",
+        "projectUniqueName": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\Service\\Service.csproj",
         "projectName": "Service",
-        "projectPath": "E:\\code\\CSharp\\GustoSystemProject\\Service\\Service.csproj",
-        "packagesPath": "C:\\Users\\dangv\\.nuget\\packages\\",
-        "outputPath": "E:\\code\\CSharp\\GustoSystemProject\\Service\\obj\\",
+        "projectPath": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\Service\\Service.csproj",
+        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
+        "outputPath": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\Service\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\dangv\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -202,8 +206,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "E:\\code\\CSharp\\GustoSystemProject\\Repository\\Repository.csproj": {
-                "projectPath": "E:\\code\\CSharp\\GustoSystemProject\\Repository\\Repository.csproj"
+              "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\Repository\\Repository.csproj": {
+                "projectPath": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\Repository\\Repository.csproj"
               }
             }
           }
@@ -223,6 +227,28 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[12.0.1, )"
+            },
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[12.0.1, )"
+            },
+            "Microsoft.AspNetCore.Http.Abstractions": {
+              "target": "Package",
+              "version": "[2.3.0, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[8.14.0, )"
+            },
+            "UAParser": {
+              "target": "Package",
+              "version": "[3.1.47, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -239,7 +265,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

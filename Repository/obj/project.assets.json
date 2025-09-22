@@ -4410,23 +4410,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\dangv\\.nuget\\packages\\": {},
+    "C:\\Users\\DELL\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\code\\CSharp\\GustoSystemProject\\Repository\\Repository.csproj",
+      "projectUniqueName": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\Repository\\Repository.csproj",
       "projectName": "Repository",
-      "projectPath": "E:\\code\\CSharp\\GustoSystemProject\\Repository\\Repository.csproj",
-      "packagesPath": "C:\\Users\\dangv\\.nuget\\packages\\",
-      "outputPath": "E:\\code\\CSharp\\GustoSystemProject\\Repository\\obj\\",
+      "projectPath": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\Repository\\Repository.csproj",
+      "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
+      "outputPath": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\Repository\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\dangv\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -4499,7 +4499,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
