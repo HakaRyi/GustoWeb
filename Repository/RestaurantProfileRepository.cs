@@ -48,5 +48,27 @@ namespace Repository
                 .Include(r => r.Favourites)
                 .FirstOrDefaultAsync(r => r.AccountId == id);
         }
+        //-----------------------------------------------------
+        public async Task<int> CreateAsync(RestaurantProfile item)
+        {
+            context.RestaurantProfiles.Add(item);
+            return await context.SaveChangesAsync();
+        }
+        public async Task<int> UpdateAsync(RestaurantProfile item)
+        {
+            context.RestaurantProfiles.Update(item);
+            return await context.SaveChangesAsync();
+        }
+        public async Task<int> DeleteAsync(int id)
+        {
+            var item = await GetByIdAsync(id);
+            if (item != null)
+            {
+                context.RestaurantProfiles.Remove(item);
+                return await context.SaveChangesAsync();
+            }
+            return 0;
+
+        }
     }
 }

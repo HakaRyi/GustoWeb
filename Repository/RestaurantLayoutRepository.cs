@@ -24,6 +24,34 @@ namespace Repository
                 .Include(r=>r.Account)
                 .FirstOrDefaultAsync(r => r.LayoutId == id);
         }
-        
+        public async Task<List<RestaurantLayout>> GetByAccountAsync(int accountId)
+        {
+            return await context.RestaurantLayouts
+                .Where(a => a.AccountId == accountId)
+                .Include(r => r.Account)
+                .ToListAsync();
+        }
+        //-----------------------------------------------------
+        public async Task<int> CreateAsync(RestaurantLayout item)
+        {
+            context.RestaurantLayouts.Add(item);
+            return await context.SaveChangesAsync();
+        }
+        public async Task<int> UpdateAsync(RestaurantLayout item)
+        {
+            context.RestaurantLayouts.Update(item);
+            return await context.SaveChangesAsync();
+        }
+        public async Task<int> DeleteAsync(int id)
+        {
+            var item = await GetByIdAsync(id);
+            if (item != null)
+            {
+                context.RestaurantLayouts.Remove(item);
+                return await context.SaveChangesAsync();
+            }
+            return 0;
+            
+        }
     }
 }

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GustoSystemProject")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fdbcad79adf67d74d6dad158ffcace7940408e7f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+541827158f820b716c1013eaf839170325067733")]
 [assembly: System.Reflection.AssemblyProductAttribute("GustoSystemProject")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GustoSystemProject")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

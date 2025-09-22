@@ -4,8 +4,10 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Repository;
 using Repository.Models;
+using Service.DTO.Request;
 using Service.DTO.Response;
 
 namespace Service
@@ -94,6 +96,74 @@ namespace Service
 
             }
             return new RestaurantTableResponse();
+        }
+        public async Task<List<RestaurantTableResponse>> GetByAccountAsync(int accId)
+        {
+            try
+            {
+                return await repository.GetByAccountAsync(accId)
+                    .ContinueWith(task => task.Result.Select(resTab => new RestaurantTableResponse
+                    {
+                        TableId = resTab.TableId,
+                        RestaurantName = resTab.Account?.FullName,
+                        Name = resTab.Name,
+                        Deposit = resTab.Deposit,
+                        Description = resTab.Description,
+                        IsVip = resTab.IsVip,
+                        MinCharge = resTab.MinCharge,
+                        PersonNumber = resTab.PersonNumber,
+                        Position = resTab.Position,
+                        Status = resTab.Status
+
+                    }).ToList());
+            }
+            catch (Exception e)
+            {
+
+            }
+            return new List<RestaurantTableResponse>();
+        }
+        public async Task<int> CreateTableAsync(RestaurantTableRequest request, short tableId)
+        {
+            var newItem = new RestaurantTable
+            {
+                Name = request.Name,
+                Description = request.Description,
+                PersonNumber = request.PersonNumber,
+                Position = request.Position,
+                Status = request.Status.ToString(),
+                IsVip = request.IsVip,
+                MinCharge = request.MinCharge,
+                Deposit = request.Deposit
+            };
+            return await repository.CreateAsync(newItem);
+        }
+        public async Task<int> UpdateTableAsync(RestaurantTableRequest request, int tableId)
+        {
+            var item = await GetByIdAsync(tableId);
+            if (item == null)
+            {
+                throw new KeyNotFoundException($"Table with ID {tableId} not found.");
+            }
+            item.Name = request.Name;
+            item.Description = request.Description;
+            item.PersonNumber = request.PersonNumber;
+            item.Position = request.Position;
+            item.Status = request.Status.ToString(); 
+            item.IsVip = request.IsVip;
+            item.MinCharge = request.MinCharge;
+            item.Deposit = request.Deposit;
+
+            return await repository.UpdateAsync(item);
+        }
+        public async Task<int> DeleteTableAsync(int tableId)
+        {
+            var item = await GetByIdAsync(tableId);
+            if (item == null)
+            {
+                throw new KeyNotFoundException($"Table with ID {tableId} not found.");
+            }
+            return await repository.DeleteAsync(tableId);
         }
     }
 }
