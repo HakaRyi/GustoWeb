@@ -16,13 +16,13 @@ namespace GustoSystemProject.Controllers
         {
             this.service = service;
         }
-        [HttpGet]
-        public async Task<List<RestaurantProfile>> GetAll()
-        {
-            return await service.GetAllAsync1();
-        }
+        //[HttpGet]
+        //public async Task<List<RestaurantProfile>> GetAll()
+        //{
+        //    return await service.GetAllAsync1();
+        //}
         [HttpGet("getAllResPro")]
-        public async Task<IActionResult> GetAllAccounts()
+        public async Task<IActionResult> GetAllProfiles()
         {
             var profiles = await service.GetAllAsync2();
             if (profiles == null || !profiles.Any())
@@ -30,6 +30,21 @@ namespace GustoSystemProject.Controllers
                 return NotFound();
             }
             return Ok(profiles);
+        }
+        //[HttpGet("{id}")]
+        //public async Task<RestaurantProfile> GetByIdAsync([FromRoute] int id)
+        //{
+        //    return await service.GetByIdAsync(id);
+        //}
+        [HttpGet("getById/{id}")]
+        public async Task<IActionResult> GetByProfileIdAsync([FromRoute] int id)
+        {
+            var item = await service.GetByIdAsync2(id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            return Ok(item);
         }
     }
 }

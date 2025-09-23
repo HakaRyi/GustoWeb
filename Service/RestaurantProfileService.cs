@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Repository;
 using Repository.Models;
+using Service.DTO.Request;
 using Service.DTO.Response;
 
 namespace Service
@@ -27,6 +28,18 @@ namespace Service
             {
             }
             return new List<RestaurantProfile>();
+        }
+        public async Task<RestaurantProfile> GetByIdAsync(int id)
+        {
+            try
+            {
+                return await repository.GetByIdAsync(id);
+
+            }
+            catch (Exception ex)
+            {
+            }
+            return new RestaurantProfile();
         }
         public async Task<List<RestaurantProfileResponse>> GetAllAsync2()
         {
@@ -53,7 +66,7 @@ namespace Service
             }
             return new List<RestaurantProfileResponse>();
         }
-        public async Task<RestaurantProfileResponse> GetByIdAsync(int id)
+        public async Task<RestaurantProfileResponse> GetByIdAsync2(int id)
         {
             try
             {
@@ -76,6 +89,81 @@ namespace Service
 
             }
             return new RestaurantProfileResponse();
+        }
+
+        public async Task<List<RestaurantProfileResponse>> GetByAccountAsync(int accId)
+        {
+            try
+            {
+                return await repository.GetByAccountAsync(accId)
+                    .ContinueWith(task => task.Result.Select(resPro => new RestaurantProfileResponse
+                    {
+                        AccountId =resPro.AccountId,
+                        Address = resPro.Address,
+                        AvatarUrl = resPro.AvatarUrl,
+                        Description=resPro.Description,
+                        Email = resPro.Email,
+                        FacebookUrl = resPro.FacebookUrl,
+                        FullName = resPro.FullName,
+                        OpenHour = resPro.OpenHour,
+                        Phone = resPro.Phone,
+                        TiktokUrl = resPro.TiktokUrl
+                        
+
+
+                    }).ToList());
+            }
+            catch (Exception e)
+            {
+
+            }
+            return new List<RestaurantProfileResponse>();
+        }
+        public async Task<int> CreateProfileAsync(RestaurantProfileRequest request, short restaurantID)
+        {
+            var newItem = new RestaurantProfile
+            {
+                FullName = null,
+                TiktokUrl= null,
+                Description = null,  
+                Email = null,
+                FacebookUrl = null,
+                Phone = null,
+                OpenHour=  null,
+                Address = null,
+                AvatarUrl = null,
+                
+
+            };
+            return await repository.CreateAsync(newItem);
+        }
+        public async Task<int> UpdateProfileAsync(RestaurantProfileRequest request, int profileId)
+        {
+            var item = await GetByIdAsync(profileId);
+            if (item == null)
+            {
+                throw new KeyNotFoundException($"Profile with ID {profileId} not found.");
+            }
+            item.Address = request.Address;
+            item.AvatarUrl = request.AvatarUrl;
+            item.Email = request.Email;
+            item.FacebookUrl = request.FacebookUrl; 
+            item.Phone = request.Phone;
+            item.OpenHour = request.OpenHour;
+            item.TiktokUrl = request.TiktokUrl;
+            item.Description = request.Description;
+            item.FullName = request.FullName;
+
+            return await repository.UpdateAsync(item);
+        }
+        public async Task<int> DeleteProfileAsync(int profileId)
+        {
+            var item = await GetByIdAsync(profileId);
+            if (item == null)
+            {
+                throw new KeyNotFoundException($"Profile with ID {profileId} not found.");
+            }
+            return await repository.DeleteAsync(profileId);
         }
     }
 }
