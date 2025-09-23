@@ -48,6 +48,26 @@ namespace Repository
                 .Include(r => r.Favourites)
                 .FirstOrDefaultAsync(r => r.AccountId == id);
         }
+        public async Task<List<RestaurantProfile>> GetByAccountAsync(int accountId)
+        {
+            return await context.RestaurantProfiles
+                .Where(a => a.AccountId == accountId)
+                .Include(r => r.RestaurantLayouts)
+                .Include(r => r.RestaurantMenus)
+                .Include(r => r.RestaurantTables)
+                    .ThenInclude(t => t.Bookings)
+                .Include(r => r.RestaurantTables)
+                    .ThenInclude(t => t.Orders)
+                .Include(r => r.Promotions)
+                .Include(r => r.Bookings)
+                    .ThenInclude(b => b.Table)
+                .Include(r => r.Orders)
+                    .ThenInclude(o => o.Table)
+                .Include(r => r.Orders)
+                    .ThenInclude(o => o.OrderDetails)
+                .Include(r => r.Favourites)
+                .ToListAsync();
+        }
         //-----------------------------------------------------
         public async Task<int> CreateAsync(RestaurantProfile item)
         {
