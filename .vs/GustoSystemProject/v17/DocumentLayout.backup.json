@@ -3,20 +3,8 @@
   "WorkspaceRootPath": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{149C3D95-551C-4A45-B91B-2622F0AEE94E}|Service\\Service.csproj|d:\\fpt_environment\\exe201c\\gusto_be\\gustoweb\\service\\accountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{149C3D95-551C-4A45-B91B-2622F0AEE94E}|Service\\Service.csproj|solutionrelative:service\\accountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{573DA25D-0776-4223-A3A6-9041084AAE12}|Repository\\Repository.csproj|d:\\fpt_environment\\exe201c\\gusto_be\\gustoweb\\repository\\accountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{573DA25D-0776-4223-A3A6-9041084AAE12}|Repository\\Repository.csproj|solutionrelative:repository\\accountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{573DA25D-0776-4223-A3A6-9041084AAE12}|Repository\\Repository.csproj|d:\\fpt_environment\\exe201c\\gusto_be\\gustoweb\\repository\\refreshtokenrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{573DA25D-0776-4223-A3A6-9041084AAE12}|Repository\\Repository.csproj|solutionrelative:repository\\refreshtokenrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{16E5B9E1-3C97-4410-9897-57E399403C70}|GustoSystemProject\\GustoSystemProject.csproj|d:\\fpt_environment\\exe201c\\gusto_be\\gustoweb\\gustosystemproject\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{16E5B9E1-3C97-4410-9897-57E399403C70}|GustoSystemProject\\GustoSystemProject.csproj|solutionrelative:gustosystemproject\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{573DA25D-0776-4223-A3A6-9041084AAE12}|Repository\\Repository.csproj|d:\\fpt_environment\\exe201c\\gusto_be\\gustoweb\\repository\\models\\refreshtoken.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -29,16 +17,12 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "DockedWidth": 204,
+          "SelectedChildIndex": 0,
           "Children": [
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
-            },
-            {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "RefreshTokenRepository.cs",
               "DocumentMoniker": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\Repository\\RefreshTokenRepository.cs",
               "RelativeDocumentMoniker": "Repository\\RefreshTokenRepository.cs",
@@ -51,7 +35,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
               "Title": "RefreshToken.cs",
               "DocumentMoniker": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\Repository\\Models\\RefreshToken.cs",
               "RelativeDocumentMoniker": "Repository\\Models\\RefreshToken.cs",
@@ -59,53 +43,17 @@
               "RelativeToolTip": "Repository\\Models\\RefreshToken.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-21T13:05:57.044Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-21T13:05:57.044Z"
             }
           ]
         },
         {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "DockedWidth": 196,
+          "SelectedChildIndex": -1,
           "Children": [
             {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "AccountRepository.cs",
-              "DocumentMoniker": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\Repository\\AccountRepository.cs",
-              "RelativeDocumentMoniker": "Repository\\AccountRepository.cs",
-              "ToolTip": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\Repository\\AccountRepository.cs",
-              "RelativeToolTip": "Repository\\AccountRepository.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAAwC0AAAAuAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-21T13:16:26.322Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "AccountService.cs",
-              "DocumentMoniker": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\Service\\AccountService.cs",
-              "RelativeDocumentMoniker": "Service\\AccountService.cs",
-              "ToolTip": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\Service\\AccountService.cs",
-              "RelativeToolTip": "Service\\AccountService.cs",
-              "ViewState": "AgIAAAQAAAAAAAAAAAAswB4AAAAZAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-21T13:12:33.811Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "AccountController.cs",
-              "DocumentMoniker": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\GustoSystemProject\\Controllers\\AccountController.cs",
-              "RelativeDocumentMoniker": "GustoSystemProject\\Controllers\\AccountController.cs",
-              "ToolTip": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\GustoSystemProject\\Controllers\\AccountController.cs",
-              "RelativeToolTip": "GustoSystemProject\\Controllers\\AccountController.cs",
-              "ViewState": "AgIAABkAAAAAAAAAAAAQwCsAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-21T15:24:37.647Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             }
           ]
         }

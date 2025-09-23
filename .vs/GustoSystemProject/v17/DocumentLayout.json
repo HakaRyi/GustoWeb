@@ -3,24 +3,32 @@
   "WorkspaceRootPath": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{16E5B9E1-3C97-4410-9897-57E399403C70}|GustoSystemProject\\GustoSystemProject.csproj|d:\\fpt_environment\\exe201c\\gusto_be\\gustoweb\\gustosystemproject\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{16E5B9E1-3C97-4410-9897-57E399403C70}|GustoSystemProject\\GustoSystemProject.csproj|solutionrelative:gustosystemproject\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{16E5B9E1-3C97-4410-9897-57E399403C70}|GustoSystemProject\\GustoSystemProject.csproj|d:\\fpt_environment\\exe201c\\gusto_be\\gustoweb\\gustosystemproject\\controllers\\notificationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{16E5B9E1-3C97-4410-9897-57E399403C70}|GustoSystemProject\\GustoSystemProject.csproj|solutionrelative:gustosystemproject\\controllers\\notificationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{149C3D95-551C-4A45-B91B-2622F0AEE94E}|Service\\Service.csproj|d:\\fpt_environment\\exe201c\\gusto_be\\gustoweb\\service\\notificationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{149C3D95-551C-4A45-B91B-2622F0AEE94E}|Service\\Service.csproj|solutionrelative:service\\notificationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{149C3D95-551C-4A45-B91B-2622F0AEE94E}|Service\\Service.csproj|d:\\fpt_environment\\exe201c\\gusto_be\\gustoweb\\service\\accountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{149C3D95-551C-4A45-B91B-2622F0AEE94E}|Service\\Service.csproj|solutionrelative:service\\accountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{573DA25D-0776-4223-A3A6-9041084AAE12}|Repository\\Repository.csproj|d:\\fpt_environment\\exe201c\\gusto_be\\gustoweb\\repository\\accountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{573DA25D-0776-4223-A3A6-9041084AAE12}|Repository\\Repository.csproj|solutionrelative:repository\\accountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{573DA25D-0776-4223-A3A6-9041084AAE12}|Repository\\Repository.csproj|d:\\fpt_environment\\exe201c\\gusto_be\\gustoweb\\repository\\refreshtokenrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{573DA25D-0776-4223-A3A6-9041084AAE12}|Repository\\Repository.csproj|solutionrelative:repository\\refreshtokenrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{16E5B9E1-3C97-4410-9897-57E399403C70}|GustoSystemProject\\GustoSystemProject.csproj|d:\\fpt_environment\\exe201c\\gusto_be\\gustoweb\\gustosystemproject\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{16E5B9E1-3C97-4410-9897-57E399403C70}|GustoSystemProject\\GustoSystemProject.csproj|solutionrelative:gustosystemproject\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{573DA25D-0776-4223-A3A6-9041084AAE12}|Repository\\Repository.csproj|d:\\fpt_environment\\exe201c\\gusto_be\\gustoweb\\repository\\models\\refreshtoken.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{573DA25D-0776-4223-A3A6-9041084AAE12}|Repository\\Repository.csproj|solutionrelative:repository\\models\\refreshtoken.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{573DA25D-0776-4223-A3A6-9041084AAE12}|Repository\\Repository.csproj|d:\\fpt_environment\\exe201c\\gusto_be\\gustoweb\\repository\\modelextensions\\searchrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{573DA25D-0776-4223-A3A6-9041084AAE12}|Repository\\Repository.csproj|solutionrelative:repository\\modelextensions\\searchrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{573DA25D-0776-4223-A3A6-9041084AAE12}|Repository\\Repository.csproj|d:\\fpt_environment\\exe201c\\gusto_be\\gustoweb\\repository\\notificationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{573DA25D-0776-4223-A3A6-9041084AAE12}|Repository\\Repository.csproj|solutionrelative:repository\\notificationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -29,8 +37,8 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "DockedWidth": 204,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -38,74 +46,110 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "RefreshTokenRepository.cs",
-              "DocumentMoniker": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\Repository\\RefreshTokenRepository.cs",
-              "RelativeDocumentMoniker": "Repository\\RefreshTokenRepository.cs",
-              "ToolTip": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\Repository\\RefreshTokenRepository.cs",
-              "RelativeToolTip": "Repository\\RefreshTokenRepository.cs",
-              "ViewState": "AgIAAAEAAAAAAAAAAAAiwCIAAAA5AAAAAAAAAA==",
+              "DocumentIndex": 5,
+              "Title": "SearchRequest.cs",
+              "DocumentMoniker": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\Repository\\ModelExtensions\\SearchRequest.cs",
+              "RelativeDocumentMoniker": "Repository\\ModelExtensions\\SearchRequest.cs",
+              "ToolTip": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\Repository\\ModelExtensions\\SearchRequest.cs",
+              "RelativeToolTip": "Repository\\ModelExtensions\\SearchRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-21T13:04:31.418Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "RefreshToken.cs",
-              "DocumentMoniker": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\Repository\\Models\\RefreshToken.cs",
-              "RelativeDocumentMoniker": "Repository\\Models\\RefreshToken.cs",
-              "ToolTip": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\Repository\\Models\\RefreshToken.cs",
-              "RelativeToolTip": "Repository\\Models\\RefreshToken.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAApAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-21T13:05:57.044Z",
-              "EditorCaption": ""
-            }
-          ]
-        },
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 1,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "AccountRepository.cs",
-              "DocumentMoniker": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\Repository\\AccountRepository.cs",
-              "RelativeDocumentMoniker": "Repository\\AccountRepository.cs",
-              "ToolTip": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\Repository\\AccountRepository.cs",
-              "RelativeToolTip": "Repository\\AccountRepository.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAAwC0AAAAuAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-21T13:16:26.322Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "AccountService.cs",
-              "DocumentMoniker": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\Service\\AccountService.cs",
-              "RelativeDocumentMoniker": "Service\\AccountService.cs",
-              "ToolTip": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\Service\\AccountService.cs",
-              "RelativeToolTip": "Service\\AccountService.cs",
-              "ViewState": "AgIAAEgAAAAAAAAAAAAcwGgAAAA0AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-21T13:12:33.811Z",
+              "WhenOpened": "2025-09-23T10:44:53.094Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "AccountService.cs",
+              "DocumentMoniker": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\Service\\AccountService.cs",
+              "RelativeDocumentMoniker": "Service\\AccountService.cs",
+              "ToolTip": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\Service\\AccountService.cs",
+              "RelativeToolTip": "Service\\AccountService.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAEIBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-23T09:03:49.848Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "NotificationService.cs",
+              "DocumentMoniker": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\Service\\NotificationService.cs",
+              "RelativeDocumentMoniker": "Service\\NotificationService.cs",
+              "ToolTip": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\Service\\NotificationService.cs",
+              "RelativeToolTip": "Service\\NotificationService.cs",
+              "ViewState": "AgIAACgAAAAAAAAAAAAkwD0AAABVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-23T11:04:54.478Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 204,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\GustoSystemProject\\Program.cs",
+              "RelativeDocumentMoniker": "GustoSystemProject\\Program.cs",
+              "ToolTip": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\GustoSystemProject\\Program.cs",
+              "RelativeToolTip": "GustoSystemProject\\Program.cs",
+              "ViewState": "AgIAACQAAAAAAAAAAAAAADwAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-23T11:14:26.886Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "NotificationController.cs",
+              "DocumentMoniker": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\GustoSystemProject\\Controllers\\NotificationController.cs",
+              "RelativeDocumentMoniker": "GustoSystemProject\\Controllers\\NotificationController.cs",
+              "ToolTip": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\GustoSystemProject\\Controllers\\NotificationController.cs",
+              "RelativeToolTip": "GustoSystemProject\\Controllers\\NotificationController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD4AAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-23T10:48:47.388Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "AccountController.cs",
               "DocumentMoniker": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\GustoSystemProject\\Controllers\\AccountController.cs",
               "RelativeDocumentMoniker": "GustoSystemProject\\Controllers\\AccountController.cs",
               "ToolTip": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\GustoSystemProject\\Controllers\\AccountController.cs",
               "RelativeToolTip": "GustoSystemProject\\Controllers\\AccountController.cs",
-              "ViewState": "AgIAABkAAAAAAAAAAAAQwCsAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAHUAAAAAAAAAAAAAAE4AAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-21T15:24:37.647Z",
+              "WhenOpened": "2025-09-23T10:38:23.671Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "NotificationRepository.cs",
+              "DocumentMoniker": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\Repository\\NotificationRepository.cs",
+              "RelativeDocumentMoniker": "Repository\\NotificationRepository.cs",
+              "ToolTip": "D:\\FPT_Environment\\EXE201c\\Gusto_BE\\GustoWeb\\Repository\\NotificationRepository.cs",
+              "RelativeToolTip": "Repository\\NotificationRepository.cs",
+              "ViewState": "AgIAAEYAAAAAAAAAAADwv1AAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-23T10:30:30.704Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 196,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             }
           ]
         }

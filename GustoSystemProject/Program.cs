@@ -55,10 +55,12 @@ builder.Services.AddHttpContextAccessor();
 //Dependency Injection:
 builder.Services.AddScoped<AccountService>();
 builder.Services.AddScoped<RoleService>();
+builder.Services.AddScoped<NotificationService>();
 
 builder.Services.AddScoped<AccountRepository>();
 builder.Services.AddScoped<RoleRepository>();
 builder.Services.AddScoped<RefreshTokenRepository>();
+builder.Services.AddScoped<NotificationRepository>();
 //End Dependency Injection
 
 

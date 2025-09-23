@@ -15,6 +15,9 @@ namespace Service.AutoMapper
         {
             //Account Auto Mapper:
             CreateMap<Account, AccountResponse>();
+
+            //Notification Mapper;
+            CreateMap<Notification, NotificationResponse>();
         }
     }
 }

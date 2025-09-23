@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Repository.DBContext;
+using Repository.ModelExtensions;
 using Repository.Models;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace Repository
 
         //CRUD Operations:
 
-        public async Task<Account> CreateAccount (Account account)
+        public async Task<Account> CreateAccount(Account account)
         {
             var proccess = await _context.AddAsync(account);
             _context.SaveChanges();
@@ -73,5 +74,41 @@ namespace Repository
             return account;
         }
 
+        public async Task<List<Account>> SearchAsync(string name, int roleId, string profileName)
+        {
+            var items = await _context.Accounts
+               .Include(a => a.Notifications)
+                .Include(a => a.RestaurantProfile)
+                .Include(a => a.DinerProfile)
+                .Include(a => a.RefreshTokens)
+                .Where(a => a.UserName.Contains(name) || string.IsNullOrEmpty(name)
+                && (a.RoleId == roleId)
+                && (a.RestaurantProfile.FullName.Equals(profileName) || a.DinerProfile.FullName.Equals(profileName)))
+                .OrderBy(x => x.CreateAt)
+                .ToListAsync();
+            return items ?? new List<Account>();
+        }
+
+        public async Task<PaginationResult<List<Account>>> SearchWithPagingAsync(string name, int roleId, string profileName, int currentPage, int pageSize)
+        {
+            var items = await this.SearchAsync(name, roleId, profileName);
+
+            var totalItems = items.Count();
+            var totalPages = (int)Math.Ceiling((double)totalItems / pageSize);
+
+            items = items.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+
+            var result = new PaginationResult<List<Account>>
+            {
+                TotalItems = totalItems,
+                TotalPages = totalPages,
+                CurrentPage = currentPage,
+                PageSize = pageSize,
+                Items = items
+            };
+
+            return result ?? new PaginationResult<List<Account>>();
+
+        }
     }
 }

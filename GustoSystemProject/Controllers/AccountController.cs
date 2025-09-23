@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Repository.ModelExtensions;
+using Repository.Models;
 using Service;
 using Service.DTO.Request;
 using Service.DTO.Request.AccountRequest;
@@ -79,6 +81,57 @@ namespace GustoSystemProject.Controllers
             {
                 _logger.LogError(ex, "Refresh token error");
                 return Unauthorized(new { message = ex.Message });
+            }
+        }
+
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            try
+            {
+                var result = await _service.SignOutAsync();
+                if (result)
+                {
+                    return Ok(new { message = "Logged out successfully" });
+                }
+                else
+                {
+                    return BadRequest(new { message = "Logout failed" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Logout error");
+                return StatusCode(500, new { message = "Internal server error" });
+            }
+        }
+
+        [HttpPost("search")]
+        public async Task<List<Account>> SearchAccount([FromQuery] string username, [FromQuery] int roleId, [FromQuery] string profileName)
+        {
+            try
+            {
+                return await _service.SearchAccount(username, roleId, profileName);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Search account error");
+                return new List<Account>();
+
+            }
+        }
+
+        [HttpPost("searchWithPagination")]
+        public async Task<PaginationResult<List<Account>>> SearchAccountWithPagination([FromBody] AccountSearchRequest searchRequest)
+        {
+            try
+            {
+                return await _service.SearchAccountWithPaging(searchRequest);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Search account with pagination error");
+                return new PaginationResult<List<Account>>();
             }
         }
     }
