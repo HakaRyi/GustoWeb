@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Repository;
 using Service;
 using Service.DTO.Response;
@@ -23,6 +24,7 @@ namespace GustoSystemProject.Controllers
 
         // GET: api/<NotificationController>
         [HttpGet]
+        [Authorize]
         public async Task<List<NotificationResponse>> Get()
         {
             try
@@ -37,6 +39,7 @@ namespace GustoSystemProject.Controllers
         }
         // GET api/<NotificationController>/5
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<NotificationResponse> Get(int id)
         {
             try
@@ -51,6 +54,7 @@ namespace GustoSystemProject.Controllers
         }
 
         [HttpGet("accountId")]
+        [Authorize]
         public async Task<List<NotificationResponse>> GetByAccount([FromQuery] short accountId)
         {
             try

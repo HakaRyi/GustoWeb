@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Repository.ModelExtensions;
 using Repository.Models;
 using Service;
@@ -26,6 +27,7 @@ namespace GustoSystemProject.Controllers
         //CRUD Operations:
         // GET: api/<AccountController>
         [HttpGet]
+        [Authorize]
         public async Task<List<AccountResponse>> Get()
         {
             return await _service.GetAllAccountsAsync();
@@ -33,6 +35,7 @@ namespace GustoSystemProject.Controllers
 
         // GET api/<AccountController>/
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<AccountResponse> Get(short id)
         {
             return await _service.GetAccountByIdAsync(id);
@@ -53,6 +56,7 @@ namespace GustoSystemProject.Controllers
 
         // PUT api/<AccountController>/5
         [HttpPut]
+        [Authorize]
         public async Task<AccountResponse> Put([FromBody] UpdateAccountRequest value)
         {
             return await _service.UpdateAccountAsync(value);
@@ -60,6 +64,7 @@ namespace GustoSystemProject.Controllers
 
         // DELETE api/<AccountController>/5
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<bool> Delete(short id)
         {
             return await _service.DeleteAccountAsync(id);
@@ -85,6 +90,7 @@ namespace GustoSystemProject.Controllers
         }
 
         [HttpPost("logout")]
+        [Authorize]
         public async Task<IActionResult> Logout()
         {
             try
@@ -107,6 +113,7 @@ namespace GustoSystemProject.Controllers
         }
 
         [HttpPost("search")]
+        [Authorize]
         public async Task<List<Account>> SearchAccount([FromQuery] string username, [FromQuery] int roleId, [FromQuery] string profileName)
         {
             try
@@ -122,6 +129,7 @@ namespace GustoSystemProject.Controllers
         }
 
         [HttpPost("searchWithPagination")]
+        [Authorize]
         public async Task<PaginationResult<List<Account>>> SearchAccountWithPagination([FromBody] AccountSearchRequest searchRequest)
         {
             try

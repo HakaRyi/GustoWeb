@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Repository;
@@ -8,12 +9,11 @@ using Repository.Models;
 using Service.DTO.Request;
 using Service.DTO.Request.AccountRequest;
 using Service.DTO.Response;
+using Service.Exceptions;
 using Service.Settings;
 using System.IdentityModel.Tokens.Jwt;
-using System.Net.Http;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Service
 {
@@ -21,13 +21,14 @@ namespace Service
     {
         private readonly AccountRepository _repo;
         private readonly RefreshTokenRepository _refreshTokenRepository;
+        private readonly RoleRepository _roleRepository;
 
         private readonly IMapper _mapper;
         private readonly ILogger<AccountService> _logger;
         private readonly JwtSettings _jwtSettings;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AccountService(AccountRepository repo, IMapper mapper, ILogger<AccountService> logger, JwtSettings jwtSettings, IHttpContextAccessor httpContextAccessor, RefreshTokenRepository refreshTokenRepository)
+        public AccountService(AccountRepository repo, IMapper mapper, ILogger<AccountService> logger, JwtSettings jwtSettings, IHttpContextAccessor httpContextAccessor, RefreshTokenRepository refreshTokenRepository, RoleRepository roleRepository)
         {
             _repo = repo;
             _mapper = mapper;
@@ -35,6 +36,7 @@ namespace Service
             _jwtSettings = jwtSettings;
             _httpContextAccessor = httpContextAccessor;
             _refreshTokenRepository = refreshTokenRepository;
+            _roleRepository = roleRepository;
         }
         //CRUD Operations:
         //Create Account
@@ -42,12 +44,20 @@ namespace Service
         {
             try
             {
+                var existedAccount = await _repo.GetAccountByUserName(request.UserName);
+                if(existedAccount != null)
+                {
+                    throw new UsernameAlreadyExistsException();
+                }
                 //Init Account Model
                 var account = new Account();
                 account.UserName = request.UserName;
-                account.Password = request.Password;
+
+                var passwordHasher = new PasswordHasher<Account>();
+                account.Password = passwordHasher.HashPassword(account, request.Password);
                 account.CreateAt = DateTime.Now;
 
+                Role role = await _roleRepository.GetRoleById(request.RoleId);
                 account.RoleId = request.RoleId;
 
                 await _repo.CreateAccount(account);
@@ -58,7 +68,7 @@ namespace Service
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error in CreateAccountAsync");
-                return new AccountResponse();
+                throw;
             }
         }
 
@@ -89,6 +99,11 @@ namespace Service
         {
             try
             {
+                var existedAccount = await _repo.GetAccountByUserName(request.UserName);
+                if (existedAccount != null)
+                {
+                    throw new Exception("Username already exists");
+                }
                 //Init Account Model
                 var account = await _repo.GetAccountById(request.Id);
 
@@ -137,11 +152,24 @@ namespace Service
         {
             try
             {
-                var result = await _repo.SignInAsync(request.UserName, request.Password);
+                var result = await _repo.GetAccountByUserName(request.UserName);
+
 
                 if(result != null)
                 {
-                    await GenerateTokens(result);
+                    var passwordHasher = new PasswordHasher<Account>();
+
+                    var verificationResult = passwordHasher.VerifyHashedPassword(result, result.Password, request.Password);
+
+                    if (verificationResult == PasswordVerificationResult.Success ||
+                        verificationResult == PasswordVerificationResult.SuccessRehashNeeded)
+                    {
+                        await GenerateTokens(result);
+                    }
+                    else
+                    {
+                        throw new InvalidCredentialsException();
+                    }
                 }
                 else
                 {
@@ -153,7 +181,7 @@ namespace Service
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error in SignInAsync");
-                return false;
+                throw;
             }
         }
 
@@ -170,7 +198,7 @@ namespace Service
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecretKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var accessTokenExpiry = DateTime.UtcNow.AddMinutes(_jwtSettings.ExpiryMinutes);
+            var accessTokenExpiry = DateTime.UtcNow.AddMinutes(_jwtSettings.ExpiryInMinutes);
 
             var token = new JwtSecurityToken(
                 issuer: _jwtSettings.Issuer,
@@ -180,6 +208,17 @@ namespace Service
                 signingCredentials: creds);
 
             var accessToken = new JwtSecurityTokenHandler().WriteToken(token);
+
+            httpContext.Response.Cookies.Append("AccessToken", accessToken, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.None,
+                Expires = accessTokenExpiry,
+            });
+
+
+            _logger.LogInformation("Set-Cookie headers after append: {SetCookie}", httpContext.Response.Headers["Set-Cookie"].ToArray());
 
             // generate refresh token
             RefreshToken refreshToken = new RefreshToken();
@@ -199,16 +238,6 @@ namespace Service
             {
                 await _refreshTokenRepository.CreateAsync(refreshToken);
 
-                // Set Cookie
-
-                    httpContext.Response.Cookies.Append("AccessToken", accessToken, new CookieOptions
-                    {
-                        HttpOnly = true,
-                        Secure = true,
-                        SameSite = SameSiteMode.None,
-                        Expires = accessTokenExpiry,
-                    });
-
                     httpContext.Response.Cookies.Append("RefreshToken", refreshToken.RefreshToken1, new CookieOptions
                     {
                         HttpOnly = true,
@@ -216,7 +245,7 @@ namespace Service
                         SameSite = SameSiteMode.None,
                         Expires = refreshTokenExpiry
                     });
-                
+
             }
             catch (Exception ex)
             {
@@ -255,7 +284,7 @@ namespace Service
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecretKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            var accessTokenExpiry = DateTime.UtcNow.AddMinutes(_jwtSettings.ExpiryMinutes);
+            var accessTokenExpiry = DateTime.UtcNow.AddMinutes(_jwtSettings.ExpiryInMinutes);
 
             var token = new JwtSecurityToken(
                 issuer: _jwtSettings.Issuer,

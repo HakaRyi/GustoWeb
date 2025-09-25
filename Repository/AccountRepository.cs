@@ -35,6 +35,7 @@ namespace Repository
                 .Include(a => a.RestaurantProfile)
                 .Include(a => a.DinerProfile)
                 .Include(a => a.RefreshTokens)
+                .Include(a => a.Role)
                 .ToListAsync();
         }
 
@@ -45,7 +46,19 @@ namespace Repository
                 .Include(a => a.RestaurantProfile)
                 .Include(a => a.DinerProfile)
                 .Include(a => a.RefreshTokens)
+                .Include(a => a.Role)
                 .FirstOrDefaultAsync(a => a.Id == id);
+        }
+
+        public async Task<Account> GetAccountByUserName(string username)
+        {
+            return await _context.Accounts
+                .Include(a => a.Notifications)
+                .Include(a => a.RestaurantProfile)
+                .Include(a => a.DinerProfile)
+                .Include(a => a.RefreshTokens)
+                .Include(a => a.Role)
+                .FirstOrDefaultAsync(a => a.UserName == username);
         }
 
         public async Task<Account> UpdateAccount(Account account)
@@ -81,6 +94,7 @@ namespace Repository
                 .Include(a => a.RestaurantProfile)
                 .Include(a => a.DinerProfile)
                 .Include(a => a.RefreshTokens)
+                .Include(a => a.Role)
                 .Where(a => a.UserName.Contains(name) || string.IsNullOrEmpty(name)
                 && (a.RoleId == roleId)
                 && (a.RestaurantProfile.FullName.Equals(profileName) || a.DinerProfile.FullName.Equals(profileName)))

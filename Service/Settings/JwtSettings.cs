@@ -9,7 +9,7 @@ namespace Service.Settings
     public class JwtSettings
     {
         public String SecretKey { get; set; }
-        public int ExpiryMinutes { get; set; }
+        public int ExpiryInMinutes { get; set; }
         public String Issuer { get; set; }
         public String Audience { get; set; }
 
