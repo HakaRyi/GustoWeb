@@ -11,8 +11,10 @@ using Service.Exceptions;
 using Service.Settings;
 using System.Text;
 using System.Text.Json.Serialization;
-;
-
+using Microsoft.EntityFrameworkCore;
+using Repository;
+using Repository.DBContext;
+using Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -82,11 +84,19 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<AccountService>();
 builder.Services.AddScoped<RoleService>();
 builder.Services.AddScoped<NotificationService>();
+builder.Services.AddScoped<RestaurantProfileService>();
+builder.Services.AddScoped<RestaurantLayoutService>();
+builder.Services.AddScoped<RestaurantTableService>();
+builder.Services.AddScoped<RestaurantMenuService>();
 
 builder.Services.AddScoped<AccountRepository>();
 builder.Services.AddScoped<RoleRepository>();
 builder.Services.AddScoped<RefreshTokenRepository>();
 builder.Services.AddScoped<NotificationRepository>();
+builder.Services.AddScoped<RestaurantLayoutRepository>();
+builder.Services.AddScoped<RestaurantMenuRepository>();
+builder.Services.AddScoped<RestaurantProfileRepository>();
+builder.Services.AddScoped<RestaurantTableRepository>();
 
 builder.Services.AddAutoMapper(typeof(AutoMapperConfig).Assembly);
 

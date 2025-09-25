@@ -401,7 +401,6 @@ public partial class GustoSystemContext : DbContext
         modelBuilder.Entity<RestaurantProfile>(entity =>
         {
             entity.HasKey(e => e.AccountId).HasName("PK__Restaura__349DA5A6BB5BEA5A");
-
             entity.ToTable("Restaurant_Profile");
 
             entity.Property(e => e.AccountId).ValueGeneratedNever();
