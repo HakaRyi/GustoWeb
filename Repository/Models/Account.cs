@@ -21,6 +21,10 @@ public partial class Account
 
     public virtual DinerProfile DinerProfile { get; set; }
 
+    public virtual ICollection<Notification> Notifications { get; set; } = new List<Notification>();
+
+    public virtual ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
+
     public virtual RestaurantProfile RestaurantProfile { get; set; }
 
     public virtual Role Role { get; set; }
