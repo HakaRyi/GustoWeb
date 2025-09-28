@@ -21,13 +21,16 @@ builder.Services.AddScoped<RestaurantMenuRepository>();
 builder.Services.AddScoped<RestaurantProfileRepository>();
 builder.Services.AddScoped<RestaurantTableRepository>();
 builder.Services.AddScoped<FavouriteRepository>();
+builder.Services.AddScoped<FoodReviewRepository>();
+
 
 //Service
 builder.Services.AddScoped<RestaurantProfileService>();
 builder.Services.AddScoped<RestaurantLayoutService>();
 builder.Services.AddScoped<RestaurantTableService>();
 builder.Services.AddScoped<RestaurantMenuService>();
-builder.Services.AddScoped<FavouriteService>(); 
+builder.Services.AddScoped<FavouriteService>();
+builder.Services.AddScoped<FoodReviewService>();
 
 
 builder.Services.AddControllers().AddJsonOptions(options =>
