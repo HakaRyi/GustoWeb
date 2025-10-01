@@ -33,6 +33,10 @@ builder.Services.AddControllers()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//SMTP Settings
+builder.Services.Configure<SmtpSettings>(
+    builder.Configuration.GetSection("Email"));
+
 // JWT Settings
 var jwtSetting = new JwtSettings();
 builder.Configuration.GetSection("JwtSettings").Bind(jwtSetting); 
