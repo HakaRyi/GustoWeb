@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using Repository;
+﻿using Repository;
 using Repository.Models;
 using Service.DTO.Request;
 using Service.DTO.Response;

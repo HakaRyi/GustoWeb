@@ -1,0 +1,78 @@
+﻿using Repository;
+using Repository.Models;
+using Service.DTO.Request;
+using Service.DTO.Response;
+using Service.DTO.Request;
+using Service.DTO.Response;
+
+namespace Service
+{
+    public class FavouriteService
+    {
+        private readonly FavouriteRepository _repository;
+
+        public FavouriteService(FavouriteRepository repository)
+        {
+            _repository = repository;
+        }
+
+        public async Task<List<FavouriteResponse>> GetByDinerIdAsync(short dinerId)
+        {
+            var favs = await _repository.GetByDinerIdAsync(dinerId);
+
+            return favs.Select(f => new FavouriteResponse
+            {
+                Id = f.Id,
+                DinerId = f.DinerId,
+                RestaurantId = f.RestaurantId,
+                CreatedAt = f.CreatedAt,
+                RestaurantName = f.Restaurant?.FullName,
+            }).ToList();
+        }
+
+        public async Task<FavouriteResponse?> GetByIdAsync(short id)
+        {
+            var fav = await _repository.GetByIdAsync(id);
+            if (fav == null) return null;
+
+            return new FavouriteResponse
+            {
+                Id = fav.Id,
+                DinerId = fav.DinerId,
+                RestaurantId = fav.RestaurantId,
+                CreatedAt = fav.CreatedAt,
+                RestaurantName = fav.Restaurant?.FullName
+            };
+        }
+
+        public async Task AddAsync(FavouriteRequest request)
+        {
+            var fav = new Favourite
+            {
+                DinerId = request.DinerId,
+                RestaurantId = request.RestaurantId,
+                CreatedAt = DateTime.UtcNow
+            };
+
+            await _repository.AddAsync(fav);
+        }
+
+        public async Task UpdateAsync(short id, FavouriteRequest request)
+        {
+            var fav = new Favourite
+            {
+                Id = id,
+                DinerId = request.DinerId,
+                RestaurantId = request.RestaurantId,
+                CreatedAt = DateTime.UtcNow
+            };
+
+            await _repository.UpdateAsync(fav);
+        }
+
+        public async Task DeleteAsync(short id)
+        {
+            await _repository.DeleteAsync(id);
+        }
+    }
+}

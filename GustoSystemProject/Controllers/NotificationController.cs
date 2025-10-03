@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Repository;
 using Service;
+using Service.DTO.Request;
 using Service.DTO.Response;
 using System.Threading.Tasks;
 
@@ -87,5 +88,21 @@ namespace GustoSystemProject.Controllers
         //public void Delete(int id)
         //{
         //}
+
+        //Send Email
+        [HttpPost("send-email")]
+        public async Task<IActionResult> SendEmail([FromBody] SendEmailRequest request)
+        {
+            try
+            {
+                await _service.SendEmailAsync(request);
+                return Ok(new { Message = "Email sent successfully" });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while sending email");
+                return StatusCode(500, "Internal server error");
+            }
+        }
     }
 }
