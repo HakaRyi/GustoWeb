@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using Org.BouncyCastle.Ocsp;
 using Repository;
 using Repository.Models;
 using Service.DTO.Request;
@@ -136,28 +137,30 @@ namespace Service
         {
             var newItem = new RestaurantMenu
             {
-               Name = request.Name,
-               Price = request.Price,
-               OldPrice = request.OldPrice,
-               DiscountPercent= request.DiscountPercent,
-               StartDiscount= request.StartDiscount,
-               EndDiscount= request.EndDiscount,
-               IsRecommended = request.IsRecommended,
-               Status = request.Status,
-               Type = request.Type,
-               FoodUrl = request.FoodUrl,
-               Description = request.Description,
-
+                Name = request.Name,
+                Price = request.Price,
+                OldPrice = request.OldPrice,
+                DiscountPercent = request.DiscountPercent,
+                StartDiscount = request.StartDiscount,
+                EndDiscount = request.EndDiscount,
+                IsRecommended = request.IsRecommended,
+                Status = request.Status,
+                Type = request.Type,
+                FoodUrl = request.FoodUrl,
+                Description = request.Description,
+                AccountId = restaurantID
             };
             return await repository.CreateAsync(newItem);
         }
-        public async Task<int> UpdateMenuAsync(RestaurantMenuRequest request, int menuId)
+        public async Task<int> UpdateMenuAsync(RestaurantMenuRequest request, int menuId, short resId)
         {
             var item = await GetByIdAsync(menuId);
             if (item == null)
             {
                 throw new KeyNotFoundException($"Menu with ID {menuId} not found.");
             }
+            if (resId != item.AccountId) throw new UnauthorizedAccessException("You dont have permission to delete this menu");
+
             item.Name = request.Name;
             item.Price = request.Price;
             item.OldPrice = request.OldPrice;
@@ -172,13 +175,15 @@ namespace Service
 
             return await repository.UpdateAsync(item);
         }
-        public async Task<int> DeleteMenuAsync(int menuId)
+        public async Task<int> DeleteMenuAsync(int menuId, short resId)
         {
             var item = await GetByIdAsync(menuId);
             if (item == null)
             {
                 throw new KeyNotFoundException($"Menu with ID {menuId} not found.");
             }
+            if (resId != item.AccountId) throw new UnauthorizedAccessException("You dont have permission to remove this menu");
+
             return await repository.DeleteAsync(menuId);
         }
     }

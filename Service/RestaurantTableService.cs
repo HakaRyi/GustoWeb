@@ -123,10 +123,11 @@ namespace Service
             }
             return new List<RestaurantTableResponse>();
         }
-        public async Task<int> CreateTableAsync(RestaurantTableRequest request, short tableId)
+        public async Task<int> CreateTableAsync(RestaurantTableRequest request, short resId)
         {
             var newItem = new RestaurantTable
             {
+                AccountId = resId,
                 Name = request.Name,
                 Description = request.Description,
                 PersonNumber = request.PersonNumber,
@@ -138,13 +139,15 @@ namespace Service
             };
             return await repository.CreateAsync(newItem);
         }
-        public async Task<int> UpdateTableAsync(RestaurantTableRequest request, int tableId)
+        public async Task<int> UpdateTableAsync(RestaurantTableRequest request, int tableId, short resId)
         {
             var item = await GetByIdAsync(tableId);
             if (item == null)
             {
                 throw new KeyNotFoundException($"Table with ID {tableId} not found.");
             }
+            if (resId != item.AccountId) throw new UnauthorizedAccessException("You dont have permission to edit this table");
+
             item.Name = request.Name;
             item.Description = request.Description;
             item.PersonNumber = request.PersonNumber;
@@ -156,13 +159,15 @@ namespace Service
 
             return await repository.UpdateAsync(item);
         }
-        public async Task<int> DeleteTableAsync(int tableId)
+        public async Task<int> DeleteTableAsync(int tableId, short resId)
         {
             var item = await GetByIdAsync(tableId);
             if (item == null)
             {
                 throw new KeyNotFoundException($"Table with ID {tableId} not found.");
             }
+            if (resId != item.AccountId) throw new UnauthorizedAccessException("You dont have permission to remove this table");
+
             return await repository.DeleteAsync(tableId);
         }
     }

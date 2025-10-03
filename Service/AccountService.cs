@@ -191,6 +191,7 @@ namespace Service
 
             var claims = new[]
             {
+            new Claim("AccountID", user.Id.ToString()),
             new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new Claim(ClaimTypes.Role, user.Role.Name)
@@ -276,6 +277,7 @@ namespace Service
             // 3. Sinh access token mới
             var claims = new[]
             {
+                new Claim("AccountID", user.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Role, user.Role.Name)

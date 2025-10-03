@@ -1,4 +1,5 @@
-﻿using Repository;
+﻿using Org.BouncyCastle.Ocsp;
+using Repository;
 using Repository.Models;
 using Service.DTO.Request;
 using Service.DTO.Response;
@@ -104,33 +105,38 @@ namespace Service
             var newItem = new RestaurantLayout
             {
                 Name = request.Name,
-                Description = request.Description,
-                LayoutUrl = request.LayoutUrl,
+                Description = request.Description ?? "",
+                LayoutUrl = request.LayoutUrl ?? "",
                 AccountId = restaurantID
 
             };
             return await repository.CreateAsync(newItem);
         }
-        public async Task<int> UpdateLayoutAsync(RestaurantLayoutRequest request, int layoutId)
+        public async Task<int> UpdateLayoutAsync(RestaurantLayoutRequest request, int layoutId, short resId)
         {
             var item = await GetByIdAsync(layoutId);
             if (item == null)
             {
                 throw new KeyNotFoundException($"Layout with ID {layoutId} not found.");
             }
+            if (resId != item.AccountId) throw new UnauthorizedAccessException("You dont have permission to edit this layout");
+
             item.Description = request.Description;
             item.Name = request.Name;
             item.LayoutUrl = request.LayoutUrl;
 
             return await repository.UpdateAsync(item);
         }
-        public async Task<int> DeleteLayoutAsync(int layoutId)
+        public async Task<int> DeleteLayoutAsync(int layoutId, short resId)
         {
             var item = await GetByIdAsync(layoutId);
+
             if (item == null)
             {
                 throw new KeyNotFoundException($"Layout with ID {layoutId} not found.");
             }
+            if (resId != item.AccountId) throw new UnauthorizedAccessException("You dont have permission to delete this layout");
+
             return await repository.DeleteAsync(layoutId);
         }
 

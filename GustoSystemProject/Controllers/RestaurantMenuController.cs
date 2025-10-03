@@ -51,7 +51,7 @@ namespace GustoSystemProject.Controllers
         [HttpGet("getByMyRestaurant")]
         public async Task<IActionResult> GetByMyRestaurant()
         {
-            var restaurantID = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var restaurantID = User.FindFirst("AccountID")?.Value;
             var item = await service.GetByAccountAsync(short.Parse(restaurantID));
             if (item == null)
             {
@@ -62,33 +62,74 @@ namespace GustoSystemProject.Controllers
         [HttpPost("createMenu")]
         public async Task<IActionResult> CreateAsync(RestaurantMenuRequest request)
         {
-            var restaurantID = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var restaurantID = User.FindFirst("AccountID")?.Value;
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
             await service.CreateMenuAsync(request, short.Parse(restaurantID));
-            return Ok("Food successfully created.");
+            return Ok(new
+            {
+                message = "Food successfully created."
+            });
         }
         [HttpPut("updateMenu/{id}")]
         public async Task<IActionResult> UpdateAsync(RestaurantMenuRequest request, [FromRoute] int id)
         {
+            var restaurantID = User.FindFirst("AccountID")?.Value;
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            await service.UpdateMenuAsync(request, id);
-            return Ok("Food successfully updated.");
+            try
+            {
+                await service.UpdateMenuAsync(request, id, short.Parse(restaurantID));
+                return Ok(new
+                {
+                    message = "Food successfully updated."
+                });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { error = ex.Message });
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return StatusCode(403, new { error = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
         }
         [HttpDelete("deleteMenu/{id}")]
         public async Task<IActionResult> DeleteAsync([FromRoute] int id)
         {
+            var restaurantID = User.FindFirst("AccountID")?.Value;
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
+            }    
+            try
+            {
+                await service.DeleteMenuAsync(id, short.Parse(restaurantID));
+                return Ok(new
+                {
+                    message = "Food successfully deleted."
+                });
             }
-            await service.DeleteMenuAsync(id);
-            return Ok("Food successfully deleted.");
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { error = ex.Message });
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return StatusCode(403, new { error = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
         }
     }
 }

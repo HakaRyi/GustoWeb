@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Identity.Client;
+using Org.BouncyCastle.Ocsp;
 using Repository;
 using Repository.Models;
 using Service.DTO.Request;
@@ -13,9 +15,11 @@ namespace Service
     public class RestaurantProfileService
     {
         private readonly RestaurantProfileRepository repository;
-        public RestaurantProfileService(RestaurantProfileRepository repository)
+        private readonly AccountRepository accRepo;
+        public RestaurantProfileService(RestaurantProfileRepository repository, AccountRepository accRepo)
         {
             this.repository = repository;
+            this.accRepo = accRepo;
         }
         public async Task<List<RestaurantProfile>> GetAllAsync1()
         {
@@ -119,31 +123,39 @@ namespace Service
             }
             return new List<RestaurantProfileResponse>();
         }
-        public async Task<int> CreateProfileAsync(RestaurantProfileRequest request, short restaurantID)
+        public async Task<int> CreateProfileAsync(RestaurantProfileRequest request, short accId)
         {
+            var acc = await accRepo.GetAccountById(accId);
+            if(acc == null) throw new Exception($"Account with ID {accId} not found.");
+            var existingProfile = await repository.GetByIdAsync(accId);
+            if (existingProfile != null) throw new Exception("Profile already exists for this account.");
+           
             var newItem = new RestaurantProfile
             {
-                FullName = null,
-                TiktokUrl= null,
-                Description = null,  
-                Email = null,
-                FacebookUrl = null,
-                Phone = null,
-                OpenHour=  null,
-                Address = null,
-                AvatarUrl = null,
+                AccountId = accId,
+                FullName = request.FullName ?? null,
+                TiktokUrl= request.TiktokUrl ?? null,
+                Description = request.Description ?? "",  
+                Email = request.Email ?? null,
+                FacebookUrl = request.FacebookUrl ?? null,
+                Phone = request.Phone ?? null,
+                OpenHour=  request.OpenHour ?? null,
+                Address = request.Address ?? null,
+                AvatarUrl = request.AvatarUrl ?? null,
                 
 
             };
             return await repository.CreateAsync(newItem);
         }
-        public async Task<int> UpdateProfileAsync(RestaurantProfileRequest request, int profileId)
+        public async Task<int> UpdateProfileAsync(RestaurantProfileRequest request, int profileId, short resId)
         {
             var item = await GetByIdAsync(profileId);
             if (item == null)
             {
                 throw new KeyNotFoundException($"Profile with ID {profileId} not found.");
             }
+            if (resId != item.AccountId) throw new UnauthorizedAccessException("You dont have permission to edit this profile");
+
             item.Address = request.Address;
             item.AvatarUrl = request.AvatarUrl;
             item.Email = request.Email;
@@ -156,13 +168,15 @@ namespace Service
 
             return await repository.UpdateAsync(item);
         }
-        public async Task<int> DeleteProfileAsync(int profileId)
+        public async Task<int> DeleteProfileAsync(int profileId, short resId)
         {
             var item = await GetByIdAsync(profileId);
             if (item == null)
             {
                 throw new KeyNotFoundException($"Profile with ID {profileId} not found.");
             }
+            if (resId != item.AccountId) throw new UnauthorizedAccessException("You dont have permission to remove this profile");
+
             return await repository.DeleteAsync(profileId);
         }
     }
