@@ -7,6 +7,8 @@ import Footer from './components/GlobalStyle/Footer.js';
 import Restaurants from './pages/Restaurants.js';
 import Login from './pages/Login.js';
 import Register from './pages/Register.js';
+import About from './pages/About.js';
+
 import { publicRoutes } from '~/routes';
 import { useState, useEffect } from 'react';
 function App() {
@@ -19,6 +21,7 @@ function App() {
       <main className="container mt-4">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
           <Route path="/restaurants" element={<Restaurants />} />
           <Route path="/login" element={<Login setToken={setToken} />} />
           <Route path="/register" element={<Register />} />

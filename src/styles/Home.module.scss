@@ -35,17 +35,20 @@
   z-index: 2;
   animation: fadeIn 2s ease-in-out;
   font-weight: bold;
+  text-align: center;
 
   h1 {
-    font-size: 4rem;
+    font-size: 8rem;
     font-weight: bold;
     color: #fff9d6;
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+    margin-bottom: 20px; 
+    line-height: 1;      /* 👈 giúp chữ GUSTO và dòng dưới khít hơn */
   }
 
   p {
     font-size: 1.5rem;
-    margin: 20px 0;
+    margin: 5px 0 20px;  /* 👈 giảm khoảng cách trên, giữ khoảng dưới */
     font-weight: bold;
     color: #f5de87;
   }

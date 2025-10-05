@@ -18,27 +18,27 @@ function Header({ token, cartCount = 0 }) {
 
         <Nav className={styles.navbar}>
           <Link to="/" className={styles.navLink}>
-            <FaHome className={styles.navIcon} /> Home
+            <FaHome className={styles.navIcon} /> Trang chủ
           </Link>
           <Link to="/about" className={styles.navLink}>
-            <FaInfoCircle className={styles.navIcon} /> About
+            <FaInfoCircle className={styles.navIcon} /> Về chúng tôi
           </Link>
           <Link to="/contact" className={styles.navLink}>
-            <FaPaperPlane className={styles.navIcon} /> Contact
+            <FaPaperPlane className={styles.navIcon} /> Liên hệ
           </Link>
 
           {!token ? (
             <Link to="/login" className={`${styles.navLink} ${styles.loginBtn}`}>
-              <FaSignInAlt className={styles.navIcon} /> Login
+              <FaSignInAlt className={styles.navIcon} /> Đăng nhập
             </Link>
           ) : (
             <>
               <Link to="/profile" className={styles.navLink}>
-                <FaAddressBook className={styles.navIcon} /> Profile
+                <FaAddressBook className={styles.navIcon} /> Hồ sơ
               </Link>
               <Link to="/myCart" className={styles.navLink}>
                 <FaShoppingCart className={styles.navIcon} />
-                My Pre-order
+                Món đã đặt
                 {cartCount > 0 && (
                   <Badge className={styles.cartBadge}>{cartCount}</Badge>
                 )}
