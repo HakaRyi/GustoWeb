@@ -1,0 +1,106 @@
+.headerContainer {
+  background-color: #6a7636;
+  padding: 10px 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.headerInner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1300px;
+}
+
+.brand {
+ 
+}
+
+.logoImg {
+  height: 50px;
+  width: auto;
+  margin-right: 15px;
+  transition: transform 0.3s ease, filter 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+/* NAVBAR LINKS */
+.navbar {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+}
+
+.navLink {
+  color: #fff9d6;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s ease-in-out;
+  font-family: Kanit, Verdana, Geneva, Tahoma, sans-serif;
+
+  &:hover {
+    color: #f5de87;
+    transform: translateY(-2px);
+    text-shadow: 0 0 8px #a2935d;
+  }
+}
+
+.navIcon {
+  margin-right: 6px;
+}
+
+/* LOGIN BUTTON */
+.loginBtn {
+  background-color: transparent;
+  border: 2.5px solid #f5de87;
+  border-radius: 8px;
+  padding: 6px 14px;
+  color: #f5de87;
+  font-weight: bold;
+  transition: all 0.25s ease-in-out;
+
+  &:hover {
+    background-color: #f5de87;
+    color: #6a7636;
+  }
+}
+
+/* CART BADGE */
+.cartBadge {
+  background-color: #f5de87;
+  color: #6a7636;
+  border-radius: 50%;
+  font-size: 12px;
+  padding: 4px 7px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .headerInner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar {
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 10px;
+  }
+}
