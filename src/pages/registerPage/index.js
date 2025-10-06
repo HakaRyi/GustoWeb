@@ -5,10 +5,13 @@ import styles from './registerPage.module.scss'
 
 //Components
 import RegisterForm from '../../components/Forms/RegisterForm'
+import {  useNavigate } from 'react-router-dom'
+import routes from '~/config/route'
 
 const cx = className.bind(styles)
 
 function RegisterPage() {
+  const nav = useNavigate();
   return (
     <div className={cx('wrapper')}>
       <div className={cx('infor-container')}>
@@ -26,7 +29,7 @@ function RegisterPage() {
             <h2 className={cx('form-title')}>Sign Up</h2>
             <div className={cx('formDescription')}>Ready to start your travel to Food Kingdom? Hope you have the most interesting experiences. Thank you for choossing GUSTO</div>
             <RegisterForm />
-            <button className={cx('register-btn')}>Back</button>
+            <div onClick={() => nav(routes.login)} className={cx('register-btn')}>Back</div>
         </div>
       </div>
     </div>
