@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from '../../styles/Header.module.scss';
+import routes from '~/config/route';
 import { Nav, Badge } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { FaHome, FaInfoCircle, FaAddressBook, FaPaperPlane, FaShoppingCart, FaSignInAlt } from 'react-icons/fa';
@@ -28,7 +29,7 @@ function Header({ token, cartCount = 0 }) {
           </Link>
 
           {!token ? (
-            <Link to="/login" className={`${styles.navLink} ${styles.loginBtn}`}>
+            <Link to={routes.login} className={`${styles.navLink} ${styles.loginBtn}`}>
               <FaSignInAlt className={styles.navIcon} /> Đăng nhập
             </Link>
           ) : (

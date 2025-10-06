@@ -4,9 +4,11 @@ import Home from './pages/Home.js';
 import Header from './components/GlobalStyle/Header.js';
 import Footer from './components/GlobalStyle/Footer.js';
 import Restaurants from './pages/Restaurants.js';
-import Login from './pages/Login.js';
+import LoginPage from './pages/LoginPage/loginPage.js';
 import Register from './pages/Register.js';
 import About from './pages/About.js';
+
+import routes from './config/route.js';
 
 import { publicRoutes } from '~/routes';
 import { useState, useEffect } from 'react';
@@ -22,7 +24,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/restaurants" element={<Restaurants />} />
-          <Route path="/login" element={<Login setToken={setToken} />} />
+          <Route path={routes.login} element={<LoginPage  />} />
           <Route path="/register" element={<Register />} />
           
           <Route path="*" element={<h2>404 Not Found</h2>} />

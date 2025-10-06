@@ -8,7 +8,7 @@ import LoginForm from '../../components/Forms/LoginForm'
 const cx = className.bind(styles)
 
 
-function loginPage() {
+function LoginPage() {
   return (
     <div className={cx("wrapper")}>
       <div className={cx("overlay")}>
@@ -35,4 +35,4 @@ function loginPage() {
   );
 }
 
-export default loginPage
+export default LoginPage
