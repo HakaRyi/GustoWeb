@@ -1,0 +1,67 @@
+.footer {
+  background-color: #1a1a1a; // nền tối
+  color: #fff9d6; // màu chữ vàng nhạt như header
+  padding: 20px 40px;
+  text-align: center;
+  font-family: 'Kanit', Verdana, Geneva, Tahoma, sans-serif;
+  border-top: 1px solid #333;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.3);
+
+  .footerInner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .footerBrand {
+    span {
+      font-size: 24px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      color: #f5de87;
+      transition: text-shadow 0.3s ease;
+
+      &:hover {
+        text-shadow: 0 0 10px #f5de87;
+      }
+    }
+
+    .logoImg {
+      height: 40px;
+      width: auto;
+      transition: transform 0.3s ease, filter 0.3s ease;
+
+      &:hover {
+        transform: scale(1.05);
+        filter: brightness(1.2);
+      }
+    }
+  }
+
+  .footerLinks {
+    display: flex;
+    gap: 25px;
+
+    a {
+      color: #fff9d6;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 500;
+      transition: color 0.2s ease, text-shadow 0.2s ease;
+
+      &:hover {
+        color: #f5de87;
+        text-shadow: 0 0 6px #f5de87;
+      }
+    }
+  }
+
+  .footerCopy {
+    p {
+      font-size: 14px;
+      color: #cfcfcf;
+      margin-top: 8px;
+    }
+  }
+}
