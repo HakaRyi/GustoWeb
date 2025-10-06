@@ -1,0 +1,133 @@
+.card {
+  display: flex;
+  font-family:  Verdana, Geneva, Tahoma, sans-serif;
+  align-items: center;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  width: 650px;
+  margin: 20px auto;
+  position: relative;
+  border: 2px solid #dceeff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-6px);
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  }
+}
+
+/* --- NEW badge --- */
+.badge {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  background: #ff3b3b;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 6px 10px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-20deg);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* --- Image --- */
+.imageBox {
+  flex: 0 0 220px;
+  height: 180px;
+  overflow: hidden;
+  border-radius: 10px;
+  margin-left: 15px;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+}
+
+/* --- Info section --- */
+.info {
+  flex: 1;
+  padding: 15px 25px;
+  text-align: left;
+  color: #222;
+  font-family: "Poppins", sans-serif;
+}
+
+.name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.rating {
+  font-size: 1rem;
+  color: #ffcc00;
+  margin-bottom: 5px;
+
+  .grayStar {
+    color: #ccc;
+  }
+}
+
+.address {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+/* --- Status row --- */
+.statusRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.statusDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.open {
+  background: #00c851;
+}
+
+.closed {
+  background: #ff4444;
+}
+
+.statusText {
+  font-weight: 600;
+}
+
+.time {
+  margin-left: 8px;
+  color: #555;
+}
+
+/* --- Button --- */
+.btn {
+  background: #00c851;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 200, 81, 0.3);
+
+  &:hover {
+    background: #02e57f;
+    transform: scale(1.05);
+  }
+}

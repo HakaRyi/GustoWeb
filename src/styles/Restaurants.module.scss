@@ -1,0 +1,225 @@
+.restaurantsPage {
+  display: flex;
+  min-height: 100vh;
+  background: url("/assets/backgroundRestaurant.png") center/cover no-repeat;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: #fff;
+  position: relative;
+}
+
+/* --- Lớp phủ nền mờ --- */
+.restaurantsPage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(2px);
+  z-index: 0;
+}
+
+.filterPanel {
+  margin-top: 80px;
+  width: 350px;
+  padding: 80px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  z-index: 1;
+
+  /* Xóa border thẳng gây vệt */
+  border-right: none;
+
+  /* 💫 Mờ dần thật sự từ trái qua phải */
+  background: linear-gradient(
+    to right,
+    rgba(20, 20, 20, 0.8) 0%,
+    rgba(20, 20, 20, 0.4) 60%,
+    rgba(20, 20, 20, 0) 100%
+  );
+
+  backdrop-filter: blur(2px);
+}
+
+.filterOption {
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1rem;
+  color: #eaeaea;
+  cursor: pointer;
+  transition: color 0.3s ease;
+
+  input[type="radio"] {
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #ccc;
+    border: 1px solid #888;
+    position: relative;
+    cursor: pointer;
+
+    &:checked {
+      background: #00e676;
+      box-shadow: 0 0 5px #00e676;
+    }
+  }
+
+  &:hover {
+    color: #ffd369;
+  }
+}
+
+.filterText {
+  user-select: none;
+}
+
+/* --- Main Content --- */
+.mainContent {
+  margin-top: 50px;
+  flex: 1;
+  position: relative;
+  z-index: 1;
+  padding: 60px 100px;
+  text-align: center;
+}
+
+.title {
+  font-size: 72px;
+  font-weight: 800;
+  margin-bottom: 40px;
+  
+
+  /* Gradient text */
+  background: linear-gradient(90deg, #ffdd00, #ffb700);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+/* --- Search box --- */
+.searchBox {
+  width: 70%;
+  margin: 0 auto 60px;
+  position: relative;
+
+  input {
+    width: 100%;
+    padding: 14px 25px 14px 20px; /* giảm padding-right xuống 45px */
+    border-radius: 12px;
+    border: 2px solid #fff;
+    border-color: #eaeaea;
+    outline: none;
+    font-size: 1rem;
+    background: rgba(0, 0, 0, 0);
+    color: #fff;
+    backdrop-filter: blur(6px);
+    transition: 0.3s;
+
+    &::placeholder {
+      color: #ddd;
+    }
+
+    &:focus {
+      background: rgba(0, 0, 0, 0);
+    }
+  }
+
+  .searchIcon {
+    position: absolute;
+    right: 0px;
+    top: 50%;
+    transform: translateY(-50%) translateX(70%);
+   
+    font-size: 1.4rem;
+    color: #fff;
+    cursor: pointer;
+  }
+}
+
+/* --- Responsive --- */
+@media (max-width: 900px) {
+  .restaurantsPage {
+    flex-direction: column;
+  }
+
+  .filterPanel {
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    padding: 20px;
+    gap: 20px;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .mainContent {
+    padding: 40px 20px;
+  }
+
+  .title {
+    font-size: 48px;
+  }
+
+  .searchBox {
+    width: 85%;
+  }
+}
+/* --- Toggle iOS Style --- */
+.toggleSwitch {
+  position: relative;
+  width: 42px;
+  height: 24px;
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.25);
+  border-radius: 34px;
+  transition: background-color 0.3s;
+}
+
+.slider::before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  top: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+
+.toggleSwitch input:checked + .slider {
+  background-color: #00ee3f;
+  box-shadow: 0 0 3px #00e676;
+}
+
+.toggleSwitch input:checked + .slider::before {
+  transform: translateX(18px);
+}
+
+/* --- Filter option layout --- */
+.filterOption {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* đưa mọi thứ về trái */
+  gap: 15px; /* khoảng cách giữa chữ và toggle */
+  color: #eaeaea;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 20px;
+  user-select: none;
+  transition: color 0.3s;
+
+  &:hover {
+    color: #ffd369;
+  }
+}
