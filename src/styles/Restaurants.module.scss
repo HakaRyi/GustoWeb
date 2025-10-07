@@ -25,54 +25,44 @@
   flex-direction: column;
   gap: 25px;
   z-index: 1;
-
-  /* Xóa border thẳng gây vệt */
   border-right: none;
-
-  /* 💫 Mờ dần thật sự từ trái qua phải */
   background: linear-gradient(
     to right,
     rgba(20, 20, 20, 0.8) 0%,
     rgba(20, 20, 20, 0.4) 60%,
     rgba(20, 20, 20, 0) 100%
   );
-
   backdrop-filter: blur(2px);
 }
 
-.filterOption {
-  margin-top: 40px;
+.filterButton {
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+  padding: 10px 20px;
   font-size: 1rem;
   color: #eaeaea;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid #ccc; /* Viền không sáng khi không nhấn */
+  border-radius: 8px;
   cursor: pointer;
-  transition: color 0.3s ease;
-
-  input[type="radio"] {
-    appearance: none;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: #ccc;
-    border: 1px solid #888;
-    position: relative;
-    cursor: pointer;
-
-    &:checked {
-      background: #00e676;
-      box-shadow: 0 0 5px #00e676;
-    }
-  }
+  transition: all 0.3s ease;
+  text-align: center;
+  margin-left: 60px;
+  margin-top: 20px;
+  width: 70%;
+  box-sizing: border-box;
 
   &:hover {
     color: #ffd369;
+    border-color: #ffd369; /* Viền sáng nhẹ khi hover */
   }
-}
 
-.filterText {
-  user-select: none;
+  &.active {
+    border: 2px solid #ffd369; /* Viền sáng khi nhấn */
+    color: #ffd369;
+    background: rgba(255, 211, 105, 0.2); /* Nền nhẹ khi active */
+  }
 }
 
 /* --- Main Content --- */
@@ -89,13 +79,11 @@
   font-size: 72px;
   font-weight: 800;
   margin-bottom: 40px;
-  
-
-  /* Gradient text */
   background: linear-gradient(90deg, #ffdd00, #ffb700);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
 /* --- Search box --- */
 .searchBox {
   width: 70%;
@@ -104,7 +92,7 @@
 
   input {
     width: 100%;
-    padding: 14px 25px 14px 20px; /* giảm padding-right xuống 45px */
+    padding: 14px 25px 14px 20px;
     border-radius: 12px;
     border: 2px solid #fff;
     border-color: #eaeaea;
@@ -129,7 +117,6 @@
     right: 0px;
     top: 50%;
     transform: translateY(-50%) translateX(70%);
-   
     font-size: 1.4rem;
     color: #fff;
     cursor: pointer;
@@ -163,63 +150,9 @@
   .searchBox {
     width: 85%;
   }
-}
-/* --- Toggle iOS Style --- */
-.toggleSwitch {
-  position: relative;
-  width: 42px;
-  height: 24px;
-  input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-}
 
-.slider {
-  position: absolute;
-  cursor: pointer;
-  inset: 0;
-  background-color: rgba(255, 255, 255, 0.25);
-  border-radius: 34px;
-  transition: background-color 0.3s;
-}
-
-.slider::before {
-  position: absolute;
-  content: "";
-  height: 18px;
-  width: 18px;
-  left: 3px;
-  top: 3px;
-  background-color: white;
-  border-radius: 50%;
-  transition: transform 0.3s;
-}
-
-.toggleSwitch input:checked + .slider {
-  background-color: #00ee3f;
-  box-shadow: 0 0 3px #00e676;
-}
-
-.toggleSwitch input:checked + .slider::before {
-  transform: translateX(18px);
-}
-
-/* --- Filter option layout --- */
-.filterOption {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start; /* đưa mọi thứ về trái */
-  gap: 15px; /* khoảng cách giữa chữ và toggle */
-  color: #eaeaea;
-  font-size: 1rem;
-  cursor: pointer;
-  margin-bottom: 20px;
-  user-select: none;
-  transition: color 0.3s;
-
-  &:hover {
-    color: #ffd369;
+  .filterButton {
+    padding: 8px 15px;
+    font-size: 0.9rem;
   }
 }
