@@ -14,6 +14,7 @@ using Service.Settings;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Service
 {
@@ -152,6 +153,7 @@ namespace Service
         {
             try
             {
+
                 var result = await _repo.GetAccountByUserName(request.UserName);
 
 
@@ -386,6 +388,19 @@ namespace Service
             {
                 _logger.LogError(ex, "Error in SearchAccountWithPaging");
                 return new PaginationResult<List<Account>>();
+            }
+        }
+
+        public async Task<bool> isPhoneExistAsync(string phone)
+        {
+            try
+            {
+                return await _repo.isPhoneExist(phone);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error in isPhoneExistAsync");
+                return false;
             }
         }
     }

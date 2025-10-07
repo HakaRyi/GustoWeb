@@ -22,5 +22,6 @@ namespace Service.DTO.Request
         public string ConfirmPassword { get; set; }
         [Required(ErrorMessage = "Role is Require")]
         public int RoleId { get; set; }
+        public string Phone { get; set; }
     }
 }

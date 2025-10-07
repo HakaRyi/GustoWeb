@@ -142,5 +142,19 @@ namespace GustoSystemProject.Controllers
                 return new PaginationResult<List<Account>>();
             }
         }
+
+        [HttpGet("checkPhone")]
+        public Task<bool> CheckPhoneNumber([FromQuery] string phoneNumber)
+        {
+            try
+            {
+                return _service.isPhoneExistAsync(phoneNumber);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Check phone number error");
+                return Task.FromResult(false);
+            }
+        }
     }
 }

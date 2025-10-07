@@ -124,5 +124,10 @@ namespace Repository
             return result ?? new PaginationResult<List<Account>>();
 
         }
+
+        public async Task<bool> isPhoneExist(string phone)
+        {
+             return await _context.Accounts.AnyAsync(a => a.DinerProfile.Phone == phone || a.RestaurantProfile.Phone == phone);
+        }
     }
 }

@@ -114,6 +114,8 @@ builder.Services.AddScoped<RestaurantMenuRepository>();
 builder.Services.AddScoped<RestaurantProfileRepository>();
 builder.Services.AddScoped<RestaurantTableRepository>();
 
+builder.Services.AddSingleton<SpeedSmsService>();
+
 builder.Services.AddAutoMapper(typeof(AutoMapperConfig).Assembly);
 
 // CORS and Cookie
@@ -124,7 +126,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: CorsPolicyName,
         policy =>
         {
-            policy.WithOrigins("https://localhost:7176") // Swagger UI domain
+            policy.WithOrigins("https://localhost:7176", "http://localhost:3000", "https://localhost:3000") // Swagger UI domain
                   .AllowAnyHeader()
                   .AllowAnyMethod()
                   .AllowCredentials();
