@@ -103,7 +103,7 @@ builder.Services.AddScoped<RestaurantTableService>();
 builder.Services.AddScoped<RestaurantMenuService>();
 builder.Services.AddScoped<FavouriteService>();
 builder.Services.AddScoped<FoodReviewService>();
-
+builder.Services.AddScoped<DinerProfileService>();
 
 builder.Services.AddScoped<AccountRepository>();
 builder.Services.AddScoped<RoleRepository>();
@@ -113,6 +113,7 @@ builder.Services.AddScoped<RestaurantLayoutRepository>();
 builder.Services.AddScoped<RestaurantMenuRepository>();
 builder.Services.AddScoped<RestaurantProfileRepository>();
 builder.Services.AddScoped<RestaurantTableRepository>();
+builder.Services.AddScoped<DinerProfileRepository>();
 
 builder.Services.AddSingleton<SpeedSmsService>();
 
