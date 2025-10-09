@@ -1,0 +1,95 @@
+.terms_container {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: #222;
+  padding: 60px 12%;
+  background-image: url('/assets/BÌA FANPAGE.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  line-height: 1.8;
+  margin-top: 80px;
+  position: relative;
+  min-height: 100vh;
+
+  // 🔹 Thêm overlay tối
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.40); // điều chỉnh độ tối (0.4–0.6 tuỳ ý)
+    z-index: 0;
+  }
+}
+
+.terms_header,
+.terms_content {
+  position: relative;
+  z-index: 1; // 🔹 đảm bảo nội dung hiển thị trên overlay
+}
+
+/* --- Header --- */
+.terms_header {
+  text-align: center;
+  margin-bottom: 40px;
+
+  h1 {
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: #fff9d6; // đổi sang màu sáng hơn để nổi bật
+    margin-bottom: 10px;
+  }
+
+  p {
+    color: #fff9d6;
+    font-size: 0.95rem;
+  }
+}
+
+/* --- Content --- */
+.terms_content {
+  section {
+    margin-bottom: 40px;
+    background: rgba(255, 255, 255, 0.92); // hơi trong suốt để thấy nền
+    padding: 25px 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: translateY(-3px);
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #2c3e50;
+      margin-bottom: 10px;
+    }
+
+    p,
+    ul {
+      font-size: 1rem;
+      color: #333;
+    }
+
+    ul {
+      margin-top: 10px;
+      padding-left: 25px;
+
+      li {
+        list-style: disc;
+        margin-bottom: 8px;
+      }
+    }
+
+    a {
+      color: #e67e22;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

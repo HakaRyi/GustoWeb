@@ -1,0 +1,158 @@
+.restaurantsPage {
+  display: flex;
+  min-height: 100vh;
+  background: url("/assets/backgroundRestaurant.png") center/cover no-repeat;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: #fff;
+  position: relative;
+}
+
+/* --- Lớp phủ nền mờ --- */
+.restaurantsPage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(2px);
+  z-index: 0;
+}
+
+.filterPanel {
+  margin-top: 80px;
+  width: 350px;
+  padding: 80px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  z-index: 1;
+  border-right: none;
+  background: linear-gradient(
+    to right,
+    rgba(20, 20, 20, 0.8) 0%,
+    rgba(20, 20, 20, 0.4) 60%,
+    rgba(20, 20, 20, 0) 100%
+  );
+  backdrop-filter: blur(2px);
+}
+
+.filterButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: #eaeaea;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid #ccc; /* Viền không sáng khi không nhấn */
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  margin-left: 60px;
+  margin-top: 20px;
+  width: 70%;
+  box-sizing: border-box;
+
+  &:hover {
+    color: #ffd369;
+    border-color: #ffd369; /* Viền sáng nhẹ khi hover */
+  }
+
+  &.active {
+    border: 2px solid #ffd369; /* Viền sáng khi nhấn */
+    color: #ffd369;
+    background: rgba(255, 211, 105, 0.2); /* Nền nhẹ khi active */
+  }
+}
+
+/* --- Main Content --- */
+.mainContent {
+  margin-top: 50px;
+  flex: 1;
+  position: relative;
+  z-index: 1;
+  padding: 60px 100px;
+  text-align: center;
+}
+
+.title {
+  font-size: 72px;
+  font-weight: 800;
+  margin-bottom: 40px;
+  background: linear-gradient(90deg, #ffdd00, #ffb700);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* --- Search box --- */
+.searchBox {
+  width: 70%;
+  margin: 0 auto 60px;
+  position: relative;
+
+  input {
+    width: 100%;
+    padding: 14px 25px 14px 20px;
+    border-radius: 12px;
+    border: 2px solid #fff;
+    border-color: #eaeaea;
+    outline: none;
+    font-size: 1rem;
+    background: rgba(0, 0, 0, 0);
+    color: #fff;
+    backdrop-filter: blur(6px);
+    transition: 0.3s;
+
+    &::placeholder {
+      color: #ddd;
+    }
+
+    &:focus {
+      background: rgba(0, 0, 0, 0);
+    }
+  }
+
+  .searchIcon {
+    position: absolute;
+    right: 0px;
+    top: 50%;
+    transform: translateY(-50%) translateX(70%);
+    font-size: 1.4rem;
+    color: #fff;
+    cursor: pointer;
+  }
+}
+
+/* --- Responsive --- */
+@media (max-width: 900px) {
+  .restaurantsPage {
+    flex-direction: column;
+  }
+
+  .filterPanel {
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    padding: 20px;
+    gap: 20px;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .mainContent {
+    padding: 40px 20px;
+  }
+
+  .title {
+    font-size: 48px;
+  }
+
+  .searchBox {
+    width: 85%;
+  }
+
+  .filterButton {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+  }
+}
