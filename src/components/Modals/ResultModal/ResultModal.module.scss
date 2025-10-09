@@ -1,0 +1,69 @@
+/* ResultModal.module.scss */
+.backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 5, 8, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1300;
+}
+
+.modal {
+    width: 420px;
+    padding: 20px;
+    border-radius: 14px;
+    background: linear-gradient(180deg, #fffaf3, #fff4ea);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.28);
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.iconWrap {
+    width: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon {
+    width: 86px;
+    height: 86px;
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.1));
+}
+
+.content {
+    flex: 1;
+}
+
+.title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #4a2a12;
+    margin-bottom: 6px;
+}
+
+.message {
+    font-size: 14px;
+    color: #5a3b2a;
+    opacity: 0.95;
+    margin-bottom: 12px;
+}
+
+.actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.closeBtn {
+    background: linear-gradient(180deg, #ffb74d, #ff8a65);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    box-shadow: 0 6px 12px rgba(255, 140, 80, 0.2);
+}

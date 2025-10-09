@@ -1,14 +1,18 @@
 import { Formik, Form, Field , ErrorMessage} from 'formik'
-import React from 'react'
+import React, { useState } from 'react'
 import className from 'classnames/bind'
 import styles from './loginform.module.scss'
 import * as Yup from 'yup'
 import { useNavigate } from 'react-router-dom'
 import routes from '~/config/route'
+import LoadingModal from '~/components/Modals/LoadingModal'
+import ResultModal from '~/components/Modals/ResultModal'
 
 const cx = className.bind(styles)
 
 function LoginForm() {
+  const [loadingVisible, setLoadingVisible] = useState(false);
+  const [result, setResult] = useState({ visible: false, success: false, message: "" });
   const navigate = useNavigate();
 
   const initialValues = {
@@ -22,6 +26,7 @@ function LoginForm() {
 
   const handleSubmit = async (values) => {
     try{
+        setLoadingVisible(true);
         const loginData ={
           userName: values.userName,
           password: values.password
@@ -35,11 +40,15 @@ function LoginForm() {
       });
 
         if(loginResponse.ok){
+          setLoadingVisible(false)
           navigate(routes.home);
+        }else{
+          setLoadingVisible(false)
+          setResult({ visible: true, success: false, message: "Sai tài khoản hoặc mật khẩu" });
         }
     }catch(loginError){
-      console.error("Login failed:", loginError);
-      navigate(routes.login);
+      setLoadingVisible(false)
+      setResult({ visible: true, success: false, message: loginError });
     }
   }
   return (
@@ -61,6 +70,13 @@ function LoginForm() {
         <button type='submit'>Login</button>
       </Form>
       </Formik>
+      <LoadingModal visible={loadingVisible} message="Đồ ăn đang đươc chuẩn bị..." />
+      <ResultModal
+        visible={result.visible}
+        success={result.success}
+        message={result.message}
+        onClose={() => setResult((s) => ({ ...s, visible: false }))}
+      />
     </div>
   )
 }

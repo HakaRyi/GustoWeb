@@ -36,10 +36,12 @@
         font-size: 15px;
         background: #fff;
         transition: all 0.25s ease;
+        color: #000;
 
         &:focus {
-            border-color: #007cf0;
+            border-color: #8db0d0;
             box-shadow: 0 0 6px rgba(0, 124, 240, 0.4);
+            background: rgba(182, 171, 171, 0.636);
         }
 
         &::placeholder {

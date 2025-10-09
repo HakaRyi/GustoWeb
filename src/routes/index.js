@@ -7,12 +7,15 @@ import MainLayout from '~/layouts/MainLayout';
 import Home from '~/pages/Home';
 import About from '~/pages/About';
 import routes from '~/config/route';
+import ProfileLayout from '~/layouts/ProfileLayout';
+import ProfilePage from '~/pages/ProfilePage';
 import TermsPage from '~/pages/TermsAndLegal';
 import Restaurants from '~/pages/Restaurants';
 import Contact from '~/pages/Contact';
 
+
 const publicRoutes = [
-    {path: routes.home, component: MainLayout, 
+    {path: routes.home, component: MainLayout,
         children:[{
         index: true, component: Home
     },{ path: routes.about, component: About },
@@ -22,6 +25,13 @@ const publicRoutes = [
 },
     {path: routes.login, component: loginPage},
     {path: routes.register, component: RegisterPage},
+    {path: routes.profile, component: ProfileLayout,
+        children: [{
+            index: true,
+            path: '@:username',
+            component: ProfilePage
+        }]
+    }
 ];
 
 const privateRoutes = [];
