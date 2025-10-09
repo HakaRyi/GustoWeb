@@ -24,8 +24,10 @@ namespace GustoSystemProject.Controllers
             return Ok(result);
         }
 
+        
+
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(short id)
+        public async Task<IActionResult> GetByIdAsync(short id)
         {
             var result = await _service.GetByIdAsync(id);
             if (result == null) return NotFound(new { message = "Không tìm thấy hồ sơ" });
@@ -43,8 +45,7 @@ namespace GustoSystemProject.Controllers
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] DinerProfileRequest request)
         {
-            var id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value
-                  ?? User.FindFirst("AccountID")?.Value;
+            var id = User.FindFirst("AccountID")?.Value;
 
             if (id == null)
                 return Unauthorized(new { message = "Không tìm thấy thông tin người dùng trong token" });
@@ -56,8 +57,7 @@ namespace GustoSystemProject.Controllers
         [HttpPut("uploadAvt")]
         public async Task<IActionResult> UpdateAvt([FromBody] string avtUrl)
         {
-            var id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value
-                  ?? User.FindFirst("AccountID")?.Value;
+            var id = User.FindFirst("AccountID")?.Value;
 
             if (id == null)
                 return Unauthorized(new { message = "Không tìm thấy thông tin người dùng trong token" });

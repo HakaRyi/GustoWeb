@@ -17,12 +17,16 @@ namespace GustoSystemProject.Controllers
     public class AccountController : ControllerBase
     {
         private readonly AccountService _service;
+        private readonly DinerProfileService _dinerProfileService;
+        private readonly RestaurantProfileService _restaurantProfileService;
         private readonly ILogger<AccountController> _logger;
 
-        public AccountController(AccountService service, ILogger<AccountController> logger)
+        public AccountController(AccountService service, ILogger<AccountController> logger, DinerProfileService dinerProfileService, RestaurantProfileService restaurantProfileService)
         {
             _service = service;
             _logger = logger;
+            _dinerProfileService = dinerProfileService;
+            _restaurantProfileService = restaurantProfileService;
         }
         //CRUD Operations:
         // GET: api/<AccountController>
@@ -154,6 +158,62 @@ namespace GustoSystemProject.Controllers
             {
                 _logger.LogError(ex, "Check phone number error");
                 return Task.FromResult(false);
+            }
+        }
+
+        [HttpGet("profile/{id}")]
+        public async Task<IActionResult> GetProfileByIdAsync(short id)
+        {
+            var account = await _service.GetAccountByIdAsync(id);
+            if(account == null)
+            {
+                return NotFound(new {message = "Tài khoản không tồn tại"});
+            }
+            var role = account.RoleId;
+            if(role == 1)//Diner
+            {
+                var result = await _dinerProfileService.GetByIdAsync(id);
+                return Ok(result);
+            }
+            else if (role == 2) //Restaurant
+            {
+                var result = await _restaurantProfileService.GetByIdAsync(id);
+                return Ok(result);
+            }
+            else
+            {
+                return NotFound(new { message = "Không tìm thấy hồ sơ" });
+            }
+                
+        }
+
+        [HttpGet("get-me")]
+        public async Task<IActionResult> GetMe()
+        {
+            var id = short.Parse(User.FindFirst("AccountID")?.Value);
+
+            if (id == null)
+                return Unauthorized(new { message = "Không tìm thấy thông tin người dùng trong token" });
+
+            var account = await _service.GetAccountByIdAsync(id);
+            if (account == null)
+            {
+                return NotFound(new { message = "Tài khoản không tồn tại" });
+            }
+            var role = account.RoleId;
+            if (role == 1)//Diner
+            {
+                var result = await _dinerProfileService.GetByIdAsync(id);
+                return Ok(result);
+            }
+            else if (role == 2) //Restaurant
+            {
+                var result = await _restaurantProfileService.GetByIdAsync(id);
+                return Ok(result);
+            }
+            else
+            {
+                return NotFound(new { message = "Không tìm thấy hồ sơ" });
             }
         }
     }
