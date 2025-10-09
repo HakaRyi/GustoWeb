@@ -23,13 +23,14 @@ namespace Service
         private readonly AccountRepository _repo;
         private readonly RefreshTokenRepository _refreshTokenRepository;
         private readonly RoleRepository _roleRepository;
+        private readonly DinerProfileRepository _dinerProfileRepository;
 
         private readonly IMapper _mapper;
         private readonly ILogger<AccountService> _logger;
         private readonly JwtSettings _jwtSettings;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AccountService(AccountRepository repo, IMapper mapper, ILogger<AccountService> logger, JwtSettings jwtSettings, IHttpContextAccessor httpContextAccessor, RefreshTokenRepository refreshTokenRepository, RoleRepository roleRepository)
+        public AccountService(AccountRepository repo, IMapper mapper, ILogger<AccountService> logger, JwtSettings jwtSettings, IHttpContextAccessor httpContextAccessor, RefreshTokenRepository refreshTokenRepository, RoleRepository roleRepository, DinerProfileRepository dinerProfileRepository)
         {
             _repo = repo;
             _mapper = mapper;
@@ -38,6 +39,7 @@ namespace Service
             _httpContextAccessor = httpContextAccessor;
             _refreshTokenRepository = refreshTokenRepository;
             _roleRepository = roleRepository;
+            _dinerProfileRepository = dinerProfileRepository;
         }
         //CRUD Operations:
         //Create Account
@@ -64,6 +66,12 @@ namespace Service
                 await _repo.CreateAccount(account);
                 //Result:
                 var res = _mapper.Map<AccountResponse>(account);
+
+                //Profile for account
+                DinerProfile dinerProfile = new DinerProfile();
+                dinerProfile.AccountId = account.Id;
+                dinerProfile.Phone = request.Phone;
+                await _dinerProfileRepository.AddAsync(dinerProfile);
                 return res;
             }
             catch (Exception ex)

@@ -35,7 +35,6 @@ namespace Service
         {
             var entity = new DinerProfile
             {
-                AccountId = request.AccountId,
                 AvatarUrl = request.AvatarUrl,
                 FullName = request.FullName,
                 Phone = request.Phone,
@@ -72,6 +71,15 @@ namespace Service
             entity.TiktokUrl = request.TiktokUrl;
             entity.RewardPoints = request.RewardPoints;
 
+            await _repository.UpdateAsync(entity);
+            return true;
+        }
+
+        public async Task<bool> UpdateAvtAsync(string avt, short id)
+        {
+            var entity = await _repository.GetByIdAsync(id);
+            if (entity == null) return false;
+            entity.AvatarUrl = avt;
             await _repository.UpdateAsync(entity);
             return true;
         }
