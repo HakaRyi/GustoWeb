@@ -1,13 +1,63 @@
-import React from 'react';
+// src/components/GlobalStyle/Header.js
+import React, { useEffect } from 'react';
 import styles from '../../styles/Header.module.scss';
 import routes from '~/config/route';
 import { Nav, Badge } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { FaHome, FaInfoCircle, FaAddressBook, FaPaperPlane, FaShoppingCart, FaSignInAlt } from 'react-icons/fa';
+import { useSelector, useDispatch } from 'react-redux';
+import { logoutSuccess, setUser } from '~/redux/authSlice';
 
 const logo = process.env.PUBLIC_URL + '/LOGOGUSTO.png';
 
-function Header({ token, cartCount = 0 }) {
+function Header({ cartCount = 0 }) {
+  const dispatch = useDispatch();
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
+
+  // ✅ Khi app load, tự check user từ cookie
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await fetch("https://localhost:7176/api/Account/get-me", {
+          credentials: "include",
+        });
+        if (res.ok) {
+        const userData = await res.json();
+        console.log("Auto login từ cookie:", userData);
+        dispatch(setUser(userData));
+      } else if (res.status === 401) {
+        console.log("Chưa đăng nhập (401)");
+        dispatch(logoutSuccess());
+      } else if (res.status === 403) {
+        console.log("Không có quyền truy cập (403)");
+        dispatch(logoutSuccess());
+      } else {
+        console.warn("Lỗi khi gọi /get-me:", res.status);
+        dispatch(logoutSuccess());
+      }
+      } catch (err) {
+        console.error("Không thể kết nối tới backend:", err.message);
+      dispatch(logoutSuccess());
+      }
+    };
+    fetchUser();
+  }, [dispatch]);
+
+  const handleLogout = async () => {
+    console.log("Đang logout...");
+    try {
+      console.log("đã logout với user",  user?.account.userName);
+      await fetch("https://localhost:7176/api/Account/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+    } catch (e) {
+      console.warn("Logout backend lỗi:", e);
+    } finally {
+      dispatch(logoutSuccess());
+    }
+  };
+
   return (
     <header className={styles.headerContainer}>
       <div className={styles.headerInner}>
@@ -28,22 +78,20 @@ function Header({ token, cartCount = 0 }) {
             <FaPaperPlane className={styles.navIcon} /> Liên hệ
           </Link>
 
-          {!token ? (
+          {!isAuthenticated ? (
             <Link to={routes.login} className={`${styles.navLink} ${styles.loginBtn}`}>
-              <FaSignInAlt className={styles.navIcon} /> Đăng nhập
+              <FaSignInAlt /> Đăng nhập
             </Link>
           ) : (
             <>
               <Link to="/profile" className={styles.navLink}>
-                <FaAddressBook className={styles.navIcon} /> Hồ sơ
+                <FaAddressBook /> Hồ sơ 
               </Link>
               <Link to="/myCart" className={styles.navLink}>
-                <FaShoppingCart className={styles.navIcon} />
-                Món đã đặt
-                {cartCount > 0 && (
-                  <Badge className={styles.cartBadge}>{cartCount}</Badge>
-                )}
+                <FaShoppingCart /> Món đã đặt
+                {cartCount > 0 && <Badge className={styles.cartBadge}>{cartCount}</Badge>}
               </Link>
+              <button onClick={handleLogout} className={styles.navLink}>Đăng xuất</button>
             </>
           )}
         </Nav>

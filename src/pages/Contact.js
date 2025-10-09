@@ -42,7 +42,7 @@ const Contact = () => {
             <h2>Thông Tin Liên Hệ</h2>
             <ul>
               <li><strong>Địa chỉ:</strong> FPT University, TP. Hồ Chí Minh</li>
-              <li><strong>Email:</strong> gusto.cpn@gmail.com</li>
+              <li><strong>Email:</strong> gusto.cpn@gmail.comgusto.cpn@gmail.com</li>
               <li><strong>Hotline:</strong> 035 773 2955</li>
               <li><strong>Giờ làm việc:</strong> 8:00 - 18:00 (Thứ 2 - Thứ 7)</li>
             </ul>

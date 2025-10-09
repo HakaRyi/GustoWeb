@@ -17,6 +17,7 @@ function App() {
   return (
    <Router>
      <div className="App">
+      
             <Routes>
                 {publicRoutes.map((route, index) => {
                     let Layout = Fragment;// ở đây mình set default layout nè, tức là layout có sẵn Header và Footer

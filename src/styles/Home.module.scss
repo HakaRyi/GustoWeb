@@ -56,6 +56,7 @@
 
 .heroBtn {
   margin-top: 30px;
+  background-color: #f8f8f0;
   font-size: 18px;
   font-weight: bold;
   padding: 12px 30px;
@@ -64,7 +65,8 @@
 
   &:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 15px #f5de87;
+    background-color: #f5de87;
+    box-shadow: 0 0 5px #f5de87;
   }
 }
 
@@ -106,6 +108,9 @@
     width: 90px;
     height: 90px;
     margin-bottom: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
@@ -129,6 +134,7 @@
   font-weight: bold;
   font-size: 18px;
   transition: 0.3s ease;
+  background-color: #ffffff;
 
   &:hover {
     background-color: #f5de87;

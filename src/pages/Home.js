@@ -52,7 +52,7 @@ function Home() {
       >
         <div className={styles.heroContent}>
           <h1>GUSTO</h1>
-          <p>Đặt món trước – Trải nghiệm ẩm thực không chờ đợi 🍽️</p>
+          <p>Đặt món trước – Trải nghiệm ẩm thực không chờ đợi</p>
           <Link to="/restaurants">
             <Button variant="warning" className={styles.heroBtn}>
               Khám phá ngay
