@@ -32,6 +32,7 @@ namespace Repository
         public async Task<RestaurantProfile> GetByIdAsync(int id)
         {
             return await context.RestaurantProfiles
+                .Include(r=>r.Account)
                 .Include(r => r.RestaurantLayouts)
                 .Include(r => r.RestaurantMenus)
                 .Include(r => r.RestaurantTables)
