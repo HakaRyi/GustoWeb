@@ -1,15 +1,19 @@
 import { Formik, Form, Field , ErrorMessage} from 'formik'
-import React from 'react'
+import React, { useState } from 'react'
 import className from 'classnames/bind'
 import styles from './RegisterForm.module.scss'
 import * as Yup from 'yup'
 import { useNavigate } from 'react-router-dom'
 import routes from '~/config/route'
+import LoadingModal from '~/components/Modals/LoadingModal'
+import ResultModal from '~/components/Modals/ResultModal'
 
 const cx = className.bind(styles)
 
 function RegisterForm() {
   const navigate = useNavigate();
+    const [loadingVisible, setLoadingVisible] = useState(false);
+  const [result, setResult] = useState({ visible: false, success: false, message: "" });
 
     const initialValues = {
       userName: '',
@@ -21,6 +25,7 @@ function RegisterForm() {
 
     const handleSubmit = async (values) => {
       try{
+        setLoadingVisible(true)
         const response = await fetch("https://localhost:7176/api/Account/signUp", {
           method: "POST",
           headers: {
@@ -46,15 +51,17 @@ function RegisterForm() {
             });
 
               if(loginResponse.ok){
+                setLoadingVisible(false)
                 navigate(routes.home);
               }
           }catch(loginError){
-            console.error("Login failed:", loginError);
+            setResult({ visible: true, success: false, message: loginError });
             navigate(routes.login);
           }
         }
       }catch(error){
-        alert("Đăng ký thất bại!");
+        setLoadingVisible(false)
+        setResult({ visible: true, success: false, message: "Đăng ký không thành công" });
       }
     }
 
@@ -94,6 +101,13 @@ function RegisterForm() {
             </Form>
             </Formik>
           </div>
+      <LoadingModal visible={loadingVisible} message="Đồ ăn đang đươc chuẩn bị..." />
+      <ResultModal
+        visible={result.visible}
+        success={result.success}
+        message={result.message}
+        onClose={() => setResult((s) => ({ ...s, visible: false }))}
+      />
     </div>
   )
 }

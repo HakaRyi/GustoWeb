@@ -1,3 +1,60 @@
 .wrapper{
-    
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    font-family: "Poppins", sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* 3. Xóa style mặc định của các thẻ HTML phổ biến */
+ul,
+ol {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+    background: none;
+    border: none;
+    outline: none;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+/* 4. Đảm bảo container bao toàn màn hình */
+#root,
+#__next {
+    isolation: isolate;
+    min-height: 100%;
+}
+
+/* 5. Tùy chọn: Ẩn thanh cuộn ngang (nếu bị tràn ngang nhẹ) */
+body {
+    overflow-x: hidden;
 }

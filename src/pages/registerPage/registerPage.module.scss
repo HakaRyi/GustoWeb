@@ -1,5 +1,5 @@
 .wrapper {
-    height: 89vh;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -14,7 +14,7 @@
     display: flex;
     width: 90%;
     max-width: 1100px;
-    height: 80vh;
+    height: 95vh;
     border-radius: 20px;
     overflow: hidden;
     background: #fff;
@@ -124,7 +124,7 @@
 
 .register-btn {
     position: absolute;
-    top: 72px;
+    top: 6%;
     right: 230px;
     background: linear-gradient(90deg, #00dfd8, #007cf0);
     color: #000;

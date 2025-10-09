@@ -23,12 +23,12 @@ function LoginPage() {
           <div className={cx("content")}>
             <LoginForm />
             <div className={cx("links")}>
-              <p><a href="#" className={cx("forgot")}>Forgot Password</a></p>
+              <div><a href="#" className={cx("forgot")}>Forgot Password</a></div>
               <div className={cx("google")}>
-              <p>
+              <div>
                 This is your first time?{" "}
                 <div onClick={() => nav(routes.register)} className={cx("register")}>Register</div>
-              </p>
+              </div>
                 Or continue with <span className={cx("google-icon")}>G</span>
               </div>
             </div>
