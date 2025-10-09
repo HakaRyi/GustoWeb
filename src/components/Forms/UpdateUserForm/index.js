@@ -3,20 +3,17 @@ import style from './UpdateUserForm.module.scss'
 import { Formik, Form, Field , ErrorMessage} from 'formik'
 import * as Yup from 'yup'
 
-import React from 'react'
+import React, { useState } from 'react'
+import { customFetch } from '~/config/customFetch'
+import LoadingModal from '~/components/Modals/LoadingModal'
+import ResultModal from '~/components/Modals/ResultModal'
 
 const cx = classNames.bind(style)
 
-function UpdateUserForm() {
-    const initialValues = {
-        phone: '0357732955',
-        age: 28,
-        address: 'Binh Thanh, Ho Chi Minh',
-        gender: 'Female',
-        email: 'gusto.cpn@gmail.com',
-        job: 'Software Engineering',
-        description: 'Hi my name is Haiju Moon from Gusto'
-    }
+function UpdateUserForm({initialValues, onProfileReload  }) {
+    const [loadingVisible, setLoadingVisible] = useState(false);
+    const [result, setResult] = useState({ visible: false, success: false, message: "" });
+    if (!initialValues) return null;
 
     const validationSchema = Yup.object({
         phone: Yup.string()
@@ -48,12 +45,48 @@ function UpdateUserForm() {
             .required("Mô tả là bắt buộc")
             .min(10, "Mô tả quá ngắn"),
         });
+
+    const handleSubmit = async (values) => {
+    try {
+      setLoadingVisible(true);
+
+      const res = await customFetch("https://localhost:7176/api/DinerProfile/update", {
+        method: "POST",
+        headers: {
+          "Accept": "*/*",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (!res.ok) throw new Error("Cập nhật thất bại");
+
+      // Reload lại profile từ server
+      if (onProfileReload) await onProfileReload();
+
+      setResult({
+        visible: true,
+        success: true,
+        message: "Cập nhật profile thành công 🍱",
+      });
+    } catch (ex) {
+      console.error(ex);
+      setResult({
+        visible: true,
+        success: false,
+        message: "Cập nhật profile thất bại 😢",
+      });
+    } finally {
+      setLoadingVisible(false);
+    }
+  };
   return (
     <div className={cx('wrapper')}>
         <div className={cx('form-wrapper')}>
             <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
+            enableReinitialize
             // onSubmit={handleSubmit}
             >
             <Form className={cx("form")}>
@@ -121,8 +154,15 @@ function UpdateUserForm() {
             </Form>
             </Formik>
         </div>
+        <LoadingModal visible={loadingVisible} message="Đang cập nhật dữ liệu..." />
+        <ResultModal
+        visible={result.visible}
+        success={result.success}
+        message={result.message}
+        onClose={() => setResult((s) => ({ ...s, visible: false }))}
+        />
         </div>
-        )
-        }
+    )
+}
 
 export default UpdateUserForm
