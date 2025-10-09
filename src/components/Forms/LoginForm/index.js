@@ -34,8 +34,10 @@ function LoginForm() {
         const loginResponse = await fetch("https://localhost:7176/api/Account/signIn",{
         method: "POST",
         headers: {
+          "Accept": "*/*",
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify(loginData),
       });
 

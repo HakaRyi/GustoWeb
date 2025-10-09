@@ -27,7 +27,10 @@ function ProfilePage() {
     const fetchProfile = async () => {
       try {
         setLoadingVisible(true);
-        const response = await customFetch("https://localhost:7176/api/DinerProfile");
+        const response = await customFetch("https://localhost:7176/api/Account/get-me",{
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        });
         if (!response.ok) setResult({ visible: true, success: false, message: "Lấy dữ liệu không thành công" });
         const data = await response.json();
         setProfileData(data);
@@ -65,7 +68,7 @@ function ProfilePage() {
             const imageUrl = await ImageUploader(selectedFile);
             const response = await customFetch("https://localhost:7176/api/User/update-avatar", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { "Accept": "*/*","Content-Type": "application/json" },
             body: JSON.stringify({ imageUrl }),
           });
             if (response.ok) {
