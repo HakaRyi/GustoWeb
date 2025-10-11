@@ -13,7 +13,7 @@ import { publicRoutes } from '~/routes';
 import { useState, useEffect } from 'react';
 function App() {
     const [token, setToken] = useState(localStorage.getItem('token') || null);
-     const [isAdmin, setIsAdmin] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
   return (
    <Router>
      <div className="App">

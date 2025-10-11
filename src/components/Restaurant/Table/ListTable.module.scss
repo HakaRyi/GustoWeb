@@ -1,0 +1,11 @@
+.listTableContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.loading {
+  text-align: center;
+  font-size: 18px;
+  color: #424921;
+}

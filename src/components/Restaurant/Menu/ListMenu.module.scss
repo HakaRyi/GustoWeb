@@ -1,0 +1,33 @@
+.listMenuContainer {
+  width: 100%;
+  max-width: 1000px;
+  padding: 20px;
+  align-self: flex-start; // Sát trái
+  margin-left: 0; // Đảm bảo không lệch phải
+
+  .loading {
+    font-size: 1.2rem;
+    color: #424921;
+    text-align: left; // Sát trái
+    padding: 30px;
+  }
+
+  p {
+    color: #424921;
+    font-size: 1rem;
+    text-align: left; // Sát trái
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .listMenuContainer {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .listMenuContainer {
+    padding: 10px;
+  }
+}

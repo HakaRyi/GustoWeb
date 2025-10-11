@@ -1,0 +1,95 @@
+.modalTableOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalTableContent {
+  background-color: #fffdf6;
+  padding: 20px;
+  border-radius: 8px;
+  width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #6a7636 transparent;
+}
+
+.modalTableContent::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modalTableContent::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modalTableContent::-webkit-scrollbar-thumb {
+  background-color: #6a7636;
+  border-radius: 3px;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #424921;
+  font-size: 18px;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.formGroup {
+  margin-bottom: 15px;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 5px;
+  color: #424921;
+}
+
+.formInput {
+  width: 100%;
+  padding: 8px;
+  color: #424921;
+  font-weight: 300;
+  border: 1px solid #424921;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.checkbox {
+  margin-left: 10px;
+}
+
+.fullWidth {
+  grid-column: span 2;
+}
+
+.submitBtn {
+  background-color: #424921;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submitBtn:hover {
+  background-color: #6a7636;
+}

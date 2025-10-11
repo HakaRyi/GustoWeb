@@ -1,9 +1,8 @@
-// src/components/GlobalStyle/Header.js
 import React, { useEffect } from 'react';
 import styles from '../../styles/Header.module.scss';
 import routes from '~/config/route';
 import { Nav, Badge } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link ,useNavigate} from 'react-router-dom';
 import { FaHome, FaInfoCircle, FaAddressBook, FaPaperPlane, FaShoppingCart, FaSignInAlt } from 'react-icons/fa';
 import { useSelector, useDispatch } from 'react-redux';
 import { logoutSuccess, setUser } from '~/redux/authSlice';
@@ -12,6 +11,7 @@ const logo = process.env.PUBLIC_URL + '/LOGOGUSTO.png';
 
 function Header({ cartCount = 0 }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { isAuthenticated, user } = useSelector((state) => state.auth);
 
   // ✅ Khi app load, tự check user từ cookie
@@ -22,22 +22,23 @@ function Header({ cartCount = 0 }) {
           credentials: "include",
         });
         if (res.ok) {
-        const userData = await res.json();
-        console.log("Auto login từ cookie:", userData);
-        dispatch(setUser(userData));
-      } else if (res.status === 401) {
-        console.log("Chưa đăng nhập (401)");
-        dispatch(logoutSuccess());
-      } else if (res.status === 403) {
-        console.log("Không có quyền truy cập (403)");
-        dispatch(logoutSuccess());
-      } else {
-        console.warn("Lỗi khi gọi /get-me:", res.status);
-        dispatch(logoutSuccess());
-      }
+          const userData = await res.json();
+          console.log("Auto login từ cookie:", userData);
+          console.log("user có role là:", user?.account?.roleId);
+          dispatch(setUser(userData));
+        } else if (res.status === 401) {
+          console.log("Chưa đăng nhập (401)");
+          dispatch(logoutSuccess());
+        } else if (res.status === 403) {
+          console.log("Không có quyền truy cập (403)");
+          dispatch(logoutSuccess());
+        } else {
+          console.warn("Lỗi khi gọi /get-me:", res.status);
+          dispatch(logoutSuccess());
+        }
       } catch (err) {
         console.error("Không thể kết nối tới backend:", err.message);
-      dispatch(logoutSuccess());
+        dispatch(logoutSuccess());
       }
     };
     fetchUser();
@@ -46,7 +47,7 @@ function Header({ cartCount = 0 }) {
   const handleLogout = async () => {
     console.log("Đang logout...");
     try {
-      console.log("đã logout với user",  user?.account.userName);
+      console.log("Đã logout với user", user?.account?.userName);
       await fetch("https://localhost:7176/api/Account/logout", {
         method: "POST",
         credentials: "include",
@@ -55,8 +56,12 @@ function Header({ cartCount = 0 }) {
       console.warn("Logout backend lỗi:", e);
     } finally {
       dispatch(logoutSuccess());
+      navigate("/login");
     }
   };
+
+  // Xác định route cho "Hồ sơ" dựa trên role
+  const profileRoute = user?.account?.roleId === 2 ? routes.resProfile : routes.profile;
 
   return (
     <header className={styles.headerContainer}>
@@ -84,8 +89,8 @@ function Header({ cartCount = 0 }) {
             </Link>
           ) : (
             <>
-              <Link to="/profile" className={styles.navLink}>
-                <FaAddressBook /> Hồ sơ 
+              <Link to={profileRoute} className={styles.navLink}>
+                <FaAddressBook /> Hồ sơ
               </Link>
               <Link to="/myCart" className={styles.navLink}>
                 <FaShoppingCart /> Món đã đặt

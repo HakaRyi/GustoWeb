@@ -128,6 +128,7 @@ function ProfilePage() {
         onClose={() => setResult((s) => ({ ...s, visible: false }))}
       />
     </div>
+    
   )
 }
 
