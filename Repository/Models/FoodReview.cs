@@ -23,7 +23,11 @@ public partial class FoodReview
 
     public bool? IsAnonymous { get; set; }
 
+    public short? OrderId { get; set; }
+
     public virtual DinerProfile Diner { get; set; }
 
     public virtual RestaurantMenu Food { get; set; }
+
+    public virtual Order Order { get; set; }
 }

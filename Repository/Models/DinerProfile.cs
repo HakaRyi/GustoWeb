@@ -40,6 +40,4 @@ public partial class DinerProfile
     public virtual ICollection<Favourite> Favourites { get; set; } = new List<Favourite>();
 
     public virtual ICollection<FoodReview> FoodReviews { get; set; } = new List<FoodReview>();
-
-    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 }

@@ -9,13 +9,13 @@ public partial class Order
 {
     public short OrderId { get; set; }
 
-    public short DinerId { get; set; }
-
-    public short RestaurantId { get; set; }
-
     public short? PromotionId { get; set; }
 
     public DateTime Date { get; set; }
+
+    public DateTime? PickTime { get; set; }
+
+    public int? NumOfPeople { get; set; }
 
     public decimal? TotalPrice { get; set; }
 
@@ -23,17 +23,21 @@ public partial class Order
 
     public decimal? FinalPrice { get; set; }
 
+    public string Note { get; set; }
+
     public string Status { get; set; }
 
     public short? TableId { get; set; }
 
-    public virtual DinerProfile Diner { get; set; }
+    public int? BookingId { get; set; }
+
+    public virtual Booking Booking { get; set; }
+
+    public virtual ICollection<FoodReview> FoodReviews { get; set; } = new List<FoodReview>();
 
     public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
 
     public virtual Promotion Promotion { get; set; }
-
-    public virtual RestaurantProfile Restaurant { get; set; }
 
     public virtual RestaurantTable Table { get; set; }
 }

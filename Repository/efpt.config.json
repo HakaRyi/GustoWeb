@@ -4,7 +4,7 @@
    "ContextNamespace": null,
    "FilterSchemas": false,
    "IncludeConnectionString": true,
-   "MinimumProductVersion": "2.6.1130",
+   "MinimumProductVersion": "2.6.1166",
    "ModelNamespace": null,
    "OutputContextPath": null,
    "OutputPath": "Models",
@@ -40,11 +40,19 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[Optional]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Order]",
          "ObjectType": 0
       },
       {
          "Name": "[dbo].[Order_Detail]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PaymentMerchant]",
          "ObjectType": 0
       },
       {
@@ -73,6 +81,14 @@
       },
       {
          "Name": "[dbo].[Role]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Taste]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Transaction]",
          "ObjectType": 0
       }
    ],

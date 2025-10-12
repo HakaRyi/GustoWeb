@@ -37,5 +37,9 @@ public partial class RestaurantMenu
 
     public virtual ICollection<FoodReview> FoodReviews { get; set; } = new List<FoodReview>();
 
+    public virtual ICollection<Optional> Optionals { get; set; } = new List<Optional>();
+
     public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
+
+    public virtual ICollection<Taste> Tastes { get; set; } = new List<Taste>();
 }

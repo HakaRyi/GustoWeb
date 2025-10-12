@@ -20,7 +20,8 @@ namespace Service.DTO.Response
 
         public string Email { get; set; }
 
-        public string OpenHour { get; set; }
+        public TimeOnly? OpenAt { get; set; }
+        public TimeOnly? CloseAt { get; set; }
 
         public string? Description { get; set; }
 
