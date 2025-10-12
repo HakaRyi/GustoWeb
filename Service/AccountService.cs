@@ -68,9 +68,15 @@ namespace Service
                 var res = _mapper.Map<AccountResponse>(account);
 
                 //Profile for account
+                Random random = new Random();
+                int randomNumber = random.Next(1000, 10000); // Tạo số từ 1000 đến 9999
+                string fullName = "Khách " + randomNumber;
+
                 DinerProfile dinerProfile = new DinerProfile();
                 dinerProfile.AccountId = account.Id;
                 dinerProfile.Phone = request.Phone;
+                dinerProfile.FullName = fullName;
+                
                 await _dinerProfileRepository.AddAsync(dinerProfile);
                 return res;
             }

@@ -16,10 +16,21 @@ namespace GustoSystemProject.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] FoodReviewRequest request)
+        public async Task<IActionResult> Add([FromBody] FeedbackRequest request)
         {
-            var result = await _service.AddAsync(request);
-            return CreatedAtAction(nameof(GetByFoodId), new { foodId = result.FoodId }, result);
+            if (request == null || request.Feedbacks == null || !request.Feedbacks.Any())
+                return BadRequest("Invalid feedback data.");
+            var id = short.Parse(User.FindFirst("AccountID")?.Value);
+
+            if (id == null)
+                return Unauthorized(new { message = "Không tìm thấy thông tin người dùng trong token" });
+            foreach (var feedback in request.Feedbacks)
+            {
+                feedback.DinerId = id;
+            }
+
+            await _service.AddAsync(request);
+            return Ok(new { message = "Feedbacks created successfully." });
         }
 
         [HttpGet("ByFood/{foodId}")]
@@ -36,12 +47,22 @@ namespace GustoSystemProject.Controllers
             return Ok(result);
         }
 
-        [HttpPut("{reviewId}")]
-        public async Task<IActionResult> Update(short reviewId, [FromBody] FoodReviewRequest request)
+        [HttpPut]
+        public async Task<IActionResult> Update(short reviewId, [FromBody] FeedbackRequest request)
         {
-            var result = await _service.UpdateAsync(reviewId, request);
-            if (result == null) return NotFound("Review not found");
-            return Ok(result);
+            if (request == null || request.Feedbacks == null || !request.Feedbacks.Any())
+                return BadRequest("Invalid feedback data.");
+            var id = short.Parse(User.FindFirst("AccountID")?.Value);
+
+            if (id == null)
+                return Unauthorized(new { message = "Không tìm thấy thông tin người dùng trong token" });
+            foreach (var feedback in request.Feedbacks)
+            {
+                feedback.DinerId = id;
+            }
+
+            await _service.UpdateFeedbacksAsync(request);
+            return Ok(new { message = "Feedbacks updated successfully." });
         }
 
         [HttpDelete("{reviewId}")]

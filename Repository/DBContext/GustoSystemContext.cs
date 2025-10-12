@@ -51,7 +51,7 @@ public partial class GustoSystemContext : DbContext
 
     //    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-    //        => optionsBuilder.UseSqlServer("Data Source=HAKARYIPC\\SQL2306;Initial Catalog=GustoSystem;User ID=sa;Password=12345;Encrypt=False");
+    //        => optionsBuilder.UseSqlServer("Data Source=HakaryiPC\\SQL2306;Initial Catalog=GustoSystem;User ID=sa;Password=12345;Encrypt=False");
 
     public static string GetConnectionString(string connectionStringName)
     {
@@ -66,16 +66,15 @@ public partial class GustoSystemContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer(GetConnectionString("DefaultConnection")).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Account>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Account__3214EC07DD6054C9");
+            entity.HasKey(e => e.Id).HasName("PK__Account__3214EC071FA4E128");
 
             entity.ToTable("Account");
 
-            entity.HasIndex(e => e.UserName, "UQ__Account__C9F284564B6F8ABA").IsUnique();
+            entity.HasIndex(e => e.UserName, "UQ__Account__C9F2845681B27A98").IsUnique();
 
             entity.Property(e => e.CreateAt)
                 .HasDefaultValueSql("(getdate())")
@@ -100,7 +99,7 @@ public partial class GustoSystemContext : DbContext
 
         modelBuilder.Entity<Booking>(entity =>
         {
-            entity.HasKey(e => e.BookingId).HasName("PK__Booking__35ABFDC0D3E57B7E");
+            entity.HasKey(e => e.BookingId).HasName("PK__Booking__35ABFDC03B6A30F2");
 
             entity.ToTable("Booking");
 
@@ -133,7 +132,7 @@ public partial class GustoSystemContext : DbContext
 
         modelBuilder.Entity<DinerProfile>(entity =>
         {
-            entity.HasKey(e => e.AccountId).HasName("PK__Diner_Pr__349DA5A6619DFAC8");
+            entity.HasKey(e => e.AccountId).HasName("PK__Diner_Pr__349DA5A61FEB38C9");
 
             entity.ToTable("Diner_Profile");
 
@@ -167,7 +166,7 @@ public partial class GustoSystemContext : DbContext
 
         modelBuilder.Entity<Favourite>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Favourit__3214EC07BDFC71F8");
+            entity.HasKey(e => e.Id).HasName("PK__Favourit__3214EC071BE4BBB3");
 
             entity.ToTable("Favourite");
 
@@ -191,7 +190,7 @@ public partial class GustoSystemContext : DbContext
 
         modelBuilder.Entity<FoodReview>(entity =>
         {
-            entity.HasKey(e => e.ReviewId).HasName("PK__Food_Rev__F85DA78BA6FB6D40");
+            entity.HasKey(e => e.ReviewId).HasName("PK__Food_Rev__F85DA78BDAA03F26");
 
             entity.ToTable("Food_Review");
 
@@ -204,6 +203,7 @@ public partial class GustoSystemContext : DbContext
             entity.Property(e => e.FoodId).HasColumnName("Food_Id");
             entity.Property(e => e.ImageUrl).HasMaxLength(255);
             entity.Property(e => e.IsAnonymous).HasDefaultValue(false);
+            entity.Property(e => e.OrderId).HasColumnName("Order_Id");
 
             entity.HasOne(d => d.Diner).WithMany(p => p.FoodReviews)
                 .HasForeignKey(d => d.DinerId)
@@ -214,11 +214,15 @@ public partial class GustoSystemContext : DbContext
                 .HasForeignKey(d => d.FoodId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Review_Food");
+
+            entity.HasOne(d => d.Order).WithMany(p => p.FoodReviews)
+                .HasForeignKey(d => d.OrderId)
+                .HasConstraintName("FK_FoodReview_Order");
         });
 
         modelBuilder.Entity<Notification>(entity =>
         {
-            entity.HasKey(e => e.NotificationId).HasName("PK__Notifica__8C11609579946647");
+            entity.HasKey(e => e.NotificationId).HasName("PK__Notifica__8C116095D57C4059");
 
             entity.ToTable("Notification");
 
@@ -238,38 +242,32 @@ public partial class GustoSystemContext : DbContext
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasKey(e => e.OrderId).HasName("PK__Order__F1E4607BFC4564CF");
+            entity.HasKey(e => e.OrderId).HasName("PK__Order__F1E4607BAF76290B");
 
             entity.ToTable("Order");
 
             entity.Property(e => e.OrderId).HasColumnName("Order_Id");
+            entity.Property(e => e.BookingId).HasColumnName("Booking_Id");
             entity.Property(e => e.Date)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
-            entity.Property(e => e.DinerId).HasColumnName("Diner_Id");
             entity.Property(e => e.DiscountAmount)
                 .HasDefaultValue(0m)
                 .HasColumnType("decimal(10, 2)");
             entity.Property(e => e.FinalPrice).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.PromotionId).HasColumnName("Promotion_Id");
-            entity.Property(e => e.RestaurantId).HasColumnName("Restaurant_Id");
             entity.Property(e => e.Status).HasMaxLength(20);
             entity.Property(e => e.TableId).HasColumnName("Table_Id");
             entity.Property(e => e.TotalPrice).HasColumnType("decimal(10, 2)");
 
-            entity.HasOne(d => d.Diner).WithMany(p => p.Orders)
-                .HasForeignKey(d => d.DinerId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Order_Diner");
+            entity.HasOne(d => d.Booking).WithMany(p => p.Orders)
+                .HasForeignKey(d => d.BookingId)
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("FK_Order_Booking");
 
             entity.HasOne(d => d.Promotion).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.PromotionId)
                 .HasConstraintName("FK_Order_Promotion");
-
-            entity.HasOne(d => d.Restaurant).WithMany(p => p.Orders)
-                .HasForeignKey(d => d.RestaurantId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Order_Restaurant");
 
             entity.HasOne(d => d.Table).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.TableId)
@@ -278,7 +276,7 @@ public partial class GustoSystemContext : DbContext
 
         modelBuilder.Entity<OrderDetail>(entity =>
         {
-            entity.HasKey(e => e.OrderDetailId).HasName("PK__Order_De__53D880806811AADE");
+            entity.HasKey(e => e.OrderDetailId).HasName("PK__Order_De__53D88080652052A7");
 
             entity.ToTable("Order_Detail");
 
@@ -302,11 +300,11 @@ public partial class GustoSystemContext : DbContext
 
         modelBuilder.Entity<Promotion>(entity =>
         {
-            entity.HasKey(e => e.PromotionId).HasName("PK__Promotio__DAF79ADB4CE4E220");
+            entity.HasKey(e => e.PromotionId).HasName("PK__Promotio__DAF79ADB4AB1DA51");
 
             entity.ToTable("Promotion");
 
-            entity.HasIndex(e => e.Code, "UQ__Promotio__A25C5AA74070C2DA").IsUnique();
+            entity.HasIndex(e => e.Code, "UQ__Promotio__A25C5AA7289E5059").IsUnique();
 
             entity.Property(e => e.PromotionId).HasColumnName("Promotion_Id");
             entity.Property(e => e.Code)
@@ -326,7 +324,7 @@ public partial class GustoSystemContext : DbContext
 
         modelBuilder.Entity<RefreshToken>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Refresh___3214EC0750FAC17C");
+            entity.HasKey(e => e.Id).HasName("PK__Refresh___3214EC07F47E5FDA");
 
             entity.ToTable("Refresh_Token");
 
@@ -351,7 +349,7 @@ public partial class GustoSystemContext : DbContext
 
         modelBuilder.Entity<RestaurantLayout>(entity =>
         {
-            entity.HasKey(e => e.LayoutId).HasName("PK__Restaura__839DF10181E76658");
+            entity.HasKey(e => e.LayoutId).HasName("PK__Restaura__839DF10175ED30D2");
 
             entity.ToTable("Restaurant_Layout");
 
@@ -372,7 +370,7 @@ public partial class GustoSystemContext : DbContext
 
         modelBuilder.Entity<RestaurantMenu>(entity =>
         {
-            entity.HasKey(e => e.FoodId).HasName("PK__Restaura__B350059C54F63D83");
+            entity.HasKey(e => e.FoodId).HasName("PK__Restaura__B350059C95AEE5A7");
 
             entity.ToTable("Restaurant_Menu");
 
@@ -400,7 +398,8 @@ public partial class GustoSystemContext : DbContext
 
         modelBuilder.Entity<RestaurantProfile>(entity =>
         {
-            entity.HasKey(e => e.AccountId).HasName("PK__Restaura__349DA5A6BB5BEA5A");
+            entity.HasKey(e => e.AccountId).HasName("PK__Restaura__349DA5A60100BB51");
+
             entity.ToTable("Restaurant_Profile");
 
             entity.Property(e => e.AccountId).ValueGeneratedNever();
@@ -414,7 +413,6 @@ public partial class GustoSystemContext : DbContext
                 .HasMaxLength(255)
                 .HasColumnName("FacebookURL");
             entity.Property(e => e.FullName).HasMaxLength(100);
-            entity.Property(e => e.OpenHour).HasMaxLength(50);
             entity.Property(e => e.Phone)
                 .HasMaxLength(10)
                 .IsUnicode(false)
@@ -431,7 +429,7 @@ public partial class GustoSystemContext : DbContext
 
         modelBuilder.Entity<RestaurantTable>(entity =>
         {
-            entity.HasKey(e => e.TableId).HasName("PK__Restaura__BAB7E676F9B529B0");
+            entity.HasKey(e => e.TableId).HasName("PK__Restaura__BAB7E676C1A05BAA");
 
             entity.ToTable("Restaurant_Table");
 
@@ -456,7 +454,7 @@ public partial class GustoSystemContext : DbContext
 
         modelBuilder.Entity<Role>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Role__3214EC07591C579A");
+            entity.HasKey(e => e.Id).HasName("PK__Role__3214EC076A4AEBEA");
 
             entity.ToTable("Role");
 

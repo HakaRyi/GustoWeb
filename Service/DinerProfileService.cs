@@ -109,7 +109,8 @@ namespace Service
                 Description = entity.Description,
                 FacebookUrl = entity.FacebookUrl,
                 TiktokUrl = entity.TiktokUrl,
-                RewardPoints = entity.RewardPoints
+                RewardPoints = entity.RewardPoints,
+                Bookings = (List<Booking>) entity.Bookings
             };
         }
     }

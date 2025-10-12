@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Service;
 using Service.DTO.Request;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace GustoSystemProject.Controllers
 {
@@ -72,6 +73,19 @@ namespace GustoSystemProject.Controllers
             var success = await _service.DeleteAsync(id);
             if (!success) return NotFound(new { message = "Không tìm thấy để xóa" });
             return Ok(new { message = "Xóa thành công" });
+        }
+
+        //Other Operations:
+        [HttpGet("my-bookings")]
+        public async Task<IActionResult> GetMyBooking()
+        {
+            var id = User.FindFirst("AccountID")?.Value;
+
+            if (id == null)
+                return Unauthorized(new { message = "Không tìm thấy thông tin người dùng trong token" });
+            var user = await _service.GetByIdAsync(short.Parse(id));
+            if (user == null) return NotFound("Không tìm thấy người dùng trong cơ sở dữ liệu");
+            return Ok(user.Bookings);
         }
     }
 }

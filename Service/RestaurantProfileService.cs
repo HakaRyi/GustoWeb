@@ -58,7 +58,6 @@ namespace Service
                 Email = resPro.Email,
                 FacebookUrl = resPro.FacebookUrl,
                 FullName = resPro.FullName,
-                OpenHour = resPro.OpenHour,
                 Phone = resPro.Phone,
                 TiktokUrl = resPro.TiktokUrl,
                 }).ToList());
@@ -84,7 +83,6 @@ namespace Service
                     Email = item.Email,
                     FacebookUrl = item.FacebookUrl,
                     FullName = item.FullName,
-                    OpenHour = item.OpenHour,
                     Phone = item.Phone,
                     TiktokUrl = item.TiktokUrl
                 };
@@ -109,7 +107,6 @@ namespace Service
                         Email = resPro.Email,
                         FacebookUrl = resPro.FacebookUrl,
                         FullName = resPro.FullName,
-                        OpenHour = resPro.OpenHour,
                         Phone = resPro.Phone,
                         TiktokUrl = resPro.TiktokUrl
                         
@@ -139,7 +136,6 @@ namespace Service
                 Email = request.Email ?? null,
                 FacebookUrl = request.FacebookUrl ?? null,
                 Phone = request.Phone ?? null,
-                OpenHour=  request.OpenHour ?? null,
                 Address = request.Address ?? null,
                 AvatarUrl = request.AvatarUrl ?? null,
                 
@@ -161,7 +157,6 @@ namespace Service
             item.Email = request.Email;
             item.FacebookUrl = request.FacebookUrl; 
             item.Phone = request.Phone;
-            item.OpenHour = request.OpenHour;
             item.TiktokUrl = request.TiktokUrl;
             item.Description = request.Description;
             item.FullName = request.FullName;

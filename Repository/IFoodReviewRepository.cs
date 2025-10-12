@@ -18,11 +18,10 @@ namespace Repository
             _context = context;
         }
 
-        public async Task<FoodReview> AddAsync(FoodReview review)
+        public async Task AddAsync(List<FoodReview> review)
         {
-            _context.FoodReviews.Add(review);
+            _context.FoodReviews.AddRangeAsync(review);
             await _context.SaveChangesAsync();
-            return review;
         }
 
         public async Task<List<FoodReview>> GetByFoodIdAsync(short foodId)
@@ -51,20 +50,24 @@ namespace Repository
                 .FirstOrDefaultAsync(r => r.ReviewId == reviewId);
         }
 
-        public async Task<FoodReview?> UpdateAsync(FoodReview review)
+        public async Task UpdateFeedbacksAsync(List<FoodReview> feedbacks)
         {
-            var existing = await _context.FoodReviews.FindAsync(review.ReviewId);
-            if (existing == null) return null;
+            foreach (var feedback in feedbacks)
+            {
+                var existing = await _context.FoodReviews
+                    .FirstOrDefaultAsync(f => f.FoodId == feedback.FoodId && f.DinerId == feedback.DinerId && f.OrderId == feedback.OrderId);
+                Console.WriteLine(_context.ChangeTracker.AutoDetectChangesEnabled);
 
-            existing.Rating = review.Rating;
-            existing.Description = review.Description;
-            existing.ImageUrl = review.ImageUrl;
-            existing.IsAnonymous = review.IsAnonymous;
-            existing.Date = DateTime.Now;
-
-            _context.FoodReviews.Update(existing);
+                if (existing != null)
+                {
+                    existing.Rating = feedback.Rating;
+                    existing.Description = feedback.Description;
+                    existing.IsAnonymous = feedback.IsAnonymous;
+                    existing.Date = DateTime.Now;
+                    _context.FoodReviews.Update(existing);
+                }
+            }
             await _context.SaveChangesAsync();
-            return existing;
         }
 
         public async Task<bool> DeleteAsync(short reviewId, short dinerId)

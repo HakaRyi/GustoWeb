@@ -25,8 +25,8 @@ namespace Repository
                 .Include(r=>r.RestaurantTables)
                 .Include(r=>r.Promotions)
                 .Include(r => r.Bookings)
+                .ThenInclude(r => r.Orders)
                 .Include(r => r.Favourites)
-                .Include(r => r.Orders)
                 .ToListAsync();
         }
         public async Task<RestaurantProfile> GetByIdAsync(int id)
@@ -40,10 +40,12 @@ namespace Repository
                     .ThenInclude(t => t.Orders)   
                 .Include(r => r.Promotions)
                 .Include(r => r.Bookings)
-                    .ThenInclude(b => b.Table)    
-                .Include(r => r.Orders)
-                    .ThenInclude(o => o.Table)     
-                .Include(r => r.Orders)
+                    .ThenInclude(b => b.Table)
+                .Include(r => r.Bookings)
+                    .ThenInclude(b => b.Orders)
+                    .ThenInclude(o => o.Table)
+                 .Include(r => r.Bookings)
+                    .ThenInclude(b => b.Orders)
                     .ThenInclude(o => o.OrderDetails) 
                 .Include(r => r.Favourites)
                 .FirstOrDefaultAsync(r => r.AccountId == id);
@@ -60,11 +62,10 @@ namespace Repository
                     .ThenInclude(t => t.Orders)
                 .Include(r => r.Promotions)
                 .Include(r => r.Bookings)
-                    .ThenInclude(b => b.Table)
-                .Include(r => r.Orders)
-                    .ThenInclude(o => o.Table)
-                .Include(r => r.Orders)
+                    .ThenInclude(r => r.Orders)
                     .ThenInclude(o => o.OrderDetails)
+                .Include(r => r.Bookings)
+                    .ThenInclude(b => b.Table)             
                 .Include(r => r.Favourites)
                 .ToListAsync();
         }
