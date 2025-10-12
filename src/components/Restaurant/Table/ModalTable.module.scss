@@ -1,95 +1,209 @@
+/* --- Overlay mờ --- */
 .modalTableOverlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
-}
-
-.modalTableContent {
-  background-color: #fffdf6;
+  z-index: 2000;
   padding: 20px;
-  border-radius: 8px;
-  width: 600px;
-  max-height: 80vh;
   overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: #6a7636 transparent;
+  animation: fadeIn 0.3s ease;
 }
 
-.modalTableContent::-webkit-scrollbar {
-  width: 6px;
+/* --- Hộp modal chính --- */
+.modalTableContent {
+  background: #fffdf6;
+  border: 1.5px solid #424921;
+  border-radius: 14px;
+  width: 800px;
+  max-width: 95%;
+  max-height: 85vh;
+  overflow-y: auto;
+  position: relative;
+  padding: 36px 32px 30px 32px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  animation: modalAppear 0.35s ease;
+  scrollbar-gutter: stable;
+
+  h3 {
+    color: #424921;
+    font-size: 1.6rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: #d3d3d3;
+  }
 }
 
-.modalTableContent::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.modalTableContent::-webkit-scrollbar-thumb {
-  background-color: #6a7636;
-  border-radius: 3px;
-}
-
+/* --- Nút đóng (X) --- */
 .closeBtn {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  cursor: pointer;
+  top: 14px;
+  right: 16px;
+  background: transparent;
   color: #424921;
-  font-size: 18px;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+
+  &:hover {
+    color: #6a7636;
+    transform: rotate(90deg);
+  }
 }
 
+/* --- Lưới form chính --- */
 .formGrid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px 24px;
 }
 
-.formGroup {
-  margin-bottom: 15px;
-}
-
-.formGroup label {
-  display: block;
-  margin-bottom: 5px;
-  color: #424921;
-}
-
-.formInput {
-  width: 100%;
-  padding: 8px;
-  color: #424921;
-  font-weight: 300;
-  border: 1px solid #424921;
-  border-radius: 5px;
-  box-sizing: border-box;
-}
-
-.checkbox {
-  margin-left: 10px;
-}
-
+/* --- Hàng full chiều ngang --- */
 .fullWidth {
   grid-column: span 2;
 }
 
-.submitBtn {
-  background-color: #424921;
-  color: white;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+/* --- Nhóm input chung --- */
+.formGroup,
+.formGroupSmall {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  label {
+    font-weight: 600;
+    color: #424921 !important;
+    font-size: 0.95rem;
+  }
 }
 
-.submitBtn:hover {
-  background-color: #6a7636;
+/* --- Input cơ bản --- */
+.formInput {
+  padding: 10px 12px;
+  border: 1px solid #424921;
+  border-radius: 5px;
+  font-size: 1rem;
+  color: #2d2d2d;
+  background: #fffdf6;
+  transition: all 0.25s ease;
+
+  &:focus {
+    outline: none;
+    border-color: #6a7636;
+    box-shadow: 0 0 4px rgba(106, 118, 54, 0.25);
+  }
+}
+
+/* --- Nhóm 3 input số nằm cùng hàng --- */
+.numberRow {
+  grid-column: span 2;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+
+  .formGroupSmall {
+    flex: 1;
+  }
+}
+
+/* --- Checkbox VIP nằm dưới 3 ô số --- */
+.checkboxGroup {
+  grid-column: span 2;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+    color: #424921 !important;
+  }
+
+  input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: #424921;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}
+
+/* --- Nút submit --- */
+.submitBtn {
+  grid-column: span 2;
+  width: 100%;
+  padding: 12px;
+  background: #424921;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+
+  &:hover {
+    background: #6a7636;
+    transform: translateY(-2px);
+  }
+}
+
+/* --- Hiệu ứng --- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalAppear {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .modalTableContent {
+    width: 90%;
+    padding: 20px 18px;
+  }
+
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .numberRow {
+    grid-template-columns: 1fr;
+  }
 }

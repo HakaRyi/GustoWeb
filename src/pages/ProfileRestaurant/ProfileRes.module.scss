@@ -23,7 +23,7 @@
 .content {
   flex: 1; // Chiếm hết không gian còn lại
   padding: 20px;
-  background-color: #fafafa;
+  background-color: #fffdf6 !important;
   overflow-y: auto; // Scroll nội dung nếu dài
   min-height: 100%; // Đầy đủ chiều cao của mainArea
 }

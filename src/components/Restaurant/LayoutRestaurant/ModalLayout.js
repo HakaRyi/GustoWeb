@@ -37,7 +37,6 @@ const ModalLayout = ({ isOpen, onClose, layout, isUpdate, onSuccess }) => {
       console.log("Ảnh đã được tải lên!");
     } catch (error) {
       console.error("Upload image failed:", error);
-      console.log(error.message || "Tải ảnh lên thất bại!");
     } finally {
       setUploading(false);
     }
@@ -49,30 +48,38 @@ const ModalLayout = ({ isOpen, onClose, layout, isUpdate, onSuccess }) => {
       const url = isUpdate
         ? `https://localhost:7176/api/RestaurantLayout/updateLayout/${layout.layoutId}`
         : "https://localhost:7176/api/RestaurantLayout/createLayout";
+
       const res = await customFetch(url, {
         method: isUpdate ? "PUT" : "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-      if (!res.ok) throw new Error(`${isUpdate ? "Cập nhật" : "Tạo"} bố cục thất bại`);
-      console.log(`${isUpdate ? "Cập nhật" : "Tạo"} bố cục thành công!`);
+
+      if (!res.ok) throw new Error("Thao tác thất bại!");
       onSuccess();
       onClose();
     } catch (error) {
-      console.error(`${isUpdate ? "Update" : "Create"} layout failed:`, error);
-      console.log(`${isUpdate ? "Cập nhật" : "Tạo"} bố cục thất bại!`);
+      console.error("Request failed:", error);
     }
   };
 
   if (!isOpen) return null;
 
+  const handleOverlayClick = (e) => {
+    if (e.target === e.currentTarget) {
+      onClose(); // click ngoài modal => đóng
+    }
+  };
+
   return (
-    <div className={styles.modalOverlay}>
+    <div className={styles.modalOverlay} onClick={handleOverlayClick}>
       <div className={styles.modalContent}>
         <button className={styles.closeBtn} onClick={onClose}>
           <FaTimes />
         </button>
+
         <h3>{isUpdate ? "Cập nhật bố cục" : "Tạo bố cục mới"}</h3>
+
         <form onSubmit={handleSubmit}>
           <div className={styles.formGroup}>
             <label>
@@ -87,12 +94,13 @@ const ModalLayout = ({ isOpen, onClose, layout, isUpdate, onSuccess }) => {
               />
             </label>
           </div>
+
           <div className={styles.formGroup}>
             <label>
               Hình ảnh:
               <div className={styles.imagePreview}>
                 <img
-                  src={formData.layoutUrl || "https://via.placeholder.com/300x200"}
+                  src={formData.layoutUrl || "https://cdn-icons-png.flaticon.com/512/1663/1663945.png"}
                   alt="Layout preview"
                   className={styles.previewImage}
                 />
@@ -110,6 +118,7 @@ const ModalLayout = ({ isOpen, onClose, layout, isUpdate, onSuccess }) => {
               </div>
             </label>
           </div>
+
           <div className={styles.formGroup}>
             <label>
               Mô tả:
@@ -121,6 +130,7 @@ const ModalLayout = ({ isOpen, onClose, layout, isUpdate, onSuccess }) => {
               />
             </label>
           </div>
+
           <button type="submit" className={styles.submitBtn} disabled={uploading}>
             {isUpdate ? "Cập nhật" : "Tạo"}
           </button>

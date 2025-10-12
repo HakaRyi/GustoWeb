@@ -1,4 +1,6 @@
 .cardTable {
+  width: 310px;
+  height: 260px;
   background-color: #fffdf6;
   border: 0px solid #424921;
   border-radius: 8px;
@@ -15,15 +17,18 @@
 }
 
 .tableInfo h4 {
-  font-size: 18px;
+  font-size: 20px;
   color: #424921;
   margin-bottom: 10px;
+  margin-left: 10px;
 }
 
 .tableInfo p {
-  margin: 5px 0;
-  color: #333;
+  margin: 5px 14px;
+  color: #6a7636 !important;
   text-align: left;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .menu {

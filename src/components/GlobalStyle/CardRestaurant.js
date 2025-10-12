@@ -28,7 +28,7 @@ const CardRestaurant = ({ restaurant }) => {
               }`}
             ></span>
             <span className={styles.statusText}>
-              {restaurant.isOpen ? "Open" : "Closed"}
+              {restaurant.isOpen ? "Đang mở" : "Đóng cửa"}
             </span>
             <span className={styles.time}>🕓 {restaurant.time}</span>
           </div>

@@ -44,21 +44,7 @@ function Header({ cartCount = 0 }) {
     fetchUser();
   }, [dispatch]);
 
-  const handleLogout = async () => {
-    console.log("Đang logout...");
-    try {
-      console.log("Đã logout với user", user?.account?.userName);
-      await fetch("https://localhost:7176/api/Account/logout", {
-        method: "POST",
-        credentials: "include",
-      });
-    } catch (e) {
-      console.warn("Logout backend lỗi:", e);
-    } finally {
-      dispatch(logoutSuccess());
-      navigate("/login");
-    }
-  };
+
 
   // Xác định route cho "Hồ sơ" dựa trên role
   const profileRoute = user?.account?.roleId === 2 ? routes.resProfile : routes.profile;
@@ -96,7 +82,7 @@ function Header({ cartCount = 0 }) {
                 <FaShoppingCart /> Món đã đặt
                 {cartCount > 0 && <Badge className={styles.cartBadge}>{cartCount}</Badge>}
               </Link>
-              <button onClick={handleLogout} className={styles.navLink}>Đăng xuất</button>
+              
             </>
           )}
         </Nav>

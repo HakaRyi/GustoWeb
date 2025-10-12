@@ -17,11 +17,13 @@
   border: 0px solid #424921;
   border-radius: 12px;
   margin-bottom: 25px;
+  
   width: 100%;
   max-width: 1000px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  // box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 
   .avatarWrapper {
+    margin-left: 0px;
     position: relative;
   }
 
@@ -66,22 +68,59 @@
   }
 
   .headerInfo {
+    margin-left: 40px;
     h2 {
-      margin: 0;
-      font-size: 1.8rem;
+      margin-top: -40px;
+      font-size: 2.3rem;
       color: #424921;
       font-weight: 600;
     }
     p {
-      margin: 5px 0 0;
-      color: #6a7636; // Màu phụ
+      margin: 10px 0 0;
+      margin-left: 0px !important;
+
+      color: #6a7636 !important; // Màu phụ
+      font-weight: 600;
+      font-size: 1.2rem;
+    }
+     .description {
+      margin-left: 0px !important;
+      color: #6a7636 !important; // Màu phụ
+      font-weight: 500;
       font-size: 1rem;
     }
+
+    .rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 10px;
+
+    .starIcon {
+      font-size: 1.5rem;
+      transition: color 0.3s;
+    }
+
+    .filledStar {
+      color: #ffc107; // 🌟 vàng
+    }
+
+    .emptyStar {
+      color: #ccc; // ⭐ xám nhạt
+    }
+
+    .ratingText {
+      margin-left: 6px;
+      font-weight: 600;
+      color: #424921;
+    }
+}
   }
 }
 
 .profileActions {
   display: flex;
+  justify-content: flex-end;
   gap: 12px;
   margin-bottom: 25px;
   width: 100%;
@@ -89,6 +128,7 @@
 }
 
 .actionBtn {
+  
   background: #424921;
   display: flex;
   align-items: center;
@@ -97,7 +137,7 @@
   border: none;
   border-radius: 8px;
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s;
 
@@ -134,11 +174,11 @@
 .profileForm {
   width: 100%;
   max-width: 1000px;
-  background: #fffdf6; // Đồng bộ nền chính
+  // background: #fffdf6; // Đồng bộ nền chính
   padding: 25px;
   border: 0px solid #424921;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  // box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .formRow {

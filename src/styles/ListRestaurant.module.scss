@@ -1,15 +1,18 @@
 /* --- Restaurant List Container --- */
 .restList_container {
   max-height: 50vh; /* Giảm chiều cao để dễ kiểm tra thanh cuộn */
+  width: 800px;
   overflow-y: scroll; /* Buộc hiển thị thanh cuộn dọc */
-  padding-right: 10px; /* Khoảng cách để thanh cuộn không che nội dung */
-  display: flex;
+  padding-right: 0px; /* Khoảng cách để thanh cuộn không che nội dung */
+  
   flex-direction: column;
   gap: 20px; /* Khoảng cách giữa các card nhà hàng */
-
+  margin-left: 260px; 
+  overflow-x: hidden;
   /* Tùy chỉnh thanh cuộn */
   &::-webkit-scrollbar {
     width: 8px; /* Chiều rộng thanh cuộn */
+
   }
 
   &::-webkit-scrollbar-track {
@@ -27,7 +30,9 @@
     background: #ffdd00; /* Màu khi hover thanh cuộn */
   }
 }
-
+p{
+  color: white !important;
+}
 /* --- Responsive --- */
 @media (max-width: 900px) {
   .restList_container {

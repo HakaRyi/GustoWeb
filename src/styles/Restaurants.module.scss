@@ -1,5 +1,6 @@
 .restaurantsPage {
   display: flex;
+  flex-direction: column;
   min-height: 100vh;
   background: url("/assets/backgroundRestaurant.png") center/cover no-repeat;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -15,56 +16,6 @@
   background: rgba(0, 0, 0, 0.55);
   backdrop-filter: blur(2px);
   z-index: 0;
-}
-
-.filterPanel {
-  margin-top: 80px;
-  width: 350px;
-  padding: 80px 40px;
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-  z-index: 1;
-  border-right: none;
-  background: linear-gradient(
-    to right,
-    rgba(20, 20, 20, 0.8) 0%,
-    rgba(20, 20, 20, 0.4) 60%,
-    rgba(20, 20, 20, 0) 100%
-  );
-  backdrop-filter: blur(2px);
-}
-
-.filterButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 20px;
-  font-size: 1rem;
-  color: #eaeaea;
-  font-weight: 600;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid #ccc; /* Viền không sáng khi không nhấn */
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-align: center;
-  margin-left: 60px;
-  margin-top: 20px;
-  width: 70%;
-  box-sizing: border-box;
-
-  &:hover {
-    color: #ffd369;
-    background: rgba(255, 211, 105, 0.2); 
-    border-color: #ffd369; /* Viền sáng nhẹ khi hover */
-  }
-
-  &.active {
-    border: 2px solid #ffd369; /* Viền sáng khi nhấn */
-    color: #ffd369;
-    background: rgba(255, 211, 105, 0.2); /* Nền nhẹ khi active */
-  }
 }
 
 /* --- Main Content --- */
@@ -86,18 +37,28 @@
   -webkit-text-fill-color: transparent;
 }
 
-/* --- Search box --- */
-.searchBox {
-  width: 70%;
+/* --- Container chứa ô tìm kiếm và nút bộ lọc --- */
+.searchFilterContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  width: 80%;
   margin: 0 auto 60px;
+  position: relative;
+}
+
+/* --- Search Box --- */
+.searchBox {
+  flex: 0 !important;
   position: relative;
 
   input {
-    width: 100%;
+    width: 700px;
     padding: 14px 25px 14px 20px;
+ 
     border-radius: 12px;
-    border: 2px solid #fff;
-    border-color: #eaeaea;
+    border: 2px solid #eaeaea;
     outline: none;
     font-size: 1rem;
     background: rgba(0, 0, 0, 0);
@@ -109,57 +70,126 @@
       color: #ddd;
     }
 
-    &:focus {
-      background: rgba(0, 0, 0, 0);
-    }
     &:focus-visible {
       border: 2px solid #ffd369 !important;
-    
     }
-
   }
 
   .searchIcon {
     position: absolute;
-    right: 40px;
+    right: 35px;
     top: 50%;
-    transform: translateY(-50%) translateX(70%);
+    transform: translateY(-50%);
     font-size: 1.4rem;
     color: #fff;
     cursor: pointer;
   }
 }
 
+/* --- Filter Button --- */
+.filterContainer {
+  position: relative;
+
+}
+
+.filterToggle {
+  display: flex;
+
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1.5px solid #ffd369;
+  color: #ffd369;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
+
+  &:hover {
+    background: rgba(255, 211, 105, 0.25);
+  }
+
+  .filterIcon {
+    font-size: 1.2rem;
+  }
+}
+
+/* --- Filter Dropdown --- */
+.filterDropdown {
+  position: absolute;
+  top: 120%;
+  right: -30px;
+  width: 200px;
+  background: rgba(40, 40, 40, 0.95);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  padding: 15px 20px;
+  animation: fadeIn 0.3s ease forwards;
+  z-index: 50;
+}
+
+.filterTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ffd369;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.filterList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.filterItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #f5f5f5;
+  font-size: 0.95rem;
+
+  input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: #ffd369;
+    cursor: pointer;
+  }
+
+  &:hover {
+    color: #ffd369;
+  }
+}
+
+/* --- Animation --- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* --- Responsive --- */
 @media (max-width: 900px) {
-  .restaurantsPage {
+  .searchFilterContainer {
     flex-direction: column;
-  }
-
-  .filterPanel {
-    width: 100%;
-    flex-direction: row;
-    justify-content: center;
-    padding: 20px;
-    gap: 20px;
-    border-right: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  }
-
-  .mainContent {
-    padding: 40px 20px;
+    width: 90%;
+    gap: 10px;
   }
 
   .title {
     font-size: 48px;
   }
 
-  .searchBox {
-    width: 85%;
-  }
-
-  .filterButton {
-    padding: 8px 15px;
-    font-size: 0.9rem;
+  .filterToggle {
+    width: 100%;
   }
 }

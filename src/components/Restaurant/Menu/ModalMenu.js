@@ -94,7 +94,11 @@ const ModalMenu = ({ isOpen, onClose, menu, isUpdate, onSuccess }) => {
   if (!isOpen) return null;
 
   return (
-    <div className={styles.modalOverlay}>
+    <div className={styles.modalOverlay}
+    onClick={(e) => {
+      // nếu click vào overlay (bên ngoài modalContent) thì đóng modal
+      if (e.target === e.currentTarget) onClose();
+    }}>
       <div className={styles.modalContent}>
         <button className={styles.closeBtn} onClick={onClose}>
           <FaTimes />
@@ -224,7 +228,7 @@ const ModalMenu = ({ isOpen, onClose, menu, isUpdate, onSuccess }) => {
               Hình ảnh:
               <div className={styles.imagePreview}>
                 <img
-                  src={formData.foodUrl || "https://via.placeholder.com/300x200"}
+                  src={formData.foodUrl || "https://static.thenounproject.com/png/1092662-200.png"}
                   alt="Menu preview"
                   className={styles.previewImage}
                 />

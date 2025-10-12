@@ -44,21 +44,20 @@ const ModalTable = ({ isOpen, onClose, table, isUpdate, onSuccess }) => {
       const url = isUpdate
         ? `https://localhost:7176/api/RestaurantTable/updateTable/${table.tableId}`
         : "https://localhost:7176/api/RestaurantTable/createTable";
-      
-      // Chuyển status từ chuỗi sang số
+
       const statusMap = {
         Available: 0,
         Reserved: 1,
         Occupied: 2,
       };
+
       const payload = {
         ...formData,
         personNumber: parseInt(formData.personNumber),
         minCharge: formData.minCharge ? parseFloat(formData.minCharge) : null,
         deposit: parseFloat(formData.deposit),
-        status: statusMap[formData.status] || 0, // Chuyển status thành số
+        status: statusMap[formData.status] || 0,
       };
-      console.log("Payload gửi đi:", payload); // Log payload để debug
 
       const res = await customFetch(url, {
         method: isUpdate ? "PUT" : "POST",
@@ -67,25 +66,24 @@ const ModalTable = ({ isOpen, onClose, table, isUpdate, onSuccess }) => {
       });
 
       if (!res.ok) {
-        const errorData = await res.json().catch(() => ({})); // Lấy chi tiết lỗi từ response
+        const errorData = await res.json().catch(() => ({}));
         throw new Error(
-          `${isUpdate ? "Cập nhật" : "Tạo"} bàn thất bại: ${res.status} - ${errorData.message || "Không có thông tin lỗi"}`
+          `${isUpdate ? "Cập nhật" : "Tạo"} bàn thất bại: ${res.status} - ${
+            errorData.message || "Không có thông tin lỗi"
+          }`
         );
       }
 
-      console.log(`${isUpdate ? "Cập nhật" : "Tạo"} bàn thành công!`);
       onSuccess();
       onClose();
     } catch (error) {
       console.error(`${isUpdate ? "Update" : "Create"} table failed:`, error);
-      console.log(`${isUpdate ? "Cập nhật" : "Tạo"} bàn thất bại! ${error.message}`);
+      alert(`${isUpdate ? "Cập nhật" : "Tạo"} bàn thất bại! ${error.message}`);
     }
   };
 
   const handleOverlayClick = (e) => {
-    if (e.target === e.currentTarget) {
-      onClose();
-    }
+    if (e.target === e.currentTarget) onClose();
   };
 
   if (!isOpen) return null;
@@ -96,24 +94,38 @@ const ModalTable = ({ isOpen, onClose, table, isUpdate, onSuccess }) => {
         <button className={styles.closeBtn} onClick={onClose}>
           <FaTimes />
         </button>
+
         <h3>{isUpdate ? "Cập nhật bàn" : "Tạo bàn mới"}</h3>
+
         <form onSubmit={handleSubmit} className={styles.formGrid}>
+          {/* --- Hàng 1: Tên bàn + Vị trí --- */}
           <div className={styles.formGroup}>
-            <label>
-              Tên bàn:
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-                className={styles.formInput}
-              />
-            </label>
+            <label>Tên bàn:</label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+              className={styles.formInput}
+            />
           </div>
+
           <div className={styles.formGroup}>
-            <label>
-              Số người:
+            <label>Vị trí:</label>
+            <input
+              type="text"
+              name="position"
+              value={formData.position}
+              onChange={handleChange}
+              className={styles.formInput}
+            />
+          </div>
+
+          {/* --- Hàng 2: Số người + Phí tối thiểu + Tiền cọc --- */}
+          <div className={styles.numberRow}>
+            <div className={styles.formGroupSmall}>
+              <label>Số người:</label>
               <input
                 type="number"
                 name="personNumber"
@@ -123,51 +135,10 @@ const ModalTable = ({ isOpen, onClose, table, isUpdate, onSuccess }) => {
                 required
                 className={styles.formInput}
               />
-            </label>
-          </div>
-          <div className={styles.formGroup}>
-            <label>
-              Vị trí:
-              <input
-                type="text"
-                name="position"
-                value={formData.position}
-                onChange={handleChange}
-                className={styles.formInput}
-              />
-            </label>
-          </div>
-          <div className={styles.formGroup}>
-            <label>
-              Trạng thái:
-              <select
-                name="status"
-                value={formData.status}
-                onChange={handleChange}
-                required
-                className={styles.formInput}
-              >
-                <option value="Available">Available</option>
-                <option value="Reserved">Reserved</option>
-                <option value="Occupied">Occupied</option>
-              </select>
-            </label>
-          </div>
-          <div className={styles.formGroup}>
-            <label>
-              VIP:
-              <input
-                type="checkbox"
-                name="isVip"
-                checked={formData.isVip}
-                onChange={handleChange}
-                className={styles.checkbox}
-              />
-            </label>
-          </div>
-          <div className={styles.formGroup}>
-            <label>
-              Phí tối thiểu (VNĐ):
+            </div>
+
+            <div className={styles.formGroupSmall}>
+              <label>Phí tối thiểu (VNĐ):</label>
               <input
                 type="number"
                 name="minCharge"
@@ -176,11 +147,10 @@ const ModalTable = ({ isOpen, onClose, table, isUpdate, onSuccess }) => {
                 min="0"
                 className={styles.formInput}
               />
-            </label>
-          </div>
-          <div className={styles.formGroup}>
-            <label>
-              Tiền cọc (VNĐ):
+            </div>
+
+            <div className={styles.formGroupSmall}>
+              <label>Tiền cọc (VNĐ):</label>
               <input
                 type="number"
                 name="deposit"
@@ -190,20 +160,54 @@ const ModalTable = ({ isOpen, onClose, table, isUpdate, onSuccess }) => {
                 required
                 className={styles.formInput}
               />
-            </label>
+            </div>
           </div>
-          <div className={`${styles.formGroup} ${styles.fullWidth}`}>
+
+          {/* --- Checkbox VIP --- */}
+          <div className={styles.checkboxGroup}>
             <label>
-              Mô tả:
-              <textarea
-                name="description"
-                value={formData.description}
+              <input
+                type="checkbox"
+                name="isVip"
+                checked={formData.isVip}
                 onChange={handleChange}
-                className={styles.formInput}
               />
+              <span>VIP</span>
             </label>
           </div>
-          <button type="submit" className={`${styles.submitBtn} ${styles.fullWidth}`}>
+
+          {/* --- Trạng thái --- */}
+          <div className={`${styles.formGroup} ${styles.fullWidth}`}>
+            <label>Trạng thái:</label>
+            <select
+              name="status"
+              value={formData.status}
+              onChange={handleChange}
+              required
+              className={styles.formInput}
+            >
+              <option value="Available">Available</option>
+              <option value="Reserved">Reserved</option>
+              <option value="Occupied">Occupied</option>
+            </select>
+          </div>
+
+          {/* --- Mô tả --- */}
+          <div className={`${styles.formGroup} ${styles.fullWidth}`}>
+            <label>Mô tả:</label>
+            <textarea
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              className={styles.formInput}
+            />
+          </div>
+
+          {/* --- Nút submit --- */}
+          <button
+            type="submit"
+            className={`${styles.submitBtn} ${styles.fullWidth}`}
+          >
             {isUpdate ? "Cập nhật" : "Tạo"}
           </button>
         </form>

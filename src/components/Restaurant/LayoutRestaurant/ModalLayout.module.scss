@@ -1,63 +1,68 @@
 .modalOverlay {
+
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 2000;
+  padding: 20px; /* tránh modal dính mép màn hình */
+  overflow-y: auto; /* Nếu modal lớn hơn viewport */
 }
 
 .modalContent {
   background: #fffdf6;
   border: 2px solid #424921;
   border-radius: 12px;
-  padding: 20px;
-  width: 100%;
-  max-width: 500px;
+  width: 700px;
+  max-width: 90%;
+  max-height: 80vh;
   position: relative;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  padding: 25px 20px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  animation: fadeIn 0.25s ease;
 
   h3 {
     color: #424921;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     margin: 0 0 20px;
+    text-align: center;
   }
+
 }
 
 .closeBtn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: #424921;
-  color: #fff;
+  position: absolute; /* để nằm trong modal, không bị mất */
+  top: 12px;
+  right: 12px;
+  font-size: 30px;
+  color: #424921;
   border: none;
   border-radius: 50%;
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background-color 0.3s;
+  z-index: 2100;
+  transition: all 0.3s ease;
 
   &:hover {
-    background: #6a7636;
+    color: #6a7636;
+    transform: rotate(90deg);
   }
 }
 
 .formGroup {
-  margin-bottom: 15px;
+  margin-bottom: 16px;
 
   label {
     display: flex;
     flex-direction: column;
     gap: 8px;
     color: #424921;
-    font-size: 1rem;
     font-weight: 500;
   }
 }
@@ -69,7 +74,8 @@
   font-size: 1rem;
   color: #424921;
   background: #fffdf6;
-  transition: border-color 0.3s;
+  resize: none;
+  transition: border-color 0.3s ease;
 
   &:focus {
     outline: none;
@@ -84,11 +90,11 @@
   align-items: center;
 
   .previewImage {
-    width: 300px;
-    height: 200px;
+    width: 200px;
+    height: 100px;
     border-radius: 8px;
-    border: 1px solid #424921;
-    object-fit: cover;
+    border: 0px solid #424921;
+    object-fit: contain;
   }
 }
 
@@ -97,31 +103,27 @@
   align-items: center;
   gap: 8px;
   background: #424921;
-  color: #fff;
+  color: #fff !important;
   padding: 8px 16px;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background 0.3s ease;
 
   &:hover {
     background: #6a7636;
-  }
-
-  input {
-    display: none;
   }
 }
 
 .submitBtn {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   background: #424921;
   color: #fff;
   border: none;
   border-radius: 8px;
   font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
+  transition: all 0.25s ease;
 
   &:hover {
     background: #6a7636;
@@ -134,29 +136,28 @@
   }
 }
 
-// Responsive
+/* Hiệu ứng mở */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Responsive */
 @media (max-width: 768px) {
   .modalContent {
-    width: 90%;
+    width: 95%;
     padding: 15px;
-
-    h3 {
-      font-size: 1.3rem;
-    }
+    max-height: 85vh;
   }
 
   .imagePreview .previewImage {
     width: 100%;
-    height: 150px;
-  }
-}
-
-@media (max-width: 480px) {
-  .modalContent {
-    padding: 10px;
-  }
-
-  .imagePreview .previewImage {
-    height: 120px;
+    height: 160px;
   }
 }

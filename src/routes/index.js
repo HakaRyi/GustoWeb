@@ -1,9 +1,6 @@
 import React from 'react';
 
-
 //Components:
-import loginPage from '~/pages/LoginPage/loginPage';
-import RegisterPage from '~/pages/registerPage';
 
 import routes from '~/config/route';
 
@@ -27,22 +24,21 @@ import MenuLayout from '~/components/Restaurant/Menu/MenuLayout';
 import TableResLayout from '~/components/Restaurant/Table/TableResLayout';
 
 const publicRoutes = [
-  {
-    path: routes.home,
-    component: MainLayout,
-    children: [
-      { index: true, component: Home },
-      { path: routes.about, component: About },
-      { path: routes.terms, component: TermsPage },
-      { path: routes.contact, component: Contact },
-      { path: routes.restaurants, component: Restaurants },
-      { path: routes.myCart, component: MyCart },
-      
-    ],
-  },
-  { path: routes.login, component: LoginPage },
-  { path: routes.register, component: RegisterPage },
-  {
+    {
+        path: routes.home,
+        component: MainLayout,
+        children: [
+            { index: true, component: Home },
+            { path: routes.about, component: About },
+            { path: routes.terms, component: TermsPage },
+            { path: routes.contact, component: Contact },
+            { path: routes.restaurants, component: Restaurants },
+            { path: routes.myCart, component: MyCart },
+        ],
+    },
+    { path: routes.login, component: LoginPage },
+    { path: routes.register, component: RegisterPage },
+    {
         path: routes.profile,
         component: ProfileLayout,
         children: [
@@ -56,16 +52,16 @@ const publicRoutes = [
             },
         ],
     },
-  {
+    {
         path: routes.resProfile, // Thêm /profileRestaurant vào MainLayout
         component: ProfileRestaurant,
         children: [
-          { index: true, component: ProfileRestaurantLayout },
-          { path: 'layout', component: LayoutRestaurant }, // Sử dụng relative path
-          { path: 'menu', component: MenuLayout },
-          { path: 'table', component: TableResLayout },
+            { index: true, component: ProfileRestaurantLayout },
+            { path: 'layout', component: LayoutRestaurant }, // Sử dụng relative path
+            { path: 'menu', component: MenuLayout },
+            { path: 'table', component: TableResLayout },
         ],
-      },
+    },
 ];
 
 const privateRoutes = [];
