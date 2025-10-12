@@ -1,0 +1,203 @@
+/* Anonymous toggle row */
+.anonymousRow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 6px;
+    border-top: 1px dashed #eee;
+    margin-top: 6px;
+}
+
+.anonymousLabel {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: #444;
+    cursor: pointer;
+}
+
+.anonymousHint {
+    font-size: 13px;
+    color: #777;
+}
+
+.feedbackModalOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 10, 10, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 20px;
+}
+
+.feedbackModal {
+    width: min(880px, 98%);
+    max-height: 90vh;
+    overflow: auto;
+    background: #fffefc;
+    border-radius: 12px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.3);
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.feedbackHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.feedbackHeader h3 {
+    margin: 0;
+    color: #a05424;
+}
+
+.sub {
+    font-size: 13px;
+    color: #6b6b6b;
+}
+
+.closeBtn {
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    color: #666;
+    padding: 6px 10px;
+    border-radius: 8px;
+}
+.closeBtn:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+.feedbackBody {
+    background: transparent;
+}
+
+.loading,
+.noItems {
+    padding: 20px;
+    color: #666;
+}
+
+.feedbackList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.feedbackItem {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 10px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04);
+}
+
+.foodImg {
+    width: 84px;
+    height: 84px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.foodMeta {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.foodName {
+    font-weight: 700;
+    color: #3b3b3b;
+}
+
+.controlsRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ratingLabel {
+    font-size: 14px;
+    color: #666;
+}
+
+.ratingSelect {
+    padding: 6px 8px;
+    border-radius: 8px;
+    border: 1px solid #e6e6e6;
+    background: white;
+    color: black;
+}
+
+.feedbackTextarea {
+    width: 100%;
+    min-height: 68px;
+    max-height: 160px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid #eee;
+    resize: vertical;
+    font-size: 14px;
+    color: black;
+}
+
+.modalActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+.cancelBtn {
+    background: transparent;
+    border: 1px solid #d9d9d9;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.saveBtn {
+    background: linear-gradient(90deg, rgba(168, 111, 46, 1), rgba(245, 222, 135, 1));
+    border: none;
+    padding: 8px 14px;
+    color: white;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.resultMsg {
+    text-align: center;
+    padding: 8px 10px;
+    border-radius: 8px;
+}
+
+.resultMsg.success {
+    background: rgba(46, 125, 50, 0.08);
+    color: #2e7d32;
+}
+.resultMsg.error {
+    background: rgba(183, 28, 28, 0.06);
+    color: #b71c1c;
+}
+
+@media (max-width: 600px) {
+    .feedbackItem {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .foodImg {
+        width: 100%;
+        height: 180px;
+    }
+}

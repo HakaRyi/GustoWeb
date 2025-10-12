@@ -3,10 +3,12 @@ const routes = {
     login: '/login',
     register: '/register',
     profile: '/profile',
+    bookingHistory: 'bkh',
     about: '/about',
     terms: '/terms',
     contact: '/contact',
     restaurants: '/restaurants',
+
     myCart: '/myCart',
 
     resProfile: '/profileRestaurant',

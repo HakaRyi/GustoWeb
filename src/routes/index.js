@@ -1,10 +1,19 @@
 import React from 'react';
+
+
+//Components:
+import loginPage from '~/pages/LoginPage/loginPage';
+import RegisterPage from '~/pages/registerPage';
+
 import routes from '~/config/route';
+
 import MainLayout from '~/layouts/MainLayout';
 import Home from '~/pages/Home';
 import About from '~/pages/About';
 import TermsPage from '~/pages/TermsAndLegal';
 import Contact from '~/pages/Contact';
+
+import BookingHistory from '~/pages/BookingHistory';
 import Restaurants from '~/pages/Restaurants';
 import MyCart from '~/pages/myCart.js';
 import LoginPage from '~/pages/LoginPage/loginPage';
@@ -34,13 +43,19 @@ const publicRoutes = [
   { path: routes.login, component: LoginPage },
   { path: routes.register, component: RegisterPage },
   {
-    path: routes.profile,
-    component: ProfileLayout,
-    children: [
-      { index: true, component: ProfilePage },
-      { path: '@:username', component: ProfilePage },
-    ],
-  },
+        path: routes.profile,
+        component: ProfileLayout,
+        children: [
+            {
+                index: true,
+                component: ProfilePage,
+            },
+            {
+                path: routes.bookingHistory,
+                component: BookingHistory,
+            },
+        ],
+    },
   {
         path: routes.resProfile, // Thêm /profileRestaurant vào MainLayout
         component: ProfileRestaurant,

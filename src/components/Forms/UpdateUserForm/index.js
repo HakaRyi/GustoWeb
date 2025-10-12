@@ -2,6 +2,7 @@ import classNames from 'classnames/bind'
 import style from './UpdateUserForm.module.scss'
 import { Formik, Form, Field , ErrorMessage} from 'formik'
 import * as Yup from 'yup'
+import ImageUploader from '~/components/Cloundinary/ImageUploader'
 
 import React, { useState } from 'react'
 import { customFetch } from '~/config/customFetch'
@@ -10,53 +11,61 @@ import ResultModal from '~/components/Modals/ResultModal'
 
 const cx = classNames.bind(style)
 
-function UpdateUserForm({initialValues, onProfileReload  }) {
+function UpdateUserForm({initialValues, onProfileReload, isEditing, imgFile }) {
     const [loadingVisible, setLoadingVisible] = useState(false);
     const [result, setResult] = useState({ visible: false, success: false, message: "" });
     if (!initialValues) return null;
 
     const validationSchema = Yup.object({
-        phone: Yup.string()
-            .required("Số điện thoại là bắt buộc")
-            .matches(/^(0|\+84)[0-9]{9,10}$/, "Số điện thoại không hợp lệ"),
+      phone: Yup.string()
+        .nullable()
+        .matches(/^(0|\+84)[0-9]{9,10}$/, "Số điện thoại không hợp lệ"),
 
-        age: Yup.number()
-            .required("Tuổi là bắt buộc")
-            .min(18, "Tuổi phải từ 18 trở lên")
-            .max(100, "Tuổi không được vượt quá 100"),
+      age: Yup.number()
+        .nullable()
+        .min(18, "Tuổi phải từ 18 trở lên")
+        .max(100, "Tuổi không được vượt quá 100"),
 
-        address: Yup.string()
-            .required("Địa chỉ là bắt buộc")
-            .min(5, "Địa chỉ quá ngắn"),
+      address: Yup.string()
+        .nullable()
+        .min(5, "Địa chỉ quá ngắn"),
 
-        gender: Yup.string()
-            .required("Giới tính là bắt buộc")
-            .oneOf(["Male", "Female", "Other"], "Giới tính không hợp lệ"),
+      gender: Yup.string()
+        .nullable()
+        .oneOf(["Male", "Female", "Other"], "Giới tính không hợp lệ"),
 
-        email: Yup.string()
-            .required("Email là bắt buộc")
-            .email("Email không hợp lệ"),
+      email: Yup.string()
+        .nullable()
+        .email("Email không hợp lệ"),
 
-        job: Yup.string()
-            .required("Công việc là bắt buộc")
-            .min(2, "Tên công việc quá ngắn"),
+      job: Yup.string()
+        .nullable()
+        .min(2, "Tên công việc quá ngắn"),
 
-        description: Yup.string()
-            .required("Mô tả là bắt buộc")
-            .min(10, "Mô tả quá ngắn"),
-        });
+      description: Yup.string()
+        .nullable()
+        .min(10, "Mô tả quá ngắn"),
+    });
 
     const handleSubmit = async (values) => {
+    if (!isEditing) return
     try {
       setLoadingVisible(true);
+      let imageUrl = initialValues.avatarUrl; // mặc định lấy ảnh cũ
+      if (imgFile) {
+        imageUrl = await ImageUploader(imgFile);
+      }
 
-      const res = await customFetch("https://localhost:7176/api/DinerProfile/update", {
-        method: "POST",
+    // Gắn link ảnh vào values
+      const updatedValues = { ...values, avatarUrl: imageUrl };
+      console.log("Submitting values:", updatedValues);
+      const res = await customFetch("https://localhost:7176/api/DinerProfile", {
+        method: "PUT",
         headers: {
           "Accept": "*/*",
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(values),
+        body: JSON.stringify(updatedValues),
       });
 
       if (!res.ok) throw new Error("Cập nhật thất bại");
@@ -87,7 +96,7 @@ function UpdateUserForm({initialValues, onProfileReload  }) {
             initialValues={initialValues}
             validationSchema={validationSchema}
             enableReinitialize
-            // onSubmit={handleSubmit}
+            onSubmit={handleSubmit}
             >
             <Form className={cx("form")}>
 
@@ -150,7 +159,14 @@ function UpdateUserForm({initialValues, onProfileReload  }) {
                 <ErrorMessage name="description" component="div" className={cx("error")} />
                 </div>
 
-                <button type="submit" className={cx("submitBtn")}>Lưu thông tin</button>
+              <button
+                type="submit"
+                className={cx("submitBtn")}
+                style={{ visibility: isEditing ? "visible" : "hidden" }}
+              >
+                Lưu thông tin
+              </button>
+
             </Form>
             </Formik>
         </div>

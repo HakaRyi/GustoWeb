@@ -1,0 +1,315 @@
+:root {
+    --accent: #a86f2e; /* warm accent */
+    --accent-2: #f5de87;
+    --bg: #fffaf0;
+    --card: #ffffff;
+    --muted: #6b6b6b;
+}
+
+/* Container takes into account fixed header (header height ~70px) */
+.container {
+    padding: 90px 20px 40px; /* top space for fixed Header + breathing room */
+    max-width: 1100px;
+    margin: 0 auto;
+    background: linear-gradient(180deg, rgba(250, 248, 245, 1) 0%, rgba(255, 255, 255, 1) 100%);
+    min-height: calc(100vh - 90px);
+    box-sizing: border-box;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+    padding: 10px 12px;
+    background: transparent;
+}
+
+.title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.2px;
+}
+
+.logout {
+    font-size: 20px;
+    color: var(--muted);
+    cursor: pointer;
+}
+
+/* Content wrapper holds the list of bookings */
+.contentWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* Empty state */
+.empty {
+    padding: 28px;
+    text-align: center;
+    color: var(--muted);
+    background: var(--card);
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(100, 100, 100, 0.06);
+}
+
+/* Each booking card */
+.historyItem {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    background: var(--card);
+    padding: 14px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(100, 100, 100, 0.06);
+    transition: transform 0.18s ease;
+    overflow: hidden;
+}
+
+.historyItem:hover {
+    transform: translateY(-4px);
+}
+
+/* Left avatar */
+.imgContainer {
+    width: 92px;
+    min-width: 92px;
+    height: 92px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: linear-gradient(180deg, #fff 0%, #f8f8f8 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.avartar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Main info column */
+.bookInfor {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.restaurantName {
+    font-size: 18px;
+    font-weight: 700;
+    color: #2f4b2b;
+}
+
+.restaurantAdress {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+/* Date text */
+.bookingDate {
+    font-size: 13px;
+    color: #7a7a7a;
+}
+
+/* row between status and expand button */
+.rowBetween {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Status button */
+.bookingStatusBtn {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(168, 111, 46, 0.12);
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 13px;
+}
+
+/* expand button */
+.expandBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--accent);
+    padding: 6px 8px;
+    border-radius: 8px;
+}
+.expandBtn:hover {
+    background: rgba(168, 111, 46, 0.06);
+}
+
+.rotate {
+    transform: rotate(180deg);
+    transition: transform 0.25s ease;
+}
+
+/* Details panel with nice collapse/expand */
+.detailsPanel {
+    margin-top: 10px;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.35s ease, opacity 0.25s ease, padding 0.25s;
+    opacity: 0;
+    padding: 0 0;
+    border-top: 1px dashed #eee;
+}
+
+.detailsPanel.open {
+    max-height: 1000px; /* large enough to show content, adjust if needed */
+    opacity: 1;
+    padding: 12px 6px 6px;
+}
+
+/* Dish list */
+.dishList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-right: 6px;
+}
+
+.dishRow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px;
+    border-radius: 10px;
+    background: #fffefc;
+}
+
+.dishImg {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+}
+
+.dishMeta {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.dishName {
+    font-weight: 600;
+    color: #333;
+}
+
+.dishQty {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+/* price column */
+.dishPrice {
+    font-weight: 700;
+    color: #2f4b2b;
+    white-space: nowrap;
+}
+
+/* totals */
+.totalsRow {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 16px;
+    padding-top: 10px;
+    margin-top: 8px;
+    border-top: 1px solid #f1f1f1;
+}
+
+.totalLabel {
+    font-weight: 700;
+    color: var(--muted);
+    margin-right: 8px;
+}
+
+.totalValue {
+    background: linear-gradient(90deg, rgba(168, 111, 46, 0.12), rgba(245, 222, 135, 0.06));
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+/* small devices */
+@media (max-width: 768px) {
+    .historyItem {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .rowBetween {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .imgContainer {
+        width: 100%;
+        height: 160px;
+    }
+
+    .dishRow {
+        flex-direction: row;
+    }
+
+    .totalsRow {
+        justify-content: space-between;
+    }
+}
+
+.feedbackActionBtn {
+    background: linear-gradient(160deg, #a86f2e, #f5de87);
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+    margin-left: 8px;
+}
+.feedbackActionBtn:hover {
+    opacity: 0.95;
+}
+
+/* order card */
+.orderCard {
+    margin-top: 10px;
+    padding: 10px 0;
+    border-bottom: 1px dashed #eee;
+}
+.orderHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+.orderLabel {
+    font-weight: 700;
+    color: #2f4b2b;
+}
+.orderDate {
+    font-size: 13px;
+    color: #777;
+}
+.ordersList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}

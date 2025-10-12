@@ -1,10 +1,14 @@
+.container {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
 .main-content{
     display: flex;
+    flex: 1;
     flex-direction: row;
 }
 .content{
     flex: 1;
-}
-.container{
-    overflow: hidden;
 }
