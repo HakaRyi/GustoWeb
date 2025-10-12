@@ -14,32 +14,21 @@ namespace Service
             _repository = repository;
         }
 
-        public async Task<FoodReviewResponse> AddAsync(FoodReviewRequest request)
+        public async Task AddAsync(FeedbackRequest request)
         {
-            var review = new FoodReview
+            var feedbacks = request.Feedbacks.Select(f => new FoodReview
             {
-                FoodId = request.FoodId,
-                DinerId = request.DinerId,
-                Rating = request.Rating,
-                Description = request.Description,
-                ImageUrl = request.ImageUrl,
-                IsAnonymous = request.IsAnonymous,
-                Date = DateTime.Now
-            };
+                DinerId = f.DinerId,
+                FoodId = f.FoodId,
+                Rating = f.Rating,
+                Description = f.Description,
+                IsAnonymous = f.IsAnonymous,
+                Date = DateTime.Now,
+                ImageUrl = f.ImageUrl,
+                OrderId = f.OrderId,
+            }).ToList();
 
-            var created = await _repository.AddAsync(review);
-
-            return new FoodReviewResponse
-            {
-                ReviewId = created.ReviewId,
-                FoodId = created.FoodId,
-                DinerId = created.DinerId,
-                Rating = created.Rating ?? 0,
-                Description = created.Description,
-                ImageUrl = created.ImageUrl,
-                IsAnonymous = created.IsAnonymous ?? false,
-                Date = created.Date
-            };
+            await _repository.AddAsync(feedbacks);
         }
 
         public async Task<List<FoodReviewResponse>> GetByFoodIdAsync(short foodId)
@@ -78,35 +67,21 @@ namespace Service
             }).ToList();
         }
 
-        public async Task<FoodReviewResponse?> UpdateAsync(short reviewId, FoodReviewRequest request)
+        public async Task UpdateFeedbacksAsync(FeedbackRequest request)
         {
-            var review = new FoodReview
+            var feedbacks = request.Feedbacks.Select(f => new FoodReview
             {
-                ReviewId = reviewId,
-                FoodId = request.FoodId,
-                DinerId = request.DinerId,
-                Rating = request.Rating,
-                Description = request.Description,
-                ImageUrl = request.ImageUrl,
-                IsAnonymous = request.IsAnonymous
-                // ❌ Không set Date = DateTime.Now ở đây,
-                // repo nên giữ lại Date gốc (ngày tạo).
-            };
+                DinerId = f.DinerId,
+                FoodId = f.FoodId,
+                Rating = f.Rating,
+                Description = f.Description,
+                IsAnonymous = f.IsAnonymous,
+                Date = DateTime.Now,
+                ImageUrl= f.ImageUrl,
+                OrderId = f.OrderId,
+            }).ToList();
 
-            var updated = await _repository.UpdateAsync(review);
-            if (updated == null) return null;
-
-            return new FoodReviewResponse
-            {
-                ReviewId = updated.ReviewId,
-                FoodId = updated.FoodId,
-                DinerId = updated.DinerId,
-                Rating = updated.Rating ?? 0,
-                Description = updated.Description,
-                ImageUrl = updated.ImageUrl,
-                IsAnonymous = updated.IsAnonymous ?? false,
-                Date = updated.Date
-            };
+            await _repository.UpdateFeedbacksAsync(feedbacks);
         }
 
         public async Task<bool> DeleteAsync(short reviewId, short dinerId)

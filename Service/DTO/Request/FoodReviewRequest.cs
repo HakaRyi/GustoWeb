@@ -14,5 +14,12 @@ namespace Service.DTO.Request
         public string Description { get; set; }
         public string ImageUrl { get; set; }
         public bool IsAnonymous { get; set; }
+        public short OrderId { get; set; }
     }
+
+    public class FeedbackRequest
+    {
+        public List<FoodReviewRequest> Feedbacks { get; set; }
+    }
+
 }

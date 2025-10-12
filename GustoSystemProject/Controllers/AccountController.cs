@@ -6,6 +6,7 @@ using Service;
 using Service.DTO.Request;
 using Service.DTO.Request.AccountRequest;
 using Service.DTO.Response;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -204,11 +205,20 @@ namespace GustoSystemProject.Controllers
             if (role == 1)//Diner
             {
                 var result = await _dinerProfileService.GetByIdAsync(id);
+                if(result == null)
+                {
+                    return Ok(new DinerProfile());
+                }
                 return Ok(result);
             }
             else if (role == 2) //Restaurant
             {
                 var result = await _restaurantProfileService.GetByIdAsync(id);
+                if (result == null)
+                {
+                    return Ok(new RestaurantProfile());
+                }
+
                 return Ok(result);
             }
             else

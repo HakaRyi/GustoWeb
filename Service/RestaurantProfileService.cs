@@ -58,6 +58,7 @@ namespace Service
                 Email = resPro.Email,
                 FacebookUrl = resPro.FacebookUrl,
                 FullName = resPro.FullName,
+
                 OpenAt = resPro.OpenAt,
                 CloseAt = resPro.CloseAt,
                 Phone = resPro.Phone,
@@ -85,6 +86,7 @@ namespace Service
                     Email = item.Email,
                     FacebookUrl = item.FacebookUrl,
                     FullName = item.FullName,
+
                     OpenAt = item.OpenAt,
                     CloseAt = item.CloseAt,
                     Phone = item.Phone,
@@ -111,6 +113,7 @@ namespace Service
                         Email = resPro.Email,
                         FacebookUrl = resPro.FacebookUrl,
                         FullName = resPro.FullName,
+
                         OpenAt=resPro.OpenAt,
                         CloseAt=resPro.CloseAt,
                         Phone = resPro.Phone,
@@ -142,6 +145,7 @@ namespace Service
                 Email = request.Email ?? null,
                 FacebookUrl = request.FacebookUrl ?? null,
                 Phone = request.Phone ?? null,
+
                 OpenAt=  request.OpenAt ?? null,
                 CloseAt = request.CloseAt ?? null,
                 Address = request.Address ?? null,
@@ -164,6 +168,7 @@ namespace Service
             item.Email = request.Email;
             item.FacebookUrl = request.FacebookUrl; 
             item.Phone = request.Phone;
+
             item.OpenAt = request.OpenAt;
             item.CloseAt = request.CloseAt;
             item.TiktokUrl = request.TiktokUrl;

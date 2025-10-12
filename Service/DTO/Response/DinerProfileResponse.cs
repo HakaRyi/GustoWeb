@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Repository.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,5 +22,6 @@ namespace Service.DTO.Response
         public string FacebookUrl { get; set; }
         public string TiktokUrl { get; set; }
         public int? RewardPoints { get; set; }
+        public List<Booking>? Bookings { get; set; }
     }
 }
