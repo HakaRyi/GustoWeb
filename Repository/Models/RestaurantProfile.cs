@@ -35,6 +35,8 @@ public partial class RestaurantProfile
 
     public virtual ICollection<Favourite> Favourites { get; set; } = new List<Favourite>();
 
+
+    public virtual PaymentMerchant PaymentMerchant { get; set; }
     public virtual ICollection<Promotion> Promotions { get; set; } = new List<Promotion>();
 
     public virtual ICollection<RestaurantLayout> RestaurantLayouts { get; set; } = new List<RestaurantLayout>();

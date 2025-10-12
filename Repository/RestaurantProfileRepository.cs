@@ -25,13 +25,15 @@ namespace Repository
                 .Include(r=>r.RestaurantTables)
                 .Include(r=>r.Promotions)
                 .Include(r => r.Bookings)
-                .ThenInclude(r => r.Orders)
+                    .ThenInclude(r=>r.Orders)
+                    .ThenInclude(r=>r.Table)
                 .Include(r => r.Favourites)
                 .ToListAsync();
         }
         public async Task<RestaurantProfile> GetByIdAsync(int id)
         {
             return await context.RestaurantProfiles
+                .Include(r=>r.Account)
                 .Include(r => r.RestaurantLayouts)
                 .Include(r => r.RestaurantMenus)
                 .Include(r => r.RestaurantTables)
@@ -66,6 +68,7 @@ namespace Repository
                     .ThenInclude(o => o.OrderDetails)
                 .Include(r => r.Bookings)
                     .ThenInclude(b => b.Table)             
+
                 .Include(r => r.Favourites)
                 .ToListAsync();
         }

@@ -28,4 +28,6 @@ public partial class Booking
     public virtual RestaurantProfile Restaurant { get; set; }
 
     public virtual RestaurantTable Table { get; set; }
+
+    public virtual Transaction Transaction { get; set; }
 }

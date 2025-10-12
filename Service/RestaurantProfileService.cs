@@ -58,6 +58,9 @@ namespace Service
                 Email = resPro.Email,
                 FacebookUrl = resPro.FacebookUrl,
                 FullName = resPro.FullName,
+
+                OpenAt = resPro.OpenAt,
+                CloseAt = resPro.CloseAt,
                 Phone = resPro.Phone,
                 TiktokUrl = resPro.TiktokUrl,
                 }).ToList());
@@ -83,6 +86,9 @@ namespace Service
                     Email = item.Email,
                     FacebookUrl = item.FacebookUrl,
                     FullName = item.FullName,
+
+                    OpenAt = item.OpenAt,
+                    CloseAt = item.CloseAt,
                     Phone = item.Phone,
                     TiktokUrl = item.TiktokUrl
                 };
@@ -107,6 +113,9 @@ namespace Service
                         Email = resPro.Email,
                         FacebookUrl = resPro.FacebookUrl,
                         FullName = resPro.FullName,
+
+                        OpenAt=resPro.OpenAt,
+                        CloseAt=resPro.CloseAt,
                         Phone = resPro.Phone,
                         TiktokUrl = resPro.TiktokUrl
                         
@@ -136,10 +145,12 @@ namespace Service
                 Email = request.Email ?? null,
                 FacebookUrl = request.FacebookUrl ?? null,
                 Phone = request.Phone ?? null,
+
+                OpenAt=  request.OpenAt ?? null,
+                CloseAt = request.CloseAt ?? null,
                 Address = request.Address ?? null,
                 AvatarUrl = request.AvatarUrl ?? null,
                 
-
             };
             return await repository.CreateAsync(newItem);
         }
@@ -157,6 +168,9 @@ namespace Service
             item.Email = request.Email;
             item.FacebookUrl = request.FacebookUrl; 
             item.Phone = request.Phone;
+
+            item.OpenAt = request.OpenAt;
+            item.CloseAt = request.CloseAt;
             item.TiktokUrl = request.TiktokUrl;
             item.Description = request.Description;
             item.FullName = request.FullName;
@@ -174,5 +188,80 @@ namespace Service
 
             return await repository.DeleteAsync(profileId);
         }
+
+        // ===== ADMIN CRUD =====
+
+        public async Task<int> AdminUpdateProfileAsync(int profileId, RestaurantProfileRequest request)
+        {
+            var item = await repository.GetByIdAsync(profileId);
+            if (item == null)
+                throw new Exception($"Profile with ID {profileId} not found.");
+
+            item.Address = request.Address;
+            item.AvatarUrl = request.AvatarUrl;
+            item.Email = request.Email;
+            item.FacebookUrl = request.FacebookUrl; 
+            item.Phone = request.Phone;
+            item.OpenAt = request.OpenAt;
+            item.CloseAt = request.CloseAt;
+            item.TiktokUrl = request.TiktokUrl;
+            item.Description = request.Description;
+            item.FullName = request.FullName;
+
+            return await repository.UpdateAsync(item);
+        }
+
+        public async Task<int> AdminDeleteProfileAsync(int profileId)
+        {
+            var item = await repository.GetByIdAsync(profileId);
+            if (item == null)
+                throw new Exception($"Profile with ID {profileId} not found.");
+
+            return await repository.DeleteAsync(profileId);
+        }
+
+        public async Task<int> AdminCreateProfileAsync(RestaurantProfileRequest request, short accId)
+        {
+            // ✅ Kiểm tra Account có tồn tại không
+            var acc = await accRepo.GetAccountById(accId);
+            if (acc == null)
+                throw new Exception($"Account with ID {accId} does not exist.");
+
+            // ✅ Kiểm tra Account có phải là loại nhà hàng (nếu có Role)
+            // if (acc.Role != "Restaurant") throw new Exception("Account is not a restaurant account.");
+
+            // ✅ Kiểm tra đã có profile chưa
+            var existingProfile = await repository.GetByIdAsync(accId);
+            if (existingProfile != null)
+                throw new Exception($"Account ID {accId} already has a RestaurantProfile.");
+
+            // ✅ Tạo mới
+            var newProfile = new RestaurantProfile
+            {
+                AccountId = accId,
+                FullName = request.FullName?.Trim(),
+                TiktokUrl = request.TiktokUrl?.Trim(),
+                Description = request.Description?.Trim(),
+                Email = request.Email?.Trim(),
+                FacebookUrl = request.FacebookUrl?.Trim(),
+                Phone = request.Phone?.Trim(),
+                OpenAt = request.OpenAt,
+                CloseAt = request.CloseAt,
+                Address = request.Address?.Trim(),
+                AvatarUrl = request.AvatarUrl?.Trim()
+            };
+
+            try
+            {
+                return await repository.CreateAsync(newProfile);
+            }
+            catch (Exception ex)
+            {
+                // ⚠️ Ghi log lỗi cụ thể để dễ debug
+                throw new Exception($"Failed to create RestaurantProfile: {ex.InnerException?.Message ?? ex.Message}");
+            }
+        }
+
     }
 }
+

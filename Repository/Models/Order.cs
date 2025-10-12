@@ -13,11 +13,17 @@ public partial class Order
 
     public DateTime Date { get; set; }
 
+    public DateTime? PickTime { get; set; }
+
+    public int? NumOfPeople { get; set; }
+
     public decimal? TotalPrice { get; set; }
 
     public decimal? DiscountAmount { get; set; }
 
     public decimal? FinalPrice { get; set; }
+
+    public string Note { get; set; }
 
     public string Status { get; set; }
 

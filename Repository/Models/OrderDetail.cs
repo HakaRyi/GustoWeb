@@ -13,8 +13,6 @@ public partial class OrderDetail
 
     public short OrderId { get; set; }
 
-    public string Note { get; set; }
-
     public int NumberOfFood { get; set; }
 
     public decimal? FoodPrice { get; set; }
