@@ -1,7 +1,7 @@
 
 async function ImageUploader(file) {
-    const CLOUD_NAME = "dgqrus47s";
-    const UPLOAD_PRESET = "Gusto";
+    const CLOUD_NAME = "dz74ypnth";
+    const UPLOAD_PRESET = "gustoImage";
 
     const formData = new FormData();
     formData.append("file", file);

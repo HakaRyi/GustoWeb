@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 //Components:
 import loginPage from '~/pages/LoginPage/loginPage';
@@ -12,26 +12,39 @@ import ProfilePage from '~/pages/ProfilePage';
 import TermsPage from '~/pages/TermsAndLegal';
 import Restaurants from '~/pages/Restaurants';
 import Contact from '~/pages/Contact';
-
+import BookingHistory from '~/pages/BookingHistory';
 
 const publicRoutes = [
-    {path: routes.home, component: MainLayout,
-        children:[{
-        index: true, component: Home
-    },{ path: routes.about, component: About },
-        { path: routes.terms, component: TermsPage },
-    { path: routes.contact, component: Contact },
-{ path: routes.restaurants, component: Restaurants },] //Toàn bộ con đi từ Home mà có Header với Footer đều nằm trong này nhan
-},
-    {path: routes.login, component: loginPage},
-    {path: routes.register, component: RegisterPage},
-    {path: routes.profile, component: ProfileLayout,
-        children: [{
-            index: true,
-            path: '@:username',
-            component: ProfilePage
-        }]
-    }
+    {
+        path: routes.home,
+        component: MainLayout,
+        children: [
+            {
+                index: true,
+                component: Home,
+            },
+            { path: routes.about, component: About },
+            { path: routes.terms, component: TermsPage },
+            { path: routes.contact, component: Contact },
+            { path: routes.restaurants, component: Restaurants },
+        ], //Toàn bộ con đi từ Home mà có Header với Footer đều nằm trong này nhan
+    },
+    { path: routes.login, component: loginPage },
+    { path: routes.register, component: RegisterPage },
+    {
+        path: routes.profile,
+        component: ProfileLayout,
+        children: [
+            {
+                index: true,
+                component: ProfilePage,
+            },
+            {
+                path: routes.bookingHistory,
+                component: BookingHistory,
+            },
+        ],
+    },
 ];
 
 const privateRoutes = [];
