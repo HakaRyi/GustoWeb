@@ -1,0 +1,120 @@
+.cardMenu {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: #fffdf6;
+  border: 0px solid #424921;
+  border-radius: 12px;
+  padding: 15px;
+  width: 100%;
+  max-width: 1000px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: relative;
+  margin-bottom: 20px;
+  margin-left: 100px; // Sát trái
+  align-self: center; // Đảm bảo card sát trái
+  cursor: pointer;
+  .menuImage {
+    width: 300px;
+    height: 200px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 0px solid #424921;
+  }
+
+  .menuInfo {
+    flex: 1;
+    h4 {
+      margin: 0;
+      font-size: 1.4rem;
+      color: #424921;
+      font-weight: 600;
+    }
+    p {
+      margin: 5px 0 0;
+      color: #6a7636;
+      font-size: 1rem;
+    }
+  }
+
+  .menu {
+    position: relative;
+  }
+
+  .menuBtn {
+    color: #6a7636;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+      color: #6a7636;
+    }
+  }
+
+  .menuDropdown {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    background: #fffdf6;
+    border: 2px solid #424921;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    min-width: 120px;
+
+    button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background: none;
+      border: none;
+      color: #424921;
+      font-size: 0.9rem;
+      text-align: left;
+      cursor: pointer;
+
+      &:hover {
+        background: #424921;
+        color: #fff;
+      }
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .cardMenu {
+    flex-direction: column;
+    align-items: flex-start; // Sát trái trên mobile
+    padding: 10px;
+
+    .menuImage {
+      width: 100%;
+      height: 150px;
+    }
+
+    .menuInfo {
+      h4 {
+        font-size: 1.2rem;
+      }
+      p {
+        font-size: 0.9rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .cardMenu {
+    .menuImage {
+      height: 120px;
+    }
+  }
+}

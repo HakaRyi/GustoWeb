@@ -42,6 +42,7 @@
   padding: 10px 20px;
   font-size: 1rem;
   color: #eaeaea;
+  font-weight: 600;
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid #ccc; /* Viền không sáng khi không nhấn */
   border-radius: 8px;
@@ -55,6 +56,7 @@
 
   &:hover {
     color: #ffd369;
+    background: rgba(255, 211, 105, 0.2); 
     border-color: #ffd369; /* Viền sáng nhẹ khi hover */
   }
 
@@ -110,11 +112,16 @@
     &:focus {
       background: rgba(0, 0, 0, 0);
     }
+    &:focus-visible {
+      border: 2px solid #ffd369 !important;
+    
+    }
+
   }
 
   .searchIcon {
     position: absolute;
-    right: 0px;
+    right: 40px;
     top: 50%;
     transform: translateY(-50%) translateX(70%);
     font-size: 1.4rem;

@@ -121,7 +121,23 @@ function ProfilePage() {
                 onClose={() => setResult((s) => ({ ...s, visible: false }))}
             />
         </div>
-    );
+
+        <div className={cx('infor-wrapper')}>
+            <div className={cx('infor-title')}>Bio and other information</div>
+            <FontAwesomeIcon className={cx('edit-icon')} icon={faUserPen} />
+            <UpdateUserForm initialValues={profileData} onProfileReload={fetchProfile} />
+        </div>
+      </div>
+      <LoadingModal visible={loadingVisible} message="Bếp đang nấu, vui lòng chờ..." />
+      <ResultModal
+        visible={result.visible}
+        success={result.success}
+        message={result.message}
+        onClose={() => setResult((s) => ({ ...s, visible: false }))}
+      />
+    </div>
+    
+  )
 }
 
 export default ProfilePage;

@@ -13,10 +13,11 @@ import { publicRoutes } from '~/routes';
 import { useState, useEffect } from 'react';
 function App() {
     const [token, setToken] = useState(localStorage.getItem('token') || null);
-     const [isAdmin, setIsAdmin] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
   return (
    <Router>
      <div className="App">
+      
             <Routes>
                 {publicRoutes.map((route, index) => {
                     let Layout = Fragment;// ở đây mình set default layout nè, tức là layout có sẵn Header và Footer

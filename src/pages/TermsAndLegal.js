@@ -99,7 +99,7 @@ const TermsPage = () => {
           <h2>11. Liên hệ</h2>
           <p>
             Nếu bạn có bất kỳ câu hỏi hoặc khiếu nại nào liên quan đến Điều khoản & Pháp lý, vui lòng liên hệ qua email:
-            <a href="mailto:support@gusto.vn"> support@gusto.vn</a>.
+            <a href="/contact"> gusto.cpn@gmail.com</a>.
           </p>
         </section>
       </div>

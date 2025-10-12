@@ -7,14 +7,15 @@ import { useNavigate } from 'react-router-dom'
 import routes from '~/config/route'
 import LoadingModal from '~/components/Modals/LoadingModal'
 import ResultModal from '~/components/Modals/ResultModal'
-
+import { useDispatch } from 'react-redux';
+import { loginSuccess } from '~/redux/authSlice';
 const cx = className.bind(styles)
 
 function LoginForm() {
   const [loadingVisible, setLoadingVisible] = useState(false);
   const [result, setResult] = useState({ visible: false, success: false, message: "" });
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const initialValues = {
     userName: '',
     password: '',
@@ -37,11 +38,14 @@ function LoginForm() {
           "Accept": "*/*",
           "Content-Type": "application/json",
         },
-        credentials: "include",
+        credentials: "include", 
         body: JSON.stringify(loginData),
+        credentials: "include",
       });
 
         if(loginResponse.ok){
+          console.log("đăng nhập thành công với user:", values.userName);
+          dispatch(loginSuccess({ user: { username: values.userName } }));
           setLoadingVisible(false)
           navigate(routes.home);
         }else{

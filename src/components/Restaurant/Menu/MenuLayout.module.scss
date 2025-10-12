@@ -1,0 +1,94 @@
+.menuLayoutContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; // Sát trái
+ 
+  color: #424921; // Chữ chính
+  min-height: 100vh; // Full chiều cao
+  padding: 30px 20px;
+  font-family: 'Verdana', 'Geneva', 'Tahoma', sans-serif;
+  transition: margin-left 0.3s ease;
+
+  &.sidebarCollapsed {
+    margin-left: 60px; // Phù hợp với sidebar thu gọn
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1000px;
+  margin-bottom: 25px;
+  margin-left: 100px; // Sát trái
+  align-self: flex-start; // Đảm bảo header sát trái
+
+  h3 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: #424921;
+    font-weight: 600;
+  }
+}
+
+.createBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: #424921;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+
+  &:hover {
+    background: #6a7636;
+    transform: translateY(-2px);
+  }
+
+  .btnIcon {
+    font-size: 1rem;
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .menuLayoutContainer {
+    padding: 20px;
+    margin-left: 60px; // Sidebar thu gọn mặc định
+    &.sidebarExpanded {
+      margin-left: 200px;
+    }
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start; // Sát trái trên mobile
+    gap: 15px;
+
+    h3 {
+      font-size: 1.5rem;
+    }
+  }
+
+  .createBtn {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .menuLayoutContainer {
+    padding: 10px;
+  }
+
+  .createBtn {
+    width: 100%;
+    justify-content: center;
+  }
+}
