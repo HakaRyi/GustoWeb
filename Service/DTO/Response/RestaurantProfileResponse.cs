@@ -28,5 +28,6 @@ namespace Service.DTO.Response
         public string? FacebookUrl { get; set; }
 
         public string? TiktokUrl { get; set; }
+        public int Rating { get; set; }
     }
 }
