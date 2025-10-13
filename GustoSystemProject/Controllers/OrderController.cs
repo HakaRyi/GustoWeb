@@ -75,7 +75,7 @@ namespace GustoSystemProject.Controllers
         public async Task<IActionResult> GetMyOrderPending()
         {
             var accountId = User.FindFirst("AccountID")?.Value;
-            var order = await _service.GetOrderPending(short.Parse(accountId));
+            var order = await _service.GetMyOrderPending(short.Parse(accountId));
             return Ok(new
             {
                 exists = order != null,

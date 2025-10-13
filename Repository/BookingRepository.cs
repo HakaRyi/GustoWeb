@@ -18,11 +18,33 @@ namespace Repository
         }
         public async Task<List<Booking>> GetAllAsync()
         {
-            return await context.Bookings.ToListAsync();
+            return await context.Bookings
+                .Include(b=>b.Restaurant)
+                .Include(b=>b.Order)
+                .Include(b=>b.Diner)
+                .Include(b => b.Table)
+                .Include(b => b.Transaction)
+                .ToListAsync();
         }
         public async Task<Booking> GetBookingAsync(int id)
         {
-            return await context.Bookings.FirstOrDefaultAsync(b=>b.BookingId==id);
+            return await context.Bookings
+                .Include(b => b.Restaurant)
+                .Include(b => b.Order)
+                .Include(b => b.Diner)
+                .Include(b => b.Table)
+                .Include(b => b.Transaction)
+                .FirstOrDefaultAsync(b=>b.BookingId==id);
+        }
+        public async Task<Booking> GetBookingByMeAndResAsync(short dinerId, short resId)
+        {
+            return await context.Bookings
+                .Include(b => b.Restaurant)
+                .Include(b => b.Order)
+                .Include(b => b.Diner)
+                .Include(b => b.Table)
+                .Include(b => b.Transaction)
+                .FirstOrDefaultAsync(b => b.DinerId == dinerId && b.RestaurantId == resId && b.Status == "Pending");
         }
         public async Task<int> Create(Booking booking)
         {

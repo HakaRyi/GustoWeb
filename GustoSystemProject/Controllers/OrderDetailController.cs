@@ -31,14 +31,19 @@ namespace GustoSystemProject.Controllers
         }
 
         // POST api/<OrderDetailController>
-        [HttpPost]
-        public async Task<int> Post(OrderDetail detail)
+        [HttpPost("{foodId}/{orderId}")]
+        public async Task<IActionResult> Post ([FromRoute]short foodId,short orderId)
         {
             if (ModelState.IsValid)
             {
-                return await service.CreateAsync(detail);
+                await service.AddOrderDetailAsync(orderId, foodId);
             }
-            return 0;
+            return Ok(new
+            {
+                message = "add thanh cong",
+             
+            });
+
         }
 
         // PUT api/<OrderDetailController>/5

@@ -39,7 +39,17 @@ namespace Service
             }
             return new Booking();
         }
-
+        public async Task<Booking> GetBookingByMeAndResAsync(short dinerId,short resId)
+        {
+            try
+            {
+                return await repo.GetBookingByMeAndResAsync(dinerId,resId);
+            }
+            catch (Exception ex)
+            {
+            }
+            return new Booking();
+        }
         public async Task<int> Create(short dinerId, short restaurantId)
         {
             try
@@ -53,7 +63,7 @@ namespace Service
                 var booking = new Booking()
                 {
                     DinerId = dinerId,
-                    BookingTime = DateTime.Now,
+                    BookingTime = null,
                     CreatedAt = DateTime.Now,
                     Status = "Pending",
                     RestaurantId = restaurantId, 
@@ -93,6 +103,7 @@ namespace Service
 
                 if (booking.DinerId==dinnerId && booking !=null)
                 {
+                    booking.BookingTime = DateTime.Now;
                     return await repo.Update(booking);
                 }
                 return 0;

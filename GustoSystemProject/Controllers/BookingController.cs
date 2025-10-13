@@ -29,7 +29,12 @@ namespace GustoSystemProject.Controllers
         {
             return await service.GetBooking(id);
         }
-
+        [HttpGet("getBookingByMeAndRes/{resId}")]
+        public async Task<Booking> GetBookingByMeAndResAsync([FromRoute] short resId)
+        {
+            var dinerId = User.FindFirst("AccountID")?.Value;
+            return await service.GetBookingByMeAndResAsync(short.Parse(dinerId),resId);
+        }
         // POST api/<BookingController>
         [HttpPost("{restaurantId}")]
         public async Task<IActionResult> Post([FromRoute] short restaurantId)
@@ -59,8 +64,23 @@ namespace GustoSystemProject.Controllers
 
         // PUT api/<BookingController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put([FromRoute]short id)
         {
+            var dinerId = User.FindFirst("AccountID")?.Value;
+            var result = await service.Update(id,short.Parse(dinerId));
+  
+            if (result == 0)
+            {
+                return StatusCode(500, new
+                {
+                    message = "cant update booking, loi 500:V"
+                });
+            }
+            return Ok(new
+            {
+                message = "Booking successfully updated",
+                result = result
+            });
         }
 
         // DELETE api/<BookingController>/5

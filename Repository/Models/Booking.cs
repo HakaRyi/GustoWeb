@@ -15,7 +15,7 @@ public partial class Booking
 
     public short? TableId { get; set; }
 
-    public DateTime BookingTime { get; set; }
+    public DateTime? BookingTime { get; set; }
 
     public string Status { get; set; }
 

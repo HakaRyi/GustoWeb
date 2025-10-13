@@ -42,10 +42,24 @@ namespace Service
             }
             return new OrderDetail();
         }
-        public async Task<int> CreateAsync(OrderDetail detail)
+        public async Task<int> CreateAsync(short foodId, short orderId)
         {
             try
             {
+                var product = await _menuRepository.GetByIdAsync(foodId);
+                var order = await _orderRepository.GetOrderAsync(orderId);
+                if (order.Status != "Pending")
+                {
+                    throw new InvalidOperationException("Cannot add order detail to an order that is not pending.");
+                }
+                var detail = new OrderDetail
+                {
+                    FoodId = foodId,
+                    FoodPrice = product.Price,
+                    NumberOfFood = 1,
+                    OrderId = orderId
+
+                };
                 return await _repository.CreateAsync(detail);
             }
             catch (Exception ex)
