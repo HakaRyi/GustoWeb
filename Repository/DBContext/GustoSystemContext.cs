@@ -108,7 +108,7 @@ public partial class GustoSystemContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Account_Role");
         });
-
+   
         modelBuilder.Entity<Booking>(entity =>
         {
 
@@ -143,8 +143,13 @@ public partial class GustoSystemContext : DbContext
             entity.HasOne(d => d.Table).WithMany(p => p.Bookings)
                 .HasForeignKey(d => d.TableId)
                 .HasConstraintName("FK_Booking_Table");
-        });
 
+            entity.HasOne(b => b.Order).WithOne(o => o.Booking)
+                .HasForeignKey<Order>(o => o.BookingId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_Booking_Order");
+        });
+        
         modelBuilder.Entity<DinerProfile>(entity =>
         {
 
@@ -311,8 +316,8 @@ public partial class GustoSystemContext : DbContext
             entity.Property(e => e.TableId).HasColumnName("Table_Id");
             entity.Property(e => e.TotalPrice).HasColumnType("decimal(10, 2)");
 
-            entity.HasOne(d => d.Booking).WithMany(p => p.Orders)
-                .HasForeignKey(d => d.BookingId)
+            entity.HasOne(d => d.Booking).WithOne(p => p.Order)
+                .HasForeignKey<Order>(d => d.BookingId)
                 .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("FK_Order_Booking");
 

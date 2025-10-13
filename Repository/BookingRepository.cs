@@ -1,0 +1,63 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Repository.DBContext;
+using Repository.Models;
+
+namespace Repository
+{
+    public class BookingRepository
+    {
+        private readonly GustoSystemContext context;
+        public BookingRepository(GustoSystemContext context)
+        {
+            this.context = context;
+        }
+        public async Task<List<Booking>> GetAllAsync()
+        {
+            return await context.Bookings.ToListAsync();
+        }
+        public async Task<Booking> GetBookingAsync(int id)
+        {
+            return await context.Bookings.FirstOrDefaultAsync(b=>b.BookingId==id);
+        }
+        public async Task<int> Create(Booking booking)
+        {
+            context.Bookings.Add(booking);
+            return await context.SaveChangesAsync();
+        }
+        public async Task<Booking?> GetLatestBookingByDiner(short dinerId)
+        {
+            return await context.Bookings
+                .Where(b => b.DinerId == dinerId)
+                .OrderByDescending(b => b.BookingTime)
+                .FirstOrDefaultAsync();
+        }
+        public async Task<Booking?> GetPendingBookingByDinerAndRestaurant(short dinerId, short restaurantId)
+        {
+            return await context.Bookings
+                .Where(b => b.DinerId == dinerId && b.RestaurantId == restaurantId && b.Status == "Pending")
+                .FirstOrDefaultAsync();
+        }
+        public async Task<int> Update(Booking booking)
+        {
+            context.Bookings.Update(booking);
+            return await context.SaveChangesAsync();
+        }
+        public async Task<bool> Delete(short id)
+        {
+            var booking = await GetBookingAsync(id);
+            if (booking !=null)
+            {
+                context.Bookings.Remove(booking);
+                await context.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
+
+    }
+}

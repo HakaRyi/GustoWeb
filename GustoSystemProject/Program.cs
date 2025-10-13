@@ -104,6 +104,12 @@ builder.Services.AddScoped<RestaurantMenuService>();
 builder.Services.AddScoped<FavouriteService>();
 builder.Services.AddScoped<FoodReviewService>();
 builder.Services.AddScoped<DinerProfileService>();
+builder.Services.AddScoped<OrderService>();
+builder.Services.AddScoped<OrderDetailService>();
+builder.Services.AddScoped<BookingService>();
+builder.Services.AddScoped<PaymentMerchantService>();
+builder.Services.AddScoped<TasteService>();
+builder.Services.AddScoped<OptionalService>();
 
 builder.Services.AddScoped<AccountRepository>();
 builder.Services.AddScoped<RoleRepository>();
@@ -114,6 +120,14 @@ builder.Services.AddScoped<RestaurantMenuRepository>();
 builder.Services.AddScoped<RestaurantProfileRepository>();
 builder.Services.AddScoped<RestaurantTableRepository>();
 builder.Services.AddScoped<DinerProfileRepository>();
+builder.Services.AddScoped<OrderRepository>();
+builder.Services.AddScoped<OrderDetailRepository>();
+builder.Services.AddScoped<BookingRepository>();
+builder.Services.AddScoped<PaymentMerchantRepository>();
+builder.Services.AddScoped<TasteRepository>();
+builder.Services.AddScoped<OptionalRepository>();
+
+
 
 builder.Services.AddSingleton<SpeedSmsService>();
 

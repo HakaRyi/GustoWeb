@@ -1,0 +1,72 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Cms;
+using Repository.Models;
+using Service;
+
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
+namespace GustoSystemProject.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class BookingController : ControllerBase
+    {
+        private readonly BookingService service;
+        public BookingController(BookingService service)
+        {
+            this.service = service;
+        }
+        // GET: api/<BookingController>
+        [HttpGet]
+        public async Task<List<Booking>> Get()
+        {
+            return await service.GetBookings();
+        }
+
+        // GET api/<BookingController>/5
+        [HttpGet("{id}")]
+        public async Task<Booking> Get([FromRoute]int id)
+        {
+            return await service.GetBooking(id);
+        }
+
+        // POST api/<BookingController>
+        [HttpPost("{restaurantId}")]
+        public async Task<IActionResult> Post([FromRoute] short restaurantId)
+        {
+            var dinerId = User.FindFirst("AccountID")?.Value;
+            var result = await service.Create(short.Parse(dinerId), restaurantId);
+            if (result == -1)
+            {
+                return Ok(new
+                {
+                    message = "booking is existed"
+                });
+            }
+            if (result == 0)
+            {
+                return StatusCode(500, new
+                {
+                    message = "cant create booking, loi 500, hoac nha hang co the ko ton tai :V"
+                });
+            }
+            return Ok(new
+            {
+                message = "Booking and Order successfully created",
+                result = result   
+            });
+        }
+
+        // PUT api/<BookingController>/5
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody] string value)
+        {
+        }
+
+        // DELETE api/<BookingController>/5
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+        }
+    }
+}

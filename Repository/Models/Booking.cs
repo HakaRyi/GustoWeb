@@ -23,7 +23,7 @@ public partial class Booking
 
     public virtual DinerProfile Diner { get; set; }
 
-    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+    public virtual Order Order { get; set; } 
 
     public virtual RestaurantProfile Restaurant { get; set; }
 
