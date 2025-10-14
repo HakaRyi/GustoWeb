@@ -26,6 +26,12 @@ namespace Repository
                 .Include(o => o.RestaurantMenu)
                 .FirstOrDefaultAsync(pm => pm.Id == id);
         }
+        public async Task<List<Optional>> GetOptByMenuAsync(short id)
+        {
+            return await context.Optionals
+                .Where(pm => pm.RestaurantMenuId == id)
+                .ToListAsync();
+        }
 
         public async Task<int> CreateAsync(Optional opt)
         {

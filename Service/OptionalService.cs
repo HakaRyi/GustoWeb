@@ -34,6 +34,17 @@ namespace Service
             }
             return new Optional();
         }
+        public async Task<List<Optional>> GetOptByMenuAsync(short id)
+        {
+            try
+            {
+                return await repository.GetOptByMenuAsync(id);
+            }
+            catch (Exception ex)
+            {
+            }
+            return new List<Optional>();
+        }
 
         public async Task<int> Create(Optional option)
         {

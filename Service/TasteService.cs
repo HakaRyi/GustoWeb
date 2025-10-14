@@ -23,6 +23,17 @@ namespace Service
             }
             return new List<Taste>();
         }
+        public async Task<List<Taste>> GetTasteByMenuAsync(short id)
+        {
+            try
+            {
+                return await repository.GetTasteByMenuAsync(id);
+            }
+            catch (Exception ex)
+            {
+            }
+            return new List<Taste>();
+        }
         public async Task<Taste> GetByIdAsync(short id)
         {
             try

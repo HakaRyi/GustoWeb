@@ -21,6 +21,11 @@ namespace GustoSystemProject.Controllers
         {
             return await service.GetAllAsync();
         }
+        [HttpGet("menu/{menuId}")]
+        public async Task<List<Taste>> GetTasteByMenu([FromRoute]short menuId)
+        {
+            return await service.GetTasteByMenuAsync(menuId);
+        }
 
         // GET api/<TasteController>/5
         [HttpGet("{id}")]
