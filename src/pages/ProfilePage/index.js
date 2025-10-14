@@ -161,6 +161,7 @@ function ProfilePage() {
     const [selectedFile, setSelectedFile] = useState(null);
     const [profileData, setProfileData] = useState(null);
     const fileInputRef = useRef(null);
+    const [initialData, setInitialData] = useState(null);
 
     // Lấy dữ liệu người dùng:
     const fetchProfile = async () => {
@@ -173,6 +174,7 @@ function ProfilePage() {
             if (!response.ok) setResult({ visible: true, success: false, message: 'Lấy dữ liệu không thành công' });
             const data = await response.json();
             setProfileData(data);
+            setInitialData(data);
             console.log(data);
             setPreview(
                 data.avatarUrl && data.avatarUrl.trim() !== ''
@@ -186,6 +188,21 @@ function ProfilePage() {
             setLoadingVisible(false);
             setIsEditing(false);
         }
+    };
+
+    const handleEditClick = () => {
+        setIsEditing(true);
+    };
+
+    const handleCancelClick = () => {
+        setProfileData(initialData); // Khôi phục dữ liệu gốc
+        setPreview(
+            initialData.avatarUrl && initialData.avatarUrl.trim() !== ''
+                ? initialData.avatarUrl
+                : 'https://i.pinimg.com/1200x/a6/24/d1/a624d160e5f627d98fc22a442fb0423c.jpg',
+        ); // Khôi phục ảnh preview
+        setSelectedFile(null);
+        setIsEditing(false);
     };
 
     useEffect(() => {

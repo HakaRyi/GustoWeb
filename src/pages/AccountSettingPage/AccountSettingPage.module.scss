@@ -1,0 +1,42 @@
+.container {
+    padding: 100px 40px 20px;
+    width: 100%;
+}
+
+.page-title {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 15px;
+}
+
+.section {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    margin-bottom: 40px;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.section-description {
+    font-size: 1rem;
+    color: #666 !important;
+    margin-bottom: 25px;
+    line-height: 1.6;
+    text-align: left !important;
+}
+
+.danger-zone {
+    border: 2px solid #ff4d4f;
+    background-color: #fff5f5;
+
+    .section-title {
+        color: #d93025;
+    }
+}

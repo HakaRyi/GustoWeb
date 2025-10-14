@@ -1,0 +1,54 @@
+// Biến màu giả định, bạn có thể thay đổi cho phù hợp với theme của mình
+$primary-color: #6a7636;
+$text-color: #333;
+$text-light-color: #777;
+$background-color: #f7f7f7;
+
+.empty-state-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 30px;
+    text-align: center;
+    background-color: $background-color;
+    border-radius: 12px;
+    border: 1px dashed #ddd;
+    margin: 30px 0;
+}
+
+.icon-wrapper {
+    margin-bottom: 20px;
+    .icon {
+        font-size: 5rem; // Kích thước icon lớn
+        color: $primary-color;
+        opacity: 0.6;
+    }
+}
+
+.message {
+    font-size: 1.2rem;
+    color: $text-light-color;
+    max-width: 400px;
+    line-height: 1.6;
+    margin: 0 0 25px 0;
+}
+
+.action-button {
+    background-color: $primary-color;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 28px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+
+    &:hover {
+        background-color: darken($primary-color, 5%);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba($primary-color, 0.3);
+    }
+}

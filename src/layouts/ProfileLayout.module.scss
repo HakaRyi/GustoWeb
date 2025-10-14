@@ -1,14 +1,22 @@
+/* File CSS cho ProfileLayout của bạn */
+
 .container {
     overflow: hidden;
     display: flex;
     flex-direction: column;
     height: 100vh;
 }
-.main-content{
+
+.main-content {
     display: flex;
     flex: 1;
     flex-direction: row;
+    /* Thêm thuộc tính này để tránh tràn ở một số trình duyệt */
+    min-height: 0;
 }
-.content{
+
+.content {
     flex: 1;
+    /* ✅ DÒNG QUAN TRỌNG NHẤT */
+    overflow-y: auto;
 }
