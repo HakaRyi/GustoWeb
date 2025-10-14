@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Repository.Models;
 using Service;
+using Service.DTO.Request;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -34,9 +35,15 @@ namespace GustoSystemProject.Controllers
 
         // POST api/<PaymentMerchantController>
         [HttpPost]
-        public async Task<int> Post(PaymentMerchant paymentMerchant)
+        public async Task<IActionResult> Post([FromBody] AddPaymentMerchantRequest request)
         {
-            return await service.Create(paymentMerchant);
+            var id = User.FindFirst("AccountID")?.Value;
+
+            if (id == null)
+                return Unauthorized(new { message = "Không tìm thấy thông tin người dùng trong token" });
+            request.AccountId = short.Parse(id);
+            var result = await service.Create(request);
+            return Ok(result);
         }
 
         // PUT api/<PaymentMerchantController>/5

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Repository.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,5 +30,7 @@ namespace Service.DTO.Response
 
         public string? TiktokUrl { get; set; }
         public int Rating { get; set; }
+
+        public virtual PaymentMerchant paymentMerchant { get; set; }
     }
 }

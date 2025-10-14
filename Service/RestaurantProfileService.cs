@@ -140,7 +140,8 @@ namespace Service
                     CloseAt = item.CloseAt,
                     Phone = item.Phone,
                     TiktokUrl = item.TiktokUrl,
-                    Rating = (int)Math.Round(avgRating) // Làm tròn về int 0–5
+                    Rating = (int)Math.Round(avgRating), // Làm tròn về int 0–5
+                    paymentMerchant = item.PaymentMerchant,
                 };
             }
             catch (Exception e)

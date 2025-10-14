@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Repository;
 using Repository.Models;
+using Service.DTO.Request;
 
 namespace Service
 {
@@ -48,11 +49,16 @@ namespace Service
             }
             return new PaymentMerchant();
         }
-        public async Task<int> Create(PaymentMerchant paymentMerchant)
+        public async Task<int> Create(AddPaymentMerchantRequest request)
         {
             try
             {
-                return await paymentMerchantRepository.CreateAsync(paymentMerchant);
+                PaymentMerchant merchant = new PaymentMerchant();
+                merchant.AccountId = request.AccountId;
+                merchant.BankAccountName = request.BankAccountName;
+                merchant.BankNo = request.BankNo;
+                merchant.Bank = request.Bank;
+                return await paymentMerchantRepository.CreateAsync(merchant);
             }
             catch (Exception ex)
             {

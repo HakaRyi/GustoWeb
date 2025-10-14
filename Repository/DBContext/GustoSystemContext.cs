@@ -73,10 +73,6 @@ public partial class GustoSystemContext : DbContext
     }
 
 
-    public virtual DbSet<Taste> Tastes { get; set; }
-
-
-    public virtual DbSet<Transaction> Transactions { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer(GetConnectionString("DefaultConnection")).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);

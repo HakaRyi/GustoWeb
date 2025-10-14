@@ -28,6 +28,7 @@ namespace Repository
                     .ThenInclude(r=>r.Order)
                     .ThenInclude(r=>r.Table)
                 .Include(r => r.Favourites)
+                .Include(r => r.PaymentMerchant)
                 .ToListAsync();
         }
         public async Task<RestaurantProfile> GetByIdAsync(int id)
@@ -50,6 +51,7 @@ namespace Repository
                     .ThenInclude(b => b.Order)
                     .ThenInclude(o => o.OrderDetails) 
                 .Include(r => r.Favourites)
+                .Include(r => r.PaymentMerchant)
                 .FirstOrDefaultAsync(r => r.AccountId == id);
         }
         public async Task<List<RestaurantProfile>> GetByAccountAsync(int accountId)
