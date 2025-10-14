@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 using Org.BouncyCastle.Ocsp;
 using Repository;
@@ -16,10 +17,12 @@ namespace Service
     {
         private readonly RestaurantProfileRepository repository;
         private readonly AccountRepository accRepo;
-        public RestaurantProfileService(RestaurantProfileRepository repository, AccountRepository accRepo)
+        private readonly FoodReviewRepository foodReviewRepository;
+        public RestaurantProfileService(RestaurantProfileRepository repository, AccountRepository accRepo, FoodReviewRepository foodReviewRepository)
         {
             this.repository = repository;
             this.accRepo = accRepo;
+            this.foodReviewRepository = foodReviewRepository;
         }
         public async Task<List<RestaurantProfile>> GetAllAsync1()
         {
@@ -49,34 +52,49 @@ namespace Service
         {
             try
             {
-                return await repository.GetAllAsync()
-                    .ContinueWith(task=>task.Result.Select(resPro => new RestaurantProfileResponse { 
-                AccountId = resPro.AccountId,
-                Address = resPro.Address,
-                AvatarUrl = resPro.AvatarUrl,
-                Description = resPro.Description,
-                Email = resPro.Email,
-                FacebookUrl = resPro.FacebookUrl,
-                FullName = resPro.FullName,
+      
+                var restaurantProfiles = await repository.GetAllAsync();
 
-                OpenAt = resPro.OpenAt,
-                CloseAt = resPro.CloseAt,
-                Phone = resPro.Phone,
-                TiktokUrl = resPro.TiktokUrl,
-                }).ToList());
-                 
- 
+                var result = new List<RestaurantProfileResponse>();
+
+                foreach (var resPro in restaurantProfiles)
+                {
+                    var averageRating = await foodReviewRepository.GetAverageRatingByRestaurantIdAsync(resPro.AccountId);
+
+                    result.Add(new RestaurantProfileResponse
+                    {
+                        AccountId = resPro.AccountId,
+                        Address = resPro.Address,
+                        AvatarUrl = resPro.AvatarUrl,
+                        Description = resPro.Description,
+                        Email = resPro.Email,
+                        FacebookUrl = resPro.FacebookUrl,
+                        FullName = resPro.FullName,
+                        OpenAt = resPro.OpenAt,
+                        CloseAt = resPro.CloseAt,
+                        Phone = resPro.Phone,
+                        TiktokUrl = resPro.TiktokUrl,
+                        Rating = (int)Math.Round(averageRating)
+                    });
+                }
+
+                return result;
             }
             catch (Exception ex)
             {
             }
             return new List<RestaurantProfileResponse>();
+
         }
         public async Task<RestaurantProfileResponse> GetByIdAsync2(int id)
         {
             try
             {
                 var item = await repository.GetByIdAsync(id);
+                if (item == null) return new RestaurantProfileResponse();
+
+                double avgRating = await foodReviewRepository.GetAverageRatingByRestaurantIdAsync(id);
+
                 return new RestaurantProfileResponse
                 {
                     AccountId = item.AccountId,
@@ -86,48 +104,51 @@ namespace Service
                     Email = item.Email,
                     FacebookUrl = item.FacebookUrl,
                     FullName = item.FullName,
-
                     OpenAt = item.OpenAt,
                     CloseAt = item.CloseAt,
                     Phone = item.Phone,
-                    TiktokUrl = item.TiktokUrl
+                    TiktokUrl = item.TiktokUrl,
+                    Rating = (int)Math.Round(avgRating) // Làm tròn về int 0–5
                 };
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
-
+                Console.WriteLine(e.Message);
             }
             return new RestaurantProfileResponse();
         }
 
-        public async Task<List<RestaurantProfileResponse>> GetByAccountAsync(int accId)
+        public async Task<RestaurantProfileResponse> GetByAccountAsync(int accId)
         {
             try
             {
-                return await repository.GetByAccountAsync(accId)
-                    .ContinueWith(task => task.Result.Select(resPro => new RestaurantProfileResponse
-                    {
-                        AccountId =resPro.AccountId,
-                        Address = resPro.Address,
-                        AvatarUrl = resPro.AvatarUrl,
-                        Description=resPro.Description,
-                        Email = resPro.Email,
-                        FacebookUrl = resPro.FacebookUrl,
-                        FullName = resPro.FullName,
+                var item = await repository.GetByIdAsync(accId);
+                if (item == null) return new RestaurantProfileResponse();
 
-                        OpenAt=resPro.OpenAt,
-                        CloseAt=resPro.CloseAt,
-                        Phone = resPro.Phone,
-                        TiktokUrl = resPro.TiktokUrl
-                        
+                double avgRating = await foodReviewRepository.GetAverageRatingByRestaurantIdAsync(accId);
 
-
-                    }).ToList());
+                return new RestaurantProfileResponse
+                {
+                    AccountId = item.AccountId,
+                    Address = item.Address,
+                    AvatarUrl = item.AvatarUrl,
+                    Description = item.Description,
+                    Email = item.Email,
+                    FacebookUrl = item.FacebookUrl,
+                    FullName = item.FullName,
+                    OpenAt = item.OpenAt,
+                    CloseAt = item.CloseAt,
+                    Phone = item.Phone,
+                    TiktokUrl = item.TiktokUrl,
+                    Rating = (int)Math.Round(avgRating) // Làm tròn về int 0–5
+                };
             }
             catch (Exception e)
             {
-
+                
             }
-            return new List<RestaurantProfileResponse>();
+
+            return new RestaurantProfileResponse();
         }
         public async Task<int> CreateProfileAsync(RestaurantProfileRequest request, short accId)
         {

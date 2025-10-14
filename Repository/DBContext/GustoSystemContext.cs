@@ -72,6 +72,12 @@ public partial class GustoSystemContext : DbContext
         return connectionString;
     }
 
+
+    public virtual DbSet<Taste> Tastes { get; set; }
+
+
+    public virtual DbSet<Transaction> Transactions { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer(GetConnectionString("DefaultConnection")).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -105,7 +111,7 @@ public partial class GustoSystemContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Account_Role");
         });
-
+   
         modelBuilder.Entity<Booking>(entity =>
         {
             entity.HasKey(e => e.BookingId).HasName("PK__Booking__35ABFDC0EA209B84");
@@ -139,8 +145,13 @@ public partial class GustoSystemContext : DbContext
             entity.HasOne(d => d.Table).WithMany(p => p.Bookings)
                 .HasForeignKey(d => d.TableId)
                 .HasConstraintName("FK_Booking_Table");
-        });
 
+            entity.HasOne(b => b.Order).WithOne(o => o.Booking)
+                .HasForeignKey<Order>(o => o.BookingId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_Booking_Order");
+        });
+        
         modelBuilder.Entity<DinerProfile>(entity =>
         {
             entity.HasKey(e => e.AccountId).HasName("PK__Diner_Pr__349DA5A627C08665");
@@ -301,8 +312,8 @@ public partial class GustoSystemContext : DbContext
             entity.Property(e => e.TableId).HasColumnName("Table_Id");
             entity.Property(e => e.TotalPrice).HasColumnType("decimal(10, 2)");
 
-            entity.HasOne(d => d.Booking).WithMany(p => p.Orders)
-                .HasForeignKey(d => d.BookingId)
+            entity.HasOne(d => d.Booking).WithOne(p => p.Order)
+                .HasForeignKey<Order>(d => d.BookingId)
                 .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("FK_Order_Booking");
 

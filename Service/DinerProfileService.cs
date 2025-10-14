@@ -34,7 +34,7 @@ namespace Service
         public async Task<bool> AddAsync(DinerProfileRequest request)
         {
             var entity = new DinerProfile
-            {
+            { 
                 AvatarUrl = request.AvatarUrl,
                 FullName = request.FullName,
                 Phone = request.Phone,

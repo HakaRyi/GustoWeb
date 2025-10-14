@@ -28,7 +28,7 @@ namespace Repository
         {
             return await _context.FoodReviews
                 .Include(r => r.Diner)
-                .Include(r => r.Food)
+                .Include(r => r.Food).ThenInclude(r=>r.Account)
                 .Where(r => r.FoodId == foodId)
                 .ToListAsync();
         }
@@ -79,6 +79,19 @@ namespace Repository
             _context.FoodReviews.Remove(review);
             await _context.SaveChangesAsync();
             return true;
+        }
+        public async Task<double> GetAverageRatingByRestaurantIdAsync(int restaurantId)
+        {
+            var ratings = await _context.FoodReviews
+                .Where(r => r.Food.AccountId == restaurantId && r.Rating.HasValue)
+                .Select(r => r.Rating.Value)
+                .ToListAsync();
+
+            if (ratings == null || ratings.Count == 0)
+                return 0; 
+
+         
+            return Math.Round(ratings.Average(), 1);
         }
     }
 }
