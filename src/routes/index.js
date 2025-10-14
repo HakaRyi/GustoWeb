@@ -22,8 +22,12 @@ import ProfileRestaurantLayout from '~/components/Restaurant/ProfileRestaurantLa
 import LayoutRestaurant from '~/components/Restaurant/LayoutRestaurant/LayoutRestaurant';
 import MenuLayout from '~/components/Restaurant/Menu/MenuLayout';
 import TableResLayout from '~/components/Restaurant/Table/TableResLayout';
+
 import AccountSettingsPage from '~/pages/AccountSettingPage';
 import PaymentMerchantRequest from '~/pages/PaymentMerchant';
+
+import IntegratePaymentAccount from '~/components/Restaurant/IntegratePaymentAccount/IntegratePaymentAccount';
+import RestaurantDetail from '~/components/RestaurantDetail/RestaurantDetail';
 
 const publicRoutes = [
     {
@@ -35,6 +39,7 @@ const publicRoutes = [
             { path: routes.terms, component: TermsPage },
             { path: routes.contact, component: Contact },
             { path: routes.restaurants, component: Restaurants },
+            { path: routes.restaurantDetail, component: RestaurantDetail },
             { path: routes.myCart, component: MyCart },
         ],
     },
@@ -70,6 +75,7 @@ const publicRoutes = [
             { path: 'layout', component: LayoutRestaurant }, // Sử dụng relative path
             { path: 'menu', component: MenuLayout },
             { path: 'table', component: TableResLayout },
+            { path: 'integratePaymentAccount', component: IntegratePaymentAccount },
         ],
     },
     {

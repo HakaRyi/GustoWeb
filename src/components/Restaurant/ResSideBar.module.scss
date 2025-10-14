@@ -1,135 +1,135 @@
 .resSidebar {
-  background-color: #424921; // Màu nền tối, sang trọng
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  padding: 20px 0;
-  position: sticky;
-  top: 80px; // Giả định header cao 80px
-  min-height: calc(100vh - 80px); // Full height trừ header
-  transition: width 0.3s ease, box-shadow 0.3s ease; // Animation mượt
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2); // Shadow nhẹ
-  font-family: 'Verdana', 'Geneva', 'Tahoma', sans-serif;
+    background-color: #424921; // Màu nền tối, sang trọng
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+    position: sticky;
+    top: 80px; // Giả định header cao 80px
+    min-height: calc(100vh - 80px); // Full height trừ header
+    transition: width 0.3s ease, box-shadow 0.3s ease; // Animation mượt
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2); // Shadow nhẹ
+    font-family: 'Verdana', 'Geneva', 'Tahoma', sans-serif;
 }
 
 // Chế độ mở rộng
 .expanded {
-  width: 240px;
+    width: 240px;
 }
 
 // Chế độ thu gọn
 .collapsed {
-  width: 60px; // Chỉ đủ cho icon và padding
+    width: 60px; // Chỉ đủ cho icon và padding
 }
 
 // Nút toggle
 .toggleBtn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  background-color: #f5de87; // Màu vàng nổi bật
-  color: #424921;
-  border: none;
-  border-radius: 50%;
-  margin: 10px auto;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
-  font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: #f5de87; // Màu vàng nổi bật
+    color: #424921;
+    border: none;
+    border-radius: 50%;
+    margin: 10px auto;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    font-size: 18px;
 
-  &:hover {
-    background-color: #e6c76e;
-    transform: scale(1.1);
-  }
+    &:hover {
+        background-color: #e6c76e;
+        transform: scale(1.1);
+    }
 }
 
 // Menu item
 .resMenuItem {
-  display: flex;
-  align-items: center;
-  padding: 14px 20px;
-  color: #fff;
-  text-decoration: none;
-  font-size: 15px;
-  transition: background-color 0.3s, transform 0.2s;
+    display: flex;
+    align-items: center;
+    padding: 14px 20px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 15px;
+    transition: background-color 0.3s, transform 0.2s;
 
-  &:hover {
-    background-color: #f5de87;
-    color: #424921;
-    transform: translateX(4px);
-  }
+    &:hover {
+        background-color: #f5de87;
+        color: #424921;
+        transform: translateX(4px);
+    }
 
-  &.active {
-    background-color: #f5de87;
-    color: #424921;
-    font-weight: bold;
-    border-left: 4px solid #6a7636; // Đường viền khi active
-  }
+    &.active {
+        background-color: #f5de87;
+        color: #424921;
+        font-weight: bold;
+        border-left: 4px solid #6a7636; // Đường viền khi active
+    }
 }
 
 // Icon
 .resIcon {
-  margin-right: 10px;
-  font-size: 20px;
-  flex-shrink: 0; // Giữ icon không bị co
+    margin-right: 10px;
+    font-size: 20px;
+    flex-shrink: 0; // Giữ icon không bị co
 }
 
 // Text của menu
 .resMenuText {
-  opacity: 1;
-  transition: opacity 0.3s;
+    opacity: 1;
+    transition: opacity 0.3s;
 }
 
 // Ẩn text khi thu gọn
 .collapsed .resMenuText {
-  opacity: 0;
-  width: 0;
-  overflow: hidden;
+    opacity: 0;
+    width: 0;
+    overflow: hidden;
 }
 
 // Logout button
 .resLogoutBtn {
-  display: flex;
-  align-items: center;
-  padding: 14px 20px;
-  background-color: transparent;
-  color: #fff;
-  border: none;
-  font-size: 15px;
-  cursor: pointer;
-  margin-top: auto; // Đẩy xuống dưới cùng
-  transition: background-color 0.3s, transform 0.2s;
+    display: flex;
+    align-items: center;
+    padding: 14px 20px;
+    background-color: transparent;
+    color: #fff;
+    border: none;
+    font-size: 15px;
+    cursor: pointer;
 
-  &:hover {
-    background-color: #fff4c3; // Màu đỏ khi hover
-    color: #424921;
-    transform: translateX(4px);
-  }
+    transition: background-color 0.3s, transform 0.2s;
+
+    &:hover {
+        background-color: #fff4c3; // Màu đỏ khi hover
+        color: #424921;
+        transform: translateX(4px);
+    }
 }
 
 // Responsive cho mobile
 @media (max-width: 768px) {
-  .resSidebar {
-    width: 60px; // Thu gọn mặc định trên mobile
-    &.expanded {
-      width: 200px; // Giảm width trên mobile
+    .resSidebar {
+        width: 60px; // Thu gọn mặc định trên mobile
+        &.expanded {
+            width: 200px; // Giảm width trên mobile
+        }
     }
-  }
 
-  .toggleBtn {
-    width: 36px;
-    height: 36px;
-    font-size: 16px;
-  }
+    .toggleBtn {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+    }
 
-  .resMenuItem,
-  .resLogoutBtn {
-    padding: 12px 16px;
-    font-size: 14px;
-  }
+    .resMenuItem,
+    .resLogoutBtn {
+        padding: 12px 16px;
+        font-size: 14px;
+    }
 
-  .resIcon {
-    font-size: 18px;
-  }
+    .resIcon {
+        font-size: 18px;
+    }
 }

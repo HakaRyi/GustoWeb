@@ -1,17 +1,24 @@
 import React from 'react';
+
+import { useNavigate } from 'react-router-dom';
 import styles from '../../styles/CardRestaurant.module.scss';
-import classNames from 'classnames/bind';
 
-const cx = classNames.bind(styles);
+const CardRestaurant = ({ restaurant }) => {
+    const navigate = useNavigate();
 
-const CardRestaurant = ({ restaurant, view = 'list' }) => {
-    const cardClasses = cx('card', {
-        'grid-view': view === 'grid',
-    });
+    const createSlug = (name) =>
+        name
+            .toLowerCase()
+            .replace(/\s+/g, '-')
+            .replace(/[^a-z0-9-]/g, '');
 
+    const handleClick = () => {
+        const slug = createSlug(restaurant.name);
+        navigate(`/restaurants/${slug}`, { state: { id: restaurant.id } });
+    };
     return (
-        <div className={styles.cardContainer}>
-            <div className={cardClasses}>
+        <div className={styles.cardContainer} onClick={handleClick}>
+            <div className={styles.card}>
                 {restaurant.isNew && <span className={styles.badge}>NEW</span>}
                 <div className={styles.imageBox}>
                     <img src={restaurant.image} alt={restaurant.name} />

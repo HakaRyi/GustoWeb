@@ -13,8 +13,6 @@ const ProfileRestaurantLayout = () => {
     const [editing, setEditing] = useState(false);
     const [uploading, setUploading] = useState(false);
 
-    const navigate = useNavigate();
-
     useEffect(() => {
         const fetchProfile = async () => {
             try {
@@ -24,7 +22,6 @@ const ProfileRestaurantLayout = () => {
                 if (!res.ok) throw new Error('Lỗi khi lấy hồ sơ nhà hàng');
 
                 const data = await res.json();
-
                 // vì API trả về 1 object, không cần data[0]
                 const profileData = data;
 
@@ -45,6 +42,11 @@ const ProfileRestaurantLayout = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+
+        if (name === 'description' && value.length > 250) {
+            alert('Mô tả không được vượt quá 250 ký tự!');
+            return;
+        }
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
@@ -204,8 +206,15 @@ const ProfileRestaurantLayout = () => {
                             value={formData.description || ''}
                             onChange={handleChange}
                             readOnly={!editing}
+                            maxLength={250}
                             className={styles.formInput}
+                            style={{ height: '100px', resize: 'vertical' }}
                         />
+                        {editing && (
+                            <p style={{ fontSize: '0.8rem', color: '#888', textAlign: 'right' }}>
+                                {formData.description?.length || 0}/250 ký tự
+                            </p>
+                        )}
                     </label>
                 </div>
 

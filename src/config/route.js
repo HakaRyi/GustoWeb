@@ -14,6 +14,7 @@ const routes = {
     terms: '/terms',
     contact: '/contact',
     restaurants: '/restaurants',
+    restaurantDetail: '/restaurants/:slug',
 
     myCart: '/myCart',
 
@@ -22,6 +23,7 @@ const routes = {
     reslayout: 'layout', // Relative path
     resmenu: 'menu',
     restable: 'table',
+    resPayAcc: 'integratePaymentAccount',
 };
 
 export default routes;

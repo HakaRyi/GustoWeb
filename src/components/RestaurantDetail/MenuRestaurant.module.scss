@@ -1,0 +1,39 @@
+.menuRestaurant {
+    background-color: #fff8e1;
+    padding: 30px 60px;
+    border-radius: 10px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.menuTitle {
+    font-size: 80px;
+    text-align: center;
+    color: #424921;
+    margin-bottom: 30px;
+    font-weight: bold;
+    letter-spacing: -2px;
+}
+
+.menuCategories {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.menuCategory {
+    .categoryTitle {
+        font-size: 30px;
+        color: #798636;
+        font-weight: bolder;
+        margin-bottom: 15px;
+        margin-left: 20px;
+    }
+
+    .categoryItems {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: flex-start;
+        margin-left: 40px;
+    }
+}
