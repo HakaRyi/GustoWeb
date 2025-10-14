@@ -1,143 +1,183 @@
 .card {
-  display: flex;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  align-items: center;
-  background: #ffffff;
-  border-radius: 14px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  width: 650px;
-  margin: 20px auto;
-  position: relative;
-  border: 2px solid #dceeff;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex; /* Mặc định là layout ngang */
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    align-items: center;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 650px; /* Chiều rộng cho list view */
+    margin: 20px auto;
+    position: relative;
+    border: 1px solid #e0e0e0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 
-  &:hover {
-    transform: translateY(-6px);
-    cursor: pointer;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-  }
+    &:hover {
+        transform: translateY(-6px);
+        cursor: pointer;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    /* 💡 ĐÂY LÀ PHẦN NÂNG CẤP CHO GRID VIEW */
+    &.grid-view {
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        align-items: stretch;
+
+        .imageBox {
+            flex: 0 0 auto;
+            width: 100%;
+            height: 180px;
+            margin-left: 0;
+
+            border-radius: 14px 14px 0 0;
+            img {
+                border-radius: 14px 14px 0 0;
+            }
+        }
+
+        .info {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .name {
+            font-size: 1.1rem;
+        }
+
+        .statusRow {
+            margin-top: auto;
+            padding-top: 10px;
+        }
+
+        .btn {
+            width: 100%;
+            margin-top: 10px;
+        }
+    }
 }
 
 .cardContainer {
-  display: inline-block;
+    display: inline-block;
+    width: 100%;
 }
 
 /* --- NEW badge --- */
 .badge {
-  position: absolute;
-  top: -10px;
-  left: -10px;
-  background: #ff3b3b;
-  color: #fff;
-  font-size: 12px;
-  font-weight: bold;
-  padding: 6px 10px;
-  border-radius: 50% 50% 50% 0;
-  transform: rotate(-20deg);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  z-index: 20; /* Đảm bảo badge nằm trên các phần tử khác trong card */
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    background: #ff3b3b;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 6px 10px;
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-20deg);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    z-index: 20; /* Đảm bảo badge nằm trên các phần tử khác trong card */
 }
 
 /* --- Image --- */
 .imageBox {
-  flex: 0 0 220px;
-  height: 180px;
-  overflow: hidden;
-  border-radius: 10px;
-  margin-left: 15px;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    flex: 0 0 220px;
+    height: 180px;
+    overflow: hidden;
     border-radius: 10px;
-  }
+    margin-left: 15px;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+    }
 }
 
 /* --- Info section --- */
 .info {
-  flex: 1;
-  padding: 15px 25px;
-  text-align: left;
-  color: #222;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+    flex: 1;
+    padding: 15px 25px;
+    text-align: left;
+    color: #222;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .name {
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin-bottom: 5px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 5px;
 }
 
 .rating {
-  font-size: 1.3rem;
-  color: #ffcc00;
-  margin-bottom: 5px;
-  letter-spacing: 4px; 
+    font-size: 1.3rem;
+    color: #ffcc00;
+    margin-bottom: 5px;
+    letter-spacing: 4px;
 
-  .grayStar {
-    color: #ccc;
-  }
+    .grayStar {
+        color: #ccc;
+    }
 }
 
-
 .address {
-  
-  font-size: 0.9rem;
-  color: #666 !important;
-  margin-bottom: 10px;
-  
+    font-size: 0.9rem;
+    color: #666 !important;
+    margin-bottom: 10px;
+
     text-align: left !important;
-  
 }
 
 /* --- Status row --- */
 .statusRow {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 15px;
-  font-size: 0.9rem;
-  color: #333;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+    color: #333;
 }
 
 .statusDot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
 }
 
 .open {
-  background: #00c851;
+    background: #00c851;
 }
 
 .closed {
-  background: #ff4444;
+    background: #ff4444;
 }
 
 .statusText {
-  font-weight: 600;
+    font-weight: 600;
 }
 
 .time {
-  margin-left: 8px;
-  color: #555;
+    margin-left: 8px;
+    color: #555;
 }
 
 /* --- Button --- */
 .btn {
-  background: #00c851;
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  padding: 8px 18px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s ease;
-  box-shadow: 0 2px 5px rgba(0, 200, 81, 0.3);
+    background: #00c851;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 8px 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 200, 81, 0.3);
 
-  &:hover {
-    background: #02e57f;
-    transform: scale(1.05);
-  }
+    &:hover {
+        background: #02e57f;
+        transform: scale(1.05);
+    }
 }

@@ -2,8 +2,14 @@ const routes = {
     home: '/',
     login: '/login',
     register: '/register',
+
     profile: '/profile',
     bookingHistory: 'bkh',
+    favourite: 'favourites',
+    setting: 'settings',
+
+    uploadBankAccount: '/upload-bank-account',
+
     about: '/about',
     terms: '/terms',
     contact: '/contact',

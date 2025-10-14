@@ -8,9 +8,7 @@
 
 /* Container takes into account fixed header (header height ~70px) */
 .container {
-    padding: 90px 20px 40px; /* top space for fixed Header + breathing room */
-    max-width: 1100px;
-    margin: 0 auto;
+    padding: 90px 110px 40px; /* top space for fixed Header + breathing room */
     background: linear-gradient(180deg, rgba(250, 248, 245, 1) 0%, rgba(255, 255, 255, 1) 100%);
     min-height: calc(100vh - 90px);
     box-sizing: border-box;

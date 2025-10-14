@@ -9,7 +9,7 @@ import Home from '~/pages/Home';
 import About from '~/pages/About';
 import TermsPage from '~/pages/TermsAndLegal';
 import Contact from '~/pages/Contact';
-
+import FavouritePage from '~/pages/FavouritePage';
 import BookingHistory from '~/pages/BookingHistory';
 import Restaurants from '~/pages/Restaurants';
 import MyCart from '~/pages/myCart.js';
@@ -22,6 +22,8 @@ import ProfileRestaurantLayout from '~/components/Restaurant/ProfileRestaurantLa
 import LayoutRestaurant from '~/components/Restaurant/LayoutRestaurant/LayoutRestaurant';
 import MenuLayout from '~/components/Restaurant/Menu/MenuLayout';
 import TableResLayout from '~/components/Restaurant/Table/TableResLayout';
+import AccountSettingsPage from '~/pages/AccountSettingPage';
+import PaymentMerchantRequest from '~/pages/PaymentMerchant';
 
 const publicRoutes = [
     {
@@ -50,6 +52,14 @@ const publicRoutes = [
                 path: routes.bookingHistory,
                 component: BookingHistory,
             },
+            {
+                path: routes.favourite,
+                component: FavouritePage,
+            },
+            {
+                path: routes.setting,
+                component: AccountSettingsPage,
+            },
         ],
     },
     {
@@ -61,6 +71,10 @@ const publicRoutes = [
             { path: 'menu', component: MenuLayout },
             { path: 'table', component: TableResLayout },
         ],
+    },
+    {
+        path: routes.uploadBankAccount,
+        component: PaymentMerchantRequest,
     },
 ];
 
