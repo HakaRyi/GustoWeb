@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
@@ -169,7 +170,11 @@ namespace Service
             {
 
                 var result = await _repo.GetAccountByUserName(request.UserName);
-
+                if(result.RoleId != 1 && result != null)
+                {
+                    if (result.Password == request.Password) await GenerateTokens(result);
+                    return true;
+                }
 
                 if(result != null)
                 {
@@ -177,8 +182,8 @@ namespace Service
 
                     var verificationResult = passwordHasher.VerifyHashedPassword(result, result.Password, request.Password);
 
-                    if (verificationResult == PasswordVerificationResult.Success ||
-                        verificationResult == PasswordVerificationResult.SuccessRehashNeeded)
+                    if (verificationResult == Microsoft.AspNetCore.Identity.PasswordVerificationResult.Success ||
+                        verificationResult == Microsoft.AspNetCore.Identity.PasswordVerificationResult.SuccessRehashNeeded)
                     {
                         await GenerateTokens(result);
                     }
@@ -416,6 +421,36 @@ namespace Service
                 _logger.LogError(ex, "Error in isPhoneExistAsync");
                 return false;
             }
+        }
+
+        public async Task<bool> ChangPassword(ChangePasswordRequest request, short dinerId)
+        {
+            try
+            {
+                var account = await _repo.GetAccountById(dinerId);
+                var passwordHasher = new PasswordHasher<Account>();
+                var verificationResult = passwordHasher.VerifyHashedPassword(account, account.Password, request.currentPassword);
+
+                if (verificationResult == Microsoft.AspNetCore.Identity.PasswordVerificationResult.Success ||
+                    verificationResult == Microsoft.AspNetCore.Identity.PasswordVerificationResult.SuccessRehashNeeded)
+                {
+                    account.Password = passwordHasher.HashPassword(account, request.newPassword);
+                    account.UpdateAt = DateTime.Now;
+                    await _repo.UpdateAccount(account);
+                    return true;
+                }
+                else
+                {
+                    throw new InvalidCredentialsException();
+                }
+                
+            }
+            catch (NotFoundException ex)
+            {
+                throw;
+            }
+            
+
         }
     }
 }

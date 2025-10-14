@@ -16,18 +16,11 @@ namespace Service
             _repository = repository;
         }
 
-        public async Task<List<FavouriteResponse>> GetByDinerIdAsync(short dinerId)
+        public async Task<List<RestaurantProfile>> GetByDinerIdAsync(short dinerId)
         {
             var favs = await _repository.GetByDinerIdAsync(dinerId);
 
-            return favs.Select(f => new FavouriteResponse
-            {
-                Id = f.Id,
-                DinerId = f.DinerId,
-                RestaurantId = f.RestaurantId,
-                CreatedAt = f.CreatedAt,
-                RestaurantName = f.Restaurant?.FullName,
-            }).ToList();
+            return favs.Select(f => f.Restaurant).ToList();
         }
 
         public async Task<FavouriteResponse?> GetByIdAsync(short id)
@@ -70,9 +63,9 @@ namespace Service
             await _repository.UpdateAsync(fav);
         }
 
-        public async Task DeleteAsync(short id)
+        public async Task DeleteAsync(short id, short dinerId)
         {
-            await _repository.DeleteAsync(id);
+            await _repository.DeleteAsync(id, dinerId);
         }
     }
 }

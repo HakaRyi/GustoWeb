@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Service.DTO.Request;
 using Service.DTO.Response;
 using Service;
+using Repository.Models;
 
 namespace GustoSystemProject.Controllers
 {
@@ -17,10 +18,14 @@ namespace GustoSystemProject.Controllers
             _service = service;
         }
 
-        [HttpGet("diner/{dinerId}")]
-        public async Task<ActionResult<List<FavouriteResponse>>> GetByDinerId(short dinerId)
+        [HttpGet("diner")]
+        public async Task<ActionResult<List<RestaurantProfile>>> GetByDinerId()
         {
-            var result = await _service.GetByDinerIdAsync(dinerId);
+            var id = User.FindFirst("AccountID")?.Value;
+
+            if (id == null)
+                return Unauthorized(new { message = "Không tìm thấy thông tin người dùng trong token" });
+            var result = await _service.GetByDinerIdAsync(short.Parse(id));
             return Ok(result);
         }
 
@@ -35,6 +40,11 @@ namespace GustoSystemProject.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(FavouriteRequest request)
         {
+            var id = User.FindFirst("AccountID")?.Value;
+
+            if (id == null)
+                return Unauthorized(new { message = "Không tìm thấy thông tin người dùng trong token" });
+            request.DinerId = short.Parse(id);
             await _service.AddAsync(request);
             return Ok();
         }
@@ -49,7 +59,11 @@ namespace GustoSystemProject.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(short id)
         {
-            await _service.DeleteAsync(id);
+            var dinerId = User.FindFirst("AccountID")?.Value;
+
+            if (dinerId == null)
+                return Unauthorized(new { message = "Không tìm thấy thông tin người dùng trong token" });
+            await _service.DeleteAsync(id, short.Parse(dinerId));
             return Ok();
         }
     }

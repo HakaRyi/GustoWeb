@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Client;
 using Repository.ModelExtensions;
 using Repository.Models;
 using Service;
 using Service.DTO.Request;
 using Service.DTO.Request.AccountRequest;
 using Service.DTO.Response;
+using System.Net.WebSockets;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
@@ -163,6 +165,7 @@ namespace GustoSystemProject.Controllers
         }
 
         [HttpGet("profile/{id}")]
+        [Authorize(Roles = "1,2")]
         public async Task<IActionResult> GetProfileByIdAsync(short id)
         {
             var account = await _service.GetAccountByIdAsync(id);
@@ -224,6 +227,31 @@ namespace GustoSystemProject.Controllers
             else
             {
                 return NotFound(new { message = "Không tìm thấy hồ sơ" });
+            }
+           
+        }
+        [HttpPut("change-password")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordRequest request)
+        {
+            try
+            {
+                var id = User.FindFirst("AccountID")?.Value;
+
+                if (id == null)
+                    return Unauthorized(new { message = "Không tìm thấy thông tin người dùng trong token" });
+                var result = await _service.ChangPassword(request, short.Parse(id));
+                if (result)
+                {
+                    return Ok(result);
+                }
+                else
+                {
+                    return BadRequest(false);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(false);
             }
         }
     }

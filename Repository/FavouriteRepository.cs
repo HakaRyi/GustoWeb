@@ -48,9 +48,9 @@ namespace Repository
             }
         }
 
-        public async Task DeleteAsync(short id)
+        public async Task DeleteAsync(short id, short dinerId)
         {
-            var fav = await _context.Favourites.FindAsync(id);
+            var fav = await _context.Favourites.FirstOrDefaultAsync(f => f.DinerId == dinerId && f.RestaurantId == id);
             if (fav != null)
             {
                 _context.Favourites.Remove(fav);
