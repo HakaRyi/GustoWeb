@@ -20,4 +20,8 @@ public partial class OrderDetail
     public virtual RestaurantMenu Food { get; set; }
 
     public virtual Order Order { get; set; }
+
+    public virtual ICollection<Optional> Optionals { get; set; } = new List<Optional>();
+
+    public virtual ICollection<Taste> Tastes { get; set; } = new List<Taste>();
 }

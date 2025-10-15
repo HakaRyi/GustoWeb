@@ -25,6 +25,10 @@ public partial class FoodReview
 
     public short? OrderId { get; set; }
 
+    public int? Like { get; set; }
+
+    public int? Dislike { get; set; }
+
     public virtual DinerProfile Diner { get; set; }
 
     public virtual RestaurantMenu Food { get; set; }

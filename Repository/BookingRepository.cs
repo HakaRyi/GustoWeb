@@ -20,7 +20,6 @@ namespace Repository
         {
             return await context.Bookings
                 .Include(b=>b.Restaurant)
-                .Include(b=>b.Order)
                 .Include(b=>b.Diner)
                 .Include(b => b.Table)
                 .Include(b => b.Transaction)
@@ -30,7 +29,6 @@ namespace Repository
         {
             return await context.Bookings
                 .Include(b => b.Restaurant)
-                .Include(b => b.Order)
                 .Include(b => b.Diner)
                 .Include(b => b.Table)
                 .Include(b => b.Transaction)
@@ -40,7 +38,6 @@ namespace Repository
         {
             return await context.Bookings
                 .Include(b => b.Restaurant)
-                .Include(b => b.Order)
                 .Include(b => b.Diner)
                 .Include(b => b.Table)
                 .Include(b => b.Transaction)

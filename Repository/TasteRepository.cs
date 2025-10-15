@@ -30,6 +30,7 @@ namespace Repository
         {
             return await context.Tastes
                 .Include(t => t.RestaurantMenu).ThenInclude(t=>t.Account)
+                .AsTracking()
                 .FirstOrDefaultAsync(pm => pm.Id == id);
         }
     

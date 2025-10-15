@@ -25,7 +25,6 @@ namespace Repository
                 .Include(r=>r.RestaurantTables)
                 .Include(r=>r.Promotions)
                 .Include(r => r.Bookings)
-                    .ThenInclude(r=>r.Order)
                     .ThenInclude(r=>r.Table)
                 .Include(r => r.Favourites)
                 .Include(r => r.PaymentMerchant)
@@ -45,11 +44,7 @@ namespace Repository
                 .Include(r => r.Bookings)
                     .ThenInclude(b => b.Table)
                 .Include(r => r.Bookings)
-                    .ThenInclude(b => b.Order)
                     .ThenInclude(o => o.Table)
-                 .Include(r => r.Bookings)
-                    .ThenInclude(b => b.Order)
-                    .ThenInclude(o => o.OrderDetails) 
                 .Include(r => r.Favourites)
                 .Include(r => r.PaymentMerchant)
                 .FirstOrDefaultAsync(r => r.AccountId == id);
@@ -66,11 +61,7 @@ namespace Repository
                     .ThenInclude(t => t.Orders)
                 .Include(r => r.Promotions)
                 .Include(r => r.Bookings)
-                    .ThenInclude(r => r.Order)
-                    .ThenInclude(o => o.OrderDetails)
-                .Include(r => r.Bookings)
                     .ThenInclude(b => b.Table)             
-
                 .Include(r => r.Favourites)
                 .ToListAsync();
         }

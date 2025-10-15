@@ -14,4 +14,6 @@ public partial class Taste
     public string Taste1 { get; set; }
 
     public virtual RestaurantMenu RestaurantMenu { get; set; }
+
+    public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
 }

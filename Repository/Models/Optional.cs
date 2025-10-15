@@ -16,4 +16,6 @@ public partial class Optional
     public decimal Price { get; set; }
 
     public virtual RestaurantMenu RestaurantMenu { get; set; }
+
+    public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
 }

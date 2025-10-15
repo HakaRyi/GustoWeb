@@ -24,6 +24,7 @@ namespace Repository
         {
             return await context.Optionals
                 .Include(o => o.RestaurantMenu)
+                .AsTracking()
                 .FirstOrDefaultAsync(pm => pm.Id == id);
         }
         public async Task<List<Optional>> GetOptByMenuAsync(short id)

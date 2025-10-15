@@ -39,10 +39,16 @@ namespace GustoSystemProject.Controllers
             var profiles = await service.GetByRestaurantId(id);
             if (profiles == null || !profiles.Any())
             {
-                return NotFound();
+                profiles = new List<RestaurantMenu>();
             }
             return Ok(profiles);
         }
+        [HttpGet("getDetail/{menuId}")]
+        public async Task<RestaurantMenu> GetDetailMenu([FromRoute] int menuId)
+        {
+            return await service.GetByIdAsync(menuId);
+        }
+
         //[HttpGet("{id}")]
         //public async Task<RestaurantMenu> GetByIdAsync([FromRoute] int id)
         //{

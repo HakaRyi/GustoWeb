@@ -15,15 +15,21 @@ public partial class Booking
 
     public short? TableId { get; set; }
 
-    public DateTime? BookingTime { get; set; }
+    public DateTime BookingTime { get; set; }
+
+    public DateTime? StartTime { get; set; }
+
+    public DateTime? EndTime { get; set; }
 
     public string Status { get; set; }
 
     public DateTime? CreatedAt { get; set; }
 
+    public DateTime? Timestamp { get; set; }
+
     public virtual DinerProfile Diner { get; set; }
 
-    public virtual Order Order { get; set; } 
+    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 
     public virtual RestaurantProfile Restaurant { get; set; }
 

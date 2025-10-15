@@ -24,6 +24,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[Contact]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Diner_Profile]",
          "ObjectType": 0
       },
@@ -49,6 +53,14 @@
       },
       {
          "Name": "[dbo].[Order_Detail]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Order_Detail_Optional]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Order_Detail_Taste]",
          "ObjectType": 0
       },
       {

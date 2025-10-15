@@ -9,6 +9,8 @@ public partial class Order
 {
     public short OrderId { get; set; }
 
+    public int BookingId { get; set; }
+
     public short? PromotionId { get; set; }
 
     public DateTime Date { get; set; }
@@ -28,8 +30,6 @@ public partial class Order
     public string Status { get; set; }
 
     public short? TableId { get; set; }
-
-    public int BookingId { get; set; }
 
     public virtual Booking Booking { get; set; }
 

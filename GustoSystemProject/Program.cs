@@ -110,6 +110,7 @@ builder.Services.AddScoped<BookingService>();
 builder.Services.AddScoped<PaymentMerchantService>();
 builder.Services.AddScoped<TasteService>();
 builder.Services.AddScoped<OptionalService>();
+builder.Services.AddScoped<ContactService>();
 
 builder.Services.AddScoped<AccountRepository>();
 builder.Services.AddScoped<RoleRepository>();
@@ -126,7 +127,7 @@ builder.Services.AddScoped<BookingRepository>();
 builder.Services.AddScoped<PaymentMerchantRepository>();
 builder.Services.AddScoped<TasteRepository>();
 builder.Services.AddScoped<OptionalRepository>();
-
+builder.Services.AddScoped<ContactRepository>();
 
 
 builder.Services.AddSingleton<SpeedSmsService>();

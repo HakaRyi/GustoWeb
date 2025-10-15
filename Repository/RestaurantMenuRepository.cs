@@ -29,9 +29,10 @@ namespace Repository
         {
                
             return await context.RestaurantMenus
-                .Include(r => r.Account)
+                .Include(r => r.Optionals)
                 .Include(r => r.FoodReviews)
-                .Include(r => r.OrderDetails)
+                .Include(r => r.Tastes)
+                .AsTracking()
                 .FirstOrDefaultAsync(r => r.FoodId == id);
         }
         public async Task<List<RestaurantMenu>> GetByAccountAsync(int accountId)

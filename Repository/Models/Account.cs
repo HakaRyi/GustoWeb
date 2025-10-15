@@ -19,6 +19,8 @@ public partial class Account
 
     public DateTime? UpdateAt { get; set; }
 
+    public string Status { get; set; }
+
     public virtual DinerProfile DinerProfile { get; set; }
 
     public virtual ICollection<Notification> Notifications { get; set; } = new List<Notification>();

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Org.BouncyCastle.Cms;
 using Repository;
 using Repository.Models;
 
@@ -50,6 +51,30 @@ namespace Service
             }
             return new Booking();
         }
+        public async Task<Booking?> GetPendingBookingByDinerAndRestaurant(short dinerId, short restaurantId)
+        {
+            try
+            {
+                return await repo.GetPendingBookingByDinerAndRestaurant(dinerId, restaurantId);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return new Booking();
+        }
+        public async Task<Booking?> GetLatestBookingByDiner(short dinerId)
+        {
+            try
+            {
+                return await repo.GetLatestBookingByDiner(dinerId);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return new Booking();
+        }
         public async Task<int> Create(short dinerId, short restaurantId)
         {
             try
@@ -63,7 +88,7 @@ namespace Service
                 var booking = new Booking()
                 {
                     DinerId = dinerId,
-                    BookingTime = null,
+                    BookingTime = DateTime.Now,
                     CreatedAt = DateTime.Now,
                     Status = "Pending",
                     RestaurantId = restaurantId, 

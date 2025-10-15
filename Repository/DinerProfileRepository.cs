@@ -31,11 +31,6 @@ namespace Repository
                     .ThenInclude(x => x.Restaurant)
                         .ThenInclude(r => r.RestaurantMenus)
                 .Include(x => x.Bookings)
-                    .ThenInclude(x => x.Order)
-                        .ThenInclude(x => x.OrderDetails)
-                .Include(x => x.Bookings)
-                    .ThenInclude(x => x.Order)
-                        .ThenInclude(x => x.FoodReviews)
                 .Include(x => x.Account)
                 .ToListAsync();
         }
@@ -53,12 +48,6 @@ namespace Repository
                     .ThenInclude(x => x.Restaurant)
                         .ThenInclude(r => r.RestaurantMenus)
                  .Include(x => x.Bookings)
-                    .ThenInclude(x => x.Order)
-                        .ThenInclude(x => x.OrderDetails)
-                            .ThenInclude(x => x.Food)
-                .Include(x => x.Bookings)
-                    .ThenInclude(x => x.Order)
-                        .ThenInclude(x => x.FoodReviews)
                 .Include(x => x.Account)
                 .FirstOrDefaultAsync(x => x.AccountId == id);
         }
