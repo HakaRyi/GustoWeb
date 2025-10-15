@@ -10,7 +10,7 @@ const Restaurants = () => {
 
     const filterOptions = [
         'Đánh giá cao',
-        // "Mới",
+        'Mới',
         // "Gần đây",
         'Đang mở',
         'Đã đóng',

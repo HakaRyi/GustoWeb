@@ -49,6 +49,15 @@ const ListRestaurant = ({ filters, search }) => {
                         }
                     }
 
+                    // Xác định nhà hàng có phải là mới hay không
+                    let isNew = false;
+                    if (r.createAt) {
+                        const createDate = new Date(r.createAt);
+                        const timeDiff = now - createDate; // Khoảng cách thời gian (miliseconds)
+                        const daysDiff = timeDiff / (1000 * 60 * 60 * 24); // Chuyển sang ngày
+                        isNew = daysDiff <= 21; // Mới nếu nhỏ hơn hoặc bằng 21 ngày
+                    }
+
                     // Xử lý rating từ API
                     const rating = r.rating || 0;
                     const fullStars = Math.floor(rating); // Số sao đầy
@@ -61,7 +70,7 @@ const ListRestaurant = ({ filters, search }) => {
                         image: r.avatarUrl || logo,
                         time: timeStr,
                         isOpen,
-                        isNew: true,
+                        isNew,
                         rating: fullStars, // Số sao đầy để hiển thị
                         hasHalfStar, // Cờ để hiển thị nửa sao
                     };

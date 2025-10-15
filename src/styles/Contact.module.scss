@@ -1,157 +1,227 @@
 .contactPage_container {
-  position: relative;
-  background-image: url("/assets/BÌA FANPAGE.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  min-height: 130vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  overflow: hidden;
-  padding: 0 10%;
+    position: relative;
+    background-image: url('/assets/BÌA FANPAGE.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 130vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    overflow: hidden;
+    padding: 0 10%;
 }
 
 .contactPage_overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  z-index: 0;
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 0;
 }
 
 .contactPage_content {
-  position: relative;
-  z-index: 1;
-  color: #fff;
-  max-width: 1200px;
-  width: 100%;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+    position: relative;
+    z-index: 1;
+    color: #fff;
+    max-width: 1200px;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
-  h1 {
-    font-size: 2.8rem;
-    color: #ffda7b;
-    margin-top: 80px;
-    margin-bottom: 20px;
-  }
+    h1 {
+        font-size: 2.8rem;
+        color: #ffda7b;
+        margin-top: 80px;
+        margin-bottom: 20px;
+    }
 
-  p {
-    font-size: 1.05rem;
-    line-height: 1.8;
-    color: #f2f2f2;
-    margin-bottom: 50px;
-    max-width: 850px;
-  }
+    p {
+        font-size: 1.05rem;
+        line-height: 1.8;
+        color: #f2f2f2;
+        margin-bottom: 50px;
+        max-width: 850px;
+    }
 }
 
 .contactPage_grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-  width: 100%;
-  max-width: 1000px;
-  margin: 0 auto;
-  text-align: left;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: left;
 
-  @media (max-width: 900px) {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
+    @media (max-width: 900px) {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
 }
 
 .contactPage_info {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 30px 35px;
-  border-radius: 20px;
-  backdrop-filter: blur(5px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    background: rgba(255, 255, 255, 0.1);
+    padding: 30px 35px;
+    border-radius: 20px;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 
-  h2 {
-    color: #ffda7b;
-    margin-bottom: 20px;
-  }
-
-  ul {
-    list-style: none;
-    padding: 0;
-
-    li {
-      margin-bottom: 10px;
-      font-size: 1rem;
-      color: #ddd;
-
-      strong {
-        color: #fff;
-      }
+    h2 {
+        color: #ffda7b;
+        margin-bottom: 20px;
     }
-  }
+
+    ul {
+        list-style: none;
+        padding: 0;
+
+        li {
+            margin-bottom: 10px;
+            font-size: 1rem;
+            color: #ddd;
+
+            strong {
+                color: #fff;
+            }
+        }
+    }
 }
 
 .contactPage_form {
-  background: rgba(255, 255, 255, 0.95);
-  padding: 35px;
-  border-radius: 20px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+    background: rgba(255, 255, 255, 0.95);
+    padding: 35px;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
 
-  h2 {
-    color: #2c3e50;
-    margin-bottom: 20px;
-    font-size: 1.5rem;
-  }
-
-  .formGroup {
-    margin-bottom: 20px;
-
-    input,
-    textarea {
-      width: 90%;
-      padding: 12px 15px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      font-size: 1rem;
-      font-family: inherit;
-      transition: border-color 0.3s ease;
-      &:focus {
-          border-width: 2px; 
-        outline: none;
-        border-color: #ffda7b;
-        
-      }
+    h2 {
+        color: #2c3e50;
+        margin-bottom: 20px;
+        font-size: 1.5rem;
     }
-  }
+
+    .formGroup {
+        margin-bottom: 20px;
+
+        input,
+        textarea {
+            width: 90%;
+            background-color: #fff !important;
+            padding: 12px 15px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            color: #333;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+            &:focus {
+                border-width: 2px;
+                background-color: #fff !important;
+                outline: none;
+                border-color: #ffda7b;
+            }
+        }
+    }
 }
 
 .contactPage_btn {
-  display: inline-block;
-  background: #ffda7b;
-  color: #222;
-  font-weight: 600;
-  border: none;
-  padding: 12px 30px;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.3s ease;
+    display: inline-block;
+    background: #ffda7b;
+    color: #222;
+    font-weight: 600;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
 
-  &:hover {
-    background: #f2c94c;
-    
-    transform: translateY(-2px);
-  }
+    &:hover {
+        background: #f2c94c;
+
+        transform: translateY(-2px);
+    }
 }
 
 /* --- Hiệu ứng fade --- */
 .fadeSection {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.9s ease, transform 0.9s ease;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
 }
 
 .visible {
-  opacity: 1;
-  transform: translateY(0);
+    opacity: 1;
+    transform: translateY(0);
+}
+/* --- Popup thông báo gửi thành công --- */
+.popupOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    animation: fadeIn 0.4s ease;
+}
+
+.popupBox {
+    background: #fff;
+    color: #333;
+    padding: 30px 40px;
+    border-radius: 16px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.4s ease;
+
+    h3 {
+        color: #6a7636;
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+    }
+
+    p {
+        font-size: 1rem;
+        margin-bottom: 20px;
+    }
+}
+
+.closeBtn {
+    background: #6a7636;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+
+    &:hover {
+        background: #91a148;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }

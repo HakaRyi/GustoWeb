@@ -26,7 +26,7 @@ function MenuRestaurant({ id }) {
                             {menuItems
                                 .filter((item) => item.type === category)
                                 .map((item) => (
-                                    <MenuCard key={item.foodId} item={item} />
+                                    <MenuCard key={item.foodId} item={item} restaurantId={id} />
                                 ))}
                         </div>
                     </div>
