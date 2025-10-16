@@ -2,6 +2,7 @@
 using Org.BouncyCastle.Cms;
 using Repository.Models;
 using Service;
+using Service.DTO.Request;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -37,6 +38,19 @@ namespace GustoSystemProject.Controllers
             var dinerId = User.FindFirst("AccountID")?.Value;
             return await service.GetBookingByMeAndResAsync(short.Parse(dinerId),resId);
         }
+
+        [HttpGet("bookings")]
+        public async Task<List<Booking>> GetBookingsByDate(short restaurantId, DateTime date)
+        {
+            try
+            {
+                return await service.GetBookingsByDate(restaurantId, date);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception();
+            }
+
         [HttpGet("pending/{restaurantId}")]
         public async Task<IActionResult> GetPendingBooking(short restaurantId)
         {
@@ -56,7 +70,7 @@ namespace GustoSystemProject.Controllers
         // POST api/<BookingController>
         // POST api/Booking/{restaurantId}
         [HttpPost("{restaurantId}")]
-        public async Task<IActionResult> Post([FromRoute] short restaurantId)
+        public async Task<IActionResult> Post([FromRoute] CreateBookingRequest request)
         {
             var dinerId = User.FindFirst("AccountID")?.Value;
             if (string.IsNullOrEmpty(dinerId))

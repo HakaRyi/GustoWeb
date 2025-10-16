@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Org.BouncyCastle.Cms;
 using Repository;
 using Repository.Models;
+using Service.DTO.Request;
 
 namespace Service
 {
@@ -51,6 +52,20 @@ namespace Service
             }
             return new Booking();
         }
+
+        public async Task<List<Booking>> GetBookingsByDate(short restaurantId, DateTime date)
+        {
+            try
+            {
+                return await repo.GetBookingsByDate(restaurantId, date);
+                  }
+            catch (Exception ex)
+            {
+
+            }
+            return new List<Booking>();
+        }
+      
         public async Task<Booking?> GetPendingBookingByDinerAndRestaurant(short dinerId, short restaurantId)
         {
             try
@@ -73,13 +88,13 @@ namespace Service
             {
 
             }
-            return new Booking();
+            return new List<Booking>();
         }
-        public async Task<int> Create(short dinerId, short restaurantId)
+        public async Task<int> Create(CreateBookingRequest request)
         {
             try
             {
-                var existingBooking = await repo.GetPendingBookingByDinerAndRestaurant(dinerId, restaurantId);
+                var existingBooking = await repo.GetPendingBookingByDinerAndRestaurant(request.DinerId, request.RestaurantId);
                 if (existingBooking != null)
                 {
                     //neu da ton tai booking pending va nha hang do thi se ko tao moi
@@ -87,18 +102,18 @@ namespace Service
                 }
                 var booking = new Booking()
                 {
-                    DinerId = dinerId,
-                    BookingTime = DateTime.Now,
+                    DinerId = request.DinerId,
+                    BookingTime = request.BookingDate,
                     CreatedAt = DateTime.Now,
                     Status = "Pending",
-                    RestaurantId = restaurantId, 
+                    RestaurantId = request.RestaurantId, 
                 };              
                 var result = await repo.Create(booking); 
                 if (result <= 0)
                 {
                     return 0;
                 }
-                var newBooking = await repo.GetLatestBookingByDiner(dinerId);
+                var newBooking = await repo.GetLatestBookingByDiner(request.DinerId);
 
                 if (newBooking == null)
                     return 0;
@@ -156,6 +171,18 @@ namespace Service
             {
             }
             return false;
+        }
+
+        public async Task<List<Booking>> GetByTableInRestaurant(short restaurantId, List<short> tableId)
+        {
+            try
+            {
+                return await repo.GetBookingsByTablesInRestaurant(restaurantId, tableId);
+            }
+            catch (Exception ex) {
+                throw ex;
+            }
+            
         }
 
     }

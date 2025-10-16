@@ -555,6 +555,7 @@ public partial class GustoSystemContext : DbContext
                 .HasMaxLength(10)
                 .IsUnicode(false)
                 .IsFixedLength();
+            entity.Property(e => e.TableUsageTime).HasDefaultValue(90);
             entity.Property(e => e.TiktokUrl)
                 .HasMaxLength(255)
                 .HasColumnName("TiktokURL");
