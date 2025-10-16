@@ -60,6 +60,7 @@ namespace Service
                 var passwordHasher = new PasswordHasher<Account>();
                 account.Password = passwordHasher.HashPassword(account, request.Password);
                 account.CreateAt = DateTime.Now;
+                account.Status = AccountStatus.ACTIVE.ToString();
 
                 Role role = await _roleRepository.GetRoleById(request.RoleId);
                 account.RoleId = request.RoleId;
@@ -170,25 +171,15 @@ namespace Service
             {
 
                 var result = await _repo.GetAccountByUserName(request.UserName);
-                //if(result.RoleId != 1 && result != null)
-                //{
-                //    if (result.Password == request.Password)
-                //    {
-                //        var passwordHasher = new PasswordHasher<Account>();
-                //        var verificationResult = passwordHasher.VerifyHashedPassword(result, result.Password, request.Password);
-                //        if (verificationResult == Microsoft.AspNetCore.Identity.PasswordVerificationResult.Success ||
-                //        verificationResult == Microsoft.AspNetCore.Identity.PasswordVerificationResult.SuccessRehashNeeded)
-                //        {
-                //            await GenerateTokens(result);
-                //        }
-                //        else
-                //        {
-                //            throw new InvalidCredentialsException();
-                //        }
-                //    }
-                //    return true;
-                //}
-                
+                if (result.RoleId != 1 && result != null)
+                {
+                    if (result.Password == request.Password)
+                    {
+                            await GenerateTokens(result);
+                    }
+                    return true;
+                }
+
                 if (result != null)
                 {
                     var passwordHasher = new PasswordHasher<Account>();
@@ -466,4 +457,5 @@ namespace Service
 
         }
     }
+    public enum AccountStatus { ACTIVE, INACTIVE }
 }

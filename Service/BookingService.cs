@@ -88,7 +88,20 @@ namespace Service
             {
 
             }
-            return new List<Booking>();
+            return new Booking();
+        }
+
+        public async Task<List<Booking>> GetUnDoneBookings(short restaurantId)
+        {
+            try
+            {
+                List<string> statuses = new() { "booked", "available" };
+                return await repo.GetBookingsByStatus(statuses,restaurantId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         public async Task<int> Create(CreateBookingRequest request)
         {
@@ -147,6 +160,22 @@ namespace Service
                     return await repo.Update(booking);
                 }
                 return 0;
+
+            }
+            catch (Exception ex)
+            {
+            }
+            return 0;
+        }
+
+        public async Task<int> UpdateStatus(short bookingId, string status)
+        {
+            try
+            {
+                var booking = await repo.GetBookingAsync(bookingId);
+
+                booking.Status = status.ToLower().ToString();
+                return await repo.Update(booking);
 
             }
             catch (Exception ex)

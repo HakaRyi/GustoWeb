@@ -50,6 +50,7 @@ namespace GustoSystemProject.Controllers
             {
                 throw new Exception();
             }
+        }
 
         [HttpGet("pending/{restaurantId}")]
         public async Task<IActionResult> GetPendingBooking(short restaurantId)
@@ -67,9 +68,26 @@ namespace GustoSystemProject.Controllers
             var order = await orderService.GetMyOrderPending(booking.DinerId);
             return Ok(new { bookingId = booking.BookingId, orderId = order?.OrderId });
         }
+
+            [HttpGet("undone")]
+            public async Task<IActionResult> GetUndoneBooking()
+            {
+                var id = User.FindFirst("AccountID")?.Value;
+                if (string.IsNullOrEmpty(id))
+                {
+                    return Unauthorized(new { message = "Invalid or missing token" });
+                }
+                var booking = await service.GetUnDoneBookings(short.Parse(id));
+                if (booking == null)
+                {
+                    booking = new List<Booking>();
+                    return NotFound(new { message = "No pending booking found" });
+                }
+                return Ok(booking);
+            }
         // POST api/<BookingController>
         // POST api/Booking/{restaurantId}
-        [HttpPost("{restaurantId}")]
+        [HttpPost]
         public async Task<IActionResult> Post([FromRoute] CreateBookingRequest request)
         {
             var dinerId = User.FindFirst("AccountID")?.Value;
@@ -77,10 +95,10 @@ namespace GustoSystemProject.Controllers
             {
                 return Unauthorized(new { message = "Invalid or missing token" });
             }
-            var result = await service.Create(short.Parse(dinerId), restaurantId);
+            var result = await service.Create(request);
             if (result == -1)
             {
-                var booking = await service.GetPendingBookingByDinerAndRestaurant(short.Parse(dinerId), restaurantId);
+                var booking = await service.GetPendingBookingByDinerAndRestaurant(short.Parse(dinerId), request.RestaurantId);
                 var _order = await orderService.GetMyOrderPending(booking.DinerId);
                 return Ok(new
                 {
@@ -119,6 +137,26 @@ namespace GustoSystemProject.Controllers
                 {
                     message = "cant update booking, loi 500:V"
                 }); 
+            }
+            return Ok(new
+            {
+                message = "Booking successfully updated",
+                result = result
+            });
+        }
+
+        [HttpPut("status/{id}")]
+        public async Task<IActionResult> UpdateStatus([FromBody] string status)
+        {
+            var resId = User.FindFirst("AccountID")?.Value;
+            var result = await service.UpdateStatus(short.Parse(resId), status);
+
+            if (result == 0)
+            {
+                return StatusCode(500, new
+                {
+                    message = "cant update booking, loi 500:V"
+                });
             }
             return Ok(new
             {
