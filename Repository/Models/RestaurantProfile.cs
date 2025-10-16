@@ -29,7 +29,9 @@ public partial class RestaurantProfile
 
     public string TiktokUrl { get; set; }
 
-    public int TableUsageTime { get; set; }
+    public DateTime CreateAt { get; set; }
+
+    public int? Duration { get; set; }
 
     public virtual Account Account { get; set; }
 

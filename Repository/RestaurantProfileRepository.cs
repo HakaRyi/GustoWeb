@@ -70,7 +70,6 @@ namespace Repository
                     .ThenInclude(o => o.OrderDetails)
                 .Include(r => r.Bookings)
                     .ThenInclude(b => b.Table)             
-
                 .Include(r => r.Favourites)
                 .ToListAsync();
         }

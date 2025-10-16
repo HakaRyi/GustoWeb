@@ -33,6 +33,22 @@ namespace GustoSystemProject.Controllers
             }
             return Ok(profiles);
         }
+        [HttpGet("getByResMenu/{id}")]
+        public async Task<IActionResult> GetAllByProfile([FromRoute]int id)
+        {
+            var profiles = await service.GetByRestaurantId(id);
+            if (profiles == null || !profiles.Any())
+            {
+                profiles = new List<RestaurantMenu>();
+            }
+            return Ok(profiles);
+        }
+        [HttpGet("getDetail/{menuId}")]
+        public async Task<RestaurantMenu> GetDetailMenu([FromRoute] int menuId)
+        {
+            return await service.GetByIdAsync(menuId);
+        }
+
         //[HttpGet("{id}")]
         //public async Task<RestaurantMenu> GetByIdAsync([FromRoute] int id)
         //{

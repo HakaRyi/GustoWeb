@@ -19,13 +19,20 @@ namespace Repository
                 .Include(r => r.OrderDetails)
                 .ToListAsync();
         }
+        public async Task<List<RestaurantMenu>> GetByRestaurantId(int id)
+        {
+            return await context.RestaurantMenus
+                .Where(r=>r.AccountId == id)
+                .ToListAsync();
+        }
         public async Task<RestaurantMenu> GetByIdAsync(int id)
         {
                
             return await context.RestaurantMenus
-                .Include(r => r.Account)
+                .Include(r => r.Optionals)
                 .Include(r => r.FoodReviews)
-                .Include(r => r.OrderDetails)
+                .Include(r => r.Tastes)
+                .AsTracking()
                 .FirstOrDefaultAsync(r => r.FoodId == id);
         }
         public async Task<List<RestaurantMenu>> GetByAccountAsync(int accountId)

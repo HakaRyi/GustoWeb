@@ -24,6 +24,8 @@ namespace Service.DTO.Request
         public string? Description { get; set; }
 
         public string? FacebookUrl { get; set; }
+        public DateTime CreateAt { get; set; }
+        public int? Duration { get; set; }
 
         public string? TiktokUrl { get; set; }
     }

@@ -17,13 +17,15 @@ public partial class Booking
 
     public DateTime BookingTime { get; set; }
 
+    public DateTime? StartTime { get; set; }
+
+    public DateTime? EndTime { get; set; }
+
     public string Status { get; set; }
 
     public DateTime? CreatedAt { get; set; }
 
-    public DateTime? StartTime { get; set; }
-
-    public DateTime? EndTime { get; set; }
+    public DateTime? Timestamp { get; set; }
 
     public virtual DinerProfile Diner { get; set; }
 

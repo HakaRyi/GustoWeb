@@ -74,6 +74,8 @@ namespace Service
                         CloseAt = resPro.CloseAt,
                         Phone = resPro.Phone,
                         TiktokUrl = resPro.TiktokUrl,
+                        CreateAt = resPro.CreateAt,
+                        Duration = resPro.Duration,
                         Rating = (int)Math.Round(averageRating)
                     });
                 }
@@ -108,6 +110,8 @@ namespace Service
                     CloseAt = item.CloseAt,
                     Phone = item.Phone,
                     TiktokUrl = item.TiktokUrl,
+                    Duration = item.Duration,
+                    CreateAt = item.CreateAt,
                     Rating = (int)Math.Round(avgRating) // Làm tròn về int 0–5
                 };
             }
@@ -140,6 +144,8 @@ namespace Service
                     CloseAt = item.CloseAt,
                     Phone = item.Phone,
                     TiktokUrl = item.TiktokUrl,
+                    CreateAt = item.CreateAt,
+                    Duration = item.Duration,
                     Rating = (int)Math.Round(avgRating), // Làm tròn về int 0–5
                     paymentMerchant = item.PaymentMerchant,
                 };
@@ -167,7 +173,8 @@ namespace Service
                 Email = request.Email ?? null,
                 FacebookUrl = request.FacebookUrl ?? null,
                 Phone = request.Phone ?? null,
-
+                CreateAt= DateTime.Now,
+                Duration = request.Duration,
                 OpenAt=  request.OpenAt ?? null,
                 CloseAt = request.CloseAt ?? null,
                 Address = request.Address ?? null,
@@ -190,7 +197,7 @@ namespace Service
             item.Email = request.Email;
             item.FacebookUrl = request.FacebookUrl; 
             item.Phone = request.Phone;
-
+            item.Duration = request.Duration;
             item.OpenAt = request.OpenAt;
             item.CloseAt = request.CloseAt;
             item.TiktokUrl = request.TiktokUrl;
@@ -229,7 +236,8 @@ namespace Service
             item.TiktokUrl = request.TiktokUrl;
             item.Description = request.Description;
             item.FullName = request.FullName;
-
+            item.Duration = request.Duration;
+            item.CreateAt = DateTime.UtcNow;
             return await repository.UpdateAsync(item);
         }
 
@@ -270,7 +278,9 @@ namespace Service
                 OpenAt = request.OpenAt,
                 CloseAt = request.CloseAt,
                 Address = request.Address?.Trim(),
-                AvatarUrl = request.AvatarUrl?.Trim()
+                AvatarUrl = request.AvatarUrl?.Trim(),
+                CreateAt = DateTime.Now,
+                Duration = request.Duration ?? 0
             };
 
             try

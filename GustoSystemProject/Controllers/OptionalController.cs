@@ -25,11 +25,15 @@ namespace GustoSystemProject.Controllers
 
   
         [HttpGet("{id}")]
-        public async Task<Optional> Get([FromRoute] short id)
+        public async Task<Optional> GetById([FromRoute] short id)
         {
             return await service.GetByIdAsync(id);
         }
-
+        [HttpGet("menu/{menuId}")]
+        public async Task<List<Optional>> GetListByMenu([FromRoute] short menuId)
+        {
+            return await service.GetOptByMenuAsync(menuId);
+        }
         [HttpPost]
         public async Task<int> Post(Optional opt)
         {

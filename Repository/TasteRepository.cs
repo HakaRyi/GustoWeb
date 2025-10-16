@@ -20,10 +20,17 @@ namespace Repository
                 .Include(t => t.RestaurantMenu)
                 .ToListAsync();
         }
+        public async Task<List<Taste>> GetTasteByMenuAsync(short id)
+        {
+            return await context.Tastes
+                .Where(pm => pm.RestaurantMenuId == id)
+                .ToListAsync();
+        }
         public async Task<Taste> GetByIdAsync(short id)
         {
             return await context.Tastes
                 .Include(t => t.RestaurantMenu).ThenInclude(t=>t.Account)
+                .AsTracking()
                 .FirstOrDefaultAsync(pm => pm.Id == id);
         }
     

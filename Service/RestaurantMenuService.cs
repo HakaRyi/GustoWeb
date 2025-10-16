@@ -31,6 +31,18 @@ namespace Service
             }
             return new List<RestaurantMenu>();
         }
+        public async Task<List<RestaurantMenu>> GetByRestaurantId(int id)
+        {
+            try
+            {
+                return await repository.GetByRestaurantId(id);
+
+            }
+            catch (Exception ex)
+            {
+            }
+            return new List<RestaurantMenu>();
+        }
         public async Task<RestaurantMenu> GetByIdAsync(int id)
         {
             try

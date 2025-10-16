@@ -194,10 +194,12 @@ namespace GustoSystemProject.Controllers
         [HttpGet("get-me")]
         public async Task<IActionResult> GetMe()
         {
-            var id = short.Parse(User.FindFirst("AccountID")?.Value);
+            var accountIdClaim = User.FindFirst("AccountID")?.Value;
 
-            if (id == null)
+            if (string.IsNullOrEmpty(accountIdClaim))
                 return Unauthorized(new { message = "Không tìm thấy thông tin người dùng trong token" });
+
+            var id = short.Parse(accountIdClaim);
 
             var account = await _service.GetAccountByIdAsync(id);
             if (account == null)

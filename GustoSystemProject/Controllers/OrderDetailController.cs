@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Repository.Models;
 using Service;
+using Service.DTO.Request;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,9 +13,11 @@ namespace GustoSystemProject.Controllers
     public class OrderDetailController : ControllerBase
     {
         private readonly OrderDetailService service;
-        public OrderDetailController(OrderDetailService service)
+        private readonly OrderService orderService;
+        public OrderDetailController(OrderDetailService service, OrderService orderService)
         {
             this.service = service;
+            this.orderService = orderService;
         }
         // GET: api/<OrderDetailController>
         [HttpGet]
@@ -32,7 +35,7 @@ namespace GustoSystemProject.Controllers
 
         // POST api/<OrderDetailController>
         [HttpPost("{foodId}/{orderId}")]
-        public async Task<IActionResult> Post ([FromRoute]short foodId,short orderId)
+        public async Task<IActionResult> Post1 ([FromRoute]short foodId,short orderId)
         {
             if (ModelState.IsValid)
             {
@@ -44,6 +47,42 @@ namespace GustoSystemProject.Controllers
              
             });
 
+        }
+        [HttpPost("/orders/{orderId}/{foodId}/details")]
+        [Authorize]
+        public async Task<IActionResult> Post2([FromRoute] short orderId, short foodId,[FromBody] AddOrderDetailRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+                var userId = User.FindFirst("AccountID")?.Value;
+                if (string.IsNullOrEmpty(userId))
+                {
+                    return Unauthorized(new { message = "Invalid or missing token" });
+                }
+                var order = await orderService.GetOrderAsync(orderId); // Giả sử có method này
+                if (order == null)
+                    return NotFound($"Order with ID {orderId} not found.");
+                if (order.Booking.DinerId != short.Parse(userId))
+                    return Unauthorized("You do not have permission for this order.");
+                //if (request.FoodId <= 0)
+                //{
+                //    return BadRequest(new { message = "Invalid FoodId" });
+                //}
+                if (request.Quantity <= 0)
+                {
+                    return BadRequest(new { message = "Quantity must be greater than 0" });
+                }
+                await service.AddOrderDetailAsync2(orderId, foodId, request);
+                return Ok( new
+                {
+                    message = "Món đã được thêm vào giỏ hàng thành công!",
+                    orderId,
+                    foodId = foodId,
+                    optionals = request.OptionalIds,
+                    tastes = request.TasteIds
+                });
+            
         }
 
         // PUT api/<OrderDetailController>/5

@@ -37,7 +37,8 @@ namespace Repository
         public async Task<Order> GetOrderPending(short dinnerId)
         {
             return await context.Orders
-                .Include(o => o.OrderDetails)
+                .Include(o => o.OrderDetails).ThenInclude(o=>o.Tastes)
+                .Include(o => o.OrderDetails).ThenInclude(o => o.Optionals)
                 .FirstOrDefaultAsync(o => o.Booking.DinerId == dinnerId && o.Status == "Pending");
         }
         public async Task<List<Order>> GetAllMyOrder(short dinnerId)
@@ -55,6 +56,7 @@ namespace Repository
                 .Include(o => o.FoodReviews)
                 .Include(o => o.Promotion)
                 .Include(o => o.Table)
+                .AsTracking()
                 .FirstOrDefaultAsync(o=>o.OrderId==id);
         }
         public async Task<int> CreateAsync(Order order)

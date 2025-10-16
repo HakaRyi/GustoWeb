@@ -30,7 +30,8 @@ namespace Service.DTO.Response
 
         public string? TiktokUrl { get; set; }
         public int Rating { get; set; }
-
+        public DateTime CreateAt { get; set; }
+        public int? Duration { get; set; }
         public virtual PaymentMerchant paymentMerchant { get; set; }
     }
 }

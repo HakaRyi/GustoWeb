@@ -13,9 +13,11 @@ namespace GustoSystemProject.Controllers
     public class BookingController : ControllerBase
     {
         private readonly BookingService service;
-        public BookingController(BookingService service)
+        private readonly OrderService orderService;
+        public BookingController(BookingService service, OrderService orderService)
         {
             this.service = service;
+            this.orderService = orderService;
         }
         // GET: api/<BookingController>
         [HttpGet]
@@ -48,32 +50,59 @@ namespace GustoSystemProject.Controllers
             {
                 throw new Exception();
             }
+
+        [HttpGet("pending/{restaurantId}")]
+        public async Task<IActionResult> GetPendingBooking(short restaurantId)
+        {
+            var dinerId = User.FindFirst("AccountID")?.Value;
+            if (string.IsNullOrEmpty(dinerId))
+            {
+                return Unauthorized(new { message = "Invalid or missing token" });
+            }
+            var booking = await service.GetPendingBookingByDinerAndRestaurant(short.Parse(dinerId), restaurantId);
+            if (booking == null)
+            {
+                return NotFound(new { message = "No pending booking found" });
+            }
+            var order = await orderService.GetMyOrderPending(booking.DinerId);
+            return Ok(new { bookingId = booking.BookingId, orderId = order?.OrderId });
         }
         // POST api/<BookingController>
+        // POST api/Booking/{restaurantId}
         [HttpPost("{restaurantId}")]
         public async Task<IActionResult> Post([FromRoute] CreateBookingRequest request)
         {
             var dinerId = User.FindFirst("AccountID")?.Value;
-            request.DinerId = short.Parse(dinerId);
-            var result = await service.Create(request);
+            if (string.IsNullOrEmpty(dinerId))
+            {
+                return Unauthorized(new { message = "Invalid or missing token" });
+            }
+            var result = await service.Create(short.Parse(dinerId), restaurantId);
             if (result == -1)
             {
+                var booking = await service.GetPendingBookingByDinerAndRestaurant(short.Parse(dinerId), restaurantId);
+                var _order = await orderService.GetMyOrderPending(booking.DinerId);
                 return Ok(new
                 {
-                    message = "booking is existed"
+                    message = "booking is existed",
+                    result = -1,
+                    orderId = _order?.OrderId
                 });
             }
             if (result == 0)
             {
                 return StatusCode(500, new
                 {
-                    message = "cant create booking, loi 500, hoac nha hang co the ko ton tai :V"
+                    message = "Cannot create booking. Restaurant may not exist or server error occurred."
                 });
             }
+            var newBooking = await service.GetLatestBookingByDiner(short.Parse(dinerId));
+            var order = await orderService.GetMyOrderPending(newBooking.DinerId);
             return Ok(new
             {
                 message = "Booking and Order successfully created",
-                result = result   
+                result = 1,
+                orderId = order?.OrderId
             });
         }
 
@@ -89,7 +118,7 @@ namespace GustoSystemProject.Controllers
                 return StatusCode(500, new
                 {
                     message = "cant update booking, loi 500:V"
-                });
+                }); 
             }
             return Ok(new
             {
