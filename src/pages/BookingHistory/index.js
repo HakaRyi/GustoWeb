@@ -7,6 +7,7 @@ import { customFetch } from '~/config/customFetch';
 import LoadingModal from '~/components/Modals/LoadingModal';
 import ResultModal from '~/components/Modals/ResultModal';
 import FeedbackModal from '~/components/Modals/FeedbackModal';
+import ReviewModal from '~/components/Modals/FoodReviewModal';
 
 function BookingHistory() {
     const [loadingVisible, setLoadingVisible] = useState(false);
@@ -18,6 +19,41 @@ function BookingHistory() {
     const [feedbackModalVisible, setFeedbackModalVisible] = useState(false);
     const [modalBooking, setModalBooking] = useState(null);
     const [modalOrder, setModalOrder] = useState(null);
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedFood, setSelectedFood] = useState(null);
+
+    const handleOpenModal = (foodData) => {
+        const foodReview = async (foodId) => {
+            try {
+                setLoadingVisible(true);
+                const res = await customFetch(`https://localhost:7176/api/FoodReview/ByFood/${foodId}`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' },
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    const foodForModal = {
+                        name: foodData.name,
+                        reviews: data || [],
+                    };
+                    console.log('Food reviews:', foodForModal);
+                    setSelectedFood(foodForModal);
+                    setIsModalOpen(true);
+                }
+            } catch (error) {
+                setResult({ visible: true, success: false, message: 'Không thể tải đánh giá món ăn' });
+            } finally {
+                setLoadingVisible(false);
+            }
+        };
+        foodReview(foodData.foodId);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+        setSelectedFood(null);
+    };
 
     useEffect(() => {
         const fetchBooking = async () => {
@@ -248,6 +284,7 @@ function BookingHistory() {
                                                                         key={
                                                                             d.orderDetailId ?? `${orderId}-${d.foodId}`
                                                                         }
+                                                                        onClick={() => handleOpenModal(d.food)}
                                                                     >
                                                                         <img
                                                                             className={style.dishImg}
@@ -305,6 +342,7 @@ function BookingHistory() {
                 onClose={closeFeedbackModal}
                 onSaved={onFeedbackSaved}
             />
+            <ReviewModal isOpen={isModalOpen} onClose={handleCloseModal} foodItem={selectedFood} />
         </div>
     );
 }

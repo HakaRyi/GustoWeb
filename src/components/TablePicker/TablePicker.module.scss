@@ -1,0 +1,106 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 16px;
+    background-color: #f5f7fa;
+    border-radius: 16px;
+}
+
+.datePicker {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 600;
+    font-size: 16px;
+
+    input[type='date'] {
+        padding: 6px 10px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: border-color 0.2s ease;
+
+        &:focus {
+            border-color: #1890ff;
+            outline: none;
+        }
+    }
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 18px;
+}
+
+.tableItem {
+    background-color: #bfeaff;
+    border-radius: 12px;
+    padding: 14px 18px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
+        cursor: pointer;
+    }
+}
+
+.tableName {
+    font-weight: 700;
+    font-size: 20px;
+    color: #1a1a1a;
+}
+
+.tableDesc {
+    font-size: 14px;
+    color: #444;
+}
+
+.tablePerson {
+    font-size: 15px;
+    font-weight: 600;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    &::before {
+        content: '👑';
+        font-size: 16px;
+    }
+}
+
+.tableOption {
+    margin-top: 6px;
+    font-size: 13.5px;
+    color: #333;
+
+    span {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 4px;
+    }
+}
+
+.slot {
+    display: inline-block;
+    background-color: #ffb6b6;
+    color: #000;
+    padding: 4px 8px;
+    border-radius: 8px;
+    margin: 2px;
+    font-size: 12.5px;
+    font-weight: 500;
+}
+
+.free {
+    color: #008c2e;
+    font-weight: 600;
+}
