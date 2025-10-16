@@ -11,11 +11,15 @@ namespace GustoSystemProject.Controllers
     public class AdminRestaurantProfileController : ControllerBase
     {
         private readonly RestaurantProfileService _service;
+        private readonly AccountService _accountService;
 
-        public AdminRestaurantProfileController(RestaurantProfileService service)
+        public AdminRestaurantProfileController(RestaurantProfileService service, AccountService accountService)
         {
             _service = service;
+            _accountService = accountService;
         }
+
+
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
@@ -83,6 +87,24 @@ namespace GustoSystemProject.Controllers
             catch (Exception ex)
             {
                 return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        //CreateResProfile
+
+        [HttpPost("create")]
+        [Authorize]
+        public async Task<IActionResult> CreateProfile([FromBody] SignUpRequest request)
+        {
+            try
+            {
+
+                var result = await _accountService.CreateAccountProfileAsync(request);
+                return Ok(new { message = "Restaurant profile created successfully" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
             }
         }
     }

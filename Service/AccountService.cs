@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
+using Microsoft.Identity.Client;
 using Microsoft.IdentityModel.Tokens;
 using Repository;
 using Repository.ModelExtensions;
@@ -13,6 +14,7 @@ using Service.DTO.Response;
 using Service.Exceptions;
 using Service.Settings;
 using System.IdentityModel.Tokens.Jwt;
+using System.Numerics;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,13 +27,14 @@ namespace Service
         private readonly RefreshTokenRepository _refreshTokenRepository;
         private readonly RoleRepository _roleRepository;
         private readonly DinerProfileRepository _dinerProfileRepository;
+        private readonly RestaurantProfileRepository _restaurantProfileRepository;
 
         private readonly IMapper _mapper;
         private readonly ILogger<AccountService> _logger;
         private readonly JwtSettings _jwtSettings;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AccountService(AccountRepository repo, IMapper mapper, ILogger<AccountService> logger, JwtSettings jwtSettings, IHttpContextAccessor httpContextAccessor, RefreshTokenRepository refreshTokenRepository, RoleRepository roleRepository, DinerProfileRepository dinerProfileRepository)
+        public AccountService(AccountRepository repo, IMapper mapper, ILogger<AccountService> logger, JwtSettings jwtSettings, IHttpContextAccessor httpContextAccessor, RefreshTokenRepository refreshTokenRepository, RoleRepository roleRepository, DinerProfileRepository dinerProfileRepository, RestaurantProfileRepository restaurantProfileRepository)
         {
             _repo = repo;
             _mapper = mapper;
@@ -41,6 +44,7 @@ namespace Service
             _refreshTokenRepository = refreshTokenRepository;
             _roleRepository = roleRepository;
             _dinerProfileRepository = dinerProfileRepository;
+            _restaurantProfileRepository = restaurantProfileRepository;
         }
         //CRUD Operations:
         //Create Account
@@ -79,6 +83,56 @@ namespace Service
                 dinerProfile.FullName = fullName;
                 
                 await _dinerProfileRepository.AddAsync(dinerProfile);
+                return res;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error in CreateAccountAsync");
+                throw;
+            }
+        }
+
+        //CreateRes
+        public async Task<AccountResponse> CreateAccountProfileAsync(SignUpRequest request)
+        {
+            try
+            {
+                var existedAccount = await _repo.GetAccountByUserName(request.UserName);
+                if (existedAccount != null)
+                {
+                    throw new UsernameAlreadyExistsException();
+                }
+                //Init Account Model
+                var account = new Account();
+                account.UserName = request.UserName;
+
+                var passwordHasher = new PasswordHasher<Account>();
+                account.Password = passwordHasher.HashPassword(account, request.Password);
+                account.CreateAt = DateTime.Now;
+
+                Role role = await _roleRepository.GetRoleById(request.RoleId);
+                account.RoleId = request.RoleId;
+
+                await _repo.CreateAccount(account);
+                //Result:
+                var res = _mapper.Map<AccountResponse>(account);
+
+                //Profile for account
+                RestaurantProfile restaurant = new RestaurantProfile();
+                restaurant.AccountId = account.Id;
+                restaurant.Phone = null;
+
+                restaurant.FullName = null;
+                restaurant.TiktokUrl = null;
+                restaurant.Description = null;
+                restaurant.Email = null;
+                restaurant.FacebookUrl = null;
+
+                restaurant.OpenAt = null;
+                restaurant.CloseAt = null;
+                restaurant.Address = null;
+                restaurant.AvatarUrl = null;
+                await _restaurantProfileRepository.CreateAsync(restaurant);
                 return res;
             }
             catch (Exception ex)

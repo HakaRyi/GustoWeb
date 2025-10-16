@@ -8,6 +8,7 @@ namespace Service.DTO.Request
 {
     public class RestaurantProfileRequest
     {
+        public int? Id { get; set; }
         public string? AvatarUrl { get; set; }
 
         public string? FullName { get; set; }

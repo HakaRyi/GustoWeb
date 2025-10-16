@@ -38,9 +38,17 @@ namespace GustoSystemProject.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] DinerProfileRequest request)
         {
-            var success = await _service.AddAsync(request);
-            if (!success) return BadRequest(new { message = "Tạo thất bại" });
-            return Ok(new { message = "Tạo thành công" });
+            try
+            {
+                var success = await _service.AddAsync(request);
+                if (!success) return BadRequest(new { message = "Tạo thất bại" });
+                return Ok(new { message = "Tạo thành công" });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[POST Create] Lỗi: {ex.Message}\nStackTrace: {ex.StackTrace}");
+                return StatusCode(500, new { message = "Đã xảy ra lỗi nội bộ server", error = ex.Message });
+            }
         }
 
         [HttpPut]
