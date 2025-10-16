@@ -5,6 +5,7 @@ import Cookies from 'js-cookie';
 import { logoutSuccess } from '~/redux/authSlice';
 import styles from './ResSideBar.module.scss';
 import { FaUtensils, FaTable, FaCogs, FaSignOutAlt, FaIdCard, FaBars, FaArrowLeft, FaCreditCard } from 'react-icons/fa';
+import routes from '~/config/route';
 
 const ResSideBar = () => {
     const dispatch = useDispatch();
@@ -43,6 +44,14 @@ const ResSideBar = () => {
                 {isExpanded ? <FaArrowLeft /> : <FaBars />}
             </button>
             <NavLink to="" end className={({ isActive }) => `${styles.resMenuItem} ${isActive ? styles.active : ''}`}>
+                <FaIdCard className={styles.resIcon} />
+                {isExpanded && <span className={styles.resMenuText}>DashBoard</span>}
+            </NavLink>
+            <NavLink
+                to={routes.restaurantHome}
+                end
+                className={({ isActive }) => `${styles.resMenuItem} ${isActive ? styles.active : ''}`}
+            >
                 <FaIdCard className={styles.resIcon} />
                 {isExpanded && <span className={styles.resMenuText}>Hồ sơ</span>}
             </NavLink>

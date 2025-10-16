@@ -20,6 +20,7 @@ const routes = {
 
     resProfile: '/profileRestaurant',
     resProfileLayout: '/profileRestaurant', // Route cho trang hồ sơ
+    restaurantHome: 'home',
     reslayout: 'layout', // Relative path
     resmenu: 'menu',
     restable: 'table',

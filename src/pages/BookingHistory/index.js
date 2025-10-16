@@ -113,9 +113,7 @@ function BookingHistory() {
             prev.map((b) => {
                 if (b.bookingId === (modalBooking?.bookingId ?? modalBooking?.id)) {
                     const newB = { ...b };
-                    // cập nhật foodReviews nếu server trả về feedbacks
                     if (savedData?.feedbacks) {
-                        // gộp/ghi đè foodReviews
                         newB.foodReviews = savedData.feedbacks.map((f, i) => ({
                             reviewId: f.reviewId ?? null,
                             foodId: f.itemId ?? f.foodId,
@@ -284,6 +282,7 @@ function BookingHistory() {
                                                                         key={
                                                                             d.orderDetailId ?? `${orderId}-${d.foodId}`
                                                                         }
+                                                                        style={{ cursor: 'pointer' }}
                                                                         onClick={() => handleOpenModal(d.food)}
                                                                     >
                                                                         <img

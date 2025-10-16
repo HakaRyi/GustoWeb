@@ -28,6 +28,7 @@ import PaymentMerchantRequest from '~/pages/PaymentMerchant';
 
 import IntegratePaymentAccount from '~/components/Restaurant/IntegratePaymentAccount/IntegratePaymentAccount';
 import RestaurantDetail from '~/components/RestaurantDetail/RestaurantDetail';
+import RestaurantHomePage from '~/components/Restaurant/RestaurantHomePage';
 
 const publicRoutes = [
     {
@@ -71,7 +72,8 @@ const publicRoutes = [
         path: routes.resProfile, // Thêm /profileRestaurant vào MainLayout
         component: ProfileRestaurant,
         children: [
-            { index: true, component: ProfileRestaurantLayout },
+            { index: true, component: RestaurantHomePage },
+            { index: true, path: routes.restaurantHome, component: ProfileRestaurantLayout },
             { path: 'layout', component: LayoutRestaurant }, // Sử dụng relative path
             { path: 'menu', component: MenuLayout },
             { path: 'table', component: TableResLayout },

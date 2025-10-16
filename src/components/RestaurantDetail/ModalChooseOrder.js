@@ -80,6 +80,8 @@ function ModalChooseOrder({ menuId, restaurantId, onClose }) {
                 throw new Error('Vui lòng chọn nhà hàng');
             }
 
+            // let payload = { restaurantId: restaurantId, bookingDate : };
+
             // Bước 1: Gọi API tạo Booking
             const bookingRes = await customFetch(`https://localhost:7176/api/Booking/${restaurantId}`, {
                 method: 'POST',
