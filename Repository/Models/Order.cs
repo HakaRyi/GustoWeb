@@ -29,7 +29,7 @@ public partial class Order
 
     public short? TableId { get; set; }
 
-    public int BookingId { get; set; }
+    public int? BookingId { get; set; }
 
     public virtual Booking Booking { get; set; }
 

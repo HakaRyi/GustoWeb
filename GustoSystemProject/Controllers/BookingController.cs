@@ -2,6 +2,7 @@
 using Org.BouncyCastle.Cms;
 using Repository.Models;
 using Service;
+using Service.DTO.Request;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -35,12 +36,26 @@ namespace GustoSystemProject.Controllers
             var dinerId = User.FindFirst("AccountID")?.Value;
             return await service.GetBookingByMeAndResAsync(short.Parse(dinerId),resId);
         }
+
+        [HttpGet("bookings")]
+        public async Task<List<Booking>> GetBookingsByDate(short restaurantId, DateTime date)
+        {
+            try
+            {
+                return await service.GetBookingsByDate(restaurantId, date);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception();
+            }
+        }
         // POST api/<BookingController>
         [HttpPost("{restaurantId}")]
-        public async Task<IActionResult> Post([FromRoute] short restaurantId)
+        public async Task<IActionResult> Post([FromRoute] CreateBookingRequest request)
         {
             var dinerId = User.FindFirst("AccountID")?.Value;
-            var result = await service.Create(short.Parse(dinerId), restaurantId);
+            request.DinerId = short.Parse(dinerId);
+            var result = await service.Create(request);
             if (result == -1)
             {
                 return Ok(new

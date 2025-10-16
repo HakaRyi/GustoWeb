@@ -29,6 +29,8 @@ public partial class RestaurantProfile
 
     public string TiktokUrl { get; set; }
 
+    public int TableUsageTime { get; set; }
+
     public virtual Account Account { get; set; }
 
     public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();

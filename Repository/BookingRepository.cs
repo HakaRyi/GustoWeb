@@ -20,7 +20,7 @@ namespace Repository
         {
             return await context.Bookings
                 .Include(b=>b.Restaurant)
-                .Include(b=>b.Order)
+                .Include(b=>b.Orders)
                 .Include(b=>b.Diner)
                 .Include(b => b.Table)
                 .Include(b => b.Transaction)
@@ -30,7 +30,7 @@ namespace Repository
         {
             return await context.Bookings
                 .Include(b => b.Restaurant)
-                .Include(b => b.Order)
+                .Include(b => b.Orders)
                 .Include(b => b.Diner)
                 .Include(b => b.Table)
                 .Include(b => b.Transaction)
@@ -40,11 +40,28 @@ namespace Repository
         {
             return await context.Bookings
                 .Include(b => b.Restaurant)
-                .Include(b => b.Order)
+                .Include(b => b.Orders)
                 .Include(b => b.Diner)
                 .Include(b => b.Table)
                 .Include(b => b.Transaction)
                 .FirstOrDefaultAsync(b => b.DinerId == dinerId && b.RestaurantId == resId && b.Status == "Pending");
+        }
+        public async Task<List<Booking>> GetBookingsByTablesInRestaurant(short restaurantId, List<short> tableIds)
+        {
+            return await context.Bookings
+                .Where(b => b.RestaurantId == restaurantId && tableIds.Contains(b.TableId.Value))
+                .ToListAsync();
+        }
+
+        public async Task<List<Booking>> GetBookingsByDate(short restaurantId, DateTime date)
+        {
+            return await context.Bookings
+                .Include(b => b.Restaurant)
+                .Include(b => b.Orders)
+                .Include(b => b.Diner)
+                .Include(b => b.Table)
+                .Include(b => b.Transaction)
+                .Where(b => b.RestaurantId == restaurantId && b.StartTime.Value.Date == date.Date).ToListAsync();
         }
         public async Task<int> Create(Booking booking)
         {

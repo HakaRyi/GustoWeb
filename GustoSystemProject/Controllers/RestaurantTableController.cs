@@ -60,6 +60,19 @@ namespace GustoSystemProject.Controllers
             }
             return Ok(item);
         }
+
+        [HttpGet("getByRestaurant/{id}")]
+        public async Task<IActionResult> GetByMyRestaurant(short id)
+        {
+            
+            var item = await service.GetByAccountAsync(id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            return Ok(item);
+        }
+
         [HttpPost("createTable")]
         public async Task<IActionResult> CreateAsync(RestaurantTableRequest request)
         {
