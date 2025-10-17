@@ -42,7 +42,7 @@
     text-align: left;
 }
 
-.pickTime {
+.timeAndTable {
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -51,11 +51,18 @@
     color: #333;
     font-weight: 600;
 
-    .pickInput {
+    .timeGroup {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .timeInput {
         border: 1px solid #ccc;
         border-radius: 8px;
         padding: 6px 10px;
         color: #162b00;
+        width: 180px; /* Đảm bảo input đủ rộng */
         transition: border-color 0.2s ease;
 
         &:hover {
@@ -72,6 +79,7 @@
     }
 
     .tableSelect {
+        width: 500px; /* Giữ chiều rộng để chứa nội dung dài */
         border: 1px solid #ccc;
         border-radius: 8px;
         padding: 6px 10px;
@@ -80,6 +88,8 @@
         font-size: 14px;
         cursor: pointer;
         transition: all 0.2s ease;
+        max-height: 200px; /* Giới hạn chiều cao dropdown */
+        overflow-y: auto; /* Hỗ trợ cuộn nếu có nhiều tùy chọn */
 
         &:hover {
             border-color: #f07d00;
@@ -91,6 +101,11 @@
             border-color: #f07d00;
             background: rgb(255, 247, 215);
             box-shadow: 0 0 4px rgba(240, 125, 0, 0.3);
+        }
+
+        option {
+            white-space: normal; /* Cho phép xuống dòng trong option */
+            padding: 8px; /* Thêm padding để dễ đọc */
         }
     }
 }
@@ -116,14 +131,14 @@
     margin-top: 12px;
     border-top: 1px solid #e8e1c2;
     border-bottom: 1px solid #e8e1c2;
-    padding: 12px 0; /* Increased padding for larger item list */
-    height: calc(100% - 50px); /* Adjusted to give more space */
+    padding: 12px 0;
+    height: calc(100% - 50px);
 }
 
 .itemList {
     height: 100%;
     overflow-y: auto;
-    padding-right: 12px; /* Increased padding for better spacing */
+    padding-right: 12px;
 
     scrollbar-width: thin;
     scrollbar-color: #f07d00 #fdf9e8;
@@ -142,10 +157,10 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 16px; /* Reduced gap */
+    gap: 16px;
     flex-wrap: wrap;
-    margin-top: 8px; /* Reduced margin */
-    padding-top: 8px; /* Reduced padding */
+    margin-top: 8px;
+    padding-top: 8px;
     border-top: 1px solid #f0e2b0;
 }
 
@@ -153,24 +168,24 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 6px; /* Reduced gap */
+    gap: 6px;
 }
 
 .inputGroup {
     label {
         display: block;
-        margin-bottom: 3px; /* Slightly reduced */
+        margin-bottom: 3px;
         font-weight: 600;
-        font-size: 14px; /* Slightly smaller */
+        font-size: 14px;
     }
 
     input {
-        width: 100px; /* Reduced width */
-        padding: 5px 8px; /* Reduced padding */
+        width: 100px;
+        padding: 5px 8px;
         border: 1px solid #ccc;
         border-radius: 8px;
         background-color: #fdf9e8;
-        font-size: 13px; /* Smaller font */
+        font-size: 13px;
         color: #162b00;
         transition: all 0.2s ease;
 
@@ -188,14 +203,14 @@
     }
 
     textarea {
-        width: 400px; /* Reduced width */
+        width: 400px;
         resize: none;
-        height: 50px; /* Reduced height */
+        height: 50px;
         color: #162b00;
-        padding: 6px 10px; /* Reduced padding */
+        padding: 6px 10px;
         border: 1px solid #ccc;
         border-radius: 8px;
-        font-size: 13px; /* Smaller font */
+        font-size: 13px;
         transition: all 0.2s ease;
 
         &:hover {
@@ -213,36 +228,36 @@
 }
 
 .right {
-    min-width: 220px; /* Reduced min-width */
+    min-width: 220px;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
 }
 
 .total {
-    margin-top: 20px; /* Reduced margin */
+    margin-top: 20px;
     font-weight: bold;
-    font-size: 16px; /* Smaller font */
+    font-size: 16px;
     margin-right: 8px;
     margin-bottom: 3px;
     color: #162b00 !important;
 
     span {
         color: #f07d00;
-        font-size: 24px; /* Smaller font */
+        font-size: 24px;
     }
 }
 
 .payBtn {
     background: linear-gradient(90deg, #f07d00, #ffac33);
     color: #fff;
-    padding: 8px 20px; /* Reduced padding */
+    padding: 8px 20px;
     margin-right: 8px;
     border: none;
-    border-radius: 10px; /* Slightly smaller radius */
+    border-radius: 10px;
     cursor: pointer;
     font-weight: 700;
-    font-size: 14px; /* Smaller font */
+    font-size: 14px;
     transition: all 0.3s ease;
     margin-top: 3px;
 
@@ -255,6 +270,27 @@
         transform: translateY(0);
         box-shadow: none;
     }
+}
+
+.loading {
+    text-align: center;
+    font-size: 16px;
+    color: #162b00;
+    margin: 20px 0;
+}
+
+.error {
+    text-align: center;
+    font-size: 16px;
+    color: #d10000;
+    margin: 20px 0;
+}
+
+.noItems {
+    text-align: center;
+    font-size: 16px;
+    color: #666 !important;
+    margin: 20px 0;
 }
 
 @keyframes fadeIn {

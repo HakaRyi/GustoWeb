@@ -1,33 +1,52 @@
 .listMenuContainer {
-  width: 100%;
-  max-width: 1000px;
-  padding: 20px;
-  align-self: flex-start; // Sát trái
-  margin-left: 0; // Đảm bảo không lệch phải
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+    overflow-y: auto;
+    max-height: 80vh;
 
-  .loading {
-    font-size: 1.2rem;
-    color: #424921;
-    text-align: left; // Sát trái
-    padding: 30px;
-  }
-
-  p {
-    color: #424921;
-    font-size: 1rem;
-    text-align: left; // Sát trái
-  }
+    .loading {
+        font-size: 1.2rem;
+        color: #424921;
+        text-align: center;
+        padding: 30px;
+    }
 }
 
-// Responsive
-@media (max-width: 768px) {
-  .listMenuContainer {
-    padding: 15px;
-  }
+.menuGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
 }
 
-@media (max-width: 480px) {
-  .listMenuContainer {
-    padding: 10px;
-  }
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+    gap: 10px;
+
+    button {
+        background: #424921;
+        color: #fff;
+        border: none;
+        padding: 6px 10px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: 0.3s;
+
+        &:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        &:hover:not(:disabled) {
+            background: #6a7636;
+        }
+    }
+
+    span {
+        color: #424921;
+        font-size: 0.95rem;
+    }
 }

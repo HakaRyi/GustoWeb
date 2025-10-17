@@ -294,7 +294,7 @@ function ModalChooseOrder({ menuId, restaurantId, onClose }) {
                         <button onClick={() => setQuantity(quantity + 1)}>+</button>
                     </div>
                     <button className={styles.addButton} onClick={handleAddOrderDetail}>
-                        ADD - {totalPrice.toLocaleString()}đ
+                        THÊM - {totalPrice.toLocaleString()}đ
                     </button>
                 </div>
             </div>

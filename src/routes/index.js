@@ -25,7 +25,7 @@ import TableResLayout from '~/components/Restaurant/Table/TableResLayout';
 
 import AccountSettingsPage from '~/pages/AccountSettingPage';
 import PaymentMerchantRequest from '~/pages/PaymentMerchant';
-
+import PreviewBeforePay from '~/pages/PreviewBeforePay/PreviewBeforePay';
 import IntegratePaymentAccount from '~/components/Restaurant/IntegratePaymentAccount/IntegratePaymentAccount';
 import RestaurantDetail from '~/components/RestaurantDetail/RestaurantDetail';
 import RestaurantHomePage from '~/components/Restaurant/RestaurantHomePage';
@@ -41,6 +41,7 @@ const publicRoutes = [
             { path: routes.contact, component: Contact },
             { path: routes.restaurants, component: Restaurants },
             { path: routes.restaurantDetail, component: RestaurantDetail },
+            { path: routes.previewBeforePay, component: PreviewBeforePay },
             { path: routes.myCart, component: MyCart },
         ],
     },

@@ -1,31 +1,68 @@
+.listLayoutWrapper {
+    width: 100%;
+    max-width: 1000px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .listLayoutContainer {
-  width: 100%;
-  max-width: 1000px;
-  padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    width: 100%;
+    max-height: 1200px; // chiều cao cố định để có thanh cuộn
+    overflow-y: auto; // thanh cuộn dọc
+    padding-right: 10px;
+    padding-bottom: 50px;
+    padding-left: 20px;
 }
 
 .loading {
-  font-size: 1.2rem;
-  color: #424921;
-  text-align: center;
-  padding: 30px;
+    font-size: 1.2rem;
+    color: #424921;
+    text-align: center;
+    padding: 30px;
 }
 
-p {
-  color: #424921;
-  font-size: 1rem;
-  text-align: center;
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    gap: 15px;
+
+    button {
+        background: #424921;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: 0.3s;
+
+        &:hover:not(:disabled) {
+            background: #6a7636;
+        }
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    }
+
+    span {
+        font-weight: 600;
+        color: #424921;
+    }
 }
 
 // Responsive
 @media (max-width: 768px) {
-  .listLayoutContainer {
-    padding: 15px;
-  }
-}
-
-@media (max-width: 480px) {
-  .listLayoutContainer {
-    padding: 10px;
-  }
+    .listLayoutContainer {
+        grid-template-columns: 1fr; // 1 cột khi màn hình nhỏ
+        max-height: none;
+    }
 }

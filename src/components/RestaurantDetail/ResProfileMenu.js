@@ -93,13 +93,14 @@ function ResProfileMenu({ id }) {
 
                     <div className={styles.profileActions}>
                         <button className={styles.likeButton} onClick={handleLikeClick}>
-                            ❤ Like
+                            ❤ Thích
                         </button>
                         <button className={styles.preOrderButton} onClick={handlePreOrderClick}>
-                            My Pre-Order
+                            Xem đơn hàng của bạn
                         </button>
                     </div>
                     <ModalMyPreOrder
+                        restaurantId={id}
                         isOpen={showModal}
                         onClose={() => setShowModal(false)}
                         orders={orders}

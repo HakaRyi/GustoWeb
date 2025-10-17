@@ -1,0 +1,324 @@
+.previewPage {
+    background-color: #fdf9e7;
+    height: 100%;
+    min-height: 100vh;
+    padding: 24px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: #1a2e00 !important;
+    margin-top: 80px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+
+    .backBtn {
+        background: none;
+        border: none;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        color: #1a2e00;
+        transition: all 0.2s ease;
+
+        &:hover {
+            color: #ff7a00;
+            transform: translateX(-2px);
+        }
+    }
+
+    .title {
+        font-size: 30px;
+        font-weight: 700;
+        color: #1a2e00;
+        flex: 1;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        text-align: center;
+    }
+}
+
+.content {
+    display: flex;
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.leftColumn {
+    flex: 2;
+    background-color: #fff8d8;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.rightColumn {
+    flex: 1;
+    background-color: #fff8d8;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.sectionTitle {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a2e00;
+    margin-bottom: 12px;
+}
+
+.bookingInfo {
+    margin-bottom: 20px;
+    padding: 12px;
+    background-color: #ffe79a;
+    border-radius: 8px;
+
+    h4 {
+        font-size: 20px;
+        font-weight: 600;
+        color: #1a2e00 !important;
+        text-align: left;
+        margin-bottom: 8px;
+        margin-left: 10px;
+    }
+
+    p {
+        font-size: 14px;
+        text-align: left;
+        color: #1a2e00 !important;
+        margin: 5px 10px;
+
+        strong {
+            font-weight: 600;
+        }
+    }
+}
+
+.orderSection {
+    .orderList {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        max-height: 400px;
+        overflow-y: auto;
+        padding-right: 8px;
+
+        scrollbar-width: thin;
+        scrollbar-color: #ff7a00 #fff8d8;
+
+        &::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: #ff7a00;
+            border-radius: 10px;
+        }
+    }
+
+    .orderItem {
+        display: flex;
+        align-items: center;
+        background-color: #ffe79a;
+        border-radius: 8px;
+        padding: 8px;
+        width: 100%; /* Cố định chiều rộng */
+        height: 80px; /* Cố định chiều cao */
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+
+        .foodImg {
+            width: 70px;
+            height: 70px;
+            border-radius: 6px;
+            object-fit: cover;
+            margin-right: 12px;
+        }
+
+        .foodInfo {
+            flex: 1;
+            display: flex;
+
+            flex-direction: column;
+            gap: 2px;
+
+            .foodName {
+                text-align: left !important;
+                font-size: 14px;
+                font-weight: 600;
+                color: #1a2e00 !important;
+            }
+
+            .foodDetails {
+                text-align: left !important;
+                font-style: italic;
+                font-size: 12px;
+                color: #1a2e00 !important;
+                opacity: 0.8;
+            }
+
+            .foodPrice {
+                font-size: 12px;
+                font-weight: 600;
+                text-align: left !important;
+                color: #1a2e00 !important;
+            }
+        }
+    }
+}
+
+.summary {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .summaryRow {
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
+        color: #1a2e00;
+        align-items: center;
+
+        span:last-child {
+            font-weight: 600;
+        }
+    }
+
+    .feeWithTooltip {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        position: relative;
+
+        .tooltipIcon {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 18px;
+            background-color: #ff7a00;
+            color: white;
+            border-radius: 50%;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: help;
+            transition: all 0.2s ease;
+
+            &:hover {
+                background-color: #e56900;
+                transform: scale(1.1);
+            }
+
+            .tooltipContent {
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                transform: translateX(-50%);
+                background: #fdf9e7;
+                border: 2px solid #ff7a00;
+                border-radius: 8px;
+                padding: 8px;
+                width: 220px;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+                z-index: 1000;
+                margin-top: 8px;
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    bottom: 100%;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    border: 6px solid transparent;
+                    border-bottom-color: #ff7a00;
+                }
+
+                h4 {
+                    font-size: 12px;
+                    font-weight: 700;
+                    color: #1a2e00 !important;
+                    margin-bottom: 8px;
+                    text-align: center;
+                }
+
+                p {
+                    font-size: 10px;
+                    color: #612000 !important;
+                    margin: 4px 0;
+                    line-height: 1.4;
+                }
+
+                ul {
+                    margin: 4px 0;
+                    padding-left: 14px;
+
+                    li {
+                        font-size: 10px;
+                        color: #1a2e00;
+                        margin: 1px 0;
+                        line-height: 1.2;
+                    }
+                }
+            }
+        }
+    }
+
+    .totalRow {
+        display: flex;
+        justify-content: space-between;
+        font-size: 16px;
+        font-weight: 700;
+        color: #1a2e00;
+        margin-top: 12px;
+        padding-top: 12px;
+        border-top: 1px solid #e8e1c2;
+    }
+
+    .doneBtn {
+        background: linear-gradient(90deg, #ff7a00, #ffac33);
+        border: none;
+        border-radius: 8px;
+        padding: 10px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #fff;
+        cursor: pointer;
+        margin-top: 16px;
+        transition: all 0.2s ease;
+
+        &:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(90deg, #ff5100, #ffa722);
+            box-shadow: 0 4px 10px rgba(255, 122, 0, 0.3);
+        }
+
+        &:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+    }
+}
+
+.loading {
+    text-align: center;
+    font-size: 16px;
+    color: #1a2e00 !important;
+    margin: 20px 0;
+}
+
+.error {
+    text-align: center;
+    font-size: 16px;
+    color: #d10000 !important;
+    margin: 20px 0;
+}
+
+.noItems {
+    text-align: center;
+    font-size: 14px;
+    color: #1a2e00 !important;
+    opacity: 0.8;
+    margin: 20px 0;
+}

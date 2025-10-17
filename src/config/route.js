@@ -25,6 +25,7 @@ const routes = {
     resmenu: 'menu',
     restable: 'table',
     resPayAcc: 'integratePaymentAccount',
+    previewBeforePay: '/preview-before-pay',
 };
 
 export default routes;

@@ -1,120 +1,121 @@
 .cardMenu {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  background: #fffdf6;
-  border: 0px solid #424921;
-  border-radius: 12px;
-  padding: 15px;
-  width: 100%;
-  max-width: 1000px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  position: relative;
-  margin-bottom: 20px;
-  margin-left: 100px; // Sát trái
-  align-self: center; // Đảm bảo card sát trái
-  cursor: pointer;
-  .menuImage {
-    width: 300px;
-    height: 200px;
-    border-radius: 8px;
-    object-fit: cover;
-    border: 0px solid #424921;
-  }
-
-  .menuInfo {
-    flex: 1;
-    h4 {
-      margin: 0;
-      font-size: 1.4rem;
-      color: #424921;
-      font-weight: 600;
-    }
-    p {
-      margin: 5px 0 0;
-      color: #6a7636 !important;
-      font-size: 1rem;
-    }
-  }
-
-  .menu {
-    position: relative;
-  }
-
-  .menuBtn {
-    color: #6a7636;
-    border: none;
-    border-radius: 50%;
-    width: 32px;
-    height: 32px;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    background: #fffdf6;
+    border-radius: 12px;
+    padding: 15px;
+    width: 100%;
+    max-width: 320px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
     cursor: pointer;
-    transition: background-color 0.3s;
+    position: relative;
 
     &:hover {
-      color: #6a7636;
+        transform: translateY(-5px);
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
     }
-  }
-
-  .menuDropdown {
-    position: absolute;
-    top: 40px;
-    right: 0;
-    background: #fffdf6;
-    border: 2px solid #424921;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    z-index: 10;
-    min-width: 120px;
-
-    button {
-      display: block;
-      width: 100%;
-      padding: 10px;
-      background: none;
-      border: none;
-      color: #424921;
-      font-size: 0.9rem;
-      text-align: left;
-      cursor: pointer;
-
-      &:hover {
-        background: #424921;
-        color: #fff;
-      }
-    }
-  }
-}
-
-// Responsive
-@media (max-width: 768px) {
-  .cardMenu {
-    flex-direction: column;
-    align-items: flex-start; // Sát trái trên mobile
-    padding: 10px;
 
     .menuImage {
-      width: 100%;
-      height: 150px;
+        width: 100%;
+        height: 180px;
+        border-radius: 8px;
+        object-fit: cover;
+        margin-bottom: 10px;
     }
 
     .menuInfo {
-      h4 {
-        font-size: 1.2rem;
-      }
-      p {
-        font-size: 0.9rem;
-      }
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+
+        h4 {
+            margin: 0;
+            font-size: 1.1rem;
+            color: #424921;
+            font-weight: 600;
+        }
+
+        p {
+            margin: 0;
+            color: #6a7636 !important;
+            font-size: 0.9rem !important;
+        }
     }
-  }
+
+    .menu {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+
+    .menuBtn {
+        color: #ffffff;
+        background: #6a7636;
+        border: none;
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        &:hover {
+            color: #ffffff;
+            background: #9caf47;
+        }
+    }
+
+    .menuDropdown {
+        position: absolute;
+        top: 40px;
+        right: 0;
+        background: #fffdf6;
+        border: 1px solid #d1d1b4;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        z-index: 10;
+        min-width: 120px;
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: none;
+            border: none;
+            color: #424921;
+            font-size: 0.9rem;
+            text-align: left;
+            cursor: pointer;
+
+            &:hover {
+                background: #424921;
+                color: #fff;
+            }
+        }
+    }
 }
 
-@media (max-width: 480px) {
-  .cardMenu {
-    .menuImage {
-      height: 120px;
+/* Grid Layout Container */
+.menuGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 10px;
+    justify-items: center;
+    margin-top: 20px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .menuGrid {
+        grid-template-columns: repeat(2, 1fr);
     }
-  }
+}
+
+@media (max-width: 768px) {
+    .menuGrid {
+        grid-template-columns: repeat(1, 1fr);
+    }
 }
