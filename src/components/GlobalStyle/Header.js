@@ -57,28 +57,34 @@ function Header({ cartCount = 0 }) {
                 </div>
 
                 <Nav className={styles.navbar}>
-                    <Link to="/" className={styles.navLink}>
-                        <FaHome className={styles.navIcon} /> Trang chủ
+                    <Link to="/" className={styles.navLink} title="Trang chủ">
+                        <FaHome className={styles.navIcon} />
+                        <span className={styles.navText}>Trang chủ</span>
                     </Link>
-                    <Link to="/about" className={styles.navLink}>
-                        <FaInfoCircle className={styles.navIcon} /> Về chúng tôi
+                    <Link to="/about" className={styles.navLink} title="Về chúng tôi">
+                        <FaInfoCircle className={styles.navIcon} />
+                        <span className={styles.navText}>Về chúng tôi</span>
                     </Link>
-                    <Link to="/contact" className={styles.navLink}>
-                        <FaPaperPlane className={styles.navIcon} /> Liên hệ
+                    <Link to="/contact" className={styles.navLink} title="Liên hệ">
+                        <FaPaperPlane className={styles.navIcon} />
+                        <span className={styles.navText}>Liên hệ</span>
                     </Link>
 
                     {!isAuthenticated ? (
-                        <Link to={routes.login} className={`${styles.navLink} ${styles.loginBtn}`}>
-                            <FaSignInAlt /> Đăng nhập
+                        <Link to={routes.login} className={`${styles.navLink} ${styles.loginBtn}`} title="Đăng nhập">
+                            <FaSignInAlt className={styles.navIcon} />
+                            <span className={styles.navText}>Đăng nhập</span>
                         </Link>
                     ) : (
                         <>
-                            <Link to="/restaurants" className={styles.navLink}>
-                                <FaShoppingCart /> Đặt món ngay
+                            <Link to="/restaurants" className={styles.navLink} title="Đặt món ngay">
+                                <FaShoppingCart className={styles.navIcon} />
+                                <span className={styles.navText}>Đặt món ngay</span>
                                 {cartCount > 0 && <Badge className={styles.cartBadge}>{cartCount}</Badge>}
                             </Link>
-                            <Link to={profileRoute} className={styles.navLink}>
-                                <FaAddressBook /> Hồ sơ
+                            <Link to={profileRoute} className={styles.navLink} title="Hồ sơ">
+                                <FaAddressBook className={styles.navIcon} />
+                                <span className={styles.navText}>Hồ sơ</span>
                             </Link>
                         </>
                     )}

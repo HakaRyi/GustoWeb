@@ -30,9 +30,7 @@ const MenuLayout = () => {
         <div className={styles.menuLayoutContainer}>
             <div className={styles.header}>
                 <h3>Quản lý thực đơn</h3>
-
                 <div className={styles.actions}>
-                    {/* 🔹 Nút Lọc */}
                     <div className={styles.filterWrapper}>
                         <button
                             className={`${styles.filterBtn} ${showFilter ? styles.active : ''}`}
@@ -41,7 +39,6 @@ const MenuLayout = () => {
                             <FaFilter className={`${styles.filterIcon} ${showFilter ? styles.rotate : ''}`} />
                             Lọc
                         </button>
-
                         {showFilter && (
                             <div className={styles.filterDropdown}>
                                 <label>
@@ -71,8 +68,6 @@ const MenuLayout = () => {
                             </div>
                         )}
                     </div>
-
-                    {/* 🔹 Ô tìm kiếm */}
                     <div className={styles.searchBox}>
                         <FaSearch className={styles.searchIcon} />
                         <input
@@ -82,21 +77,16 @@ const MenuLayout = () => {
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
                     </div>
-
-                    {/* 🔹 Nút tạo món */}
                     <button className={styles.createBtn} onClick={handleOpenModal}>
                         <FaPlus className={styles.btnIcon} /> Tạo món mới
                     </button>
                 </div>
             </div>
-
-            {/* ✅ Truyền filterOptions xuống */}
             <ListMenu
                 searchTerm={searchTerm}
                 filterOptions={filterOptions}
                 onSuccess={(fetchMenus) => (refreshListRef.current = fetchMenus)}
             />
-
             {isModalOpen && <ModalMenu isOpen={isModalOpen} onClose={handleCloseModal} onSuccess={handleSuccess} />}
         </div>
     );

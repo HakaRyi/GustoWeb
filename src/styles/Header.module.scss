@@ -1,106 +1,150 @@
 .headerContainer {
-  background-color: #6a7636;
-  padding: 10px 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 90px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1000;
+    background-color: #6a7636;
+    padding: 10px 20px; /* Giảm padding ngang từ 40px xuống 20px để tiết kiệm không gian */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90px; /* Giảm height từ 90px xuống 70px để gọn hơn */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
 }
 
 .headerInner {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  max-width: 1300px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1300px;
 }
 
 .brand {
- 
+    display: flex;
+    align-items: center;
 }
 
 .logoImg {
-  height: 50px;
-  width: auto;
-  margin-right: 15px;
-  transition: transform 0.3s ease, filter 0.3s ease;
+    height: 40px; /* Giảm height từ 50px xuống 40px để gọn hơn */
+    width: auto;
+    transition: transform 0.3s ease, filter 0.3s ease;
 
-  &:hover {
-    transform: scale(1.05);
-  }
+    &:hover {
+        transform: scale(1.05);
+    }
 }
 
 /* NAVBAR LINKS */
 .navbar {
-  display: flex;
-  align-items: center;
-  gap: 60px;
+    display: flex;
+    align-items: center;
+    gap: 60px; /* Giảm gap từ 60px xuống 40px */
 }
 
 .navLink {
-  color: #fff9d6;
-  font-weight: bold;
-  text-decoration: none;
-  font-size: 20px;
-  display: flex;
-  align-items: center;
-  transition: all 0.2s ease-in-out;
-  font-family: Kanit, Verdana, Geneva, Tahoma, sans-serif;
+    color: #fff9d6;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s ease-in-out;
+    font-family: Kanit, Verdana, Geneva, Tahoma, sans-serif;
 
-  &:hover {
-    color: #f5de87;
-    transform: translateY(-2px);
-    text-shadow: 0 0 8px #a2935d;
-  }
+    &:hover {
+        color: #f5de87;
+        transform: translateY(-2px);
+        text-shadow: 0 0 8px #a2935d;
+    }
 }
 
 .navIcon {
-  margin-right: 6px;
+    margin-right: 6px;
+    font-size: 22px; /* Tăng kích thước icon để rõ ràng hơn */
 }
 
 /* LOGIN BUTTON */
 .loginBtn {
-  background-color: transparent;
-  border: 2.5px solid #f5de87;
-  border-radius: 8px;
-  padding: 6px 14px;
-  color: #f5de87;
-  font-weight: bold;
-  transition: all 0.25s ease-in-out;
+    background-color: transparent;
+    border: 2.5px solid #f5de87;
+    border-radius: 8px;
+    padding: 6px 14px;
+    color: #f5de87;
+    font-weight: bold;
+    transition: all 0.25s ease-in-out;
 
-  &:hover {
-    background-color: #f5de87;
-    color: #6a7636;
-  }
+    &:hover {
+        background-color: #f5de87;
+        color: #6a7636;
+    }
 }
 
 /* CART BADGE */
 .cartBadge {
-  background-color: #f5de87;
-  color: #6a7636;
-  border-radius: 50%;
-  font-size: 12px;
-  padding: 4px 7px;
-  margin-left: 6px;
-  vertical-align: middle;
+    background-color: #f5de87;
+    color: #6a7636;
+    border-radius: 50%;
+    font-size: 12px;
+    padding: 4px 7px;
+    margin-left: 6px;
+    vertical-align: middle;
 }
 
 /* Responsive */
-@media (max-width: 768px) {
-  .headerInner {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+@media (max-width: 1098px) {
+    .headerInner {
+        flex-direction: row; /* Giữ hàng ngang thay vì cột */
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 10px;
+    }
 
-  .navbar {
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-top: 10px;
-  }
+    .navbar {
+        gap: 15px; /* Giữ gap nhỏ để các icon gần nhau */
+    }
+
+    .navLink {
+        font-size: 0; /* Ẩn văn bản */
+        padding: 8px; /* Thêm padding để vùng click lớn hơn */
+    }
+
+    .navIcon {
+        margin-right: 0; /* Bỏ margin-right vì không có văn bản */
+        font-size: 24px; /* Tăng kích thước icon để dễ nhìn */
+    }
+
+    .loginBtn {
+        padding: 6px; /* Giảm padding để gọn hơn */
+        border-width: 2px;
+    }
+
+    .cartBadge {
+        font-size: 10px;
+        padding: 3px 6px;
+    }
+
+    .logoImg {
+        height: 35px; /* Giảm kích thước logo trên mobile */
+    }
+}
+
+@media (max-width: 180px) {
+    .headerContainer {
+        padding: 10px 15px;
+        height: 60px; /* Giảm height thêm trên mobile nhỏ */
+    }
+
+    .navbar {
+        gap: 10px; /* Giảm gap hơn nữa trên màn hình rất nhỏ */
+    }
+
+    .navLink {
+        padding: 6px;
+    }
+
+    .navIcon {
+        font-size: 20px; /* Giảm nhẹ kích thước icon trên màn hình rất nhỏ */
+    }
 }
