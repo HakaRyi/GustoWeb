@@ -10,6 +10,7 @@
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     cursor: pointer;
     gap: 20px;
+    position: relative; /* Thêm để badge dùng position: absolute */
 
     &:hover {
         transform: translateY(-5px);
@@ -68,5 +69,72 @@
 
     &:hover {
         background-color: #cf711e;
+    }
+}
+
+.recommendedBadge {
+    position: absolute;
+    top: -11px;
+    right: -5px;
+    background: linear-gradient(135deg, hsl(349, 100%, 69%), #f90000);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+    rotate: 9deg;
+}
+
+@media (max-width: 768px) {
+    .menuCard {
+        width: 100%;
+        max-width: 350px;
+        padding: 12px 15px;
+    }
+
+    .menuImage {
+        width: 100px;
+        height: 100px;
+    }
+
+    .menuName {
+        font-size: 16px;
+    }
+
+    .menuPrice {
+        font-size: 14px;
+    }
+
+    .viewReviewsButton {
+        padding: 5px 12px;
+        font-size: 13px;
+        margin-top: 20px;
+    }
+
+    .recommendedBadge {
+        font-size: 11px;
+        padding: 3px 6px;
+    }
+}
+
+@media (max-width: 480px) {
+    .menuCard {
+        max-width: 300px;
+        padding: 10px 12px;
+    }
+
+    .menuImage {
+        width: 80px;
+        height: 80px;
+    }
+
+    .recommendedBadge {
+        font-size: 10px;
+        padding: 2px 5px;
+        top: 8px;
+        right: 8px;
     }
 }

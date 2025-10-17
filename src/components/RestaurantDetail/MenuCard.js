@@ -39,6 +39,7 @@ function MenuCard({ item, restaurantId }) {
     return (
         <>
             <div className={styles.menuCard} onClick={openModal}>
+                {item.isRecommended && <span className={styles.recommendedBadge}>Đề xuất</span>}
                 <img src={item.foodUrl} alt={item.name} className={styles.menuImage} />
                 <div className={styles.menuInfo}>
                     <div className={styles.textGroup}>

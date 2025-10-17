@@ -50,7 +50,7 @@ const OrderModal = ({
     // compute total
     const total = useMemo(() => {
         if (!order?.orderDetails || !Array.isArray(order.orderDetails)) return 0;
-        return order.orderDetails.reduce((s, it) => s + Number(it.foodPrice || 0), 0) + 3000;
+        return order.orderDetails.reduce((s, it) => s + Number(it.foodPrice || 0), 0) + 3000; // + them 3k phi dich vu cua app
     }, [order]);
 
     if (!isOpen) return null;

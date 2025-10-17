@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom'; // Thêm import này
+import ReactDOM from 'react-dom';
 import styles from './ModalMenu.module.scss';
 import { customFetch } from '~/config/customFetch';
 import ImageUploader from '~/components/Cloundinary/ImageUploader';
-import { FaTimes, FaCamera } from 'react-icons/fa';
+import { FaTimes, FaCamera, FaPlus } from 'react-icons/fa';
 
 const ModalMenu = ({ isOpen, onClose, menu, isUpdate, onSuccess }) => {
     const [formData, setFormData] = useState({
@@ -20,6 +20,10 @@ const ModalMenu = ({ isOpen, onClose, menu, isUpdate, onSuccess }) => {
         description: '',
     });
     const [uploading, setUploading] = useState(false);
+    const [tasteName, setTasteName] = useState(''); // Trạng thái cho input khẩu vị
+    const [tastes, setTastes] = useState([]); // Danh sách khẩu vị
+    const [tasteLoading, setTasteLoading] = useState(false); // Loading khi thêm khẩu vị
+    const [isTasteSectionOpen, setIsTasteSectionOpen] = useState(false); // Trạng thái mở phần khẩu vị
 
     useEffect(() => {
         if (isUpdate && menu) {
@@ -36,8 +40,25 @@ const ModalMenu = ({ isOpen, onClose, menu, isUpdate, onSuccess }) => {
                 foodUrl: menu.foodImgUrl || '',
                 description: menu.description || '',
             });
+            // Gọi API lấy danh sách khẩu vị
+            fetchTastes();
         }
     }, [isUpdate, menu]);
+
+    const fetchTastes = async () => {
+        if (!isUpdate || !menu?.foodId) return;
+        try {
+            const res = await customFetch(`https://localhost:7176/api/Taste/menu/${menu.foodId}`, {
+                method: 'GET',
+            });
+            if (!res.ok) throw new Error('Lấy danh sách khẩu vị thất bại');
+            const data = await res.json();
+            setTastes(data);
+        } catch (error) {
+            console.error('Fetch tastes failed:', error);
+            alert('Lấy danh sách khẩu vị thất bại!');
+        }
+    };
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -57,9 +78,31 @@ const ModalMenu = ({ isOpen, onClose, menu, isUpdate, onSuccess }) => {
             console.log('Ảnh đã được tải lên!');
         } catch (error) {
             console.error('Upload image failed:', error);
-            console.log(error.message || 'Tải ảnh lên thất bại!');
+            alert(error.message || 'Tải ảnh lên thất bại!');
         } finally {
             setUploading(false);
+        }
+    };
+
+    const handleTasteSubmit = async (e) => {
+        e.preventDefault();
+        if (!isUpdate || !menu?.foodId || !tasteName.trim()) return;
+        setTasteLoading(true);
+        try {
+            const res = await customFetch(`https://localhost:7176/api/Taste/${menu.foodId}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: tasteName }),
+            });
+            if (!res.ok) throw new Error('Thêm khẩu vị thất bại');
+            console.log('Thêm khẩu vị thành công!');
+            setTasteName(''); // Xóa input sau khi thêm
+            fetchTastes(); // Làm mới danh sách khẩu vị
+        } catch (error) {
+            console.error('Add taste failed:', error);
+            alert('Thêm khẩu vị thất bại!');
+        } finally {
+            setTasteLoading(false);
         }
     };
 
@@ -87,14 +130,13 @@ const ModalMenu = ({ isOpen, onClose, menu, isUpdate, onSuccess }) => {
             onSuccess();
             onClose();
         } catch (error) {
-            console.log(`${isUpdate ? 'Update' : 'Create'} menu failed:`, error);
+            console.error(`${isUpdate ? 'Update' : 'Create'} menu failed:`, error);
             alert(`${isUpdate ? 'Cập nhật' : 'Tạo'} món thất bại!`);
         }
     };
 
     if (!isOpen) return null;
 
-    // Sử dụng createPortal để render modal vào body
     return ReactDOM.createPortal(
         <div
             className={styles.modalOverlay}
@@ -260,13 +302,81 @@ const ModalMenu = ({ isOpen, onClose, menu, isUpdate, onSuccess }) => {
                             />
                         </label>
                     </div>
-                    <button type="submit" className={`${styles.submitBtn} ${styles.fullWidth}`} disabled={uploading}>
-                        {isUpdate ? 'Cập nhật' : 'Tạo'}
-                    </button>
+                    {/* Phần khẩu vị (chỉ hiển thị khi cập nhật) */}
+                    {isUpdate && (
+                        <div className={`${styles.formGroup} ${styles.fullWidth}`}>
+                            {!isTasteSectionOpen ? (
+                                <button
+                                    type="button"
+                                    className={styles.openTasteBtn}
+                                    onClick={() => setIsTasteSectionOpen(true)}
+                                >
+                                    <FaPlus /> Thêm khẩu vị
+                                </button>
+                            ) : (
+                                <div className={styles.tasteSection}>
+                                    <button
+                                        className={styles.closeTasteBtn}
+                                        onClick={() => setIsTasteSectionOpen(false)}
+                                    >
+                                        <FaTimes />
+                                    </button>
+                                    <div className={`${styles.formGroup} ${styles.fullWidth}`}>
+                                        <label>
+                                            Thêm khẩu vị:
+                                            <div className={styles.tasteInputWrapper}>
+                                                <input
+                                                    type="text"
+                                                    value={tasteName}
+                                                    onChange={(e) => setTasteName(e.target.value)}
+                                                    placeholder="Nhập tên khẩu vị (VD: Cay)"
+                                                    className={styles.formInput}
+                                                    disabled={tasteLoading}
+                                                />
+                                                <button
+                                                    type="button"
+                                                    className={styles.addTasteBtn}
+                                                    onClick={handleTasteSubmit}
+                                                    disabled={tasteLoading || !tasteName.trim()}
+                                                >
+                                                    <FaPlus /> {tasteLoading ? 'Đang thêm...' : 'Thêm'}
+                                                </button>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    {tastes.length > 0 && (
+                                        <div className={styles.tasteList}>
+                                            <h4 className={styles.tasteListTitle}>Danh sách khẩu vị</h4>
+                                            <div className={styles.tasteGrid}>
+                                                {tastes.map((taste) => (
+                                                    <div key={taste.id} className={styles.cardTaste}>
+                                                        <span className={styles.tasteName}>{taste.taste1}</span>
+                                                        {/* <span className={styles.tasteMenuId}>
+                                                            Menu ID: {taste.restaurantMenuId}
+                                                        </span> */}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+                        </div>
+                    )}
+                    {/* Nút submit luôn ở dưới cùng */}
+                    <div className={`${styles.formGroup} ${styles.fullWidth}`}>
+                        <button
+                            type="submit"
+                            className={`${styles.submitBtn} ${styles.fullWidth}`}
+                            disabled={uploading}
+                        >
+                            {isUpdate ? 'Cập nhật' : 'Tạo'}
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>,
-        document.body, // Render modal vào body
+        document.body,
     );
 };
 
