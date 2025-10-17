@@ -96,6 +96,24 @@ namespace GustoSystemProject.Controllers
             }
             return 0;
         }
+        [HttpPut("updateQuantity/{orderDetailId}")]
+        public async Task<IActionResult> UpdateQuantity([FromRoute] short orderDetailId, [FromBody] UpdateQuantityRequest request)
+        {
+            var dinerId = User.FindFirst("AccountID")?.Value;
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            } 
+               
+
+            await service.UpdateOrderDetailQuantity(orderDetailId, request, short.Parse(dinerId));
+
+            return Ok(new
+            {
+                message = "Cập nhật số lượng món ăn thành công"
+            });
+        }
 
         // DELETE api/<OrderDetailController>/5
         [HttpDelete("{id}")]

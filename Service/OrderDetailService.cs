@@ -109,11 +109,10 @@ namespace Service
             if (order.Status != "Pending")
                 throw new InvalidOperationException("Cannot add order detail to an order that is not pending.");
 
-            decimal totalPrice = food.Price;
+            decimal pricePerItem = food.Price;
             var orderDetail = new OrderDetail
             {
                 FoodId = menuId,
-                FoodPrice = food.Price,
                 NumberOfFood = request.Quantity,
                 OrderId = orderId,
                 Optionals = new List<Optional>(),
@@ -133,7 +132,7 @@ namespace Service
                         if (optional.RestaurantMenuId != menuId)
                             throw new Exception($"Optional with ID {optionalId} does not belong to food ID {menuId}.");
                         orderDetail.Optionals.Add(optional);
-                        totalPrice += optional.Price;
+                        pricePerItem += optional.Price;
                     }
                 }
 
@@ -149,12 +148,15 @@ namespace Service
                         orderDetail.Tastes.Add(taste);
                     }
                 }
-
+                orderDetail.FoodPrice = pricePerItem * request.Quantity;
                 //save
                 await _repository.CreateAsync(orderDetail);
-
+                //tinh lai total de confirm
+                var updatedOrder = await _orderRepository.GetOrderAsync(orderId);
+                decimal newTotal = (decimal) updatedOrder.OrderDetails.Sum(od => od.FoodPrice);
                 //update TotalPrice of order
-                order.TotalPrice += totalPrice * request.Quantity;
+                updatedOrder.TotalPrice = newTotal;
+                updatedOrder.FinalPrice = (updatedOrder.DiscountAmount != null) ? newTotal - updatedOrder.DiscountAmount : newTotal;
                 await _orderRepository.UpdateAsync(order);
             }
             catch (DbUpdateException ex)
@@ -168,17 +170,54 @@ namespace Service
             }
         }
 
-        public async Task UpdateOrderDetailQuantity(short detailId, UpdateQuantityRequest request)
+        public async Task UpdateOrderDetailQuantity(short detailId, UpdateQuantityRequest request, short dinerId)
         {
             var orderDetail = await _repository.GetOrderDetailAsync(detailId);
             if (orderDetail == null)
                 throw new Exception("Order detail not found");
+
             var order = await _orderRepository.GetOrderAsync(orderDetail.OrderId);
             if (order == null)
                 throw new Exception("Order not found");
+
+            if (dinerId != order.Booking.DinerId)
+                throw new UnauthorizedAccessException("Bạn không có quyền sửa đơn hàng này");
+
+            
+            Console.WriteLine($"orderDetail id: {orderDetail.OrderDetailId}");
+            Console.WriteLine($"current quantity: {orderDetail.NumberOfFood}");
+            Console.WriteLine($"current foodPrice: {orderDetail.FoodPrice}");
+            Console.WriteLine($"new quantity: {request.Quantity}");
+            Console.WriteLine($"food base price: {orderDetail.Food?.Price}");
+
+            decimal baseFoodPrice = orderDetail.Food?.Price ?? 0;
+            decimal optionalTotalPrice = 0;
+
+            if (orderDetail.Optionals != null && orderDetail.Optionals.Any())
+            {
+                optionalTotalPrice = orderDetail.Optionals.Sum(opt => opt.Price);
+                Console.WriteLine($"optionals count: {orderDetail.Optionals.Count}");
+                Console.WriteLine($"optionals total price: {optionalTotalPrice}");
+            }
+
+            decimal pricePerItem = baseFoodPrice + optionalTotalPrice;
+            Console.WriteLine($"price per item: {pricePerItem}");
+
+            decimal newFoodPrice = request.Quantity * pricePerItem;
+            Console.WriteLine($"new foodPrice: {newFoodPrice}");
+
             orderDetail.NumberOfFood = request.Quantity;
+            orderDetail.FoodPrice = newFoodPrice;
             await _repository.UpdateAsync(orderDetail);
+            var updatedOrder = await _orderRepository.GetOrderAsync(orderDetail.OrderId);
+            decimal newTotal = (decimal)updatedOrder.OrderDetails.Sum(od => od.FoodPrice);
+
+
+            updatedOrder.TotalPrice = newTotal;
+            updatedOrder.FinalPrice = (order.DiscountAmount != null) ? newTotal - updatedOrder.DiscountAmount : newTotal;
             await _orderRepository.UpdateAsync(order);
+
+            Console.WriteLine($"order total updated: {newTotal}");
         }
 
         public async Task<int> UpdateAsync(short detailId, short dinnerId)
@@ -204,7 +243,21 @@ namespace Service
                 var detail = await _repository.GetOrderDetailAsync(detailId);
                 if (detail != null && detail.Order.Booking.DinerId == dinnerId)
                 {
-                    return await _repository.DeleteAsync(detailId);
+                    bool deleted = await _repository.DeleteAsync(detailId);
+                    if (!deleted) return false;
+
+                    // Load updated order
+                    var updatedOrder = await _orderRepository.GetOrderAsync(detail.OrderId);
+                    if (updatedOrder == null) throw new Exception("Order not found after delete");
+
+                    // New total = Sum remaining FoodPrice
+                    decimal newTotal = (decimal)updatedOrder.OrderDetails.Sum(od => od.FoodPrice);
+
+                    updatedOrder.TotalPrice = newTotal;
+                    updatedOrder.FinalPrice = (updatedOrder.DiscountAmount != null) ? newTotal - updatedOrder.DiscountAmount : newTotal;
+
+                    await _orderRepository.UpdateAsync(updatedOrder);
+                    return true;
                 }
                 return false;
             }

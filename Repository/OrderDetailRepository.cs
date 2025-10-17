@@ -35,7 +35,10 @@ namespace Repository
         {
             return await context.OrderDetails
                 .Include(od => od.Food)
-                .Include(od => od.Order)
+                .Include(od => od.Optionals)
+                .Include(od => od.Tastes)
+                .Include(od => od.Order).ThenInclude(od => od.Booking)
+                .AsTracking()
                 .FirstOrDefaultAsync(o => o.OrderDetailId == id);
         }
         public async Task<int> CreateAsync(OrderDetail order)
@@ -53,6 +56,7 @@ namespace Repository
             var order = await GetOrderDetailAsync(id);
             if (order != null)
             {
+                context.OrderDetails.Attach(order);
                 context.OrderDetails.Remove(order);
                 await context.SaveChangesAsync();
                 return true;

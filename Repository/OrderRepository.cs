@@ -34,10 +34,20 @@ namespace Repository
 
                 .ToListAsync();
         }
-        public async Task<Order> GetOrderPending(short dinnerId)
+        public async Task<Order> GetOrderPending(short dinnerId, short resId)
         {
             return await context.Orders
+                .Include(o => o.Booking).ThenInclude(o => o.Restaurant)
                 .Include(o => o.OrderDetails).ThenInclude(o=>o.Tastes)
+                .Include(o => o.OrderDetails).ThenInclude(o => o.Optionals)
+                .Include(o => o.OrderDetails).ThenInclude(o => o.Food)
+
+                .FirstOrDefaultAsync(o => o.Booking.DinerId == dinnerId && o.Status == "Pending" && o.Booking.RestaurantId == resId);
+        }
+        public async Task<Order> GetOrderPending2(short dinnerId)
+        {
+            return await context.Orders
+                .Include(o => o.OrderDetails).ThenInclude(o => o.Tastes)
                 .Include(o => o.OrderDetails).ThenInclude(o => o.Optionals)
                 .FirstOrDefaultAsync(o => o.Booking.DinerId == dinnerId && o.Status == "Pending");
         }
@@ -52,7 +62,8 @@ namespace Repository
         {
             return await context.Orders
                 .Include(o => o.OrderDetails)
-                .Include(o => o.Booking)
+                .Include(o => o.Booking).ThenInclude(o => o.Restaurant)
+                 .Include(o => o.Booking).ThenInclude(o => o.Table)
                 .Include(o => o.FoodReviews)
                 .Include(o => o.Promotion)
                 .Include(o => o.Table)

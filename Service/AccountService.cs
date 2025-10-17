@@ -109,6 +109,7 @@ namespace Service
                 var passwordHasher = new PasswordHasher<Account>();
                 account.Password = passwordHasher.HashPassword(account, request.Password);
                 account.CreateAt = DateTime.Now;
+                account.Status = "True";
 
                 Role role = await _roleRepository.GetRoleById(request.RoleId);
                 account.RoleId = request.RoleId;

@@ -78,6 +78,7 @@ namespace Repository
         public async Task<Booking?> GetPendingBookingByDinerAndRestaurant(short dinerId, short restaurantId)
         {
             return await context.Bookings
+               
                 .Where(b => b.DinerId == dinerId && b.RestaurantId == restaurantId && b.Status == "Pending")
                 .FirstOrDefaultAsync();
         }

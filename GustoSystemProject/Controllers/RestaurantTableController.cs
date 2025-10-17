@@ -60,6 +60,11 @@ namespace GustoSystemProject.Controllers
             }
             return Ok(item);
         }
+        [HttpGet("getByRestaurantIdAndAvailable/{restaurantId}")]
+        public async Task<List<RestaurantTable>> GetByRestaurantIdAndAvailable([FromRoute] int restaurantId)
+        {
+            return await service.GetByRestaurantIdAndAvailable(restaurantId);
+        }
 
         [HttpGet("getByRestaurant/{id}")]
         public async Task<IActionResult> GetByMyRestaurant(short id)

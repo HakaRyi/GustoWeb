@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Org.BouncyCastle.Cms;
 using Repository;
 using Repository.Models;
+using Service.DTO.Request;
 using Service.DTO.Response;
 using Service.DTOs.Request;
 
@@ -72,11 +73,22 @@ namespace Service
             }
             return new List<Order>();
         }
-        public async Task<Order> GetMyOrderPending(short dinner)
+        public async Task<Order> GetMyOrderPending(short dinner, short resId)
         {
             try
             {
-                return await repository.GetOrderPending(dinner);
+                return await repository.GetOrderPending(dinner, resId);
+            }
+            catch (Exception ex)
+            {
+            }
+            return new Order();
+        }
+        public async Task<Order> GetMyOrderPending2(short dinner)
+        {
+            try
+            {
+                return await repository.GetOrderPending2(dinner);
             }
             catch (Exception ex)
             {
@@ -85,7 +97,7 @@ namespace Service
         }
         public async Task<OrderResponse> GetOrderPending(short dinner)
         {
-            var o = await repository.GetOrderPending(dinner);
+            var o = await repository.GetOrderPending2(dinner);
             if (o == null || o.Booking.DinerId != dinner)
             {
                 return null;
@@ -141,7 +153,7 @@ namespace Service
         public async Task<OrderResponse> AddOrderAsync(int bookingId)
         {
             var booking = await bookingRepository.GetBookingAsync(bookingId);
-            var existingOrder = await repository.GetOrderPending(booking.DinerId);
+            var existingOrder = await repository.GetOrderPending2(booking.DinerId);
             if (existingOrder != null)
             {
                 throw new InvalidOperationException("You already have a pending order");
@@ -160,6 +172,7 @@ namespace Service
                 Note = null,
                 TableId = null,
                 Status = "Pending",
+              
             };
 
             await repository.CreateAsync(order);
@@ -180,14 +193,34 @@ namespace Service
                 OrderDetails = new List<OrderDetailResponse>()
             };
         }
-        public async Task UpdateOrderAsync(short orderId, OrderRequest orderRequest,short dinnerId)
+        public async Task UpdateOrderAsync(short orderId, UpdateBookingRequest request,short dinnerId)
         {
+            if (request.StartTime.HasValue && request.EndTime.HasValue && request.StartTime > request.EndTime)
+            {
+                throw new ArgumentException("StartTime cannot be later than EndTime");
+            }
+            if (request.NumberOfPeople.HasValue && request.NumberOfPeople <= 0)
+            {
+                throw new ArgumentException("NumberOfPeople must be greater than 0");
+            }
             var order = await repository.GetOrderAsync(orderId);
             if (order == null)
             {
                 throw new KeyNotFoundException($"Order with ID {orderId} not found");
             }
-            order.Note = orderRequest.Note;
+            if (order.Booking.DinerId != dinnerId)
+            {
+                throw new UnauthorizedAccessException("You do not have permission to update this order");
+            }
+            order.Note = request.Note;
+            order.NumOfPeople = request.NumberOfPeople;
+            order.Booking.StartTime = request.StartTime;
+            order.Booking.EndTime = request.EndTime;
+            order.Booking.TableId = request.TableId == 0 ? null : request.TableId;
+            order.PromotionId = request.PromotionId == 0 ? null : request.PromotionId;
+            order.DiscountAmount = request.DiscountAmount;
+            order.FinalPrice = order.TotalPrice + (order.DiscountAmount ?? 0) + 3000;
+
             if(order.Booking.DinerId == dinnerId)
             {
                 await repository.UpdateAsync(order);
@@ -195,7 +228,7 @@ namespace Service
         }
         public async Task UpdateOrderStatusBooked(short orderId)
         {
-            var order = await repository.GetOrderPending(orderId);
+            var order = await repository.GetOrderPending2(orderId);
             if (order == null)
             {
                 throw new KeyNotFoundException($"Order with ID {orderId} not found.");

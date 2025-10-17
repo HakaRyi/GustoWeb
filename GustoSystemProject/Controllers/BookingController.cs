@@ -50,6 +50,8 @@ namespace GustoSystemProject.Controllers
             {
                 throw new Exception();
             }
+            return new List<Booking>();
+        }
 
         [HttpGet("pending/{restaurantId}")]
         public async Task<IActionResult> GetPendingBooking(short restaurantId)
@@ -64,49 +66,49 @@ namespace GustoSystemProject.Controllers
             {
                 return NotFound(new { message = "No pending booking found" });
             }
-            var order = await orderService.GetMyOrderPending(booking.DinerId);
+            var order = await orderService.GetMyOrderPending2(booking.DinerId);
             return Ok(new { bookingId = booking.BookingId, orderId = order?.OrderId });
         }
-        // POST api/<BookingController>
-        // POST api/Booking/{restaurantId}
-        [HttpPost("{restaurantId}")]
-        public async Task<IActionResult> Post([FromRoute] CreateBookingRequest request)
-        {
-            var dinerId = User.FindFirst("AccountID")?.Value;
-            if (string.IsNullOrEmpty(dinerId))
+            // POST api/<BookingController>
+            // POST api/Booking/{restaurantId}
+            [HttpPost("{restaurantId}")]
+            public async Task<IActionResult> Post([FromRoute] short restaurantId)
             {
-                return Unauthorized(new { message = "Invalid or missing token" });
-            }
-            var result = await service.Create(short.Parse(dinerId), restaurantId);
-            if (result == -1)
-            {
-                var booking = await service.GetPendingBookingByDinerAndRestaurant(short.Parse(dinerId), restaurantId);
-                var _order = await orderService.GetMyOrderPending(booking.DinerId);
+                var dinerId = User.FindFirst("AccountID")?.Value;
+                if (string.IsNullOrEmpty(dinerId))
+                {
+                    return Unauthorized(new { message = "Invalid or missing token" });
+                }
+                var result = await service.Create(short.Parse(dinerId), restaurantId);
+                if (result == -1)
+                {
+                    var booking = await service.GetPendingBookingByDinerAndRestaurant(short.Parse(dinerId), restaurantId);
+                    var _order = await orderService.GetMyOrderPending2(booking.DinerId);
+                    return Ok(new
+                    {
+                        message = "booking is existed",
+                        result = -1,
+                        orderId = _order?.OrderId
+                    });
+                }
+                if (result == 0)
+                {
+                    return StatusCode(500, new
+                    {
+                        message = "Cannot create booking. Restaurant may not exist or server error occurred."
+                    });
+                }
+                var newBooking = await service.GetLatestBookingByDiner(short.Parse(dinerId));
+                var order = await orderService.GetMyOrderPending2(newBooking.DinerId);
                 return Ok(new
                 {
-                    message = "booking is existed",
-                    result = -1,
-                    orderId = _order?.OrderId
+                    message = "Booking and Order successfully created",
+                    result = 1,
+                    orderId = order?.OrderId
                 });
             }
-            if (result == 0)
-            {
-                return StatusCode(500, new
-                {
-                    message = "Cannot create booking. Restaurant may not exist or server error occurred."
-                });
-            }
-            var newBooking = await service.GetLatestBookingByDiner(short.Parse(dinerId));
-            var order = await orderService.GetMyOrderPending(newBooking.DinerId);
-            return Ok(new
-            {
-                message = "Booking and Order successfully created",
-                result = 1,
-                orderId = order?.OrderId
-            });
-        }
 
-        // PUT api/<BookingController>/5
+            // PUT api/<BookingController>/5
         [HttpPut("{id}")]
         public async Task<IActionResult> Put([FromRoute]short id)
         {

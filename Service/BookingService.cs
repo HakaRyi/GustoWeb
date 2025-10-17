@@ -41,11 +41,11 @@ namespace Service
             }
             return new Booking();
         }
-        public async Task<Booking> GetBookingByMeAndResAsync(short dinerId,short resId)
+        public async Task<Booking> GetBookingByMeAndResAsync(short dinerId, short resId)
         {
             try
             {
-                return await repo.GetBookingByMeAndResAsync(dinerId,resId);
+                return await repo.GetBookingByMeAndResAsync(dinerId, resId);
             }
             catch (Exception ex)
             {
@@ -58,14 +58,14 @@ namespace Service
             try
             {
                 return await repo.GetBookingsByDate(restaurantId, date);
-                  }
+            }
             catch (Exception ex)
             {
 
             }
             return new List<Booking>();
         }
-      
+
         public async Task<Booking?> GetPendingBookingByDinerAndRestaurant(short dinerId, short restaurantId)
         {
             try
@@ -88,13 +88,13 @@ namespace Service
             {
 
             }
-            return new List<Booking>();
+            return new Booking();
         }
-        public async Task<int> Create(CreateBookingRequest request)
+        public async Task<int> Create(short dinerId, short restaurantId)
         {
             try
             {
-                var existingBooking = await repo.GetPendingBookingByDinerAndRestaurant(request.DinerId, request.RestaurantId);
+                var existingBooking = await repo.GetPendingBookingByDinerAndRestaurant(dinerId, restaurantId);
                 if (existingBooking != null)
                 {
                     //neu da ton tai booking pending va nha hang do thi se ko tao moi
@@ -102,18 +102,19 @@ namespace Service
                 }
                 var booking = new Booking()
                 {
-                    DinerId = request.DinerId,
-                    BookingTime = request.BookingDate,
+                    DinerId = dinerId,
+                    BookingTime = DateTime.Now,
                     CreatedAt = DateTime.Now,
                     Status = "Pending",
-                    RestaurantId = request.RestaurantId, 
-                };              
-                var result = await repo.Create(booking); 
+                    RestaurantId = restaurantId,
+                    Timestamp = DateTime.Now
+                };
+                var result = await repo.Create(booking);
                 if (result <= 0)
                 {
                     return 0;
                 }
-                var newBooking = await repo.GetLatestBookingByDiner(request.DinerId);
+                var newBooking = await repo.GetLatestBookingByDiner(dinerId);
 
                 if (newBooking == null)
                     return 0;
@@ -141,7 +142,7 @@ namespace Service
             {
                 var booking = await GetBooking(bookingId);
 
-                if (booking.DinerId==dinnerId && booking !=null)
+                if (booking.DinerId == dinnerId && booking != null)
                 {
                     booking.BookingTime = DateTime.Now;
                     return await repo.Update(booking);
@@ -179,10 +180,11 @@ namespace Service
             {
                 return await repo.GetBookingsByTablesInRestaurant(restaurantId, tableId);
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 throw ex;
             }
-            
+
         }
 
     }

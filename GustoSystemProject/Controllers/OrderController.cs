@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Repository.Models;
 using Service;
+using Service.DTO.Request;
 using Service.DTOs.Request;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -13,9 +14,11 @@ namespace GustoSystemProject.Controllers
     public class OrderController : ControllerBase
     {
         private readonly OrderService _service;
-        public OrderController(OrderService service)
+        private readonly PayOsPaymentService _payOsPaymentService;
+        public OrderController(OrderService service, PayOsPaymentService payOsPaymentService)
         {
             _service = service;
+            _payOsPaymentService = payOsPaymentService;
         }
         // GET: api/<OrderController>
         [HttpGet("getAllOrder")]
@@ -70,29 +73,92 @@ namespace GustoSystemProject.Controllers
             return false;
         }
 
-        [HttpGet("getMyOrderPending")]
+        [HttpGet("getMyOrderPending/{restaurantId}")]
         [Authorize]
-        public async Task<IActionResult> GetMyOrderPending()
+        public async Task<IActionResult> GetMyOrderPending([FromRoute] short restaurantId)
         {
             var accountId = User.FindFirst("AccountID")?.Value;
-            var order = await _service.GetMyOrderPending(short.Parse(accountId));
+            var order = await _service.GetMyOrderPending(short.Parse(accountId), restaurantId);
             return Ok(new
             {
                 exists = order != null,
                 data = order
             });
         }
-        [HttpPut("updateOrder/{id}")]
+        [HttpPut("updateOrder/{orderId}")]
         [Authorize]
-        public async Task<IActionResult> UpdateOrder([FromRoute] short orderId, [FromBody] OrderRequest request)
+        public async Task<IActionResult> UpdateOrder([FromRoute] short orderId, [FromBody] UpdateBookingRequest request)
         {
-            var accountId = User.FindFirst("AccountID")?.Value;
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
+                var accountId = User.FindFirst("AccountID")?.Value;
+                if (string.IsNullOrEmpty(accountId))
+                {
+                    return Unauthorized(new { message = "Invalid token" });
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(new
+                    {
+                        message = "Invalid request data",
+                        errors = ModelState.Values.SelectMany(v => v.Errors)
+                    });
+                }
+
+                await _service.UpdateOrderAsync(orderId, request, short.Parse(accountId));
+
+                return Ok(new
+                {
+                    message = "Order successfully updated",
+                    orderId = orderId
+                });
             }
-            await _service.UpdateOrderAsync(orderId, request, short.Parse(accountId));
-            return Ok("Order successfully updated.");
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(new { message = ex.Message });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error updating order {orderId}: {ex.Message}");
+                Console.WriteLine($"Stack trace: {ex.StackTrace}");
+
+                return StatusCode(500, new
+                {
+                    message = "An error occurred while updating the order",
+                    detail = ex.Message
+                });
+            }
+        }
+        [HttpPost("pay/{orderId}")]
+        public async Task<IActionResult> Pay(short orderId)
+        {
+            try
+            {
+                var order = await _service.GetOrderAsync(orderId); 
+                if (order == null) return NotFound("Order not found");
+                var returnUrl = "http://localhost:3000/profile/bkh";
+                order.FinalPrice = (order.FinalPrice ?? 0);
+
+                var amount = (decimal)(order.FinalPrice ?? 0);
+                if (amount < 1000) amount = 3000;
+
+         
+                var link = await _payOsPaymentService.CreatePaymentUrlAsync(orderId, amount, returnUrl);
+                return Ok(new { checkoutUrl = link });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

@@ -7,6 +7,7 @@ using Repository;
 using Repository.DBContext;
 using Service;
 using Service.AutoMapper;
+using Service.Config;
 using Service.Exceptions;
 using Service.Settings;
 using System.Text;
@@ -111,6 +112,11 @@ builder.Services.AddScoped<PaymentMerchantService>();
 builder.Services.AddScoped<TasteService>();
 builder.Services.AddScoped<OptionalService>();
 builder.Services.AddScoped<ContactService>();
+builder.Services.AddScoped<PayOsPaymentService>();
+builder.Services.AddScoped<TransactionService>();
+builder.Services.Configure<PayOsSettings>(
+    builder.Configuration.GetSection("PayOS")
+    );
 
 builder.Services.AddScoped<AccountRepository>();
 builder.Services.AddScoped<RoleRepository>();
@@ -128,6 +134,7 @@ builder.Services.AddScoped<PaymentMerchantRepository>();
 builder.Services.AddScoped<TasteRepository>();
 builder.Services.AddScoped<OptionalRepository>();
 builder.Services.AddScoped<ContactRepository>();
+builder.Services.AddScoped<TransactionRepository>();
 
 
 builder.Services.AddSingleton<SpeedSmsService>();
