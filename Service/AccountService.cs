@@ -64,6 +64,7 @@ namespace Service
                 var passwordHasher = new PasswordHasher<Account>();
                 account.Password = passwordHasher.HashPassword(account, request.Password);
                 account.CreateAt = DateTime.Now;
+                account.Status = AccountStatus.ACTIVE.ToString();
 
                 Role role = await _roleRepository.GetRoleById(request.RoleId);
                 account.RoleId = request.RoleId;
@@ -243,7 +244,7 @@ namespace Service
                 //    }
                 //    return true;
                 //}
-                
+
                 if (result != null)
                 {
                     var passwordHasher = new PasswordHasher<Account>();
@@ -265,7 +266,7 @@ namespace Service
                     throw new Exception("Account does not exist");
                 }
 
-                    return true;
+                return true;
             }
             catch (Exception ex)
             {
@@ -521,4 +522,5 @@ namespace Service
 
         }
     }
+    public enum AccountStatus { ACTIVE, INACTIVE }
 }

@@ -89,6 +89,20 @@ namespace Service
 
             }
             return new Booking();
+
+        }
+
+        public async Task<List<Booking>> GetUnDoneBookings(short restaurantId)
+        {
+            try
+            {
+                List<string> statuses = new() { "booked", "available" };
+                return await repo.GetBookingsByStatus(statuses,restaurantId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         public async Task<int> Create(short dinerId, short restaurantId)
         {
@@ -136,6 +150,52 @@ namespace Service
             }
             return 0;
         }
+        public async Task<int> Create2(CreateBookingRequest request)
+        {
+            try
+            {
+                var existingBooking = await repo.GetPendingBookingByDinerAndRestaurant(request.DinerId, request.RestaurantId);
+                if (existingBooking != null)
+                {
+                    //neu da ton tai booking pending va nha hang do thi se ko tao moi
+                    return -1;
+                }
+                var booking = new Booking()
+                {
+                    DinerId = request.DinerId,
+                    BookingTime = DateTime.Now,
+                    CreatedAt = DateTime.Now,
+                    Status = "Pending",
+                    RestaurantId = request.RestaurantId,
+                    Timestamp = DateTime.Now
+                };
+                var result = await repo.Create(booking);
+                if (result <= 0)
+                {
+                    return 0;
+                }
+                var newBooking = await repo.GetLatestBookingByDiner(request.DinerId);
+
+                if (newBooking == null)
+                    return 0;
+
+                var order = new Order
+                {
+                    BookingId = newBooking.BookingId,
+                    Date = DateTime.Now,
+                    Status = "Pending",
+                    TotalPrice = 0,
+                    FinalPrice = 0,
+                    DiscountAmount = 0
+                };
+                await orderService.CreateAsync(order);
+                return 1;
+            }
+            catch (Exception ex)
+            {
+            }
+            return 0;
+        }
         public async Task<int> Update(short bookingId, short dinnerId)
         {
             try
@@ -148,6 +208,22 @@ namespace Service
                     return await repo.Update(booking);
                 }
                 return 0;
+
+            }
+            catch (Exception ex)
+            {
+            }
+            return 0;
+        }
+
+        public async Task<int> UpdateStatus(short bookingId, string status)
+        {
+            try
+            {
+                var booking = await repo.GetBookingAsync(bookingId);
+
+                booking.Status = status.ToLower().ToString();
+                return await repo.Update(booking);
 
             }
             catch (Exception ex)
