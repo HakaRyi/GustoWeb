@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Repository;
 using Repository.Models;
+using Service.DTO.Request;
 
 namespace Service
 {
@@ -46,10 +47,17 @@ namespace Service
             return new List<Optional>();
         }
 
-        public async Task<int> Create(Optional option)
+        public async Task<int> Create(short menuId,OptionalRequest request)
         {
             try
             {
+                var option = new Optional
+                {
+                    RestaurantMenuId = menuId,
+                    Title = request.Name,
+                    Price = request.Price
+
+                };
                 return await repository.CreateAsync(option);
             }
             catch (Exception ex)
@@ -57,14 +65,19 @@ namespace Service
             }
             return 0;
         }
-        public async Task<int> Update(short optionId, short accountId)
+        public async Task<int> Update(short optionId, short accountId, OptionalRequest request)
         {
             try
             {
                 var option = await repository.GetByIdAsync(optionId);
                 if (accountId == option.RestaurantMenu.AccountId)
                 {
+                  option = new Optional
+                    {
+                        Title = request.Name,
+                        Price = request.Price
 
+                    };
                     return await repository.UpdateAsync(option);
                 }
                 return 0;

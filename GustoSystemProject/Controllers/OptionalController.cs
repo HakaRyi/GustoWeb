@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Repository.Models;
 using Service;
+using Service.DTO.Request;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -34,17 +35,17 @@ namespace GustoSystemProject.Controllers
         {
             return await service.GetOptByMenuAsync(menuId);
         }
-        [HttpPost]
-        public async Task<int> Post(Optional opt)
+        [HttpPost("{menuId}")]
+        public async Task<int> Post([FromRoute] short menuId,OptionalRequest opt)
         {
-            return await service.Create(opt);
+            return await service.Create(menuId,opt);
         }
 
         [HttpPut("{id}")]
-        public async Task<int> Put([FromRoute] short id)
+        public async Task<int> Put([FromRoute] short id, OptionalRequest request)
         {
             var accountId = User?.FindFirst("AccountID")?.Value;
-            return await service.Update(id, short.Parse(accountId));
+            return await service.Update(id, short.Parse(accountId),request);
         }
 
         [HttpDelete("{id}")]

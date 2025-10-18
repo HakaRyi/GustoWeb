@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Repository;
 using Repository.Models;
+using Service.DTO.Request;
 
 namespace Service
 {
@@ -46,10 +47,15 @@ namespace Service
             return new Taste();
         }
   
-        public async Task<int> Create(Taste taste)
+        public async Task<int> Create(short resId,TasteRequest request)
         {
             try
             {
+                var taste = new Taste
+                {
+                    RestaurantMenuId = resId,
+                    Taste1 = request.Name
+                };
                 return await repository.CreateAsync(taste);
             }
             catch (Exception ex)
@@ -57,14 +63,14 @@ namespace Service
             }
             return 0;
         }
-        public async Task<int> Update(short tasteId, short accountId)
+        public async Task<int> Update(short tasteId, short accountId, TasteRequest request)
         {
             try
             {
                 var taste = await repository.GetByIdAsync(tasteId);
                 if (accountId == taste.RestaurantMenu.AccountId)
                 {
-
+                    taste.Taste1 = request.Name;
                     return await repository.UpdateAsync(taste);
                 }
                 return 0;
