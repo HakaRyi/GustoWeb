@@ -226,24 +226,14 @@ namespace Service
             {
 
                 var result = await _repo.GetAccountByUserName(request.UserName);
-                //if(result.RoleId != 1 && result != null)
-                //{
-                //    if (result.Password == request.Password)
-                //    {
-                //        var passwordHasher = new PasswordHasher<Account>();
-                //        var verificationResult = passwordHasher.VerifyHashedPassword(result, result.Password, request.Password);
-                //        if (verificationResult == Microsoft.AspNetCore.Identity.PasswordVerificationResult.Success ||
-                //        verificationResult == Microsoft.AspNetCore.Identity.PasswordVerificationResult.SuccessRehashNeeded)
-                //        {
-                //            await GenerateTokens(result);
-                //        }
-                //        else
-                //        {
-                //            throw new InvalidCredentialsException();
-                //        }
-                //    }
-                //    return true;
-                //}
+                if (result.RoleId != 1 && result != null)
+                {
+                    if (result.Password == request.Password)
+                        
+                            await GenerateTokens(result);
+
+                    return true;
+                }
 
                 if (result != null)
                 {

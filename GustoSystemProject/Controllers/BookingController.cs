@@ -26,6 +26,32 @@ namespace GustoSystemProject.Controllers
             return await service.GetBookings();
         }
 
+        [HttpGet("resBooking")]
+        public async Task<ActionResult<List<Booking>>> GetAllByRes()
+        {
+            try
+            {
+                var id = User.FindFirst("AccountID")?.Value;
+                if (string.IsNullOrEmpty(id))
+                {
+                    return Unauthorized(new { message = "Không tìm thấy nhà hàng (thiếu claim AccountID)" });
+                }
+
+                var bookings = await service.GetBookingsByRes(short.Parse(id));
+
+                if (bookings == null || bookings.Count == 0)
+                {
+                    return NotFound(new { message = "Không có booking nào cho nhà hàng này" });
+                }
+
+                return Ok(bookings);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Lỗi hệ thống: " + ex.Message });
+            }
+        }
+
         // GET api/<BookingController>/5
         [HttpGet("{id}")]
         public async Task<Booking> Get([FromRoute]int id)
@@ -189,10 +215,10 @@ namespace GustoSystemProject.Controllers
         }
 
         [HttpPut("status/{id}")]
-        public async Task<IActionResult> UpdateStatus([FromBody] string status)
+        public async Task<IActionResult> UpdateStatus([FromBody] string status, int id)
         {
-            var resId = User.FindFirst("AccountID")?.Value;
-            var result = await service.UpdateStatus(short.Parse(resId), status);
+            
+            var result = await service.UpdateStatus(id, status);
 
             if (result == 0)
             {
