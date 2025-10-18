@@ -30,6 +30,18 @@ namespace Service
             }
             return new List<Booking>();
         }
+
+        public async Task<List<Booking>> GetBookingsByRes(short id)
+        {
+            try
+            {
+                return await repo.GetAllByResAsync(id);
+            }
+            catch (Exception ex)
+            {
+            }
+            return new List<Booking>();
+        }
         public async Task<Booking> GetBooking(int id)
         {
             try
@@ -216,7 +228,7 @@ namespace Service
             return 0;
         }
 
-        public async Task<int> UpdateStatus(short bookingId, string status)
+        public async Task<int> UpdateStatus(int bookingId, string status)
         {
             try
             {

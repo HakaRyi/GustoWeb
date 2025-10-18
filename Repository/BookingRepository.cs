@@ -26,6 +26,19 @@ namespace Repository
                 .Include(b => b.Transaction)
                 .ToListAsync();
         }
+        public async Task<List<Booking>> GetAllByResAsync(short id)
+        {
+            return await context.Bookings
+                .Include(b => b.Restaurant)
+                .Include(b => b.Orders)
+                .ThenInclude(o => o.OrderDetails)
+                .ThenInclude(d => d.Food)
+                .Include(b => b.Diner)
+                .Include(b => b.Table)
+                .Include(b => b.Transaction)
+                .Where(b => b.RestaurantId == id)
+                .ToListAsync();
+        }
         public async Task<Booking> GetBookingAsync(int id)
         {
             return await context.Bookings
@@ -65,6 +78,7 @@ namespace Repository
         }
         public async Task<List<Booking>> GetBookingsByStatus(List<string> statuses, short restaurantId)
         {
+            var status = statuses.Select(x => x.ToLower());
             return await context.Bookings
                 .Include(b => b.Restaurant)
                 .Include(b => b.Orders)
@@ -73,7 +87,7 @@ namespace Repository
                 .Include(b => b.Diner)
                 .Include(b => b.Table)
                 .Include(b => b.Transaction)
-                .Where(b => b.RestaurantId == restaurantId && statuses.Contains(b.Status.ToLower().ToString())).ToListAsync();
+                .Where(b => b.RestaurantId == restaurantId && statuses.Contains(b.Status.ToLower())).ToListAsync();
         }
         public async Task<int> Create(Booking booking)
         {
