@@ -20,31 +20,27 @@ function FavouritePage() {
     const [error, setError] = useState(null);
     const { isAuthenticated, user } = useSelector((state) => state.auth); // Lấy thông tin user từ Redux
 
-    // Giả lập API call để lấy danh sách yêu thích
-    useEffect(() => {
-        const fetchFavourites = async () => {
-            // if (!isAuthenticated) {
-            //     setError('Vui lòng đăng nhập để xem danh sách yêu thích.');
-            //     setLoading(false);
-            //     return;
-            // }
-            try {
-                setLoading(true);
-                var res = await customFetch('https://localhost:7176/api/Favourite/diner', {
-                    method: 'GET',
-                    headers: { 'Content-Type': 'application/json' },
-                });
-                if (!res.ok) setResult({ visible: true, success: false, message: 'Lấy dữ liệu không thành công' });
-                const data = await res.json();
-                console.log(data);
-                setRestaurants(data);
-            } catch (err) {
-                setError('Đã có lỗi xảy ra khi tải dữ liệu. Vui lòng thử lại.');
-            } finally {
-                setLoading(false);
+    const fetchFavourites = async () => {
+        try {
+            setLoading(true);
+            var res = await customFetch('https://localhost:7176/api/Favourite/diner', {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+            });
+            if (!res.ok) {
+                setResult({ visible: true, success: false, message: 'Lấy dữ liệu không thành công' });
+                return;
             }
-        };
-
+            const data = await res.json();
+            console.log(data);
+            setRestaurants(data);
+        } catch (err) {
+            setError('Đã có lỗi xảy ra khi tải dữ liệu. Vui lòng thử lại.');
+        } finally {
+            setLoading(false);
+        }
+    };
+    useEffect(() => {
         fetchFavourites();
     }, [user]); // Chạy lại khi user thay đổi
 
@@ -53,19 +49,21 @@ function FavouritePage() {
 
         const unlikeRestaurant = async () => {
             try {
-                setLoading(true);
                 var res = await customFetch(`https://localhost:7176/api/Favourite/${restaurantId}`, {
                     method: 'DELETE',
                     headers: { 'Content-Type': 'application/json' },
                 });
-                if (!res.ok) {
+                if (res.ok) {
                     setRestaurants((prev) => prev.filter((r) => r.id !== restaurantId));
-                    setResult({ visible: true, success: false, message: 'xóa thành công' });
+                    setResult({ visible: true, success: true, message: 'Đã bỏ thích nhà hàng.' });
+                } else {
+                    setResult({ visible: true, success: false, message: 'Không thể bỏ thích. Vui lòng thử lại.' });
                 }
             } catch (err) {
                 setError('Đã có lỗi xảy ra khi tải dữ liệu. Vui lòng thử lại.');
             } finally {
                 setLoading(false);
+                fetchFavourites();
             }
             console.log(`Unliked restaurant with id: ${restaurantId}`);
         };
