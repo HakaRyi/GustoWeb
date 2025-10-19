@@ -54,26 +54,24 @@ function BookingHistory() {
         setIsModalOpen(false);
         setSelectedFood(null);
     };
-
+    const fetchBooking = async () => {
+        try {
+            setLoadingVisible(true);
+            var res = await customFetch('https://localhost:7176/api/DinerProfile/my-bookings', {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+            });
+            if (!res.ok) setResult({ visible: true, success: false, message: 'Lấy dữ liệu không thành công' });
+            const data = await res.json();
+            console.log(data);
+            setBookings(data);
+        } catch (error) {
+            setResult({ visible: true, success: false, message: 'Không thể tải thông tin người dùng 😢' });
+        } finally {
+            setLoadingVisible(false);
+        }
+    };
     useEffect(() => {
-        const fetchBooking = async () => {
-            try {
-                setLoadingVisible(true);
-                var res = await customFetch('https://localhost:7176/api/DinerProfile/my-bookings', {
-                    method: 'GET',
-                    headers: { 'Content-Type': 'application/json' },
-                });
-                if (!res.ok) setResult({ visible: true, success: false, message: 'Lấy dữ liệu không thành công' });
-                const data = await res.json();
-                console.log(data);
-                setBookings(data);
-            } catch (error) {
-                setResult({ visible: true, success: false, message: 'Không thể tải thông tin người dùng 😢' });
-            } finally {
-                setLoadingVisible(false);
-            }
-        };
-
         fetchBooking();
     }, []);
 
@@ -107,35 +105,9 @@ function BookingHistory() {
         setModalOrder(null);
     };
 
-    const onFeedbackSaved = (savedData) => {
-        // savedData: server trả về feedback hoặc payload đã gửi
-        setBookings((prev) =>
-            prev.map((b) => {
-                if (b.bookingId === (modalBooking?.bookingId ?? modalBooking?.id)) {
-                    const newB = { ...b };
-                    if (savedData?.feedbacks) {
-                        newB.foodReviews = savedData.feedbacks.map((f, i) => ({
-                            reviewId: f.reviewId ?? null,
-                            foodId: f.itemId ?? f.foodId,
-                            rating: f.rating,
-                            description: f.comment ?? f.description ?? '',
-                            date: new Date().toISOString(),
-                        }));
-                    }
-
-                    if (modalOrder) {
-                        newB.orders = (newB.orders || []).map((o) => {
-                            if (o.orderId === (modalOrder.orderId ?? modalOrder.id)) {
-                                return { ...o, status: 'Feedbacked' };
-                            }
-                            return o;
-                        });
-                    }
-                    return newB;
-                }
-                return b;
-            }),
-        );
+    const onFeedbackSaved = async () => {
+        closeFeedbackModal();
+        await fetchBooking();
     };
 
     return (
@@ -200,9 +172,9 @@ function BookingHistory() {
 
                                         // Display status text mapping
                                         const statusText =
-                                            bookingStatus === 'Confirmed'
+                                            bookingStatus === 'booked'
                                                 ? 'Booked'
-                                                : orderStatus === 'Completed'
+                                                : orderStatus === 'done'
                                                 ? 'Hoàn tất'
                                                 : hasFeedbacked
                                                 ? 'Feedbacked'
@@ -222,7 +194,7 @@ function BookingHistory() {
 
                                                     <div className={style.rowBetween}>
                                                         <div className={style.bookingStatusBtn}>
-                                                            {orderStatus === 'Completed'
+                                                            {bookingStatus === 'done'
                                                                 ? hasFeedbacked
                                                                     ? 'Hoàn thành'
                                                                     : 'Feedback'
@@ -246,15 +218,18 @@ function BookingHistory() {
                                                         </button>
 
                                                         {/* Feedback action button (nút ấn được) */}
-                                                        {(orderStatus === 'Completed' ||
-                                                            orderStatus === 'Feedbacked') && (
+                                                        {bookingStatus === 'booked' ? (
+                                                            <div className={style.preparingText}>
+                                                                Nhà hàng đang chuẩn bị món ăn...
+                                                            </div>
+                                                        ) : bookingStatus === 'done' ? (
                                                             <button
                                                                 className={style.feedbackActionBtn}
                                                                 onClick={() => openFeedbackModal(booking, order)}
                                                             >
                                                                 {hasFeedbacked ? 'Cập nhật Feedback' : 'Feedback'}
                                                             </button>
-                                                        )}
+                                                        ) : null}
                                                     </div>
                                                 </div>
 
