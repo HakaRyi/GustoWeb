@@ -58,7 +58,7 @@ namespace Repository
                 .Include(a => a.DinerProfile)
                 .Include(a => a.RefreshTokens)
                 .Include(a => a.Role)
-                .FirstOrDefaultAsync(a => a.UserName == username);
+                .FirstOrDefaultAsync(a => a.UserName == username && a.Status.ToLower() == "active");
         }
 
         public async Task<Account> UpdateAccount(Account account)

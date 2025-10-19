@@ -49,6 +49,17 @@ namespace GustoSystemProject.Controllers
         }
 
         // POST api/<AccountController>
+        [HttpPost("reset-password")]
+
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest value)
+        {
+            var result = await _service.ResetPassword(value);
+            if (result)
+                return Ok("Password reset successfully");
+            else
+                return BadRequest("Password reset failed");
+        }
+
         [HttpPost("signUp")]
         public async Task<AccountResponse> SignUp([FromBody] SignUpRequest value)
         {
