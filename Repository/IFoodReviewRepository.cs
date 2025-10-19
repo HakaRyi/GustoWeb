@@ -66,6 +66,11 @@ namespace Repository
                     existing.Date = DateTime.Now;
                     _context.FoodReviews.Update(existing);
                 }
+                else
+                {
+                    feedback.Date = DateTime.Now;
+                    await _context.FoodReviews.AddAsync(feedback);
+                }
             }
             await _context.SaveChangesAsync();
         }
