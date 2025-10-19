@@ -28,13 +28,14 @@ namespace Service
         private readonly RoleRepository _roleRepository;
         private readonly DinerProfileRepository _dinerProfileRepository;
         private readonly RestaurantProfileRepository _restaurantProfileRepository;
+        private readonly NotificationService _notificationService;
 
         private readonly IMapper _mapper;
         private readonly ILogger<AccountService> _logger;
         private readonly JwtSettings _jwtSettings;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AccountService(AccountRepository repo, IMapper mapper, ILogger<AccountService> logger, JwtSettings jwtSettings, IHttpContextAccessor httpContextAccessor, RefreshTokenRepository refreshTokenRepository, RoleRepository roleRepository, DinerProfileRepository dinerProfileRepository, RestaurantProfileRepository restaurantProfileRepository)
+        public AccountService(AccountRepository repo, IMapper mapper, ILogger<AccountService> logger, JwtSettings jwtSettings, IHttpContextAccessor httpContextAccessor, RefreshTokenRepository refreshTokenRepository, RoleRepository roleRepository, DinerProfileRepository dinerProfileRepository, RestaurantProfileRepository restaurantProfileRepository, NotificationService notificationService)
         {
             _repo = repo;
             _mapper = mapper;
@@ -45,6 +46,7 @@ namespace Service
             _roleRepository = roleRepository;
             _dinerProfileRepository = dinerProfileRepository;
             _restaurantProfileRepository = restaurantProfileRepository;
+            _notificationService = notificationService;
         }
         //CRUD Operations:
         //Create Account
@@ -76,12 +78,11 @@ namespace Service
                 //Profile for account
                 Random random = new Random();
                 int randomNumber = random.Next(1000, 10000); // Tạo số từ 1000 đến 9999
-                string fullName = "Khách " + randomNumber;
 
                 DinerProfile dinerProfile = new DinerProfile();
                 dinerProfile.AccountId = account.Id;
-                dinerProfile.Phone = request.Phone;
-                dinerProfile.FullName = fullName;
+                dinerProfile.Email = request.Email;
+                dinerProfile.FullName = request.UserName;
                 
                 await _dinerProfileRepository.AddAsync(dinerProfile);
                 return res;
@@ -110,7 +111,7 @@ namespace Service
                 var passwordHasher = new PasswordHasher<Account>();
                 account.Password = passwordHasher.HashPassword(account, request.Password);
                 account.CreateAt = DateTime.Now;
-                account.Status = "True";
+                account.Status = "active";
 
                 Role role = await _roleRepository.GetRoleById(request.RoleId);
                 account.RoleId = request.RoleId;
@@ -208,8 +209,14 @@ namespace Service
         {
             try
             {
-                var result = await _repo.DeleteAccount(id);
-                return result;
+                var existedAccount = await _repo.GetAccountById(id);
+                if (existedAccount == null)
+                {
+                    throw new Exception("Account does not exist");
+                }
+                existedAccount.Status = AccountStatus.INACTIVE.ToString();
+                await _repo.UpdateAccount(existedAccount);
+                return true;
             }
             catch (Exception ex)
             {
@@ -520,6 +527,93 @@ namespace Service
             }
             
 
+        }
+
+        public async Task<bool> ResetPassword(ResetPasswordRequest request)
+        {
+            try
+            {
+                var account = await _repo.GetAccountByUserName(request.Username);
+                if(account != null)
+                {
+                    string newPassword = GenerateRandomPassword(8);
+                    var passwordHasher = new PasswordHasher<Account>();
+                    account.Password = passwordHasher.HashPassword(account, newPassword);
+                    account.UpdateAt = DateTime.Now;
+                    await _repo.UpdateAccount(account);
+
+                    if(account.RoleId == 1)
+                    {
+                        var emailRequest = new SendEmailRequest
+                        {
+                            ReceiverName = account.UserName,
+                            ReceiverMail = account.DinerProfile.Email,
+                            Subject = "Gusto - Mật khẩu mới của bạn",
+                            Messenger = $"Xin chào {account.UserName},\n\n" +
+                                    $"Mật khẩu mới của bạn là: {newPassword}\n\n" +
+                                    "Vui lòng đăng nhập và đổi lại mật khẩu ngay sau khi đăng nhập để bảo mật tài khoản.\n\n" +
+                                    "Trân trọng,\nĐội ngũ Gusto"
+                        };
+                        await _notificationService.SendEmailAsync(emailRequest);
+                    }else if(account.RoleId == 2)
+                    {
+                        var emailRequest = new SendEmailRequest
+                        {
+                            ReceiverName = account.UserName,
+                            ReceiverMail = account.RestaurantProfile.Email,
+                            Subject = "Gusto - Mật khẩu mới của bạn",
+                            Messenger = $"Xin chào {account.UserName},\n\n" +
+                                    $"Mật khẩu mới của bạn là: {newPassword}\n\n" +
+                                    "Vui lòng đăng nhập và đổi lại mật khẩu ngay sau khi đăng nhập để bảo mật tài khoản.\n\n" +
+                                    "Trân trọng,\nĐội ngũ Gusto"
+                        };
+                        await _notificationService.SendEmailAsync(emailRequest);
+                    }
+
+
+
+                    return true;
+                }
+                else
+                {
+                    throw new NotFoundException("Account not found");
+                }  
+
+            }
+            catch (NotFoundException ex)
+            {
+                throw;
+            }
+
+
+        }
+        private string GenerateRandomPassword(int length)
+        {
+            const string upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            const string lower = "abcdefghijklmnopqrstuvwxyz";
+            const string digits = "0123456789";
+            const string special = "!@#$%^&*()_+-=[]{}|;:,.<>?";
+
+            var random = new Random();
+
+            // Đảm bảo có đủ loại ký tự
+            var passwordChars = new List<char>
+            {
+                upper[random.Next(upper.Length)],
+                lower[random.Next(lower.Length)],
+                digits[random.Next(digits.Length)],
+                special[random.Next(special.Length)]
+            };
+
+            // Thêm ngẫu nhiên cho đủ độ dài
+            string allChars = upper + lower + digits + special;
+            for (int i = passwordChars.Count; i < length; i++)
+            {
+                passwordChars.Add(allChars[random.Next(allChars.Length)]);
+            }
+
+            // Trộn ngẫu nhiên
+            return new string(passwordChars.OrderBy(x => random.Next()).ToArray());
         }
     }
     public enum AccountStatus { ACTIVE, INACTIVE }
