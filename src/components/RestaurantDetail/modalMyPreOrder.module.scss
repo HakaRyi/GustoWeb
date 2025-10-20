@@ -1,3 +1,4 @@
+/* === Overlay (nền mờ toàn màn hình) === */
 .overlay {
     position: fixed;
     inset: 0;
@@ -7,16 +8,33 @@
     align-items: center;
     z-index: 2000;
     animation: fadeIn 0.3s ease-in-out;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
+/* === Modal chính === */
+.modal {
+    width: 1200px;
+    max-width: 95%;
+    height: 90vh;
+    background: #fdf9e8;
+    border-radius: 24px;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+    padding: 20px 28px;
+    color: #162b00;
+    display: flex;
+    flex-direction: column;
+    animation: slideUp 0.4s ease-out forwards;
+    overflow: hidden;
+}
+
+/* === Header === */
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-weight: bold;
+    font-weight: 700;
     font-size: 20px;
-    border-bottom: 1px solid #f0e2b0;
+    border-bottom: 2px solid #f0e2b0;
     padding-bottom: 6px;
     margin-bottom: 10px;
 }
@@ -24,37 +42,42 @@
 .exitBtn {
     border: none;
     background: none;
-    font-size: 18px;
+    font-size: 20px;
     cursor: pointer;
     color: #333;
     transition: all 0.2s ease;
+    font-weight: 600;
 
     &:hover {
         color: #f07d00;
-        transform: scale(1.1);
+        transform: scale(1.15);
     }
 }
 
+/* === Tên nhà hàng === */
 .restaurantName {
     font-weight: bold;
-    font-size: 23px;
-    margin: 8px 0;
-    text-align: left;
+    font-size: 22px;
+    margin: 6px 0 12px;
+    color: #f07d00;
 }
 
+/* === Phần chọn thời gian & bàn === */
 .timeAndTable {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
+    flex-wrap: wrap;
     font-size: 15px;
     color: #333;
     font-weight: 600;
+    margin-bottom: 10px;
 
     .timeGroup {
         display: flex;
         flex-direction: column;
-        gap: 4px;
+        gap: 5px;
     }
 
     .timeInput {
@@ -62,8 +85,9 @@
         border-radius: 8px;
         padding: 6px 10px;
         color: #162b00;
-        width: 180px; /* Đảm bảo input đủ rộng */
-        transition: border-color 0.2s ease;
+        width: 190px;
+        background: #fff;
+        transition: all 0.2s ease;
 
         &:hover {
             border-color: #f07d00;
@@ -79,17 +103,15 @@
     }
 
     .tableSelect {
-        width: 500px; /* Giữ chiều rộng để chứa nội dung dài */
+        min-width: 420px;
         border: 1px solid #ccc;
         border-radius: 8px;
-        padding: 6px 10px;
+        padding: 8px 10px;
         color: #162b00;
-        background: #fdf9e8;
+        background: #fff8dc;
         font-size: 14px;
         cursor: pointer;
         transition: all 0.2s ease;
-        max-height: 200px; /* Giới hạn chiều cao dropdown */
-        overflow-y: auto; /* Hỗ trợ cuộn nếu có nhiều tùy chọn */
 
         &:hover {
             border-color: #f07d00;
@@ -104,42 +126,26 @@
         }
 
         option {
-            white-space: normal; /* Cho phép xuống dòng trong option */
-            padding: 8px; /* Thêm padding để dễ đọc */
+            white-space: normal;
+            padding: 6px;
         }
     }
 }
 
-.modal {
-    width: 1350px;
-    height: 90vh;
-    background: #fdf9e8;
-    border-radius: 28px;
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.45);
-    padding: 24px;
-    color: #162b00;
-    font-family: 'Poppins', sans-serif;
-    animation: slideUp 0.4s ease-out forwards;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-}
-
+/* === Danh sách món ăn === */
 .itemContainer {
     flex: 1;
-    overflow: hidden;
-    margin-top: 12px;
+    margin-top: 10px;
     border-top: 1px solid #e8e1c2;
     border-bottom: 1px solid #e8e1c2;
-    padding: 12px 0;
-    height: calc(100% - 50px);
+    padding: 10px 0;
+    overflow: hidden;
 }
 
 .itemList {
     height: 100%;
     overflow-y: auto;
-    padding-right: 12px;
-
+    padding-right: 10px;
     scrollbar-width: thin;
     scrollbar-color: #f07d00 #fdf9e8;
 
@@ -149,55 +155,53 @@
 
     &::-webkit-scrollbar-thumb {
         background-color: #f07d00;
-        border-radius: 10px;
+        border-radius: 8px;
     }
 }
 
+/* === Footer === */
 .footer {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     gap: 16px;
     flex-wrap: wrap;
-    margin-top: 8px;
-    padding-top: 8px;
+    margin-top: 12px;
+    padding-top: 12px;
     border-top: 1px solid #f0e2b0;
 }
 
+/* === Cột trái (ghi chú, số người) === */
 .left {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 10px;
 }
 
 .inputGroup {
     label {
         display: block;
-        margin-bottom: 3px;
+        margin-bottom: 4px;
         font-weight: 600;
         font-size: 14px;
     }
 
     input {
-        width: 100px;
-        padding: 5px 8px;
+        width: 120px;
+        padding: 6px 8px;
         border: 1px solid #ccc;
         border-radius: 8px;
-        background-color: #fdf9e8;
-        font-size: 13px;
+        background-color: #fff8dc;
+        font-size: 14px;
         color: #162b00;
         transition: all 0.2s ease;
 
-        &:hover {
-            border-color: #f07d00;
-            background: rgb(255, 247, 215);
-        }
-
+        &:hover,
         &:focus {
-            outline: none;
             border-color: #f07d00;
             background: rgb(255, 247, 215);
+            outline: none;
             box-shadow: 0 0 4px rgba(240, 125, 0, 0.3);
         }
     }
@@ -205,61 +209,58 @@
     textarea {
         width: 400px;
         resize: none;
-        height: 50px;
-        color: #162b00;
-        padding: 6px 10px;
+        height: 60px;
+        padding: 8px 10px;
         border: 1px solid #ccc;
         border-radius: 8px;
-        font-size: 13px;
+        font-size: 14px;
+        color: #162b00;
+        background: #fff8dc;
         transition: all 0.2s ease;
 
-        &:hover {
-            border-color: #f07d00;
-            background: rgb(255, 247, 215);
-        }
-
+        &:hover,
         &:focus {
-            outline: none;
             border-color: #f07d00;
             background: rgb(255, 247, 215);
+            outline: none;
             box-shadow: 0 0 4px rgba(240, 125, 0, 0.3);
         }
     }
 }
 
+/* === Cột phải (tổng tiền + nút) === */
 .right {
-    min-width: 220px;
+    min-width: 230px;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
 }
 
 .total {
-    margin-top: 20px;
-    font-weight: bold;
+    margin-top: 8px;
+    font-weight: 700;
     font-size: 16px;
-    margin-right: 8px;
-    margin-bottom: 3px;
     color: #162b00 !important;
 
     span {
         color: #f07d00;
-        font-size: 24px;
+        font-size: 22px;
     }
 }
 
-.payBtn {
+/* === Nút hành động === */
+.payBtn,
+.selectTableBtn {
     background: linear-gradient(90deg, #f07d00, #ffac33);
     color: #fff;
-    padding: 8px 20px;
-    margin-right: 8px;
+    padding: 10px 22px;
     border: none;
     border-radius: 10px;
     cursor: pointer;
     font-weight: 700;
     font-size: 14px;
     transition: all 0.3s ease;
-    margin-top: 3px;
+    margin-top: 6px;
 
     &:hover {
         transform: translateY(-2px);
@@ -270,29 +271,35 @@
         transform: translateY(0);
         box-shadow: none;
     }
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
 }
 
-.loading {
-    text-align: center;
-    font-size: 16px;
-    color: #162b00;
-    margin: 20px 0;
-}
-
-.error {
-    text-align: center;
-    font-size: 16px;
-    color: #d10000;
-    margin: 20px 0;
-}
-
+/* === Trạng thái === */
+.loading,
+.error,
 .noItems {
     text-align: center;
     font-size: 16px;
-    color: #666 !important;
     margin: 20px 0;
 }
 
+.loading {
+    color: #162b00;
+}
+
+.error {
+    color: #d10000;
+}
+
+.noItems {
+    color: #666;
+}
+
+/* === Animation === */
 @keyframes fadeIn {
     from {
         background: rgba(0, 0, 0, 0);
@@ -311,4 +318,36 @@
         transform: translateY(0);
         opacity: 1;
     }
+}
+
+//table picker
+.tableSelectWrapper {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.selectedTableInfo {
+    font-size: 14px;
+    background: #3990e7;
+    border-radius: 8px;
+    padding: 8px 10px;
+    color: #333;
+    line-height: 1.4;
+}
+
+.selectTableBtn {
+    background-color: #ffcc00;
+    color: #000;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.selectTableBtn:hover {
+    background-color: #3990e7;
 }

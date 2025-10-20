@@ -24,7 +24,7 @@ const CardRestaurant = ({ restaurant, view = 'list' }) => {
     };
     return (
         <div className={styles.cardContainer} onClick={handleClick}>
-            <div cclassName={cardClasses}>
+            <div className={cardClasses}>
                 {restaurant.isNew && <span className={styles.badge}>NEW</span>}
                 <div className={styles.imageBox}>
                     <img src={restaurant.image} alt={restaurant.name} />

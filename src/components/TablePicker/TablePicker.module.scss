@@ -1,106 +1,145 @@
-.container {
+/* === Modal Container === */
+.modal {
+    background: linear-gradient(145deg, #ffcf81, #ffb562);
+    color: white; /* ✅ chữ trắng */
+    border-radius: 20px;
+    padding: 26px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    padding: 16px;
-    background-color: #f5f7fa;
-    border-radius: 16px;
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
-.datePicker {
+/* ✅ Header mới */
+.header {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 12px;
-    font-weight: 600;
-    font-size: 16px;
+    margin-bottom: 12px;
+}
 
-    input[type='date'] {
-        padding: 6px 10px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        font-size: 14px;
-        transition: border-color 0.2s ease;
+.title {
+    font-size: 1.4rem;
+    font-weight: 700;
+}
 
-        &:focus {
-            border-color: #1890ff;
-            outline: none;
-        }
+.closeBtn {
+    background: white;
+    color: #ff6f00;
+    border: none;
+    border-radius: 50%;
+    padding: 6px;
+    cursor: pointer;
+    transition: 0.2s;
+    &:hover {
+        background: #ffefc2;
+        transform: rotate(90deg);
     }
 }
 
-.wrapper {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 18px;
+/* ✅ date + time picker */
+.dateTimeBox {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
-.tableItem {
-    background-color: #bfeaff;
-    border-radius: 12px;
-    padding: 14px 18px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+.datePicker label {
+    font-weight: 600;
+    margin-right: 8px;
+}
 
+.datePicker input {
+    padding: 8px 10px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    background: #fff;
+    color: #333;
+    font-size: 15px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* ✅ gợi ý khi chưa chọn ngày */
+.hintText {
+    margin-top: 6px;
+    color: #fff;
+    font-style: italic;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px 10px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+/* ✅ Table item đẹp hơn */
+.tableItem {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 14px;
+    padding: 16px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+    transition: 0.25s ease;
     &:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
-        cursor: pointer;
+        transform: translateY(-4px);
+        background: rgba(255, 255, 255, 0.3);
     }
 }
 
 .tableName {
     font-weight: 700;
-    font-size: 20px;
-    color: #1a1a1a;
+    font-size: 18px;
 }
 
-.tableDesc {
-    font-size: 14px;
-    color: #444;
-}
-
+.tableDesc,
 .tablePerson {
-    font-size: 15px;
-    font-weight: 600;
-    color: #333;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-
-    &::before {
-        content: '👑';
-        font-size: 16px;
-    }
+    font-size: 14px;
+    opacity: 0.9;
 }
 
-.tableOption {
-    margin-top: 6px;
-    font-size: 13.5px;
-    color: #333;
+/* ✅ Tag trạng thái */
+.badgeRed {
+    color: #fff;
+    background: #c62828;
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+}
 
-    span {
-        display: block;
-        font-weight: 600;
-        margin-bottom: 4px;
-    }
+.badgeGreen {
+    color: #fff;
+    background: #2e7d32;
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+}
+
+/* ✅ Slots */
+.slotBox {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 6px;
 }
 
 .slot {
-    display: inline-block;
-    background-color: #ffb6b6;
-    color: #000;
+    background: rgba(255, 255, 255, 0.25);
     padding: 4px 8px;
     border-radius: 8px;
-    margin: 2px;
-    font-size: 12.5px;
-    font-weight: 500;
+    font-size: 13px;
+    color: white;
 }
 
+.selfSlot {
+    background: #00c853;
+}
+.otherSlot {
+    background: #e53935;
+}
 .free {
-    color: #008c2e;
+    color: #fff;
+    background: #4caf50;
+    padding: 4px 10px;
+    border-radius: 10px;
     font-weight: 600;
 }
