@@ -4,6 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { customFetch } from '~/config/customFetch';
 import CardItem from './CardItem';
 import styles from './modalMyPreOrder.module.scss';
+import TablePicker from '../TablePicker';
+import ResultModal from '../Modals/ResultModal';
+import dayjs from 'dayjs';
 
 function ModalMyPreOrder({ isOpen, onClose, restaurantId }) {
     const [numPeople, setNumPeople] = useState(1);
@@ -17,12 +20,25 @@ function ModalMyPreOrder({ isOpen, onClose, restaurantId }) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [pendingOrderId, setPendingOrderId] = useState(null); // ✅ Thêm state để lưu orderId
+    const [tablePickerVisible, setTablePickerVisible] = useState(false);
+    const [selectedTableInfo, setSelectedTableInfo] = useState(null);
+    const [result, setResult] = useState({ visible: false, success: false, message: '' });
+    const [booking, setBooking] = useState(null);
 
     const { isAuthenticated } = useSelector((state) => state.auth);
     const navigate = useNavigate();
 
+    //Xử lý chọn bàn:
+    const handleSelectTable = (info) => {
+        setSelectedTableInfo(info); // lưu lại toàn bộ thông tin (table + time)
+        setTablePickerVisible(false); // đóng modal chọn bàn
+    };
+
     // Tính tổng tiền
     const total = orders.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    useEffect(() => {
+        console.log('Selected Table Info:', selectedTableInfo);
+    }, [selectedTableInfo]);
 
     // Gọi API để lấy dữ liệu đơn hàng và danh sách bàn
     useEffect(() => {
@@ -33,6 +49,7 @@ function ModalMyPreOrder({ isOpen, onClose, restaurantId }) {
             return;
         }
 
+        //Lấy đơn hàn đang chờ
         const fetchPendingOrder = async () => {
             try {
                 setLoading(true);
@@ -79,13 +96,20 @@ function ModalMyPreOrder({ isOpen, onClose, restaurantId }) {
                     setOrders(formattedOrders);
                     setNumPeople(orderData.data.numOfPeople || 1);
                     setNote(orderData.data.note || '');
-                    setSelectedTable(orderData.data.tableId || '');
+                    setSelectedTable(orderData.data.booking.tableId || '');
                     setStartTime(
                         orderData.data.booking?.startTime ? orderData.data.booking.startTime.slice(0, 16) : '',
                     );
                     setEndTime(orderData.data.booking?.endTime ? orderData.data.booking.endTime.slice(0, 16) : '');
                     setRestaurantName(orderData.data.booking?.restaurant?.fullName || 'Unknown Restaurant');
                     setPendingOrderId(orderData.data.orderId); // ✅ Lưu orderId
+                    setSelectedTableInfo({
+                        table: orderData.data.booking.table,
+                        date: dayjs(orderData.data.booking.startTime).format('YYYY-MM-DD'),
+                        startTime: dayjs(orderData.data.booking.startTime).format('HH:mm'),
+                        endTime: dayjs(orderData.data.booking.endTime).format('HH:mm'),
+                    });
+                    setBooking(orderData.data.booking);
                 } else {
                     setOrders([]);
                     setNumPeople(1);
@@ -104,48 +128,48 @@ function ModalMyPreOrder({ isOpen, onClose, restaurantId }) {
             }
         };
 
-        const fetchAvailableTables = async () => {
-            try {
-                const tableResponse = await customFetch(
-                    `https://localhost:7176/api/RestaurantTable/getByRestaurantIdAndAvailable/${restaurantId}`,
-                    {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                    },
-                );
+        // const fetchAvailableTables = async () => {
+        //     try {
+        //         const tableResponse = await customFetch(
+        //             `https://localhost:7176/api/RestaurantTable/getByRestaurantIdAndAvailable/${restaurantId}`,
+        //             {
+        //                 method: 'GET',
+        //                 headers: {
+        //                     'Content-Type': 'application/json',
+        //                 },
+        //             },
+        //         );
 
-                if (!tableResponse.ok) {
-                    const errorData = await tableResponse.json();
-                    throw new Error(errorData.message || `Lỗi tải danh sách bàn (mã lỗi: ${tableResponse.status})`);
-                }
+        //         if (!tableResponse.ok) {
+        //             const errorData = await tableResponse.json();
+        //             throw new Error(errorData.message || `Lỗi tải danh sách bàn (mã lỗi: ${tableResponse.status})`);
+        //         }
 
-                const tableData = await tableResponse.json();
+        //         const tableData = await tableResponse.json();
 
-                const formattedTables = tableData
-                    .filter((table) => table.status === 'Available')
-                    .map((table) => ({
-                        id: table.tableId,
-                        name: table.name,
-                        personNumber: table.personNumber ?? 'Không xác định',
-                        position: table.position ?? 'Không xác định',
-                        isVip: table.isVip,
-                        minCharge: table.minCharge,
-                        deposit: table.deposit,
-                    }));
+        //         const formattedTables = tableData
+        //             .filter((table) => table.status === 'Available')
+        //             .map((table) => ({
+        //                 id: table.tableId,
+        //                 name: table.name,
+        //                 personNumber: table.personNumber ?? 'Không xác định',
+        //                 position: table.position ?? 'Không xác định',
+        //                 isVip: table.isVip,
+        //                 minCharge: table.minCharge,
+        //                 deposit: table.deposit,
+        //             }));
 
-                setTables(formattedTables);
-            } catch (err) {
-                console.error('Error fetching available tables:', err);
-                setError(err.message || 'Không thể tải danh sách bàn. Vui lòng thử lại.');
-                setTables([]);
-            }
-        };
+        //         setTables(formattedTables);
+        //     } catch (err) {
+        //         console.error('Error fetching available tables:', err);
+        //         setError(err.message || 'Không thể tải danh sách bàn. Vui lòng thử lại.');
+        //         setTables([]);
+        //     }
+        // };
 
         const fetchData = async () => {
             setLoading(true);
-            await Promise.all([fetchPendingOrder(), fetchAvailableTables()]);
+            await Promise.all([fetchPendingOrder() /*fetchAvailableTables()*/]);
             setLoading(false);
         };
 
@@ -154,21 +178,35 @@ function ModalMyPreOrder({ isOpen, onClose, restaurantId }) {
 
     // ✅ Hàm gọi API update order
     const handleUpdateOrder = async () => {
+        if (!selectedTableInfo) {
+            setResult({
+                visible: true,
+                success: false,
+                message: 'Vui lòng chọn bàn trước khi xác nhận!',
+            });
+            return;
+        }
+
         if (!pendingOrderId) {
-            setError('Không tìm thấy đơn hàng để cập nhật.');
-            return false;
+            // ✅ added: kiểm tra order hợp lệ
+            setResult({
+                visible: true,
+                success: false,
+                message: 'Không tìm thấy đơn hàng để cập nhật.',
+            });
+            return;
         }
 
         try {
             // ✅ Chuẩn bị dữ liệu để gửi API
             const updateData = {
-                startTime: startTime ? new Date(startTime).toISOString() : null,
-                endTime: endTime ? new Date(endTime).toISOString() : null,
-                tableId: selectedTable ? parseInt(selectedTable) : null,
-                numberOfPeople: numPeople,
-                discountAmount: null, // Có thể thêm logic tính discount sau
+                startTime: `${selectedTableInfo.date}T${selectedTableInfo.startTime}`,
+                endTime: `${selectedTableInfo.date}T${selectedTableInfo.endTime}`,
+                tableId: selectedTableInfo.table.tableId,
+                numberOfPeople: selectedTableInfo.table.capacity || null,
+                discountAmount: null,
                 note: note,
-                promotionId: null, // Có thể thêm logic promotion sau
+                promotionId: null,
             };
 
             console.log('Updating order with data:', updateData);
@@ -185,12 +223,23 @@ function ModalMyPreOrder({ isOpen, onClose, restaurantId }) {
                 const errorData = await response.json();
                 throw new Error(errorData.message || `Lỗi cập nhật đơn hàng (mã lỗi: ${response.status})`);
             }
-
+            setResult({
+                visible: true,
+                success: true,
+                message: 'Cập nhật đơn hàng thành công 🎉',
+            });
+            setSelectedTableInfo(null);
+            onClose();
             console.log('Order updated successfully');
             return true;
         } catch (err) {
             console.error('Error updating order:', err);
             setError(`Không thể cập nhật đơn hàng: ${err.message}`);
+            setResult({
+                visible: true,
+                success: false,
+                message: error.message || 'Không thể cập nhật đơn hàng 😢',
+            });
             return false;
         }
     };
@@ -366,30 +415,25 @@ function ModalMyPreOrder({ isOpen, onClose, restaurantId }) {
                             className={styles.timeInput}
                         />
                     </div>
-                    <select
-                        value={selectedTable}
-                        onChange={(e) => setSelectedTable(e.target.value)}
-                        className={styles.tableSelect}
-                    >
-                        <option value="" disabled>
-                            Chọn bàn
-                        </option>
-                        {tables.length === 0 ? (
-                            <option value="" disabled>
-                                Không có bàn trống
-                            </option>
-                        ) : (
-                            tables.map((table) => (
-                                <option key={table.id} value={table.id}>
-                                    {`${table.name} - ${table.personNumber} người - ${table.position} - ${
-                                        table.isVip ? 'VIP' : 'Không VIP'
-                                    } - ${
-                                        table.minCharge ? `Tối thiểu ${table.minCharge.toLocaleString()}đ` : 'Miễn phí'
-                                    }${table.deposit ? ` - Đặt cọc ${table.deposit.toLocaleString()}đ` : ''}`}
-                                </option>
-                            ))
+                    <div className={styles.tableSelectWrapper}>
+                        <button className={styles.selectTableBtn} onClick={() => setTablePickerVisible(true)}>
+                            {selectedTableInfo
+                                ? `Đổi bàn (Đang chọn: ${selectedTableInfo.table.name} - ${selectedTableInfo.startTime} → ${selectedTableInfo.endTime})`
+                                : 'Chọn bàn'}
+                        </button>
+
+                        {/* ✅ Nếu đã chọn bàn thì hiển thị thông tin tóm tắt */}
+                        {selectedTableInfo && (
+                            <div className={styles.selectedTableInfo}>
+                                <p>
+                                    <strong>Bàn:</strong> {selectedTableInfo.table.name}
+                                </p>
+                                <p>
+                                    <strong>Sức chứa:</strong> {selectedTableInfo.table.personNumber} người
+                                </p>
+                            </div>
                         )}
-                    </select>
+                    </div>
                 </div>
 
                 <div className={styles.itemContainer}>
@@ -435,16 +479,37 @@ function ModalMyPreOrder({ isOpen, onClose, restaurantId }) {
                         <p className={styles.total}>
                             Tạm tính: <span>{total.toLocaleString()}đ</span>
                         </p>
-                        <button
-                            onClick={handleNavigateToPayment} // ✅ Đổi thành hàm mới
-                            className={styles.payBtn}
-                            disabled={loading}
-                        >
-                            {loading ? 'Đang xử lý...' : 'Đi đến thanh toán'}
-                        </button>
+                        {selectedTable ? (
+                            <button onClick={handleNavigateToPayment} className={styles.payBtn} disabled={loading}>
+                                {loading ? 'Đang xử lý...' : 'Đi đến thanh toán'}
+                            </button>
+                        ) : (
+                            <button onClick={() => setTablePickerVisible(true)} className={styles.selectTableBtn}>
+                                Chọn bàn
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>
+            <TablePicker
+                visible={tablePickerVisible}
+                restaurantId={restaurantId}
+                onClose={() => setTablePickerVisible(false)}
+                onSelectTable={(info) => {
+                    setSelectedTableInfo(info);
+                    setSelectedTable(info.table.tableId);
+                    setStartTime(`${info.date}T${info.startTime}`);
+                    setEndTime(`${info.date}T${info.endTime}`);
+                    setTablePickerVisible(false);
+                }}
+                currentBooking={booking}
+            />
+            <ResultModal
+                visible={result.visible}
+                success={result.success}
+                message={result.message}
+                onClose={() => setResult((s) => ({ ...s, visible: false }))}
+            />
         </div>
     );
 }
