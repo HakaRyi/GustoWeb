@@ -1,6 +1,7 @@
 .wrapper {
-    background: url("../../assets/imgs/login_bg.jpg") center/cover no-repeat;
+    background: url('../../assets/imgs/login_bg.jpg') center/cover no-repeat;
     height: 100vh;
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -16,7 +17,7 @@
 }
 
 .container {
-    width: 500px;
+    width: 600px;
     background: rgba(20, 20, 20, 0.55);
     backdrop-filter: blur(10px);
     border-radius: 16px;
@@ -24,6 +25,7 @@
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
     text-align: center;
     color: white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .header {
@@ -35,17 +37,11 @@
 }
 
 .header h2 {
-    font-family: "Brush Script MT", cursive;
+    font-family: 'Brush Script MT', cursive;
     font-size: 42px;
     font-weight: 600;
-    background:
-        linear-gradient(90deg,
-            #74b9ff,
-            #a2d2ff,
-            #74b9ff,
-            #4dabf7,
-            #74b9ff),
-        url("https://i.imgur.com/Y2aEJ8x.png");
+    background: linear-gradient(90deg, #74b9ff, #a2d2ff, #74b9ff, #4dabf7, #74b9ff),
+        url('https://i.imgur.com/Y2aEJ8x.png');
     /* hiệu ứng gợn nước */
     background-size: 300% 100%, cover;
     background-repeat: repeat;
@@ -75,7 +71,7 @@
     }
 }
 .content {
-    font-family: "Lexend", cursive;
+    font-family: 'Lexend', cursive;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -103,6 +99,7 @@
 .forgot {
     color: #b5caff;
     text-decoration: none;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 
     &:hover {
         text-decoration: underline;
@@ -112,10 +109,11 @@
 .google {
     margin-top: 8px;
     color: #ccc;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-.google-icon {
-    color: #ea4335;
-    font-weight: bold;
-    font-size: 16px;
-}
+// .google-icon {
+//     color: #ea4335;
+//     font-weight: bold;
+//     font-size: 16px;
+// }

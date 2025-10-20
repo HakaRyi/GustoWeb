@@ -47,6 +47,7 @@ const CurrentBooking = () => {
                     ? prev.filter((b) => b.id !== id) // Done thì xoá khỏi danh sách
                     : prev.map((b) => (b.id === id ? { ...b, status: nextStatus } : b)),
             );
+            fetchBookings();
         } catch (error) {
             setResult({ visible: true, success: false, message: 'Không thể tải thông tin người dùng 😢' });
         } finally {

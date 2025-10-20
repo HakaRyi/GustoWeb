@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import styles from './ModalMenu.module.scss';
 import { customFetch } from '~/config/customFetch';
 import ImageUploader from '~/components/Cloundinary/ImageUploader';
-import { FaTimes, FaCamera, FaPlus } from 'react-icons/fa';
+import { FaTimes, FaCamera, FaPlus, FaTrash, FaEdit, FaSave, FaBan } from 'react-icons/fa';
 
 const ModalMenu = ({ isOpen, onClose, menu, isUpdate, onSuccess }) => {
     const [formData, setFormData] = useState({
@@ -20,10 +20,17 @@ const ModalMenu = ({ isOpen, onClose, menu, isUpdate, onSuccess }) => {
         description: '',
     });
     const [uploading, setUploading] = useState(false);
-    const [tasteName, setTasteName] = useState(''); // Trạng thái cho input khẩu vị
-    const [tastes, setTastes] = useState([]); // Danh sách khẩu vị
-    const [tasteLoading, setTasteLoading] = useState(false); // Loading khi thêm khẩu vị
-    const [isTasteSectionOpen, setIsTasteSectionOpen] = useState(false); // Trạng thái mở phần khẩu vị
+    const [tasteName, setTasteName] = useState('');
+    const [tastes, setTastes] = useState([]);
+    const [tasteLoading, setTasteLoading] = useState({ add: false, edit: {}, delete: {} });
+    const [isTasteSectionOpen, setIsTasteSectionOpen] = useState(false);
+    const [editingTaste, setEditingTaste] = useState(null);
+    const [optionalName, setOptionalName] = useState('');
+    const [optionalPrice, setOptionalPrice] = useState('');
+    const [optionals, setOptionals] = useState([]);
+    const [optionalLoading, setOptionalLoading] = useState({ add: false, edit: {}, delete: {} });
+    const [isOptionalSectionOpen, setIsOptionalSectionOpen] = useState(false);
+    const [editingOptional, setEditingOptional] = useState(null);
 
     useEffect(() => {
         if (isUpdate && menu) {
@@ -40,8 +47,8 @@ const ModalMenu = ({ isOpen, onClose, menu, isUpdate, onSuccess }) => {
                 foodUrl: menu.foodImgUrl || '',
                 description: menu.description || '',
             });
-            // Gọi API lấy danh sách khẩu vị
             fetchTastes();
+            fetchOptionals();
         }
     }, [isUpdate, menu]);
 
@@ -57,6 +64,21 @@ const ModalMenu = ({ isOpen, onClose, menu, isUpdate, onSuccess }) => {
         } catch (error) {
             console.error('Fetch tastes failed:', error);
             alert('Lấy danh sách khẩu vị thất bại!');
+        }
+    };
+
+    const fetchOptionals = async () => {
+        if (!isUpdate || !menu?.foodId) return;
+        try {
+            const res = await customFetch(`https://localhost:7176/api/Optional/menu/${menu.foodId}`, {
+                method: 'GET',
+            });
+            if (!res.ok) throw new Error('Lấy danh sách tùy chọn thất bại');
+            const data = await res.json();
+            setOptionals(data);
+        } catch (error) {
+            console.error('Fetch optionals failed:', error);
+            alert('Lấy danh sách tùy chọn thất bại!');
         }
     };
 
@@ -87,7 +109,7 @@ const ModalMenu = ({ isOpen, onClose, menu, isUpdate, onSuccess }) => {
     const handleTasteSubmit = async (e) => {
         e.preventDefault();
         if (!isUpdate || !menu?.foodId || !tasteName.trim()) return;
-        setTasteLoading(true);
+        setTasteLoading((prev) => ({ ...prev, add: true }));
         try {
             const res = await customFetch(`https://localhost:7176/api/Taste/${menu.foodId}`, {
                 method: 'POST',
@@ -96,13 +118,133 @@ const ModalMenu = ({ isOpen, onClose, menu, isUpdate, onSuccess }) => {
             });
             if (!res.ok) throw new Error('Thêm khẩu vị thất bại');
             console.log('Thêm khẩu vị thành công!');
-            setTasteName(''); // Xóa input sau khi thêm
-            fetchTastes(); // Làm mới danh sách khẩu vị
+            setTasteName('');
+            fetchTastes();
         } catch (error) {
             console.error('Add taste failed:', error);
             alert('Thêm khẩu vị thất bại!');
         } finally {
-            setTasteLoading(false);
+            setTasteLoading((prev) => ({ ...prev, add: false }));
+        }
+    };
+
+    const handleOptionalSubmit = async (e) => {
+        e.preventDefault();
+        if (!isUpdate || !menu?.foodId || !optionalName.trim() || !optionalPrice) return;
+        setOptionalLoading((prev) => ({ ...prev, add: true }));
+        try {
+            const res = await customFetch(`https://localhost:7176/api/Optional/${menu.foodId}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: optionalName, price: parseFloat(optionalPrice) }),
+            });
+            if (!res.ok) throw new Error('Thêm tùy chọn thất bại');
+            console.log('Thêm tùy chọn thành công!');
+            setOptionalName('');
+            setOptionalPrice('');
+            fetchOptionals();
+        } catch (error) {
+            console.error('Add optional failed:', error);
+            alert('Thêm tùy chọn thất bại!');
+        } finally {
+            setOptionalLoading((prev) => ({ ...prev, add: false }));
+        }
+    };
+
+    const handleEditTaste = (taste) => {
+        setEditingTaste({ id: taste.id, name: taste.taste1 });
+    };
+
+    const handleEditOptional = (optional) => {
+        setEditingOptional({ id: optional.id, name: optional.name, price: optional.price });
+    };
+
+    const handleSaveEditTaste = async (tasteId) => {
+        if (!editingTaste || !editingTaste.name.trim()) return;
+        setTasteLoading((prev) => ({ ...prev, edit: { ...prev.edit, [tasteId]: true } }));
+        try {
+            const res = await customFetch(`https://localhost:7176/api/Taste/${tasteId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: editingTaste.name }),
+            });
+            if (!res.ok) throw new Error('Cập nhật khẩu vị thất bại');
+            console.log('Cập nhật khẩu vị thành công!');
+            setEditingTaste(null);
+            fetchTastes();
+        } catch (error) {
+            console.error('Update taste failed:', error);
+            alert('Cập nhật khẩu vị thất bại!');
+        } finally {
+            setTasteLoading((prev) => ({ ...prev, edit: { ...prev.edit, [tasteId]: false } }));
+        }
+    };
+
+    const handleSaveEditOptional = async (optionalId) => {
+        if (!editingOptional || !editingOptional.name.trim() || !editingOptional.price) return;
+        setOptionalLoading((prev) => ({ ...prev, edit: { ...prev.edit, [optionalId]: true } }));
+        try {
+            const res = await customFetch(`https://localhost:7176/api/Optional/${optionalId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: editingOptional.name,
+                    price: parseFloat(editingOptional.price),
+                }),
+            });
+            if (!res.ok) throw new Error('Cập nhật tùy chọn thất bại');
+            console.log('Cập nhật tùy chọn thành công!');
+            setEditingOptional(null);
+            fetchOptionals();
+        } catch (error) {
+            console.error('Update optional failed:', error);
+            alert('Cập nhật tùy chọn thất bại!');
+        } finally {
+            setOptionalLoading((prev) => ({ ...prev, edit: { ...prev.edit, [optionalId]: false } }));
+        }
+    };
+
+    const handleDeleteTaste = async (tasteId) => {
+        setTasteLoading((prev) => ({ ...prev, delete: { ...prev.delete, [tasteId]: true } }));
+        try {
+            const res = await customFetch(`https://localhost:7176/api/Taste/${tasteId}`, {
+                method: 'DELETE',
+            });
+            if (!res.ok) throw new Error('Xóa khẩu vị thất bại');
+            const result = await res.json();
+            if (result) {
+                console.log('Xóa khẩu vị thành công!');
+                fetchTastes();
+            } else {
+                throw new Error('Xóa khẩu vị thất bại');
+            }
+        } catch (error) {
+            console.error('Delete taste failed:', error);
+            alert('Xóa khẩu vị thất bại!');
+        } finally {
+            setTasteLoading((prev) => ({ ...prev, delete: { ...prev.delete, [tasteId]: false } }));
+        }
+    };
+
+    const handleDeleteOptional = async (optionalId) => {
+        setOptionalLoading((prev) => ({ ...prev, delete: { ...prev.delete, [optionalId]: true } }));
+        try {
+            const res = await customFetch(`https://localhost:7176/api/Optional/${optionalId}`, {
+                method: 'DELETE',
+            });
+            if (!res.ok) throw new Error('Xóa tùy chọn thất bại');
+            const result = await res.json();
+            if (result) {
+                console.log('Xóa tùy chọn thành công!');
+                fetchOptionals();
+            } else {
+                throw new Error('Xóa tùy chọn thất bại');
+            }
+        } catch (error) {
+            console.error('Delete optional failed:', error);
+            alert('Xóa tùy chọn thất bại!');
+        } finally {
+            setOptionalLoading((prev) => ({ ...prev, delete: { ...prev.delete, [optionalId]: false } }));
         }
     };
 
@@ -331,15 +473,15 @@ const ModalMenu = ({ isOpen, onClose, menu, isUpdate, onSuccess }) => {
                                                     onChange={(e) => setTasteName(e.target.value)}
                                                     placeholder="Nhập tên khẩu vị (VD: Cay)"
                                                     className={styles.formInput}
-                                                    disabled={tasteLoading}
+                                                    disabled={tasteLoading.add}
                                                 />
                                                 <button
                                                     type="button"
                                                     className={styles.addTasteBtn}
                                                     onClick={handleTasteSubmit}
-                                                    disabled={tasteLoading || !tasteName.trim()}
+                                                    disabled={tasteLoading.add || !tasteName.trim()}
                                                 >
-                                                    <FaPlus /> {tasteLoading ? 'Đang thêm...' : 'Thêm'}
+                                                    <FaPlus /> {tasteLoading.add ? 'Đang thêm...' : 'Thêm'}
                                                 </button>
                                             </div>
                                         </label>
@@ -350,10 +492,225 @@ const ModalMenu = ({ isOpen, onClose, menu, isUpdate, onSuccess }) => {
                                             <div className={styles.tasteGrid}>
                                                 {tastes.map((taste) => (
                                                     <div key={taste.id} className={styles.cardTaste}>
-                                                        <span className={styles.tasteName}>{taste.taste1}</span>
-                                                        {/* <span className={styles.tasteMenuId}>
-                                                            Menu ID: {taste.restaurantMenuId}
-                                                        </span> */}
+                                                        {editingTaste && editingTaste.id === taste.id ? (
+                                                            <div className={styles.editTasteWrapper}>
+                                                                <input
+                                                                    type="text"
+                                                                    value={editingTaste.name}
+                                                                    onChange={(e) =>
+                                                                        setEditingTaste({
+                                                                            ...editingTaste,
+                                                                            name: e.target.value,
+                                                                        })
+                                                                    }
+                                                                    className={styles.formInput}
+                                                                    disabled={tasteLoading.edit[taste.id]}
+                                                                />
+                                                                <div className={styles.tasteActions}>
+                                                                    <button
+                                                                        type="button"
+                                                                        className={styles.saveTasteBtn}
+                                                                        onClick={() => handleSaveEditTaste(taste.id)}
+                                                                        disabled={
+                                                                            tasteLoading.edit[taste.id] ||
+                                                                            !editingTaste.name.trim()
+                                                                        }
+                                                                    >
+                                                                        <FaSave />{' '}
+                                                                        {tasteLoading.edit[taste.id]
+                                                                            ? 'Đang lưu...'
+                                                                            : 'Lưu'}
+                                                                    </button>
+                                                                    <button
+                                                                        type="button"
+                                                                        className={styles.cancelTasteBtn}
+                                                                        onClick={() => setEditingTaste(null)}
+                                                                        disabled={tasteLoading.edit[taste.id]}
+                                                                    >
+                                                                        <FaBan /> Hủy
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        ) : (
+                                                            <>
+                                                                <span className={styles.tasteName}>{taste.taste1}</span>
+                                                                <div className={styles.tasteActions}>
+                                                                    <button
+                                                                        type="button"
+                                                                        className={styles.editTasteBtn}
+                                                                        onClick={() => handleEditTaste(taste)}
+                                                                        disabled={tasteLoading.delete[taste.id]}
+                                                                    >
+                                                                        <FaEdit />
+                                                                    </button>
+                                                                    <button
+                                                                        type="button"
+                                                                        className={styles.deleteTasteBtn}
+                                                                        onClick={() => handleDeleteTaste(taste.id)}
+                                                                        disabled={tasteLoading.delete[taste.id]}
+                                                                    >
+                                                                        <FaTrash />{' '}
+                                                                        {tasteLoading.delete[taste.id]
+                                                                            ? 'Đang xóa...'
+                                                                            : ''}
+                                                                    </button>
+                                                                </div>
+                                                            </>
+                                                        )}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+                        </div>
+                    )}
+                    {/* Phần tùy chọn (chỉ hiển thị khi cập nhật) */}
+                    {isUpdate && (
+                        <div className={`${styles.formGroup} ${styles.fullWidth}`}>
+                            {!isOptionalSectionOpen ? (
+                                <button
+                                    type="button"
+                                    className={styles.openOptionalBtn}
+                                    onClick={() => setIsOptionalSectionOpen(true)}
+                                >
+                                    <FaPlus /> Thêm tùy chọn
+                                </button>
+                            ) : (
+                                <div className={styles.optionalSection}>
+                                    <button
+                                        className={styles.closeOptionalBtn}
+                                        onClick={() => setIsOptionalSectionOpen(false)}
+                                    >
+                                        <FaTimes />
+                                    </button>
+                                    <div className={`${styles.formGroup} ${styles.fullWidth}`}>
+                                        <label>
+                                            Thêm tùy chọn:
+                                            <div className={styles.optionalInputWrapper}>
+                                                <input
+                                                    type="text"
+                                                    value={optionalName}
+                                                    onChange={(e) => setOptionalName(e.target.value)}
+                                                    placeholder="Nhập tên tùy chọn (VD: Thịt thêm)"
+                                                    className={styles.formInput}
+                                                    disabled={optionalLoading.add}
+                                                />
+                                                <input
+                                                    type="number"
+                                                    value={optionalPrice}
+                                                    onChange={(e) => setOptionalPrice(e.target.value)}
+                                                    placeholder="Nhập giá (VNĐ)"
+                                                    className={styles.formInput}
+                                                    min="0"
+                                                    disabled={optionalLoading.add}
+                                                />
+                                                <button
+                                                    type="button"
+                                                    className={styles.addOptionalBtn}
+                                                    onClick={handleOptionalSubmit}
+                                                    disabled={
+                                                        optionalLoading.add || !optionalName.trim() || !optionalPrice
+                                                    }
+                                                >
+                                                    <FaPlus /> {optionalLoading.add ? 'Đang thêm...' : 'Thêm'}
+                                                </button>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    {optionals.length > 0 && (
+                                        <div className={styles.optionalList}>
+                                            <h4 className={styles.optionalListTitle}>Danh sách tùy chọn</h4>
+                                            <div className={styles.optionalGrid}>
+                                                {optionals.map((optional) => (
+                                                    <div key={optional.id} className={styles.cardOptional}>
+                                                        {editingOptional && editingOptional.id === optional.id ? (
+                                                            <div className={styles.editOptionalWrapper}>
+                                                                <input
+                                                                    type="text"
+                                                                    value={editingOptional.name}
+                                                                    onChange={(e) =>
+                                                                        setEditingOptional({
+                                                                            ...editingOptional,
+                                                                            name: e.target.value,
+                                                                        })
+                                                                    }
+                                                                    className={styles.formInput}
+                                                                    disabled={optionalLoading.edit[optional.id]}
+                                                                />
+                                                                <input
+                                                                    type="number"
+                                                                    value={editingOptional.price}
+                                                                    onChange={(e) =>
+                                                                        setEditingOptional({
+                                                                            ...editingOptional,
+                                                                            price: e.target.value,
+                                                                        })
+                                                                    }
+                                                                    className={styles.formInput}
+                                                                    min="0"
+                                                                    disabled={optionalLoading.edit[optional.id]}
+                                                                />
+                                                                <div className={styles.optionalActions}>
+                                                                    <button
+                                                                        type="button"
+                                                                        className={styles.saveOptionalBtn}
+                                                                        onClick={() =>
+                                                                            handleSaveEditOptional(optional.id)
+                                                                        }
+                                                                        disabled={
+                                                                            optionalLoading.edit[optional.id] ||
+                                                                            !editingOptional.name.trim() ||
+                                                                            !editingOptional.price
+                                                                        }
+                                                                    >
+                                                                        <FaSave />{' '}
+                                                                        {optionalLoading.edit[optional.id]
+                                                                            ? 'Đang lưu...'
+                                                                            : 'Lưu'}
+                                                                    </button>
+                                                                    <button
+                                                                        type="button"
+                                                                        className={styles.cancelOptionalBtn}
+                                                                        onClick={() => setEditingOptional(null)}
+                                                                        disabled={optionalLoading.edit[optional.id]}
+                                                                    >
+                                                                        <FaBan /> Hủy
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        ) : (
+                                                            <>
+                                                                <span className={styles.optionalName}>
+                                                                    {optional.title}
+                                                                    <br /> {optional.price} VNĐ
+                                                                </span>
+                                                                <div className={styles.optionalActions}>
+                                                                    <button
+                                                                        type="button"
+                                                                        className={styles.editOptionalBtn}
+                                                                        onClick={() => handleEditOptional(optional)}
+                                                                        disabled={optionalLoading.delete[optional.id]}
+                                                                    >
+                                                                        <FaEdit />
+                                                                    </button>
+                                                                    <button
+                                                                        type="button"
+                                                                        className={styles.deleteOptionalBtn}
+                                                                        onClick={() =>
+                                                                            handleDeleteOptional(optional.id)
+                                                                        }
+                                                                        disabled={optionalLoading.delete[optional.id]}
+                                                                    >
+                                                                        <FaTrash />{' '}
+                                                                        {optionalLoading.delete[optional.id]
+                                                                            ? 'Đang xóa...'
+                                                                            : ''}
+                                                                    </button>
+                                                                </div>
+                                                            </>
+                                                        )}
                                                     </div>
                                                 ))}
                                             </div>

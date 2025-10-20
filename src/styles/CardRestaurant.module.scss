@@ -1,14 +1,14 @@
 .card {
-    display: flex; /* Mặc định là layout ngang */
+    display: flex !important; /* Mặc định là layout ngang */
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     align-items: center;
-    background: #ffffff;
+    background: #ffffff !important;
     border-radius: 14px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     width: 650px; /* Chiều rộng cho list view */
     margin: 20px auto;
     position: relative;
-    border: 1px solid #e0e0e0;
+    border: 1px solid #e0e0e0 !important;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 
     &:hover {
@@ -61,7 +61,7 @@
 }
 
 .cardContainer {
-    display: inline-block;
+    display: inline-block !important;
     width: 100%;
 }
 

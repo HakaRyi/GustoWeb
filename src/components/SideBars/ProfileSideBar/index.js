@@ -39,6 +39,7 @@ function ProfileSideBar() {
     const handleLogout = () => {
         logoutApi();
     };
+
     return (
         <div className={cx('sidebar-wrapper')}>
             <NavLink to="/profile" end className={({ isActive }) => cx('sidebar-item', { active: isActive })}>

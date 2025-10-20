@@ -216,7 +216,7 @@
     gap: 8px;
     font-size: 1rem;
     font-weight: 500;
-    color: #424921;
+    color: #424921 !important;
 
     .labelText {
         font-weight: 600;
@@ -224,10 +224,10 @@
 
     .formInput {
         padding: 10px;
-        border: 1px solid #424921;
+        border: 1px solid #424921 !important;
         border-radius: 4px;
         font-size: 1rem;
-        color: #424921;
+        color: #424921 !important;
         background: #fffdf6; // Đồng bộ nền
         transition: border-color 0.3s, background 0.3s;
 
