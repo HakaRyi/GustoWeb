@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using Google.Apis.Auth;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
 using Microsoft.IdentityModel.Tokens;
@@ -34,8 +36,9 @@ namespace Service
         private readonly ILogger<AccountService> _logger;
         private readonly JwtSettings _jwtSettings;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IConfiguration configuration;
 
-        public AccountService(AccountRepository repo, IMapper mapper, ILogger<AccountService> logger, JwtSettings jwtSettings, IHttpContextAccessor httpContextAccessor, RefreshTokenRepository refreshTokenRepository, RoleRepository roleRepository, DinerProfileRepository dinerProfileRepository, RestaurantProfileRepository restaurantProfileRepository, NotificationService notificationService)
+        public AccountService(AccountRepository repo, IMapper mapper, ILogger<AccountService> logger, JwtSettings jwtSettings, IHttpContextAccessor httpContextAccessor, RefreshTokenRepository refreshTokenRepository, RoleRepository roleRepository, DinerProfileRepository dinerProfileRepository, RestaurantProfileRepository restaurantProfileRepository, NotificationService notificationService, IConfiguration configuration)
         {
             _repo = repo;
             _mapper = mapper;
@@ -47,6 +50,7 @@ namespace Service
             _dinerProfileRepository = dinerProfileRepository;
             _restaurantProfileRepository = restaurantProfileRepository;
             _notificationService = notificationService;
+            this.configuration = configuration;
         }
         //CRUD Operations:
         //Create Account
@@ -281,7 +285,56 @@ namespace Service
                 throw;
             }
         }
-
+        public async Task<bool> GoogleLoginAsync(GoogleLoginRequestDto request)
+        {
+            try
+            {
+                var payload = await GoogleJsonWebSignature.ValidateAsync(request.IdToken); 
+                if (payload == null || !payload.Audience.Equals(configuration["Google:ClientId"])) 
+                { 
+                    throw new InvalidCredentialsException("Invalid Google token"); 
+                }
+                string email = payload.Email; string name = payload.Name ?? email.Split('@')[0]; 
+                _logger.LogInformation($"Google login for: {email}"); 
+                var account = await _repo.GetAccountByEmail(email); if (account == null) 
+                { 
+                    _logger.LogInformation($"Creating new account: {email}"); 
+                    account = new Account 
+                    { 
+                        UserName = email, 
+                        Password = "", RoleId = 1,
+                        CreateAt = DateTime.Now, 
+                        Status = AccountStatus.ACTIVE.ToString() 
+                    }; 
+                    await _repo.CreateAccount(account); 
+                    var dinerProfile = new DinerProfile 
+                    {
+                        AccountId = account.Id,
+                        Email = email, FullName = name,
+                        AvatarUrl = payload.Picture 
+                    }; 
+                    await _dinerProfileRepository.AddAsync(dinerProfile); 
+                } 
+                else 
+                {
+                    _logger.LogInformation($"Existing account login: {email}");
+                }
+                // 5. GENERATE TOKENS
+                if (account.Role == null)
+                {
+                    account = await _repo.GetAccountById(account.Id);
+                }
+                await GenerateTokens(account);
+                
+                _logger.LogInformation($"Google login SUCCESS: {email}"); 
+                return true; 
+            } 
+            catch (Exception ex) 
+            { 
+                _logger.LogError(ex, "Google login FAILED"); 
+                throw; 
+            } 
+        }
         private async Task GenerateTokens(Account user)
         {
             var httpContext = _httpContextAccessor.HttpContext ?? throw new Exception("HttpContext is null");

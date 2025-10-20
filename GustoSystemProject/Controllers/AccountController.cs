@@ -71,7 +71,18 @@ namespace GustoSystemProject.Controllers
         {
             return await _service.SignInAsync(value);
         }
-
+        [HttpPost("google-login")] 
+        public async Task<IActionResult> GoogleLogin([FromBody] GoogleLoginRequestDto request) 
+        { 
+            try 
+            { 
+                var response = await _service.GoogleLoginAsync(request); 
+                return Ok(response); 
+            } catch (Exception ex) 
+            { 
+                return BadRequest(ex.Message); 
+            }
+        }
         // PUT api/<AccountController>/5
         [HttpPut]
         [Authorize]

@@ -60,7 +60,14 @@ namespace Repository
                 .Include(a => a.Role)
                 .FirstOrDefaultAsync(a => a.UserName == username && a.Status.ToLower() == "active");
         }
-
+        public async Task<Account> GetAccountByEmail(string email) { 
+            return await _context.Accounts
+                .Include(a => a.Notifications)
+                .Include(a => a.RestaurantProfile)
+                .Include(a => a.DinerProfile)
+                .Include(a => a.RefreshTokens)
+                .Include(a => a.Role)
+                .FirstOrDefaultAsync(a => a.DinerProfile.Email == email && a.Status.ToLower() == "active"); }
         public async Task<Account> UpdateAccount(Account account)
         {
             var proccess = _context.Update(account);
