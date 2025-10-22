@@ -81,7 +81,7 @@
     }
 
     .timeInput {
-        border: 1px solid #ccc;
+        border: 1px solid #ccc !important;
         border-radius: 8px;
         padding: 6px 10px;
         color: #162b00;
@@ -90,7 +90,7 @@
         transition: all 0.2s ease;
 
         &:hover {
-            border-color: #f07d00;
+            border-color: #f07d00 !important;
             background: rgb(255, 247, 215);
         }
 
@@ -185,19 +185,24 @@
         margin-bottom: 4px;
         font-weight: 600;
         font-size: 14px;
+        color: #333 !important;
     }
 
     input {
-        width: 120px;
-        padding: 6px 8px;
-        border: 1px solid #ccc;
+        width: 100px;
+        padding: 5px 8px;
+        border: 1px solid #ccc !important;
         border-radius: 8px;
         background-color: #fff8dc;
         font-size: 14px;
         color: #162b00;
         transition: all 0.2s ease;
 
-        &:hover,
+        &:hover {
+            border-color: #f07d00 !important;
+            background: rgb(255, 247, 215);
+        }
+
         &:focus {
             border-color: #f07d00;
             background: rgb(255, 247, 215);
