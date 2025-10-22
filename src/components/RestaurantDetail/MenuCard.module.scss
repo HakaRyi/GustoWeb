@@ -87,54 +87,59 @@
     z-index: 10;
     rotate: 9deg;
 }
-
+/* ================= MOBILE (≤ 768px) ================= */
 @media (max-width: 768px) {
     .menuCard {
         width: 100%;
-        max-width: 350px;
-        padding: 12px 15px;
+        max-width: 340px;
+        padding: 12px 14px;
+        gap: 14px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
     }
 
     .menuImage {
-        width: 100px;
-        height: 100px;
+        width: 90px;
+        height: 90px;
     }
 
     .menuName {
-        font-size: 16px;
+        font-size: 15px;
     }
 
     .menuPrice {
-        font-size: 14px;
+        font-size: 13px;
     }
 
     .viewReviewsButton {
-        padding: 5px 12px;
-        font-size: 13px;
-        margin-top: 20px;
-    }
-
-    .recommendedBadge {
-        font-size: 11px;
-        padding: 3px 6px;
-    }
-}
-
-@media (max-width: 480px) {
-    .menuCard {
-        max-width: 300px;
-        padding: 10px 12px;
-    }
-
-    .menuImage {
-        width: 80px;
-        height: 80px;
+        padding: 5px 10px;
+        font-size: 12px;
+        margin-top: 15px;
     }
 
     .recommendedBadge {
         font-size: 10px;
         padding: 2px 5px;
-        top: 8px;
-        right: 8px;
+        top: -6px;
+        right: -3px;
+    }
+}
+
+/* =============== SMALL MOBILE (≤ 480px) ================= */
+@media (max-width: 480px) {
+    .menuCard {
+        max-width: 280px;
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .menuImage {
+        width: 70px;
+        height: 70px;
+    }
+
+    .recommendedBadge {
+        top: 4px;
+        right: 221px;
+        rotate: -20deg;
     }
 }

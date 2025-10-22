@@ -10,11 +10,12 @@
     align-items: center;
     z-index: 2000;
     animation: fadeIn 0.3s ease;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .modalContent {
     background: #fffdf6;
-    border: 0px solid #424921;
+    border: 0px solid #424921 !important;
     border-radius: 12px;
     padding: 20px 28px 20px 20px;
     width: 100%;
@@ -100,7 +101,7 @@
 
 .formInput {
     padding: 10px;
-    border: 1px solid #424921;
+    border: 1px solid #424921 !important;
     border-radius: 8px;
     font-size: 1rem;
     color: #424921;
@@ -109,12 +110,14 @@
 
     &:focus {
         outline: none;
+        background: #fffdf6;
         border-color: #6a7636;
     }
 
     &[type='textarea'] {
         resize: vertical;
         min-height: 100px;
+        background: #fffdf6;
     }
 }
 
@@ -162,7 +165,7 @@
 .submitBtn {
     width: 100%;
     padding: 10px;
-    background: #424921;
+    background: #424921 !important;
     color: #fff;
     border: none;
     border-radius: 8px;
@@ -173,7 +176,7 @@
     margin-top: 20px;
 
     &:hover {
-        background: #6a7636;
+        background: #6a7636 !important;
         transform: translateY(-2px);
     }
 

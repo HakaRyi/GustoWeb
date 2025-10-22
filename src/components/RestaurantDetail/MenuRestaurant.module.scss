@@ -37,3 +37,47 @@
         margin-left: 40px;
     }
 }
+/* ============ RESPONSIVE ============ */
+@media (max-width: 768px) {
+    .menuRestaurant {
+        padding: 20px;
+    }
+
+    .menuTitle {
+        font-size: 48px;
+        margin-bottom: 20px;
+    }
+
+    .menuCategory {
+        .categoryTitle {
+            font-size: 22px;
+            margin-left: 0;
+            text-align: center;
+        }
+
+        .categoryItems {
+            margin-left: 0;
+            justify-content: center; // căn giữa khi mobile
+            gap: 15px;
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .menuRestaurant {
+        padding: 15px;
+    }
+
+    .menuTitle {
+        font-size: 36px;
+        margin-bottom: 15px;
+    }
+
+    .menuCategory .categoryTitle {
+        font-size: 18px;
+    }
+
+    .menuCategory .categoryItems {
+        gap: 10px;
+    }
+}

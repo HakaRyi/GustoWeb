@@ -9,7 +9,7 @@
     gap: 7px;
 }
 
-label {
+.label {
     font-size: 14px;
     font-weight: 500;
     color: #ddd !important;
@@ -89,4 +89,65 @@ button[type='submit'] {
 
 .google-login-container {
     width: 100%;
+}
+/* ================== MOBILE (≤768px) ================== */
+@media (max-width: 768px) {
+    .form-wrapper {
+        width: 100%;
+    }
+
+    .form {
+        gap: 6px;
+    }
+
+    .label {
+        font-size: 13px;
+    }
+
+    input {
+        padding: 10px 14px;
+        font-size: 15px;
+    }
+
+    button[type='submit'] {
+        padding: 10px;
+        font-size: 15px;
+    }
+
+    .error {
+        font-size: 11px;
+    }
+
+    .google-login-divider span {
+        font-size: 13px;
+    }
+}
+
+/* ================== SMALL MOBILE (≤480px) ================== */
+@media (max-width: 480px) {
+    .form {
+        gap: 5px;
+    }
+
+    .label {
+        font-size: 12.5px;
+    }
+
+    input {
+        padding: 9px 12px;
+        font-size: 14px;
+    }
+
+    button[type='submit'] {
+        padding: 9px;
+        font-size: 14px;
+    }
+
+    .google-login-divider {
+        margin: 16px 0;
+    }
+
+    .google-login-divider span {
+        font-size: 12px;
+    }
 }

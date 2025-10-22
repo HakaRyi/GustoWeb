@@ -91,60 +91,47 @@
     margin-left: 6px;
     vertical-align: middle;
 }
-
-/* Responsive */
 @media (max-width: 1098px) {
+    .headerContainer {
+        height: auto; /* Cho phép header cao hơn */
+        padding: 10px 0;
+    }
+
     .headerInner {
-        flex-direction: row; /* Giữ hàng ngang thay vì cột */
-        justify-content: space-between;
+        flex-direction: column; /* Xếp dọc */
         align-items: center;
-        padding: 0 10px;
+        gap: 10px; /* Khoảng cách giữa logo và navbar */
     }
 
-    .navbar {
-        gap: 15px; /* Giữ gap nhỏ để các icon gần nhau */
-    }
-
-    .navLink {
-        font-size: 0; /* Ẩn văn bản */
-        padding: 8px; /* Thêm padding để vùng click lớn hơn */
-    }
-
-    .navIcon {
-        margin-right: 0; /* Bỏ margin-right vì không có văn bản */
-        font-size: 24px; /* Tăng kích thước icon để dễ nhìn */
-    }
-
-    .loginBtn {
-        padding: 6px; /* Giảm padding để gọn hơn */
-        border-width: 2px;
-    }
-
-    .cartBadge {
-        font-size: 10px;
-        padding: 3px 6px;
+    /* Logo lên trên và hiện lại */
+    .brand {
+        display: flex !important;
+        justify-content: center;
+        width: 100%;
     }
 
     .logoImg {
-        height: 35px; /* Giảm kích thước logo trên mobile */
-    }
-}
-
-@media (max-width: 180px) {
-    .headerContainer {
-        padding: 10px 15px;
-        height: 60px; /* Giảm height thêm trên mobile nhỏ */
+        height: 40px;
     }
 
+    /* Navbar xuống dưới */
     .navbar {
-        gap: 10px; /* Giảm gap hơn nữa trên màn hình rất nhỏ */
+        width: 100%;
+        justify-content: center; /* căn giữa icon */
+        gap: 25px;
     }
 
     .navLink {
-        padding: 6px;
+        font-size: 0; /* ẩn chữ, chỉ để icon */
+        padding: 10px;
     }
 
     .navIcon {
-        font-size: 20px; /* Giảm nhẹ kích thước icon trên màn hình rất nhỏ */
+        margin-right: 0;
+        font-size: 24px;
+    }
+    .loginBtn {
+        padding: 6px 10px;
+        font-size: 14px;
     }
 }

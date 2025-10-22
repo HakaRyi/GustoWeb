@@ -117,3 +117,49 @@
 //     font-weight: bold;
 //     font-size: 16px;
 // }
+/* ========== TABLET & MOBILE ≤ 768px ========== */
+@media (max-width: 768px) {
+    .wrapper {
+        height: auto;
+        min-height: 100vh;
+        padding: 20px 0;
+    }
+
+    .container {
+        width: 90%;
+        padding: 25px 20px;
+        border-radius: 12px;
+    }
+
+    .header h2 {
+        font-size: 32px;
+    }
+
+    .content {
+        gap: 10px;
+    }
+
+    .links {
+        font-size: 13px;
+    }
+}
+
+/* ========== SMALL MOBILE ≤ 480px ========== */
+@media (max-width: 480px) {
+    .container {
+        width: 95%;
+        padding: 20px 15px;
+    }
+
+    .header h2 {
+        font-size: 26px;
+    }
+
+    .links {
+        font-size: 12px;
+    }
+
+    .content {
+        gap: 8px;
+    }
+}

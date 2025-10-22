@@ -404,6 +404,7 @@ function ModalMyPreOrder({ isOpen, onClose, restaurantId }) {
                             value={startTime}
                             onChange={handleStartTimeChange}
                             className={styles.timeInput}
+                            readOnly
                         />
                     </div>
                     <div className={styles.timeGroup}>
@@ -413,12 +414,15 @@ function ModalMyPreOrder({ isOpen, onClose, restaurantId }) {
                             value={endTime}
                             onChange={handleEndTimeChange}
                             className={styles.timeInput}
+                            readOnly
                         />
                     </div>
                     <div className={styles.tableSelectWrapper}>
                         <button className={styles.selectTableBtn} onClick={() => setTablePickerVisible(true)}>
                             {selectedTableInfo
-                                ? `Đổi bàn (Đang chọn: ${selectedTableInfo.table.name} - ${selectedTableInfo.startTime} → ${selectedTableInfo.endTime})`
+                                ? `Đổi bàn (Đang chọn: ${selectedTableInfo.table?.name || 'Chưa chọn'} - ${
+                                      selectedTableInfo.startTime
+                                  } → ${selectedTableInfo.endTime})`
                                 : 'Chọn bàn'}
                         </button>
 
@@ -426,10 +430,11 @@ function ModalMyPreOrder({ isOpen, onClose, restaurantId }) {
                         {selectedTableInfo && (
                             <div className={styles.selectedTableInfo}>
                                 <p>
-                                    <strong>Bàn:</strong> {selectedTableInfo.table.name}
+                                    <strong>Bàn:</strong> {selectedTableInfo.table?.name || 'Chưa có'}
                                 </p>
                                 <p>
-                                    <strong>Sức chứa:</strong> {selectedTableInfo.table.personNumber} người
+                                    <strong>Sức chứa:</strong> {selectedTableInfo.table?.personNumber || 'Chưa có'}{' '}
+                                    người
                                 </p>
                             </div>
                         )}
@@ -455,26 +460,28 @@ function ModalMyPreOrder({ isOpen, onClose, restaurantId }) {
 
                 <div className={styles.footer}>
                     <div className={styles.left}>
-                        <div className={styles.inputGroup}>
-                            <label>Số người</label>
-                            <input
-                                type="number"
-                                min="1"
-                                value={numPeople}
-                                onChange={(e) => setNumPeople(Number(e.target.value))}
-                            />
-                        </div>
-
-                        <div className={styles.inputGroup}>
-                            <label>Ghi chú</label>
-                            <textarea
-                                value={note}
-                                onChange={(e) => setNote(e.target.value)}
-                                placeholder="Thêm ghi chú..."
-                            />
+                        <div className={styles.inputGroupWrapper}>
+                            {' '}
+                            {/* Thêm wrapper để chứa số người và ghi chú */}
+                            <div className={styles.inputGroup}>
+                                <label>Số người</label>
+                                <input
+                                    type="number"
+                                    min="1"
+                                    value={numPeople}
+                                    onChange={(e) => setNumPeople(Number(e.target.value))}
+                                />
+                            </div>
+                            <div className={styles.inputGroup}>
+                                <label>Ghi chú</label>
+                                <textarea
+                                    value={note}
+                                    onChange={(e) => setNote(e.target.value)}
+                                    placeholder="Thêm ghi chú..."
+                                />
+                            </div>
                         </div>
                     </div>
-
                     <div className={styles.right}>
                         <p className={styles.total}>
                             Tạm tính: <span>{total.toLocaleString()}đ</span>

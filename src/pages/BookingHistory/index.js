@@ -156,7 +156,7 @@ function BookingHistory() {
                                     {orders.map((order) => {
                                         const orderId = order.orderId;
                                         const orderStatus = order.status ?? '';
-                                        const totalPrice = order.totalPrice ?? 0;
+                                        const totalPrice = (order.totalPrice ?? 0) + 3000;
 
                                         // derive whether booking/order already has foodReviews (global location is booking.foodReviews)
                                         const reviewFoodIds = new Set(

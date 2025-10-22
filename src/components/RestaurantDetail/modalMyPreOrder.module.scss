@@ -8,7 +8,7 @@
     align-items: center;
     z-index: 2000;
     animation: fadeIn 0.3s ease-in-out;
-    font-family: 'Poppins', sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 /* === Modal chính === */
@@ -25,6 +25,18 @@
     flex-direction: column;
     animation: slideUp 0.4s ease-out forwards;
     overflow: hidden;
+
+    @media (max-width: 768px) {
+        width: 90%;
+        height: 85vh;
+        padding: 15px;
+    }
+
+    @media (max-width: 576px) {
+        width: 95%;
+        padding: 10px;
+        border-radius: 16px;
+    }
 }
 
 /* === Header === */
@@ -37,6 +49,10 @@
     border-bottom: 2px solid #f0e2b0;
     padding-bottom: 6px;
     margin-bottom: 10px;
+
+    @media (max-width: 576px) {
+        font-size: 18px;
+    }
 }
 
 .exitBtn {
@@ -52,6 +68,10 @@
         color: #f07d00;
         transform: scale(1.15);
     }
+
+    @media (max-width: 576px) {
+        font-size: 18px;
+    }
 }
 
 /* === Tên nhà hàng === */
@@ -60,13 +80,17 @@
     font-size: 22px;
     margin: 6px 0 12px;
     color: #f07d00;
+
+    @media (max-width: 576px) {
+        font-size: 18px;
+    }
 }
 
 /* === Phần chọn thời gian & bàn === */
 .timeAndTable {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     gap: 16px;
     flex-wrap: wrap;
     font-size: 15px;
@@ -85,7 +109,7 @@
         border-radius: 8px;
         padding: 6px 10px;
         color: #162b00;
-        width: 190px;
+        width: 242px;
         background: #fff;
         transition: all 0.2s ease;
 
@@ -100,34 +124,35 @@
             background: rgb(255, 247, 215);
             box-shadow: 0 0 0 2px rgba(240, 125, 0, 0.2);
         }
+
+        @media (max-width: 768px) {
+            width: 180px;
+        }
+
+        @media (max-width: 576px) {
+            width: 100%;
+            font-size: 14px;
+        }
     }
 
-    .tableSelect {
-        min-width: 420px;
-        border: 1px solid #ccc;
+    .tableSelectWrapper {
+        margin-top: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .selectedTableInfo {
+        font-size: 14px;
+        background: linear-gradient(90deg, #41c345, #83ff87);
         border-radius: 8px;
         padding: 8px 10px;
-        color: #162b00;
-        background: #fff8dc;
-        font-size: 14px;
-        cursor: pointer;
-        transition: all 0.2s ease;
+        color: #333;
+        line-height: 1.4;
 
-        &:hover {
-            border-color: #f07d00;
-            background: rgb(255, 247, 215);
-        }
-
-        &:focus {
-            outline: none;
-            border-color: #f07d00;
-            background: rgb(255, 247, 215);
-            box-shadow: 0 0 4px rgba(240, 125, 0, 0.3);
-        }
-
-        option {
-            white-space: normal;
-            padding: 6px;
+        @media (max-width: 576px) {
+            font-size: 12px;
+            padding: 6px 8px;
         }
     }
 }
@@ -169,14 +194,35 @@
     margin-top: 12px;
     padding-top: 12px;
     border-top: 1px solid #f0e2b0;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: stretch;
+    }
 }
 
 /* === Cột trái (ghi chú, số người) === */
 .left {
     flex: 1;
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    flex-direction: row; /* Đổi sang row để số người và ghi chú nằm ngang */
+    gap: 16px;
+    flex-wrap: wrap;
+
+    @media (max-width: 576px) {
+        flex-direction: column; /* Trên mobile, quay lại column để tránh tràn */
+    }
+}
+
+.inputGroupWrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    flex-wrap: wrap;
+
+    @media (max-width: 576px) {
+        flex-direction: column;
+    }
 }
 
 .inputGroup {
@@ -209,10 +255,14 @@
             outline: none;
             box-shadow: 0 0 4px rgba(240, 125, 0, 0.3);
         }
+
+        @media (max-width: 576px) {
+            width: 100%;
+        }
     }
 
     textarea {
-        width: 400px;
+        width: 300px; /* Giảm chiều rộng để phù hợp khi nằm ngang */
         resize: none;
         height: 60px;
         padding: 8px 10px;
@@ -230,6 +280,10 @@
             outline: none;
             box-shadow: 0 0 4px rgba(240, 125, 0, 0.3);
         }
+
+        @media (max-width: 576px) {
+            width: 100%;
+        }
     }
 }
 
@@ -239,6 +293,11 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+
+    @media (max-width: 768px) {
+        align-items: stretch;
+        min-width: auto;
+    }
 }
 
 .total {
@@ -250,6 +309,14 @@
     span {
         color: #f07d00;
         font-size: 22px;
+    }
+
+    @media (max-width: 576px) {
+        font-size: 14px;
+
+        span {
+            font-size: 18px;
+        }
     }
 }
 
@@ -281,6 +348,11 @@
         opacity: 0.6;
         cursor: not-allowed;
     }
+
+    @media (max-width: 576px) {
+        padding: 8px 16px;
+        font-size: 13px;
+    }
 }
 
 /* === Trạng thái === */
@@ -291,6 +363,10 @@
     font-size: 16px;
     margin: 20px 0;
     color: #d10000 !important;
+
+    @media (max-width: 576px) {
+        font-size: 14px;
+    }
 }
 
 .loading {
@@ -326,7 +402,7 @@
     }
 }
 
-//table picker
+/* === Table Picker === */
 .tableSelectWrapper {
     margin-top: 10px;
     display: flex;
@@ -336,24 +412,34 @@
 
 .selectedTableInfo {
     font-size: 14px;
-    background: #3990e7;
+    background: linear-gradient(90deg, #41c345, #83ff87);
     border-radius: 8px;
     padding: 8px 10px;
     color: #333;
     line-height: 1.4;
+
+    @media (max-width: 576px) {
+        font-size: 12px;
+        padding: 6px 8px;
+    }
 }
 
 .selectTableBtn {
-    background-color: #ffcc00;
-    color: #000;
+    background: linear-gradient(90deg, #f07d00, #ffac33);
+    color: #ffffff;
     font-weight: 600;
     border: none;
     border-radius: 8px;
     padding: 10px 14px;
     cursor: pointer;
     transition: all 0.2s ease;
-}
 
-.selectTableBtn:hover {
-    background-color: #3990e7;
+    &:hover {
+        background: linear-gradient(90deg, #f04c00, #ff8f33);
+    }
+
+    @media (max-width: 576px) {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
 }

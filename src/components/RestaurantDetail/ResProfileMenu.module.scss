@@ -115,3 +115,64 @@
         background-color: #5b652b;
     }
 }
+/* ============ RESPONSIVE ============ */
+@media (max-width: 768px) {
+    .resProfileMenu {
+        padding: 15px 20px;
+        justify-content: flex-start;
+    }
+
+    .profileHeader {
+        flex-direction: column;
+        gap: 20px;
+        margin-top: 70px;
+        align-items: center;
+    }
+
+    .profileAvatar {
+        width: 100%;
+        max-width: 350px;
+        height: 200px;
+    }
+
+    .profileName {
+        font-size: 22px;
+        text-align: center;
+    }
+
+    .rating {
+        justify-content: center;
+    }
+
+    .profileAddress,
+    .profileDescription {
+        text-align: center;
+        max-width: 100%;
+    }
+
+    .profileActions {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .likeButton,
+    .preOrderButton {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .profileAvatar {
+        max-width: 280px;
+        height: 160px;
+    }
+
+    .profileName {
+        font-size: 18px;
+    }
+
+    .profileDescription {
+        font-size: 14px;
+    }
+}

@@ -119,11 +119,15 @@ function LoginForm() {
         <div className={cx('form-wrapper')}>
             <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
                 <Form className={cx('form')}>
-                    <label htmlFor="userName">Username</label>
+                    <label className={styles.label} htmlFor="userName">
+                        Username
+                    </label>
                     <Field type="text" id="userName" name="userName" />
                     <ErrorMessage name="userName" component="div" className={cx('error')} />
                     <br />
-                    <label htmlFor="password">Password</label>
+                    <label className={styles.label} htmlFor="password">
+                        Password
+                    </label>
                     <Field type="password" id="password" name="password" />
                     <ErrorMessage name="password" component="div" className={cx('error')} />
                     <br />
