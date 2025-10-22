@@ -104,8 +104,8 @@ namespace Service
             }
 
             order.Status = "Paid";
-            order.Booking.Status = "Booked";
-            order.Booking.Table.Status = "Booked";
+            order.Booking.Status = "booked";
+            
 
             var transaction = new Transaction
             {
