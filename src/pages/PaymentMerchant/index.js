@@ -31,7 +31,7 @@ function PaymentMerchantRequest({ destinationUrl }) {
                     body: JSON.stringify(values),
                 });
 
-                if (res.ok) navigate(routes.resProfile);
+                if (res.ok) navigate(routes.resPofile);
             } catch (ex) {
             } finally {
                 setSubmitting(false);

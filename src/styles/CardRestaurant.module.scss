@@ -1,14 +1,14 @@
 .card {
-    display: flex; /* Mặc định là layout ngang */
+    display: flex !important; /* Mặc định là layout ngang */
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     align-items: center;
-    background: #ffffff;
+    background: #ffffff !important;
     border-radius: 14px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     width: 650px; /* Chiều rộng cho list view */
     margin: 20px auto;
     position: relative;
-    border: 1px solid #e0e0e0;
+    border: 1px solid #e0e0e0 !important;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 
     &:hover {
@@ -61,7 +61,7 @@
 }
 
 .cardContainer {
-    display: inline-block;
+    display: inline-block !important;
     width: 100%;
 }
 
@@ -179,5 +179,59 @@
     &:hover {
         background: #02e57f;
         transform: scale(1.05);
+    }
+}
+/* --- MOBILE RESPONSIVE --- */
+@media (max-width: 768px) {
+    .card {
+        width: 100% !important; /* Chiếm toàn bộ chiều ngang */
+        flex-direction: column !important;
+        align-items: flex-start;
+        padding: 10px;
+
+        .imageBox {
+            width: 100% !important;
+            margin-left: 0 !important;
+            height: 160px;
+            border-radius: 10px;
+
+            img {
+                border-radius: 10px;
+            }
+        }
+
+        .info {
+            width: 100%;
+            padding: 12px;
+        }
+
+        .btn {
+            width: 100%;
+            text-align: center;
+        }
+    }
+
+    .cardContainer {
+        width: 80% !important;
+        margin: 0 auto;
+    }
+}
+
+/* --- MOBILE NHỎ HƠN 480PX --- */
+@media (max-width: 480px) {
+    .name {
+        font-size: 1rem;
+    }
+    .rating {
+        font-size: 1.1rem;
+    }
+    .address,
+    .statusRow,
+    .time {
+        font-size: 0.8rem;
+    }
+    .btn {
+        padding: 6px 12px;
+        font-size: 0.85rem;
     }
 }

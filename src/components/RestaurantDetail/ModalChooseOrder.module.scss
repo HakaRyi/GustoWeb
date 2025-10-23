@@ -146,7 +146,7 @@
 
         span {
             font-size: 14px;
-            color: #8b8b6d;
+            color: #343429 !important;
             font-weight: 400;
         }
     }
@@ -156,6 +156,10 @@
     display: flex;
     flex-direction: column;
     gap: 6px;
+    span {
+        font-size: 14px;
+        color: #56564a !important;
+    }
 }
 
 .option {

@@ -1,4 +1,4 @@
-.wrapper{
+.wrapper {
     width: 70%;
 }
 
@@ -23,14 +23,14 @@
     label {
         align-self: flex-start;
         font-weight: 600;
-        color: #333;
+        color: #333 !important;
         font-size: 15px;
         margin-left: 2px;
     }
 
     input {
         width: 100%;
-        border: 2px solid #000;
+        border: 2px solid #000 !important;
         border-radius: 8px;
         outline: none;
         font-size: 15px;
@@ -41,7 +41,7 @@
         &:focus {
             border-color: #8db0d0;
             box-shadow: 0 0 6px rgba(0, 124, 240, 0.4);
-            background: rgba(182, 171, 171, 0.636);
+            background: rgba(243, 240, 240, 0.636);
         }
 
         &::placeholder {

@@ -294,6 +294,19 @@ const ProfileRestaurantLayout = () => {
                         />
                     </label>
                 </div>
+                <div className={styles.formRow}>
+                    <label className={styles.formLabel}>
+                        <span className={styles.labelText}>Thời gian ngồi cho phép</span>
+                        <input
+                            type="number"
+                            name="duration"
+                            value={formData.duration || ''}
+                            onChange={handleChange}
+                            readOnly={!editing}
+                            className={styles.formInput}
+                        />
+                    </label>
+                </div>
             </div>
         </div>
     );

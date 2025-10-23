@@ -12,24 +12,24 @@ const CurrentBooking = () => {
     const [loadingVisible, setLoadingVisible] = useState(false);
     const [result, setResult] = useState({ visible: false, success: false, message: '' });
 
-    useEffect(() => {
-        const fetchBookings = async () => {
-            try {
-                setLoadingVisible(true);
-                var res = await customFetch(`${API_BASE}/undone`, {
-                    method: 'GET',
-                    headers: { 'Content-Type': 'application/json' },
-                });
-                if (!res.ok) setResult({ visible: true, success: false, message: 'Lấy dữ liệu không thành công' });
-                const data = await res.json();
-                setBookings(data);
-            } catch (error) {
-                setResult({ visible: true, success: false, message: 'Không thể tải thông tin người dùng 😢' });
-            } finally {
-                setLoadingVisible(false);
-            }
-        };
+    const fetchBookings = async () => {
+        try {
+            setLoadingVisible(true);
+            var res = await customFetch(`${API_BASE}/undone`, {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+            });
+            if (!res.ok) setResult({ visible: true, success: false, message: 'Lấy dữ liệu không thành công' });
+            const data = await res.json();
+            setBookings(data);
+        } catch (error) {
+            setResult({ visible: true, success: false, message: 'Không thể tải thông tin người dùng 😢' });
+        } finally {
+            setLoadingVisible(false);
+        }
+    };
 
+    useEffect(() => {
         fetchBookings();
     }, []);
 
@@ -47,6 +47,7 @@ const CurrentBooking = () => {
                     ? prev.filter((b) => b.id !== id) // Done thì xoá khỏi danh sách
                     : prev.map((b) => (b.id === id ? { ...b, status: nextStatus } : b)),
             );
+            fetchBookings();
         } catch (error) {
             setResult({ visible: true, success: false, message: 'Không thể tải thông tin người dùng 😢' });
         } finally {
@@ -55,8 +56,8 @@ const CurrentBooking = () => {
     };
 
     const columns = [
-        { title: 'Booked', status: 'Booked', actionLabel: 'Ready', next: 'Ready' },
-        { title: 'Ready', status: 'Ready', actionLabel: 'Done', next: 'Done' },
+        { title: 'Booked', status: 'booked', actionLabel: 'Ready', next: 'Available' },
+        { title: 'Available', status: 'available', actionLabel: 'Done', next: 'Done' },
     ];
 
     //Xử lý cho modal:
@@ -74,9 +75,12 @@ const CurrentBooking = () => {
     const onUpdated = (updated) => {
         // refresh data list or update state
         console.log('Updated by modal:', updated);
+        fetchBookings();
         // optionally close modal
         setOpen(false);
     };
+
+    console.log('Bookings:', bookings);
 
     return (
         <div className={styles.wrapper}>

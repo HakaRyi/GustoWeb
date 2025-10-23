@@ -39,6 +39,7 @@ function ProfileSideBar() {
     const handleLogout = () => {
         logoutApi();
     };
+
     return (
         <div className={cx('sidebar-wrapper')}>
             <NavLink to="/profile" end className={({ isActive }) => cx('sidebar-item', { active: isActive })}>
@@ -53,7 +54,7 @@ function ProfileSideBar() {
             <NavLink to="/profile/settings" className={({ isActive }) => cx('sidebar-item', { active: isActive })}>
                 <FontAwesomeIcon icon={faCog} />
             </NavLink>
-            <div onClick={handleLogout} className={({ isActive }) => cx('sidebar-item', { active: isActive })}>
+            <div onClick={handleLogout} className={cx('sidebar-item', 'logoutBtn')}>
                 <FontAwesomeIcon icon={faRightFromBracket} />
             </div>
             <LoadingModal visible={loading} message="Bếp đang nấu, vui lòng chờ..." />

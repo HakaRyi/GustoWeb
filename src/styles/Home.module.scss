@@ -181,3 +181,56 @@
         transform: scale(1);
     }
 }
+/* ========== MOBILE RESPONSIVE ========== */
+@media (max-width: 768px) {
+    .heroSection {
+        height: 70vh;
+        background-position: center;
+    }
+
+    .heroContent h1 {
+        font-size: 3.5rem;
+    }
+
+    .heroContent p {
+        font-size: 1.2rem;
+    }
+
+    .heroBtn {
+        font-size: 16px;
+        padding: 10px 24px;
+    }
+
+    .featuresSection {
+        padding: 50px 20px;
+    }
+
+    .featuresGrid {
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    .featureCard {
+        width: 90%;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .ctaSection {
+        padding: 60px 20px;
+    }
+
+    .ctaSection h2 {
+        font-size: 28px;
+    }
+
+    .ctaSection p {
+        font-size: 1.2rem;
+    }
+
+    .ctaBtn {
+        width: 80%;
+        font-size: 16px;
+        padding: 10px 25px;
+    }
+}

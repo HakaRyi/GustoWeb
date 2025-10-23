@@ -10,16 +10,17 @@
     align-items: center;
     z-index: 2000;
     animation: fadeIn 0.3s ease;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .modalContent {
     background: #fffdf6;
-    border: 0px solid #424921;
+    border: 0px solid #424921 !important;
     border-radius: 12px;
     padding: 20px 28px 20px 20px;
     width: 100%;
     max-width: 1000px;
-    height: auto; /* Đổi thành auto để chứa nội dung */
+    height: auto;
     max-height: 80vh;
     overflow-y: auto;
     position: relative;
@@ -100,7 +101,7 @@
 
 .formInput {
     padding: 10px;
-    border: 1px solid #424921;
+    border: 1px solid #424921 !important;
     border-radius: 8px;
     font-size: 1rem;
     color: #424921;
@@ -109,12 +110,14 @@
 
     &:focus {
         outline: none;
+        background: #fffdf6;
         border-color: #6a7636;
     }
 
     &[type='textarea'] {
         resize: vertical;
         min-height: 100px;
+        background: #fffdf6;
     }
 }
 
@@ -162,7 +165,7 @@
 .submitBtn {
     width: 100%;
     padding: 10px;
-    background: #424921;
+    background: #424921 !important;
     color: #fff;
     border: none;
     border-radius: 8px;
@@ -170,10 +173,10 @@
     cursor: pointer;
     font-family: Verdana, Geneva, Tahoma, sans-serif !important;
     transition: background-color 0.3s, transform 0.2s;
-    margin-top: 20px; /* Đảm bảo khoảng cách với nội dung phía trên */
+    margin-top: 20px;
 
     &:hover {
-        background: #6a7636;
+        background: #6a7636 !important;
         transform: translateY(-2px);
     }
 
@@ -183,13 +186,15 @@
     }
 }
 
-.tasteInputWrapper {
+.tasteInputWrapper,
+.optionalInputWrapper {
     display: flex;
     gap: 10px;
     align-items: center;
 }
 
-.addTasteBtn {
+.addTasteBtn,
+.addOptionalBtn {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -213,7 +218,8 @@
     }
 }
 
-.tasteList {
+.tasteList,
+.optionalList {
     margin-top: 20px;
     padding: 15px;
     background: #f5f5e6;
@@ -221,20 +227,23 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.tasteListTitle {
+.tasteListTitle,
+.optionalListTitle {
     color: #424921;
     font-size: 1.2rem;
     margin: 0 0 10px;
     text-align: center;
 }
 
-.tasteGrid {
+.tasteGrid,
+.optionalGrid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 10px;
 }
 
-.cardTaste {
+.cardTaste,
+.cardOptional {
     background: #fff;
     border: 1px solid #d1d1b4;
     border-radius: 8px;
@@ -242,6 +251,10 @@
     text-align: center;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     cursor: default;
+    min-height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
     &:hover {
         transform: translateY(-3px);
@@ -249,7 +262,8 @@
         background: #fffbe9;
     }
 
-    .tasteName {
+    .tasteName,
+    .optionalName {
         font-size: 1rem;
         font-weight: 600;
         color: #424921;
@@ -257,13 +271,101 @@
         margin-bottom: 5px;
     }
 
-    .tasteMenuId {
-        font-size: 0.85rem;
-        color: #6a7636;
+    .tasteActions,
+    .optionalActions {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 10px;
     }
 }
 
-.openTasteBtn {
+.editTasteWrapper,
+.editOptionalWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    input {
+        width: 100%;
+    }
+}
+
+.editTasteBtn,
+.deleteTasteBtn,
+.saveTasteBtn,
+.cancelTasteBtn,
+.editOptionalBtn,
+.deleteOptionalBtn,
+.saveOptionalBtn,
+.cancelOptionalBtn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.editTasteBtn,
+.editOptionalBtn {
+    background: #424921;
+    color: #fff;
+
+    &:hover {
+        background: #6a7636;
+        transform: translateY(-1px);
+    }
+}
+
+.deleteTasteBtn,
+.deleteOptionalBtn {
+    background: #ff4d4d;
+    color: #fff;
+
+    &:hover {
+        background: #e63939;
+        transform: translateY(-1px);
+    }
+}
+
+.saveTasteBtn,
+.saveOptionalBtn {
+    background: #28a745;
+    color: #fff;
+
+    &:hover {
+        background: #218838;
+        transform: translateY(-1px);
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+.cancelTasteBtn,
+.cancelOptionalBtn {
+    background: #6c757d;
+    color: #fff;
+
+    &:hover {
+        background: #5a6268;
+        transform: translateY(-1px);
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+.openTasteBtn,
+.openOptionalBtn {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -284,7 +386,8 @@
     }
 }
 
-.tasteSection {
+.tasteSection,
+.optionalSection {
     margin-top: 15px;
     padding: 15px;
     background: #f5f5e6;
@@ -295,13 +398,13 @@
     max-height: 300px;
     overflow-y: auto;
 
-    /* Hiệu ứng khi đóng */
     &.closing {
         animation: tasteSectionDisappear 0.3s ease forwards;
     }
 }
 
-.closeTasteBtn {
+.closeTasteBtn,
+.closeOptionalBtn {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -393,27 +496,45 @@
         right: 25px;
     }
 
-    .tasteSection {
+    .tasteSection,
+    .optionalSection {
         padding: 10px;
         max-height: 200px;
     }
 
-    .openTasteBtn {
+    .openTasteBtn,
+    .openOptionalBtn {
         padding: 8px 12px;
     }
 
-    .tasteGrid {
+    .tasteGrid,
+    .optionalGrid {
         grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
         gap: 8px;
     }
 
-    .tasteInputWrapper {
+    .tasteInputWrapper,
+    .optionalInputWrapper {
         flex-direction: column;
         align-items: stretch;
     }
 
-    .addTasteBtn {
+    .addTasteBtn,
+    .addOptionalBtn,
+    .editTasteBtn,
+    .deleteTasteBtn,
+    .saveTasteBtn,
+    .cancelTasteBtn,
+    .editOptionalBtn,
+    .deleteOptionalBtn,
+    .saveOptionalBtn,
+    .cancelOptionalBtn {
         padding: 8px 12px;
+    }
+
+    .cardTaste,
+    .cardOptional {
+        min-height: 70px;
     }
 }
 
@@ -427,16 +548,34 @@
         height: 120px;
     }
 
-    .tasteSection {
+    .tasteSection,
+    .optionalSection {
         max-height: 150px;
     }
 
-    .tasteGrid {
+    .tasteGrid,
+    .optionalGrid {
         grid-template-columns: 1fr;
         gap: 5px;
     }
 
-    .cardTaste {
+    .cardTaste,
+    .cardOptional {
         padding: 8px;
+        min-height: 60px;
+    }
+
+    .editTasteWrapper,
+    .editOptionalWrapper {
+        input {
+            font-size: 0.9rem;
+        }
+    }
+
+    .tasteActions,
+    .optionalActions {
+        flex-direction: column;
+        gap: 4px;
+        margin-top: 8px;
     }
 }

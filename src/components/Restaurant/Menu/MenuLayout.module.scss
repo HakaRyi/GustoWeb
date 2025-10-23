@@ -39,12 +39,12 @@
 
         top: 50%;
         transform: translateY(-50%);
-        color: #6a7636;
+        color: #6a7636 !important;
     }
 
     input {
         padding: 8px 10px 8px 30px;
-        border: 2px solid #6a7636;
+        border: 2px solid #6a7636 !important;
         border-radius: 8px;
         font-size: 1rem;
         width: 500px;
@@ -68,7 +68,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    background: white;
+    background: #f4f6ee;
     border: 2px solid #6a7636;
     color: #424921;
     padding: 8px 16px;
@@ -80,7 +80,7 @@
     box-shadow: 0 2px 5px rgba(106, 118, 54, 0.2);
 
     &:hover {
-        background: #f4f6ee;
+        background: #e3e4e0;
         transform: translateY(-1px);
     }
 

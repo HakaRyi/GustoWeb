@@ -1,7 +1,8 @@
 /* === Modal Container === */
 .modal {
-    background: linear-gradient(145deg, #ffcf81, #ffb562);
-    color: white; /* ✅ chữ trắng */
+
+    background: #fdf9e8;
+    color: rgb(0, 0, 0); /* ✅ chữ trắng */
     border-radius: 20px;
     padding: 26px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
@@ -9,6 +10,7 @@
     flex-direction: column;
     max-height: 90vh;
     overflow-y: auto;
+    font-family: 'Verdana', Geneva, Tahoma, sans-serif;
 }
 
 /* ✅ Header mới */
@@ -19,11 +21,13 @@
     margin-bottom: 12px;
 }
 
+label {
+    color: #000 !important;
+}
 .title {
     font-size: 1.4rem;
     font-weight: 700;
 }
-
 .closeBtn {
     background: white;
     color: #ff6f00;
@@ -133,13 +137,52 @@
 .selfSlot {
     background: #00c853;
 }
+// .otherSlot {
+//     background: #e53935;
+// }
+.free {
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #4caf50, #59dd5d);
+    font-weight: 600;
+}
 .otherSlot {
-    background: #e53935;
+    background: linear-gradient(90deg, #b8201d, #ff2d29);
+    font-weight: 600;
 }
 .free {
     color: #fff;
-    background: #4caf50;
+    background: linear-gradient(90deg, #4caf50, #59dd5d);
     padding: 4px 10px;
     border-radius: 10px;
     font-weight: 600;
+}
+/* ===== Scrollbar Custom ===== */
+.modal {
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: #ff8800 transparent;
+}
+.wrapper {
+    overflow-y: auto;
+    padding-right: 6px;
+    scrollbar-width: thin;
+    scrollbar-color: #ff8800 transparent;
+}
+/* Chrome, Edge, Safari */
+.modal::-webkit-scrollbar {
+    width: 10px;
+}
+
+.modal::-webkit-scrollbar-track {
+    background: transparent; /* xoá nền trắng phía sau */
+}
+
+.modal::-webkit-scrollbar-thumb {
+    background: #ff8800; /* thanh cuộn màu cam */
+    border-radius: 10px;
+}
+
+.modal::-webkit-scrollbar-thumb:hover {
+    background: #ff6f00; /* cam đậm khi hover */
 }

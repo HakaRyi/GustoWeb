@@ -130,8 +130,8 @@
 
 .contactPage_btn {
     display: inline-block;
-    background: #ffda7b;
-    color: #222;
+    background: #ffda7b !important;
+    color: #222 !important;
     font-weight: 600;
     border: none;
     padding: 12px 30px;
@@ -223,5 +223,47 @@
     to {
         transform: translateY(0);
         opacity: 1;
+    }
+}
+/* ===== RESPONSIVE MOBILE ===== */
+@media (max-width: 768px) {
+    .contactPage_container {
+        margin-top: 30px;
+        min-height: auto;
+        padding: 40px 20px;
+        background-attachment: scroll; // tránh lag và lỗi nhảy nền trên mobile
+    }
+
+    .contactPage_content h1 {
+        font-size: 2rem;
+        margin-top: 40px;
+    }
+
+    .contactPage_content p {
+        font-size: 0.95rem;
+        margin-bottom: 30px;
+        padding: 0 10px;
+    }
+
+    .contactPage_grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+        text-align: center;
+    }
+
+    .contactPage_info,
+    .contactPage_form {
+        padding: 20px;
+    }
+
+    .contactPage_form .formGroup input,
+    .contactPage_form .formGroup textarea {
+        width: 100%;
+    }
+
+    .contactPage_btn {
+        width: 100%;
+        padding: 14px;
+        font-size: 1rem;
     }
 }
