@@ -117,6 +117,7 @@ builder.Services.AddScoped<TransactionService>();
 builder.Services.Configure<PayOsSettings>(
     builder.Configuration.GetSection("PayOS")
     );
+builder.Services.AddScoped<PromotionService>();
 
 builder.Services.AddScoped<AccountRepository>();
 builder.Services.AddScoped<RoleRepository>();
@@ -135,6 +136,7 @@ builder.Services.AddScoped<TasteRepository>();
 builder.Services.AddScoped<OptionalRepository>();
 builder.Services.AddScoped<ContactRepository>();
 builder.Services.AddScoped<TransactionRepository>();
+builder.Services.AddScoped<PromotionRepository>();
 
 
 builder.Services.AddSingleton<SpeedSmsService>();
