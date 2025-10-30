@@ -27,7 +27,7 @@ builder.Services.AddControllers()
 // Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-//builder.Configuration.AddEnvironmentVariables();
+builder.Configuration.AddEnvironmentVariables();
 
 
 //SMTP Settings
