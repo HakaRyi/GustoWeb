@@ -4,21 +4,15 @@
     env: docker
     plan: free
     region: singapore
+    autoDeploy: true
 
-    # Dockerfile nằm ở thư mục gốc (hoặc điều chỉnh nếu bạn để trong subfolder)
+    # Render sẽ tự dùng Dockerfile ở thư mục gốc
     dockerfilePath: ./Dockerfile
     dockerContext: ./
 
-    # Health check endpoint (bạn cần có API /health trong project)
+    # Health check (Render gọi endpoint này để kiểm tra container)
     healthCheckPath: /health
 
-    autoDeploy: true
-
     envVars:
-      # ===== ASP.NET Core =====
       - key: ASPNETCORE_ENVIRONMENT
-        value: Production   
-
-      # ===== PORT (Render tự inject) =====
-      - key: PORT
-        value: 8080
+        value: Production

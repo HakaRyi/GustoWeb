@@ -24,9 +24,12 @@ WORKDIR /app
 # Copy output từ build stage
 COPY --from=build /app/publish .
 
-# Mở port (Render hoặc local sẽ dùng PORT, fallback 8080)
-ENV ASPNETCORE_URLS=http://0.0.0.0:${PORT:-8080}
-EXPOSE 8080
+# ===== Render yêu cầu container phải listen trên port 10000 =====
+ENV ASPNETCORE_URLS=http://+:10000
+EXPOSE 10000
 
-# Chạy ứng dụng
+# (Tùy chọn) Nếu bạn muốn chỉ định môi trường:
+ENV ASPNETCORE_ENVIRONMENT=Production
+
+# ===== ENTRYPOINT =====
 ENTRYPOINT ["dotnet", "GustoSystemProject.dll"]
