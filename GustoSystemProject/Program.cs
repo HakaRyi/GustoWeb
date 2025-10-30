@@ -49,7 +49,7 @@ builder.Services.AddScoped<FoodReviewRepository>();
 var jwtSetting = new JwtSettings();
 builder.Configuration.GetSection("JwtSettings").Bind(jwtSetting);
 builder.Services.AddSingleton(jwtSetting);
-builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
+//builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme; // "Bearer"
