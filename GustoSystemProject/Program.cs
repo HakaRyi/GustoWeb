@@ -28,7 +28,16 @@ builder.Services.AddControllers()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Configuration.AddEnvironmentVariables();
+var env = Environment.GetEnvironmentVariables();
 
+foreach (var key in env.Keys.Cast<string>().ToList())
+{
+    if (key.Contains("__"))
+    {
+        var newKey = key.Replace("__", ":");
+        builder.Configuration[newKey] = env[key]?.ToString();
+    }
+}
 
 //SMTP Settings
 builder.Services.Configure<SmtpSettings>(
