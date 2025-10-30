@@ -1,3 +1,6 @@
+using System.Collections;
+using System.Text;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
@@ -10,8 +13,6 @@ using Service.AutoMapper;
 using Service.Config;
 using Service.Exceptions;
 using Service.Settings;
-using System.Text;
-using System.Text.Json.Serialization;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,15 +30,20 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Configuration.AddEnvironmentVariables();
 var env = Environment.GetEnvironmentVariables();
+var inMemoryConfig = new Dictionary<string, string>();
 
-foreach (var key in env.Keys.Cast<string>().ToList())
+foreach (DictionaryEntry entry in env)
 {
+    var key = entry.Key.ToString();
     if (key.Contains("__"))
     {
         var newKey = key.Replace("__", ":");
-        builder.Configuration[newKey] = env[key]?.ToString();
+        inMemoryConfig[newKey] = entry.Value?.ToString() ?? "";
     }
 }
+
+// Thêm InMemory vào builder (s? override appsettings)
+builder.Configuration.AddInMemoryCollection(inMemoryConfig);
 
 //SMTP Settings
 builder.Services.Configure<SmtpSettings>(
@@ -187,4 +193,11 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.MapGet("/health", () => Results.Ok(new { status = "healthy", time = DateTime.UtcNow }));
+app.MapGet("/debug-config", () => new
+{
+    Environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"),
+    ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? "NULL - L?I!",
+    JwtSecret = builder.Configuration["JwtSettings:SecretKey"] ?? "NULL",
+    EmailHost = builder.Configuration["Email:Host"] ?? "NULL"
+});
 app.Run();
