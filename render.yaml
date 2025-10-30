@@ -1,0 +1,24 @@
+﻿services:
+  - type: web
+    name: gusto-system-api
+    env: docker
+    plan: free
+    region: singapore
+
+    # Dockerfile nằm ở thư mục gốc (hoặc điều chỉnh nếu bạn để trong subfolder)
+    dockerfilePath: ./Dockerfile
+    dockerContext: ./
+
+    # Health check endpoint (bạn cần có API /health trong project)
+    healthCheckPath: /health
+
+    autoDeploy: true
+
+    envVars:
+      # ===== ASP.NET Core =====
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production   
+
+      # ===== PORT (Render tự inject) =====
+      - key: PORT
+        value: 8080
