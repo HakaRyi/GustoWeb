@@ -18,11 +18,11 @@ namespace GustoSystemProject.Controllers
         }
         // GET: api/<RoleController>
         [HttpGet]
-        [AllowAnonymous]
-        public async Task<List<Role>>  Get()
+        public async Task<List<Role>>Get()
         {
             return await _roleService.GetAllRoles();
         }
+
 
         // GET api/<RoleController>/5
         [HttpGet("{id}")]
