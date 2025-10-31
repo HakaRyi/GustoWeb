@@ -45,7 +45,7 @@ const Contact = () => {
         setMessage('');
 
         try {
-            const res = await customFetch('https://localhost:7176/api/Contact', {
+            const res = await customFetch('https://gustoweb.onrender.com/api/Contact', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -21,7 +21,7 @@ function ModalChooseOrder({ menuId, restaurantId, onClose }) {
         const fetchFoodDetail = async () => {
             try {
                 if (!menuId) throw new Error('Menu ID is missing');
-                const res = await customFetch(`https://localhost:7176/api/RestaurantMenu/getDetail/${menuId}`);
+                const res = await customFetch(`https://gustoweb.onrender.com/api/RestaurantMenu/getDetail/${menuId}`);
                 if (!res.ok) {
                     const errorData = await res.json();
                     throw new Error(errorData.message || 'Fetch failed');
@@ -83,7 +83,7 @@ function ModalChooseOrder({ menuId, restaurantId, onClose }) {
             // let payload = { restaurantId: restaurantId, bookingDate : };
 
             // Bước 1: Gọi API tạo Booking
-            const bookingRes = await customFetch(`https://localhost:7176/api/Booking/${restaurantId}`, {
+            const bookingRes = await customFetch(`https://gustoweb.onrender.com/api/Booking/${restaurantId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -106,12 +106,15 @@ function ModalChooseOrder({ menuId, restaurantId, onClose }) {
                 // Booking đã tồn tại
                 if (!bookingData.orderId) {
                     // Nếu không có orderId, gọi API pending
-                    const pendingRes = await customFetch(`https://localhost:7176/api/Booking/pending/${restaurantId}`, {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json',
+                    const pendingRes = await customFetch(
+                        `https://gustoweb.onrender.com/api/Booking/pending/${restaurantId}`,
+                        {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
                         },
-                    });
+                    );
 
                     if (!pendingRes.ok) {
                         const errorData = await pendingRes.json();
@@ -133,12 +136,15 @@ function ModalChooseOrder({ menuId, restaurantId, onClose }) {
                 // Booking mới được tạo
                 if (!bookingData.orderId) {
                     // Nếu không có orderId, gọi API pending
-                    const pendingRes = await customFetch(`https://localhost:7176/api/Booking/pending/${restaurantId}`, {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json',
+                    const pendingRes = await customFetch(
+                        `https://gustoweb.onrender.com/api/Booking/pending/${restaurantId}`,
+                        {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
                         },
-                    });
+                    );
 
                     if (!pendingRes.ok) {
                         const errorData = await pendingRes.json();
@@ -174,13 +180,16 @@ function ModalChooseOrder({ menuId, restaurantId, onClose }) {
             console.log('OrderDetail payload:', payload); // Debug payload
 
             // Bước 4: Gọi API tạo OrderDetail
-            const orderDetailRes = await customFetch(`https://localhost:7176/orders/${orderId}/${menuId}/details`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
+            const orderDetailRes = await customFetch(
+                `https://gustoweb.onrender.com/orders/${orderId}/${menuId}/details`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload),
                 },
-                body: JSON.stringify(payload),
-            });
+            );
 
             if (!orderDetailRes.ok) {
                 const errorData = await orderDetailRes.json();

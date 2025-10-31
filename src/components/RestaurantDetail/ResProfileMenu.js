@@ -60,7 +60,7 @@ function ResProfileMenu({ id }) {
 
     useEffect(() => {
         const fetchProfile = async () => {
-            const response = await customFetch(`https://localhost:7176/api/RestaurantProfile/getById/${id}`);
+            const response = await customFetch(`https://gustoweb.onrender.com/api/RestaurantProfile/getById/${id}`);
             const data = await response.json();
             setProfile(data);
         };

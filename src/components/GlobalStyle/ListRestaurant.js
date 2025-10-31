@@ -13,7 +13,7 @@ const ListRestaurant = ({ filters, search }) => {
             try {
                 setLoading(true);
 
-                const res = await customFetch('https://localhost:7176/api/RestaurantProfile/getAllResPro', {
+                const res = await customFetch('https://gustoweb.onrender.com/api/RestaurantProfile/getAllResPro', {
                     method: 'GET',
                 });
 

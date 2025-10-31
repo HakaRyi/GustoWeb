@@ -8,7 +8,7 @@ function MenuRestaurant({ id }) {
 
     useEffect(() => {
         const fetchMenu = async () => {
-            const response = await customFetch(`https://localhost:7176/api/RestaurantMenu/getByResMenu/${id}`);
+            const response = await customFetch(`https://gustoweb.onrender.com/api/RestaurantMenu/getByResMenu/${id}`);
             const data = await response.json();
             setMenuItems(data);
             console.log('Fetched menu items:', data);

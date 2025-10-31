@@ -7,9 +7,6 @@ import styles from './modalMyPreOrder.module.scss';
 import TablePicker from '../TablePicker';
 import ResultModal from '../Modals/ResultModal';
 import dayjs from 'dayjs';
-import TablePicker from '../TablePicker';
-import ResultModal from '../Modals/ResultModal';
-import dayjs from 'dayjs';
 
 function ModalMyPreOrder({ isOpen, onClose, restaurantId }) {
     const [numPeople, setNumPeople] = useState(1);
@@ -59,7 +56,7 @@ function ModalMyPreOrder({ isOpen, onClose, restaurantId }) {
                 setError(null);
 
                 const orderResponse = await customFetch(
-                    `https://localhost:7176/api/Order/getMyOrderPending/${restaurantId}`,
+                    `https://gustoweb.onrender.com/api/Order/getMyOrderPending/${restaurantId}`,
                     {
                         method: 'GET',
                         headers: {
@@ -134,7 +131,7 @@ function ModalMyPreOrder({ isOpen, onClose, restaurantId }) {
         // const fetchAvailableTables = async () => {
         //     try {
         //         const tableResponse = await customFetch(
-        //             `https://localhost:7176/api/RestaurantTable/getByRestaurantIdAndAvailable/${restaurantId}`,
+        //             `https://gustoweb.onrender.com/api/RestaurantTable/getByRestaurantIdAndAvailable/${restaurantId}`,
         //             {
         //                 method: 'GET',
         //                 headers: {
@@ -214,13 +211,16 @@ function ModalMyPreOrder({ isOpen, onClose, restaurantId }) {
 
             console.log('Updating order with data:', updateData);
 
-            const response = await customFetch(`https://localhost:7176/api/Order/updateOrder/${pendingOrderId}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
+            const response = await customFetch(
+                `https://gustoweb.onrender.com/api/Order/updateOrder/${pendingOrderId}`,
+                {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(updateData),
                 },
-                body: JSON.stringify(updateData),
-            });
+            );
 
             if (!response.ok) {
                 const errorData = await response.json();
@@ -313,7 +313,7 @@ function ModalMyPreOrder({ isOpen, onClose, restaurantId }) {
     const handleRemoveItem = async (orderDetailId) => {
         try {
             const response = await customFetch(
-                `https://localhost:7176/api/OrderDetail/deleteOrderDetail/${orderDetailId}`,
+                `https://gustoweb.onrender.com/api/OrderDetail/deleteOrderDetail/${orderDetailId}`,
                 {
                     method: 'DELETE',
                     headers: {

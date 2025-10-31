@@ -51,7 +51,7 @@ function TablePicker({ restaurantId, visible, onClose, onSelectTable, usageTime 
             try {
                 setLoadingVisible(true);
                 const res = await customFetch(
-                    `https://localhost:7176/api/RestaurantTable/getByRestaurant/${restaurantId}`,
+                    `https://gustoweb.onrender.com/api/RestaurantTable/getByRestaurant/${restaurantId}`,
                     { method: 'GET', headers: { 'Content-Type': 'application/json' } },
                 );
                 if (!res.ok) {
@@ -83,7 +83,7 @@ function TablePicker({ restaurantId, visible, onClose, onSelectTable, usageTime 
             try {
                 setLoadingVisible(true);
                 const res = await customFetch(
-                    `https://localhost:7176/api/Booking/bookings?restaurantId=${restaurantId}&date=${selectedDate}`,
+                    `https://gustoweb.onrender.com/api/Booking/bookings?restaurantId=${restaurantId}&date=${selectedDate}`,
                     { method: 'GET', headers: { 'Content-Type': 'application/json' } },
                 );
                 if (!res.ok) {

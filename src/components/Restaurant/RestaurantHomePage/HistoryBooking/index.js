@@ -5,7 +5,7 @@ import { customFetch } from '~/config/customFetch';
 import { format } from 'date-fns';
 import OrderModal from '~/components/Modals/OrderModal';
 
-const API_BASE = 'https://localhost:7176/api/Booking';
+const API_BASE = 'https://gustoweb.onrender.com/api/Booking';
 
 function HistoryBooking({ restaurantId }) {
     const [bookings, setBookings] = useState([]);
@@ -17,7 +17,7 @@ function HistoryBooking({ restaurantId }) {
     const fetchBookings = async () => {
         setLoading(true);
         try {
-            const response = await customFetch(`https://localhost:7176/api/Booking/resBooking`, {
+            const response = await customFetch(`https://gustoweb.onrender.com/api/Booking/resBooking`, {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
             });
@@ -163,7 +163,7 @@ function HistoryBooking({ restaurantId }) {
                 onClose={() => setOpen(false)}
                 order={order}
                 booking={selectedBooking}
-                apiBase="https://localhost:7176/api/Booking"
+                apiBase="https://gustoweb.onrender.com/api/Booking"
                 onUpdated={onUpdated} // nếu bạn có wrapper fetch
             />
         </div>

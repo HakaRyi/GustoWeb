@@ -18,7 +18,7 @@ function Header({ cartCount = 0 }) {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const res = await fetch('https://localhost:7176/api/Account/get-me', {
+                const res = await fetch('https://gustoweb.onrender.com/api/Account/get-me', {
                     credentials: 'include',
                 });
                 if (res.ok) {

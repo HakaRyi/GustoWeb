@@ -26,7 +26,7 @@ function RegisterForm() {
     const handleSubmit = async (values) => {
         try {
             setLoadingVisible(true);
-            const response = await fetch('https://localhost:7176/api/Account/signUp', {
+            const response = await fetch('https://gustoweb.onrender.com/api/Account/signUp', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ function RegisterForm() {
                         userName: values.userName,
                         password: values.password,
                     };
-                    const loginResponse = await fetch('https://localhost:7176/api/Account/signIn', {
+                    const loginResponse = await fetch('https://gustoweb.onrender.com/api/Account/signIn', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

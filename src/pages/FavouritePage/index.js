@@ -23,7 +23,7 @@ function FavouritePage() {
     const fetchFavourites = async () => {
         try {
             setLoading(true);
-            var res = await customFetch('https://localhost:7176/api/Favourite/diner', {
+            var res = await customFetch('https://gustoweb.onrender.com/api/Favourite/diner', {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
             });
@@ -49,7 +49,7 @@ function FavouritePage() {
 
         const unlikeRestaurant = async () => {
             try {
-                var res = await customFetch(`https://localhost:7176/api/Favourite/${restaurantId}`, {
+                var res = await customFetch(`https://gustoweb.onrender.com/api/Favourite/${restaurantId}`, {
                     method: 'DELETE',
                     headers: { 'Content-Type': 'application/json' },
                 });

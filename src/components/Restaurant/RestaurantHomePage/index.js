@@ -17,7 +17,7 @@ function RestaurantHomePage() {
     const fetchProfile = async () => {
         try {
             setLoadingVisible(true);
-            const response = await customFetch('https://localhost:7176/api/Account/get-me', {
+            const response = await customFetch('https://gustoweb.onrender.com/api/Account/get-me', {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
             });

@@ -11,7 +11,7 @@ function MenuCard({ item, restaurantId }) {
 
     const handleOpenReviewModal = async (foodData) => {
         try {
-            const res = await customFetch(`https://localhost:7176/api/FoodReview/ByFood/${foodData.foodId}`, {
+            const res = await customFetch(`https://gustoweb.onrender.com/api/FoodReview/ByFood/${foodData.foodId}`, {
                 method: 'GET',
             });
             if (res.ok) {

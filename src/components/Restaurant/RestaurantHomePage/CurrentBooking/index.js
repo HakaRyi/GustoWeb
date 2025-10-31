@@ -5,7 +5,7 @@ import ResultModal from '~/components/Modals/ResultModal';
 import { customFetch } from '~/config/customFetch';
 import OrderModal from '~/components/Modals/OrderModal';
 
-const API_BASE = 'https://localhost:7176/api/Booking';
+const API_BASE = 'https://gustoweb.onrender.com/api/Booking';
 const CurrentBooking = () => {
     const [bookings, setBookings] = useState([]);
 
@@ -143,7 +143,7 @@ const CurrentBooking = () => {
                 onClose={() => setOpen(false)}
                 order={order}
                 booking={selectedBooking}
-                apiBase="https://localhost:7176/api/Booking"
+                apiBase="https://gustoweb.onrender.com/api/Booking"
                 onUpdated={onUpdated} // nếu bạn có wrapper fetch
             />
         </div>

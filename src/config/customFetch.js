@@ -16,7 +16,7 @@ async function refreshAccessToken() {
     try {
         isRefreshing = true;
 
-        const response = await fetch('https://localhost:7176/api/Account/refresh', {
+        const response = await fetch('https://gustoweb.onrender.com/api/Account/refresh', {
             method: 'POST',
             credentials: 'include',
         });

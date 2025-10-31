@@ -19,13 +19,16 @@ function CardItem({ item, onUpdateQuantity, onRemoveItem }) {
             onUpdateQuantity(item.id, newQty, true); // true = isOptimistic
 
             // ✅ Gọi API để cập nhật server
-            const response = await customFetch(`https://localhost:7176/api/OrderDetail/updateQuantity/${item.id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
+            const response = await customFetch(
+                `https://gustoweb.onrender.com/api/OrderDetail/updateQuantity/${item.id}`,
+                {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ quantity: newQty }),
                 },
-                body: JSON.stringify({ quantity: newQty }),
-            });
+            );
 
             if (!response.ok) {
                 const errorData = await response.json();

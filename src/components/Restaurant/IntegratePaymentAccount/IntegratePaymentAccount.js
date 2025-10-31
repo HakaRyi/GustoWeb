@@ -13,7 +13,7 @@ const IntegratePaymentAccount = () => {
     useEffect(() => {
         const fetchPayment = async () => {
             try {
-                const res = await customFetch('https://localhost:7176/api/PaymentMerchant/getByMe', {
+                const res = await customFetch('https://gustoweb.onrender.com/api/PaymentMerchant/getByMe', {
                     method: 'GET',
                 });
                 if (!res.ok) throw new Error('Lỗi khi lấy thông tin tài khoản ngân hàng');
@@ -40,7 +40,7 @@ const IntegratePaymentAccount = () => {
 
     const handleCreate = async () => {
         try {
-            const res = await customFetch('https://localhost:7176/api/PaymentMerchant', {
+            const res = await customFetch('https://gustoweb.onrender.com/api/PaymentMerchant', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData),
@@ -48,7 +48,7 @@ const IntegratePaymentAccount = () => {
             if (!res.ok) throw new Error('Lỗi khi tạo tài khoản ngân hàng');
             console.log('Tạo thành công!');
             // Refresh data
-            const fetchRes = await customFetch('https://localhost:7176/api/PaymentMerchant/getByMe');
+            const fetchRes = await customFetch('https://gustoweb.onrender.com/api/PaymentMerchant/getByMe');
             const newData = await fetchRes.json();
             setPaymentData(newData);
             setFormData({
@@ -65,7 +65,7 @@ const IntegratePaymentAccount = () => {
     const handleUpdate = async () => {
         if (!paymentData?.id) return alert('Không tìm thấy ID!');
         try {
-            const res = await customFetch(`https://localhost:7176/api/PaymentMerchant/${paymentData.id}`, {
+            const res = await customFetch(`https://gustoweb.onrender.com/api/PaymentMerchant/${paymentData.id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData),
@@ -83,7 +83,7 @@ const IntegratePaymentAccount = () => {
     const handleDelete = async () => {
         if (!paymentData?.id) return alert('Không tìm thấy ID!');
         try {
-            const res = await customFetch(`https://localhost:7176/api/PaymentMerchant/${paymentData.id}`, {
+            const res = await customFetch(`https://gustoweb.onrender.com/api/PaymentMerchant/${paymentData.id}`, {
                 method: 'DELETE',
             });
             if (!res.ok) throw new Error('Lỗi khi xóa');
