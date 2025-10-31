@@ -39,19 +39,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.Configure<SmtpSettings>(
     builder.Configuration.GetSection("Email"));
 
-builder.Services.AddDbContext<GustoSystemContext>((serviceProvider, options) =>
-{
-    var configuration = serviceProvider.GetRequiredService<IConfiguration>();
-    var connectionString = configuration.GetConnectionString("DefaultConnection");
-
-    if (string.IsNullOrEmpty(connectionString))
-    {
-        connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection")
-            ?? Environment.GetEnvironmentVariable("ConnectionString");
-    }
-
-    options.UseSqlServer(connectionString);
-});
+builder.Services.AddDbContext<GustoSystemContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+           .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
 //Repo
 builder.Services.AddScoped<RestaurantLayoutRepository>();
 builder.Services.AddScoped<RestaurantMenuRepository>();
