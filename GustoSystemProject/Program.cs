@@ -18,10 +18,9 @@ using Service.Settings;
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration
     .SetBasePath(Directory.GetCurrentDirectory())
-    .AddEnvironmentVariables() // <-- ??a dòng này LÊN TR??C
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true);
-
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true ,reloadOnChange: true)
+    .AddEnvironmentVariables();
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
@@ -39,13 +38,9 @@ builder.Services.AddSwaggerGen();
 //SMTP Settings
 builder.Services.Configure<SmtpSettings>(
     builder.Configuration.GetSection("Email"));
-var connectionString =
-    Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection")
-    ?? builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<GustoSystemContext>(options =>
-    options.UseSqlServer(connectionString));
-
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 //Repo
 builder.Services.AddScoped<RestaurantLayoutRepository>();
 builder.Services.AddScoped<RestaurantMenuRepository>();
