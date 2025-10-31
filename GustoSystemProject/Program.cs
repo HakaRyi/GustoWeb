@@ -16,7 +16,11 @@ using Service.Settings;
 
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Configuration
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
+    .AddEnvironmentVariables();
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
@@ -28,22 +32,8 @@ builder.Services.AddControllers()
 // Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Configuration.AddEnvironmentVariables();
-var env = Environment.GetEnvironmentVariables();
-var inMemoryConfig = new Dictionary<string, string>();
 
-foreach (DictionaryEntry entry in env)
-{
-    var key = entry.Key.ToString();
-    if (key.Contains("__"))
-    {
-        var newKey = key.Replace("__", ":");
-        inMemoryConfig[newKey] = entry.Value?.ToString() ?? "";
-    }
-}
 
-// Thêm InMemory vào builder (s? override appsettings)
-builder.Configuration.AddInMemoryCollection(inMemoryConfig);
 
 //SMTP Settings
 builder.Services.Configure<SmtpSettings>(
