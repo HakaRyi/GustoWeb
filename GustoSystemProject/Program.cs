@@ -186,7 +186,8 @@ app.MapGet("/health", () => Results.Ok(new { status = "healthy", time = DateTime
 app.MapGet("/debug-config", () => new
 {
     Environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"),
-    ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? "NULL - L?I!",
+    connectionStringFromEnv = Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection"),
+    ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? "NULL - Loi!",
     JwtSecret = builder.Configuration["JwtSettings:SecretKey"] ?? "NULL",
     EmailHost = builder.Configuration["Email:Host"] ?? "NULL"
 });
