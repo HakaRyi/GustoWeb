@@ -155,7 +155,12 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: CorsPolicyName,
         policy =>
         {
-            policy.WithOrigins("https://localhost:7176", "http://localhost:3000", "https://localhost:3000") // Swagger UI domain
+            policy.WithOrigins("https://localhost:7176",
+                      "http://localhost:3000",
+                      "https://localhost:3000",
+                      "https://gustoweb.site", // Tên mi?n g?c ?ã tr?
+                      "https://www.gustoweb.site", // Subdomain www ?ã tr?
+                      "https://gustoweb.onrender.com") // Swagger UI domain
                   .AllowAnyHeader()
                   .AllowAnyMethod()
                   .AllowCredentials();
