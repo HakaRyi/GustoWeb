@@ -47,8 +47,8 @@ const ModalLayout = ({ isOpen, onClose, layout, isUpdate, onSuccess }) => {
         e.preventDefault();
         try {
             const url = isUpdate
-                ? `https://localhost:7176/api/RestaurantLayout/updateLayout/${layout.layoutId}`
-                : 'https://localhost:7176/api/RestaurantLayout/createLayout';
+                ? `https://gustoweb.onrender.com/api/RestaurantLayout/updateLayout/${layout.layoutId}`
+                : 'https://gustoweb.onrender.com/api/RestaurantLayout/createLayout';
 
             const res = await customFetch(url, {
                 method: isUpdate ? 'PUT' : 'POST',

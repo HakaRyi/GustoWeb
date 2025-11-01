@@ -11,9 +11,12 @@ const CardMenu = ({ menu, onDeleteSuccess, onSuccess }) => {
     const handleDelete = async () => {
         if (!window.confirm('Bạn có chắc muốn xóa món này?')) return;
         try {
-            const res = await customFetch(`https://localhost:7176/api/RestaurantMenu/deleteMenu/${menu.foodId}`, {
-                method: 'DELETE',
-            });
+            const res = await customFetch(
+                `https://gustoweb.onrender.com/api/RestaurantMenu/deleteMenu/${menu.foodId}`,
+                {
+                    method: 'DELETE',
+                },
+            );
             if (!res.ok) throw new Error('Xóa món thất bại');
             onDeleteSuccess(menu.foodId);
             console.log('Xóa món thành công!');

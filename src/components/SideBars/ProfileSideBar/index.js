@@ -18,7 +18,7 @@ function ProfileSideBar() {
     const logoutApi = async () => {
         try {
             setLoading(true);
-            var res = await customFetch(`https://localhost:7176/api/Account/logout`, {
+            var res = await customFetch(`https://gustoweb.onrender.com/api/Account/logout`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
             });

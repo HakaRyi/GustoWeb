@@ -27,7 +27,7 @@ const OrderModal = ({
     isOpen,
     onClose,
     order = null,
-    apiBase = 'https://localhost:7176/api/Booking',
+    apiBase = 'https://gustoweb.onrender.com/api/Booking',
     onUpdated,
     booking = null,
     customFetch = fetch,

@@ -46,7 +46,7 @@ function UpdateUserForm({ initialValues, onProfileReload, isEditing, imgFile }) 
             // Gắn link ảnh vào values
             const updatedValues = { ...values, avatarUrl: imageUrl };
             console.log('Submitting values:', updatedValues);
-            const res = await customFetch('https://localhost:7176/api/DinerProfile', {
+            const res = await customFetch('https://gustoweb.onrender.com/api/DinerProfile', {
                 method: 'PUT',
                 headers: {
                     Accept: '*/*',

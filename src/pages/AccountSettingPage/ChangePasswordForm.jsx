@@ -36,7 +36,7 @@ function ChangePasswordForm() {
         const changePassword = async () => {
             try {
                 setLoadingVisible(true);
-                var res = await customFetch(`https://localhost:7176/api/Account/change-password`, {
+                var res = await customFetch(`https://gustoweb.onrender.com/api/Account/change-password`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(values),

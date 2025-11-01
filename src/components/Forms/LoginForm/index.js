@@ -39,7 +39,7 @@ function LoginForm() {
                 userName: values.userName,
                 password: values.password,
             };
-            const loginResponse = await fetch('https://localhost:7176/api/Account/signIn', {
+            const loginResponse = await fetch('https://gustoweb.onrender.com/api/Account/signIn', {
                 method: 'POST',
                 headers: {
                     Accept: '*/*',
@@ -69,7 +69,7 @@ function LoginForm() {
             setLoadingVisible(true);
             console.log('🔐 Google Success:', credentialResponse);
 
-            const response = await customFetch('https://localhost:7176/api/Account/google-login', {
+            const response = await customFetch('https://gustoweb.onrender.com/api/Account/google-login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

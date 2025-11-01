@@ -120,7 +120,9 @@ export default function FeedbackModal({ visible, booking, order, onClose, onSave
             const hasExisting = Array.isArray(order.foodReviews) && order.foodReviews.length > 0;
 
             console.log(hasExisting);
-            const url = hasExisting ? `https://localhost:7176/api/FoodReview` : `https://localhost:7176/api/FoodReview`;
+            const url = hasExisting
+                ? `https://gustoweb.onrender.com/api/FoodReview`
+                : `https://gustoweb.onrender.com/api/FoodReview`;
             const method = hasExisting ? 'PUT' : 'POST';
 
             const res = await customFetch(url, {

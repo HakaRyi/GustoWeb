@@ -28,7 +28,7 @@ const ResSideBar = () => {
 
     const handleLogout = async () => {
         try {
-            const response = await fetch('https://localhost:7176/api/Account/logout', {
+            const response = await fetch('https://gustoweb.onrender.com/api/Account/logout', {
                 method: 'POST',
                 credentials: 'include',
             });

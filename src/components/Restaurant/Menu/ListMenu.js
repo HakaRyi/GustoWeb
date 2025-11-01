@@ -13,7 +13,7 @@ const ListMenu = ({ searchTerm, filterOptions, onSuccess }) => {
     const fetchMenus = useCallback(async () => {
         try {
             setLoading(true);
-            const res = await customFetch('https://localhost:7176/api/RestaurantMenu/getByMyRestaurant', {
+            const res = await customFetch('https://gustoweb.onrender.com/api/RestaurantMenu/getByMyRestaurant', {
                 method: 'GET',
             });
             if (!res.ok) throw new Error('Lỗi khi lấy danh sách món ăn');

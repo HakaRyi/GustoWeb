@@ -12,7 +12,7 @@ const CardLayout = ({ layout, onDeleteSuccess, onSuccess }) => {
         if (!window.confirm('Bạn có chắc muốn xóa bố cục này?')) return;
         try {
             const res = await customFetch(
-                `https://localhost:7176/api/RestaurantLayout/deleteLayout/${layout.layoutId}`,
+                `https://gustoweb.onrender.com/api/RestaurantLayout/deleteLayout/${layout.layoutId}`,
                 { method: 'DELETE' },
             );
             if (!res.ok) throw new Error('Xóa bố cục thất bại');

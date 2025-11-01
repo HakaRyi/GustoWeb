@@ -55,7 +55,7 @@ const ModalMenu = ({ isOpen, onClose, menu, isUpdate, onSuccess }) => {
     const fetchTastes = async () => {
         if (!isUpdate || !menu?.foodId) return;
         try {
-            const res = await customFetch(`https://localhost:7176/api/Taste/menu/${menu.foodId}`, {
+            const res = await customFetch(`https://gustoweb.onrender.com/api/Taste/menu/${menu.foodId}`, {
                 method: 'GET',
             });
             if (!res.ok) throw new Error('Lấy danh sách khẩu vị thất bại');
@@ -70,7 +70,7 @@ const ModalMenu = ({ isOpen, onClose, menu, isUpdate, onSuccess }) => {
     const fetchOptionals = async () => {
         if (!isUpdate || !menu?.foodId) return;
         try {
-            const res = await customFetch(`https://localhost:7176/api/Optional/menu/${menu.foodId}`, {
+            const res = await customFetch(`https://gustoweb.onrender.com/api/Optional/menu/${menu.foodId}`, {
                 method: 'GET',
             });
             if (!res.ok) throw new Error('Lấy danh sách tùy chọn thất bại');
@@ -111,7 +111,7 @@ const ModalMenu = ({ isOpen, onClose, menu, isUpdate, onSuccess }) => {
         if (!isUpdate || !menu?.foodId || !tasteName.trim()) return;
         setTasteLoading((prev) => ({ ...prev, add: true }));
         try {
-            const res = await customFetch(`https://localhost:7176/api/Taste/${menu.foodId}`, {
+            const res = await customFetch(`https://gustoweb.onrender.com/api/Taste/${menu.foodId}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name: tasteName }),
@@ -133,7 +133,7 @@ const ModalMenu = ({ isOpen, onClose, menu, isUpdate, onSuccess }) => {
         if (!isUpdate || !menu?.foodId || !optionalName.trim() || !optionalPrice) return;
         setOptionalLoading((prev) => ({ ...prev, add: true }));
         try {
-            const res = await customFetch(`https://localhost:7176/api/Optional/${menu.foodId}`, {
+            const res = await customFetch(`https://gustoweb.onrender.com/api/Optional/${menu.foodId}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name: optionalName, price: parseFloat(optionalPrice) }),
@@ -163,7 +163,7 @@ const ModalMenu = ({ isOpen, onClose, menu, isUpdate, onSuccess }) => {
         if (!editingTaste || !editingTaste.name.trim()) return;
         setTasteLoading((prev) => ({ ...prev, edit: { ...prev.edit, [tasteId]: true } }));
         try {
-            const res = await customFetch(`https://localhost:7176/api/Taste/${tasteId}`, {
+            const res = await customFetch(`https://gustoweb.onrender.com/api/Taste/${tasteId}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name: editingTaste.name }),
@@ -184,7 +184,7 @@ const ModalMenu = ({ isOpen, onClose, menu, isUpdate, onSuccess }) => {
         if (!editingOptional || !editingOptional.name.trim() || !editingOptional.price) return;
         setOptionalLoading((prev) => ({ ...prev, edit: { ...prev.edit, [optionalId]: true } }));
         try {
-            const res = await customFetch(`https://localhost:7176/api/Optional/${optionalId}`, {
+            const res = await customFetch(`https://gustoweb.onrender.com/api/Optional/${optionalId}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -207,7 +207,7 @@ const ModalMenu = ({ isOpen, onClose, menu, isUpdate, onSuccess }) => {
     const handleDeleteTaste = async (tasteId) => {
         setTasteLoading((prev) => ({ ...prev, delete: { ...prev.delete, [tasteId]: true } }));
         try {
-            const res = await customFetch(`https://localhost:7176/api/Taste/${tasteId}`, {
+            const res = await customFetch(`https://gustoweb.onrender.com/api/Taste/${tasteId}`, {
                 method: 'DELETE',
             });
             if (!res.ok) throw new Error('Xóa khẩu vị thất bại');
@@ -229,7 +229,7 @@ const ModalMenu = ({ isOpen, onClose, menu, isUpdate, onSuccess }) => {
     const handleDeleteOptional = async (optionalId) => {
         setOptionalLoading((prev) => ({ ...prev, delete: { ...prev.delete, [optionalId]: true } }));
         try {
-            const res = await customFetch(`https://localhost:7176/api/Optional/${optionalId}`, {
+            const res = await customFetch(`https://gustoweb.onrender.com/api/Optional/${optionalId}`, {
                 method: 'DELETE',
             });
             if (!res.ok) throw new Error('Xóa tùy chọn thất bại');
@@ -252,8 +252,8 @@ const ModalMenu = ({ isOpen, onClose, menu, isUpdate, onSuccess }) => {
         e.preventDefault();
         try {
             const url = isUpdate
-                ? `https://localhost:7176/api/RestaurantMenu/updateMenu/${menu.foodId}`
-                : 'https://localhost:7176/api/RestaurantMenu/createMenu';
+                ? `https://gustoweb.onrender.com/api/RestaurantMenu/updateMenu/${menu.foodId}`
+                : 'https://gustoweb.onrender.com/api/RestaurantMenu/createMenu';
             const payload = {
                 ...formData,
                 price: parseFloat(formData.price),

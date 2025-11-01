@@ -12,7 +12,7 @@ const ListLayout = ({ onSuccess }) => {
     const fetchLayouts = useCallback(async () => {
         try {
             setLoading(true);
-            const res = await customFetch('https://localhost:7176/api/RestaurantLayout/getByMyRestaurant', {
+            const res = await customFetch('https://gustoweb.onrender.com/api/RestaurantLayout/getByMyRestaurant', {
                 method: 'GET',
             });
             if (!res.ok) throw new Error('Lỗi khi lấy danh sách bố cục');

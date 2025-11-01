@@ -27,7 +27,7 @@ function BookingHistory() {
         const foodReview = async (foodId) => {
             try {
                 setLoadingVisible(true);
-                const res = await customFetch(`https://localhost:7176/api/FoodReview/ByFood/${foodId}`, {
+                const res = await customFetch(`https://gustoweb.onrender.com/api/FoodReview/ByFood/${foodId}`, {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json' },
                 });
@@ -57,7 +57,7 @@ function BookingHistory() {
     const fetchBooking = async () => {
         try {
             setLoadingVisible(true);
-            var res = await customFetch('https://localhost:7176/api/DinerProfile/my-bookings', {
+            var res = await customFetch('https://gustoweb.onrender.com/api/DinerProfile/my-bookings', {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
             });

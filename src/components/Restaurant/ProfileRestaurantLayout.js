@@ -16,7 +16,7 @@ const ProfileRestaurantLayout = () => {
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const res = await customFetch('https://localhost:7176/api/RestaurantProfile/getByMyRestaurant', {
+                const res = await customFetch('https://gustoweb.onrender.com/api/RestaurantProfile/getByMyRestaurant', {
                     method: 'GET',
                 });
                 if (!res.ok) throw new Error('Lỗi khi lấy hồ sơ nhà hàng');
@@ -76,7 +76,7 @@ const ProfileRestaurantLayout = () => {
 
         try {
             const res = await customFetch(
-                `https://localhost:7176/api/RestaurantProfile/updateProfile/${profile.accountId}`,
+                `https://gustoweb.onrender.com/api/RestaurantProfile/updateProfile/${profile.accountId}`,
                 {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },

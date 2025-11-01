@@ -35,7 +35,7 @@ const ForgotPasswordModal = ({ isOpen, onClose }) => {
         if (isDisabled) return;
         setLoading(true);
         const sendPasswordReset = async () => {
-            const res = await customFetch('https://localhost:7176/api/Account/reset-password', {
+            const res = await customFetch('https://gustoweb.onrender.com/api/Account/reset-password', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(values),

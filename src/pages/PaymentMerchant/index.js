@@ -22,7 +22,7 @@ function PaymentMerchantRequest({ destinationUrl }) {
         // Giả lập việc gọi API để lưu thông tin
         const uploadBankAccount = async () => {
             try {
-                const res = await customFetch('https://localhost:7176/api/PaymentMerchant', {
+                const res = await customFetch('https://gustoweb.onrender.com/api/PaymentMerchant', {
                     method: 'POST',
                     headers: {
                         Accept: '*/*',

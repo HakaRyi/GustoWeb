@@ -11,9 +11,10 @@ const CardTable = ({ table, onDeleteSuccess, onSuccess }) => {
     const handleDelete = async () => {
         if (!window.confirm('Bạn có chắc muốn xóa bàn này?')) return;
         try {
-            const res = await customFetch(`https://localhost:7176/api/RestaurantTable/deleteTable/${table.tableId}`, {
-                method: 'DELETE',
-            });
+            const res = await customFetch(
+                `https://gustoweb.onrender.com/api/RestaurantTable/deleteTable/${table.tableId}`,
+                { method: 'DELETE' },
+            );
             if (!res.ok) throw new Error('Xóa bàn thất bại');
             onDeleteSuccess(table.tableId);
             console.log('Xóa bàn thành công!');
@@ -33,7 +34,7 @@ const CardTable = ({ table, onDeleteSuccess, onSuccess }) => {
                 <p>Trạng thái: {table.status}</p>
                 <p>{table.isVip ? 'VIP' : 'Không VIP'}</p>
                 <p>Phí tối thiểu: {table.minCharge ? table.minCharge.toLocaleString() : 'Không có'} VNĐ</p>
-                <p>Tiền cọc: {table?.deposit?.toLocaleString()} VNĐ</p>
+                <p>Tiền cọc: {table.deposit.toLocaleString()} VNĐ</p>
             </div>
             <div className={styles.menu}>
                 <button className={styles.menuBtn} onClick={() => setIsMenuOpen(!isMenuOpen)}>

@@ -49,7 +49,7 @@ function PreviewBeforePay() {
         setError(null);
 
         try {
-            const response = await fetch(`https://localhost:7176/api/Order/pay/${orderId}`, {
+            const response = await fetch(`https://gustoweb.onrender.com/api/Order/pay/${orderId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
