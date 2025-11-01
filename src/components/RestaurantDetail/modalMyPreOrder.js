@@ -7,9 +7,6 @@ import styles from './modalMyPreOrder.module.scss';
 import TablePicker from '../TablePicker';
 import ResultModal from '../Modals/ResultModal';
 import dayjs from 'dayjs';
-import TablePicker from '../TablePicker';
-import ResultModal from '../Modals/ResultModal';
-import dayjs from 'dayjs';
 
 function ModalMyPreOrder({ isOpen, onClose, restaurantId }) {
     const [numPeople, setNumPeople] = useState(1);
