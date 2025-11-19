@@ -1,3 +1,6 @@
+using System.Collections;
+using System.Text;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
@@ -10,15 +13,14 @@ using Service.AutoMapper;
 using Service.Config;
 using Service.Exceptions;
 using Service.Settings;
-using System.Text;
-using System.Text.Json.Serialization;
 
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-builder.Services.AddDbContext<GustoSystemContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Configuration
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true ,reloadOnChange: true)
+    .AddEnvironmentVariables();
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
@@ -32,12 +34,14 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
+
 //SMTP Settings
 builder.Services.Configure<SmtpSettings>(
     builder.Configuration.GetSection("Email"));
 
 builder.Services.AddDbContext<GustoSystemContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+           .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
 //Repo
 builder.Services.AddScoped<RestaurantLayoutRepository>();
 builder.Services.AddScoped<RestaurantMenuRepository>();
@@ -50,9 +54,9 @@ builder.Services.AddHttpClient();
 
 // JWT Settings
 var jwtSetting = new JwtSettings();
-builder.Configuration.GetSection("JwtSettings").Bind(jwtSetting); 
+builder.Configuration.GetSection("JwtSettings").Bind(jwtSetting);
 builder.Services.AddSingleton(jwtSetting);
-
+//builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme; // "Bearer"
@@ -118,6 +122,7 @@ builder.Services.AddScoped<TransactionService>();
 builder.Services.Configure<PayOsSettings>(
     builder.Configuration.GetSection("PayOS")
     );
+builder.Services.AddScoped<PromotionService>();
 
 builder.Services.AddScoped<AccountRepository>();
 builder.Services.AddScoped<RoleRepository>();
@@ -136,6 +141,7 @@ builder.Services.AddScoped<TasteRepository>();
 builder.Services.AddScoped<OptionalRepository>();
 builder.Services.AddScoped<ContactRepository>();
 builder.Services.AddScoped<TransactionRepository>();
+builder.Services.AddScoped<PromotionRepository>();
 
 
 builder.Services.AddSingleton<SpeedSmsService>();
@@ -150,7 +156,12 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: CorsPolicyName,
         policy =>
         {
-            policy.WithOrigins("https://localhost:7176", "http://localhost:3000", "https://localhost:3000", "http://localhost:3001") // Swagger UI domain
+            policy.WithOrigins("https://localhost:7176",
+                      "http://localhost:3000",
+                      "https://localhost:3000",
+                      "https://gustoweb.site", // Tên mi?n g?c ?ã tr?
+                      "https://www.gustoweb.site", // Subdomain www ?ã tr?
+                      "https://gustoweb.onrender.com") // Swagger UI domain
                   .AllowAnyHeader()
                   .AllowAnyMethod()
                   .AllowCredentials();
@@ -170,7 +181,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseCors(CorsPolicyName);
 app.UseCors("AllowFrontend");
@@ -178,5 +189,13 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
+app.MapGet("/health", () => Results.Ok(new { status = "healthy", time = DateTime.UtcNow }));
+app.MapGet("/debug-config", () => new
+{
+    Environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"),
+    connectionStringFromEnv = Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection"),
+    ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? "NULL - Loi!",
+    JwtSecret = builder.Configuration["JwtSettings:SecretKey"] ?? "NULL",
+    EmailHost = builder.Configuration["Email:Host"] ?? "NULL"
+});
 app.Run();
