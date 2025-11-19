@@ -45,6 +45,7 @@ builder.Services.AddScoped<RestaurantProfileRepository>();
 builder.Services.AddScoped<RestaurantTableRepository>();
 builder.Services.AddScoped<FavouriteRepository>();
 builder.Services.AddScoped<FoodReviewRepository>();
+builder.Services.AddHttpClient();
 
 
 // JWT Settings
@@ -149,7 +150,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: CorsPolicyName,
         policy =>
         {
-            policy.WithOrigins("https://localhost:7176", "http://localhost:3000", "https://localhost:3000") // Swagger UI domain
+            policy.WithOrigins("https://localhost:7176", "http://localhost:3000", "https://localhost:3000", "http://localhost:3001") // Swagger UI domain
                   .AllowAnyHeader()
                   .AllowAnyMethod()
                   .AllowCredentials();
