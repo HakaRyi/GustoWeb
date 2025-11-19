@@ -1,0 +1,242 @@
+/* FoodChatBot.css */
+:root {
+    --gusto-green: #1b4332; /* Xanh lá đậm */
+    --gusto-orange: #ff9f1c; /* Vàng cam */
+    --gusto-light: #f0fdf4;
+}
+
+/* Nút tròn nổi góc phải */
+.chatbot-toggle-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background-color: var(--gusto-green);
+    border-radius: 50%;
+    border: none;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.chatbot-toggle-btn:hover {
+    transform: scale(1.1);
+    background-color: #2d6a4f;
+}
+
+/* Khung chat chính */
+.chatbot-container {
+    position: fixed;
+    bottom: 100px;
+    right: 30px;
+    width: 350px;
+    height: 500px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: slideUp 0.3s ease-out;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Header Chat */
+.chatbot-header {
+    background-color: var(--gusto-green);
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chatbot-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+/* Nội dung chat */
+.chatbot-messages {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    background-color: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Bong bóng tin nhắn */
+.message {
+    max-width: 80%;
+    padding: 10px 15px;
+    border-radius: 15px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.message.bot {
+    align-self: flex-start;
+    background-color: #e9ecef;
+    color: #333;
+    border-bottom-left-radius: 2px;
+}
+
+.message.user {
+    align-self: flex-end;
+    background-color: var(--gusto-orange);
+    color: white;
+    border-bottom-right-radius: 2px;
+}
+
+/* Hiển thị món ăn gợi ý (Card) */
+.dish-card {
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-left: 4px solid var(--gusto-green);
+}
+.dish-name {
+    font-weight: bold;
+    color: var(--gusto-green);
+    margin-bottom: 4px;
+}
+.dish-reason {
+    font-size: 0.85rem;
+    color: #555;
+}
+
+/* Khu vực nhập tin nhắn (Mới) */
+.chat-input-area {
+    padding: 10px;
+    background: white;
+    border-top: 1px solid #eee;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.chat-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    outline: none;
+    font-size: 0.9rem;
+    transition: border-color 0.2s;
+}
+
+.chat-input:focus {
+    border-color: var(--gusto-green);
+}
+
+.send-btn {
+    background-color: var(--gusto-green);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.send-btn:hover {
+    background-color: #143625;
+}
+
+.send-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Khu vực nút gợi ý mẫu */
+.suggestion-area {
+    padding: 10px 15px;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 8px;
+    background: #f9f9f9;
+    border-top: 1px solid #eee;
+    scrollbar-width: none;
+}
+.suggestion-area::-webkit-scrollbar {
+    display: none;
+}
+
+.suggestion-chip {
+    background-color: var(--gusto-light);
+    border: 1px solid var(--gusto-green);
+    color: var(--gusto-green);
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.suggestion-chip:hover {
+    background-color: var(--gusto-green);
+    color: white;
+}
+
+.loading-dots {
+    display: flex;
+    gap: 4px;
+}
+.dot {
+    width: 8px;
+    height: 8px;
+    background: #bbb;
+    border-radius: 50%;
+    animation: bounce 1.4s infinite ease-in-out;
+}
+.dot:nth-child(1) {
+    animation-delay: -0.32s;
+}
+.dot:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+@keyframes bounce {
+    0%,
+    80%,
+    100% {
+        transform: scale(0);
+    }
+    40% {
+        transform: scale(1);
+    }
+}

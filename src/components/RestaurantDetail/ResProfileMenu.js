@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { customFetch } from '~/config/customFetch';
-import { FaStar } from 'react-icons/fa';
+import { FaStar, FaMapMarkedAlt, FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import DirectionMap from '../Maps/DirectionMap';
 import styles from './ResProfileMenu.module.scss';
 import ModalMyPreOrder from '~/components/RestaurantDetail/modalMyPreOrder';
 const logo = process.env.PUBLIC_URL + '/LOGOGUSTO2.png';
+
+const MAP_BG_IMAGE = 'https://media.wired.com/photos/59269cd37034dc5f91dec26e/master/pass/GoogleMapTA.jpg';
 
 function ResProfileMenu({ id }) {
     const [profile, setProfile] = useState(null);
@@ -28,6 +31,7 @@ function ResProfileMenu({ id }) {
             image: 'https://cdn.tgdd.vn/Products/Images//3226/307599/bhx/files/-8100-1686888701_860x0.jpg',
         },
     ]);
+    const [showMap, setShowMap] = useState(false);
 
     const { isAuthenticated } = useSelector((state) => state.auth);
     const navigate = useNavigate();
@@ -70,46 +74,63 @@ function ResProfileMenu({ id }) {
     if (!profile) return <div>Loading...</div>;
 
     return (
-        <div className={styles.resProfileMenu}>
-            <div className={styles.profileHeader}>
-                <img src={profile.avatarUrl || logo} alt={profile.fullName} className={styles.profileAvatar} />
-                <div className={styles.profileInfo}>
-                    <h1 className={styles.profileName}>{profile.fullName}</h1>
+        <>
+            <div className={styles.resProfileMenu}>
+                <div className={styles.profileHeader}>
+                    <img src={profile.avatarUrl || logo} alt={profile.fullName} className={styles.profileAvatar} />
+                    <div className={styles.profileInfo}>
+                        <h1 className={styles.profileName}>{profile.fullName}</h1>
 
-                    <div className={styles.rating}>
-                        {[...Array(5)].map((_, i) => (
-                            <FaStar
-                                key={i}
-                                className={`${styles.starIcon} ${
-                                    i < Math.round(profile.rating || 0) ? styles.filledStar : styles.emptyStar
-                                }`}
-                            />
-                        ))}
-                        <span className={styles.ratingText}>{profile.rating?.toFixed(1) || 0}</span>
+                        <div className={styles.rating}>
+                            {[...Array(5)].map((_, i) => (
+                                <FaStar
+                                    key={i}
+                                    className={`${styles.starIcon} ${
+                                        i < Math.round(profile.rating || 0) ? styles.filledStar : styles.emptyStar
+                                    }`}
+                                />
+                            ))}
+                            <span className={styles.ratingText}>{profile.rating?.toFixed(1) || 0}</span>
+                        </div>
+
+                        <p className={styles.profileAddress}>{profile.address}</p>
+                        <p className={styles.profileDescription}>{profile.description}</p>
+
+                        <div className={styles.profileActions}>
+                            <button className={styles.likeButton} onClick={handleLikeClick}>
+                                ❤ Thích
+                            </button>
+                            <button className={styles.preOrderButton} onClick={handlePreOrderClick}>
+                                Xem đơn hàng của bạn
+                            </button>
+                        </div>
+                        <ModalMyPreOrder
+                            restaurantId={id}
+                            isOpen={showModal}
+                            onClose={() => setShowModal(false)}
+                            orders={orders}
+                            onUpdateQuantity={handleUpdateQuantity}
+                            onRemoveItem={handleRemoveItem}
+                        />
                     </div>
-
-                    <p className={styles.profileAddress}>{profile.address}</p>
-                    <p className={styles.profileDescription}>{profile.description}</p>
-
-                    <div className={styles.profileActions}>
-                        <button className={styles.likeButton} onClick={handleLikeClick}>
-                            ❤ Thích
-                        </button>
-                        <button className={styles.preOrderButton} onClick={handlePreOrderClick}>
-                            Xem đơn hàng của bạn
-                        </button>
-                    </div>
-                    <ModalMyPreOrder
-                        restaurantId={id}
-                        isOpen={showModal}
-                        onClose={() => setShowModal(false)}
-                        orders={orders}
-                        onUpdateQuantity={handleUpdateQuantity}
-                        onRemoveItem={handleRemoveItem}
-                    />
                 </div>
             </div>
-        </div>
+            <div className={styles.mapButtonWrapper} onClick={() => setShowMap(!showMap)}>
+                <div className={styles.mapBackground} style={{ backgroundImage: `url('${MAP_BG_IMAGE}')` }}></div>
+                <div className={styles.mapOverlay}></div>
+                <div className={styles.mapContent}>
+                    <FaMapMarkedAlt size={24} />
+                    <span>{showMap ? 'Ẩn bản đồ' : 'Chỉ đường đến đây'}</span>
+                    {showMap ? <FaChevronUp /> : <FaChevronDown />}
+                </div>
+            </div>
+
+            {showMap && (
+                <div className={styles.mapContainer}>
+                    <DirectionMap restaurantAddress={profile.address} />
+                </div>
+            )}
+        </>
     );
 }
 

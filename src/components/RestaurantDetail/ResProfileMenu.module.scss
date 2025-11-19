@@ -176,3 +176,74 @@
         font-size: 14px;
     }
 }
+
+.mapButtonWrapper {
+    position: relative;
+    width: 50%;
+    height: 100px;
+    margin: 20px 0;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #eee;
+    transition: transform 0.2s;
+
+    &:hover {
+        transform: translateX(-50%) scale(1.01);
+    }
+}
+
+.mapBackground {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-size: cover;
+    background-position: center;
+    filter: blur(3px); /* Làm mờ hình nền */
+    transform: scale(1.1); /* Phóng to nhẹ để tránh viền trắng do blur */
+    z-index: 1;
+}
+
+.mapOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3); /* Lớp phủ tối màu */
+    z-index: 2;
+}
+
+.mapContent {
+    position: relative;
+    z-index: 3;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    gap: 10px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.mapContainer {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
