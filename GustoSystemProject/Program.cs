@@ -156,12 +156,13 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: CorsPolicyName,
         policy =>
         {
-            policy.WithOrigins("https://localhost:7176",
+            policy.WithOrigins(
                       "http://localhost:3000",
                       "https://localhost:3000",
+                      "https://gusto-web.vercel.app",
                       "https://gustoweb.site", // Tên mi?n g?c ?ã tr?
-                      "https://www.gustoweb.site", // Subdomain www ?ã tr?
-                      "https://gustoweb.onrender.com") // Swagger UI domain
+                      "https://www.gustoweb.site" // Subdomain www ?ã tr?
+                      ) // Swagger UI domain
                   .AllowAnyHeader()
                   .AllowAnyMethod()
                   .AllowCredentials();
@@ -184,7 +185,7 @@ app.UseMiddleware<ExceptionHandlingMiddleware>();
 //app.UseHttpsRedirection();
 
 app.UseCors(CorsPolicyName);
-app.UseCors("AllowFrontend");
+//app.UseCors("AllowFrontend");
 app.UseAuthentication();
 app.UseAuthorization();
 
