@@ -86,7 +86,7 @@ namespace GustoSystemProject.Controllers
 
             try
             {
-                await service.UpdateProfileAsync(request, id, short.Parse(restaurantID));
+                await service.UpdateProfileAsync(request, id, short.Parse(restaurantID)); 
                 return Ok(new
                 {
                     message = "Profile successfully updated."

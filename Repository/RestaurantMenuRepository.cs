@@ -42,6 +42,7 @@ namespace Repository
                 .Include(r => r.Account)
                 .Include(r => r.FoodReviews)
                 .Include(r => r.OrderDetails)
+                .OrderByDescending(r => r.FoodId)
                 .ToListAsync();
         }
         //-----------------------------------------------------

@@ -49,6 +49,7 @@ builder.Services.AddScoped<RestaurantProfileRepository>();
 builder.Services.AddScoped<RestaurantTableRepository>();
 builder.Services.AddScoped<FavouriteRepository>();
 builder.Services.AddScoped<FoodReviewRepository>();
+builder.Services.AddHttpClient();
 
 
 // JWT Settings

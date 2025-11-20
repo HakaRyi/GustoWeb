@@ -54,6 +54,12 @@ namespace Repository
                 .Include(r => r.PaymentMerchant)
                 .FirstOrDefaultAsync(r => r.AccountId == id);
         }
+        public async Task<RestaurantProfile> GetByIdToUpdate(int id)
+        {
+            return await context.RestaurantProfiles
+                .AsNoTracking()
+                .FirstOrDefaultAsync(r => r.AccountId == id);
+        }
         public async Task<List<RestaurantProfile>> GetByAccountAsync(int accountId)
         {
             return await context.RestaurantProfiles

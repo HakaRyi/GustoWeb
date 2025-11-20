@@ -185,7 +185,7 @@ namespace Service
         }
         public async Task<int> UpdateProfileAsync(RestaurantProfileRequest request, int profileId, short resId)
         {
-            var item = await GetByIdAsync(profileId);
+            var item = await repository.GetByIdToUpdate(profileId);
             if (item == null)
             {
                 throw new KeyNotFoundException($"Profile with ID {profileId} not found.");
