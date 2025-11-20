@@ -304,6 +304,18 @@ const ModalMenu = ({ isOpen, onClose, menu, isUpdate, onSuccess }) => {
                             >
                                 <option value="Đồ ăn">Đồ ăn</option>
                                 <option value="Đồ uống">Đồ uống</option>
+                                <option value="Cà phê">Cà phê</option>
+                                <option value="Đá Xay">Đá Xay</option>
+                                <option value="Trà Sữa">Trà Sữa</option>
+                                <option value="Trà Trái Cây">Trà Trái Cây</option>
+                                <option value="Phở">Phở</option>
+                                <option value="Bún Bò">Bún Bò</option>
+                                <option value="Cơm">Cơm</option>
+                                <option value="Gà">Gà</option>
+                                <option value="Bò">Bò</option>
+                                <option value="Cháo">Cháo</option>
+                                <option value="Bánh Mì">Bánh Mì</option>
+                                <option value="Combo">Combo</option>
                                 <option value="Khác">Khác</option>
                             </select>
                         </label>
