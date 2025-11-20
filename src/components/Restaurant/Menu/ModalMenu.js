@@ -156,7 +156,7 @@ const ModalMenu = ({ isOpen, onClose, menu, isUpdate, onSuccess }) => {
     };
 
     const handleEditOptional = (optional) => {
-        setEditingOptional({ id: optional.id, name: optional.name, price: optional.price });
+        setEditingOptional({ id: optional.id, name: optional.title, price: optional.price });
     };
 
     const handleSaveEditTaste = async (tasteId) => {
@@ -695,7 +695,7 @@ const ModalMenu = ({ isOpen, onClose, menu, isUpdate, onSuccess }) => {
                                                         ) : (
                                                             <>
                                                                 <span className={styles.optionalName}>
-                                                                    {optional.name}
+                                                                    {optional.title}
                                                                     <br /> {optional.price} VNĐ
                                                                 </span>
                                                                 <div className={styles.optionalActions}>
