@@ -695,7 +695,7 @@ const ModalMenu = ({ isOpen, onClose, menu, isUpdate, onSuccess }) => {
                                                         ) : (
                                                             <>
                                                                 <span className={styles.optionalName}>
-                                                                    {optional.title}
+                                                                    {optional.name}
                                                                     <br /> {optional.price} VNĐ
                                                                 </span>
                                                                 <div className={styles.optionalActions}>
