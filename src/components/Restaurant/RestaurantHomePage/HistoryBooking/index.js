@@ -102,7 +102,9 @@ function HistoryBooking({ restaurantId }) {
                 <span>
                     Doanh thu:{' '}
                     <b className={style.revenue}>
-                        {filteredBookings.reduce((sum, b) => sum + (b.orders[0].finalPrice || 0), 0).toLocaleString()}{' '}
+                        {filteredBookings
+                            .reduce((sum, b) => sum + (b.orders[0].finalPrice - 3000 || 0), 0)
+                            .toLocaleString()}{' '}
                         VND
                     </b>
                 </span>
@@ -151,7 +153,7 @@ function HistoryBooking({ restaurantId }) {
                             >
                                 <div>{b.bookingCode || b.bookingId}</div>
                                 <div>{b.orders[0].orderDetails.length || 0}</div>
-                                <div>{(b.orders[0].finalPrice || 0).toLocaleString()}</div>
+                                <div>{(b.orders[0].finalPrice - 3000 || 0).toLocaleString()}</div>
                                 <div className={getStatusClass(b.status)}>{b.status}</div>
                             </motion.div>
                         ))
