@@ -263,7 +263,7 @@ function ProfilePage() {
                             className={cx('edit-icon')}
                             icon={faUserPen}
                             onClick={toggleEditMode}
-                            style={{ color: isEditing ? 'red' : 'white' }}
+                            // style={{ color: isEditing ? 'red' : 'white' }}
                         />
                         <UpdateUserForm
                             initialValues={profileData}
