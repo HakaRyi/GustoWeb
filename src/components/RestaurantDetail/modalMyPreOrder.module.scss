@@ -20,7 +20,7 @@
     border-radius: 24px;
     box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
     padding: 20px 28px;
-    color: #162b00;
+    color: #162b00 !important;
     display: flex;
     flex-direction: column;
     animation: slideUp 0.4s ease-out forwards;
@@ -108,7 +108,7 @@
         border: 1px solid #ccc !important;
         border-radius: 8px;
         padding: 6px 10px;
-        color: #162b00;
+        color: #162b00 !important;
         width: 242px;
         background: #fff;
         transition: all 0.2s ease;
@@ -147,7 +147,7 @@
         background: linear-gradient(90deg, #41c345, #83ff87);
         border-radius: 8px;
         padding: 8px 10px;
-        color: #333;
+        color: #333 !important;
         line-height: 1.4;
 
         @media (max-width: 576px) {
@@ -241,7 +241,7 @@
         border-radius: 8px;
         background-color: #fff8dc;
         font-size: 14px;
-        color: #162b00;
+        color: #162b00 !important;
         transition: all 0.2s ease;
 
         &:hover {

@@ -51,7 +51,7 @@
         left: 900px;
         transform: translateX(-50%);
         background: #424921;
-        color: #fff;
+        color: #fff !important;
         padding: 6px 12px;
         border-radius: 8px;
         cursor: pointer;
@@ -162,6 +162,7 @@
 
     &:hover {
         transform: translateY(-2px);
+        background: #6a7636 !important;
     }
 
     &:disabled {
@@ -171,17 +172,17 @@
 
     &.editBtn {
         background: #424921;
-        color: #fff;
+        color: #fff !important;
     }
 
     &.saveBtn {
         background: #424921; // Xanh lá
-        color: #fff;
+        color: #fff !important;
     }
 
     &.cancelBtn {
         background: #424921; // Đỏ
-        color: #fff;
+        color: #fff !important;
     }
 
     .btnIcon {

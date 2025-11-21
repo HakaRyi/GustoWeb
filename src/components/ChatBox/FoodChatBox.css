@@ -140,6 +140,7 @@
     border: 1px solid #ddd;
     border-radius: 20px;
     outline: none;
+    color: #000 !important;
     font-size: 0.9rem;
     transition: border-color 0.2s;
 }

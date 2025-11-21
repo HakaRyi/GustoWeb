@@ -211,7 +211,7 @@ function ModalChooseOrder({ menuId, restaurantId, onClose }) {
         return (
             <div className={styles.overlay}>
                 <div className={styles.modal}>
-                    <p>Đang tải...</p>
+                    <p className={styles.load}>Đang tải...</p>
                 </div>
             </div>
         );

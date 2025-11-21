@@ -257,14 +257,14 @@ const IntegratePaymentAccount = () => {
                         <FaSave className={styles.paymentBtnIcon} /> Tạo mới
                     </button>
                 )}
-                <button
+                {/* <button
                     className={`${styles.paymentActionBtn} ${styles.paymentVerifyBtn}`}
                     onClick={handleVerify}
                     disabled={verifying || !formData.bank || !formData.bankNo || !formData.bankAccountName}
                 >
                     <FaCheckCircle className={styles.paymentBtnIcon} />{' '}
                     {verifying ? 'Đang xác minh...' : 'Xác minh tài khoản'}
-                </button>
+                </button> */}
             </div>
 
             <div className={styles.paymentNote}>

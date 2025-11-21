@@ -68,7 +68,7 @@
     border: none;
     cursor: pointer;
     font-size: 20px;
-    color: #333;
+    color: #333 !important;
     transition: transform 0.2s ease;
     &:hover {
         transform: scale(1.2);
@@ -140,7 +140,7 @@
 
     h4 {
         font-weight: 600;
-        color: #2e2e1f;
+        color: #2e2e1f !important;
         display: flex;
         justify-content: space-between;
 
@@ -161,7 +161,9 @@
         color: #56564a !important;
     }
 }
-
+.load {
+    color: #010101 !important;
+}
 .option {
     background-color: #fff;
     border-radius: 8px;
@@ -208,7 +210,7 @@
         background-color: #f2a93b;
         border: none;
         border-radius: 6px;
-        color: white;
+        color: white !important;
         font-size: 18px;
         width: 30px;
         height: 30px;
@@ -224,7 +226,7 @@
 .addButton {
     background-color: #f57c00;
     border: none;
-    color: white;
+    color: white !important;
     padding: 10px 20px;
     border-radius: 10px;
     font-weight: 600;

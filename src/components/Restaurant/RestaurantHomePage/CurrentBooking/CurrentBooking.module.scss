@@ -74,12 +74,12 @@
 
 .name {
     font-weight: 600;
-    color: #000;
+    color: #000 !important;
     font-size: 0.95rem;
 }
 
 .date {
-    color: #999;
+    color: #999 !important;
     font-size: 0.8rem;
 }
 
@@ -95,7 +95,7 @@
 
 .actionBtn {
     border: 1px solid #2e7d32;
-    color: #2e7d32;
+    color: #2e7d32 !important;
     background-color: transparent;
     border-radius: 6px;
     padding: 0.3rem 0.8rem;
