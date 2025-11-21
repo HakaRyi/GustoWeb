@@ -65,14 +65,17 @@ namespace Service
             }
             return 0;
         }
-        public async Task<int> Update(short paymentMerchantId, short accountId)
+        public async Task<int> Update(short paymentMerchantId, short accountId, PaymentMerchant request)
         {
             try
             {
                 var paymentMerchant = await paymentMerchantRepository.GetByIdAsync(paymentMerchantId);
                 if (accountId ==paymentMerchant.AccountId )
                 {
-                    
+                    paymentMerchant.BankAccountName = request.BankAccountName;
+                    paymentMerchant.BankNo = request.BankNo;
+                    paymentMerchant.Bank = request.Bank;
+                    paymentMerchant.UpdateAt = DateTime.Now;
                     return await paymentMerchantRepository.UpdateAsync(paymentMerchant);
                 }
                 return 0;
