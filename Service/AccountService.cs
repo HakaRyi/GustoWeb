@@ -289,7 +289,8 @@ namespace Service
                 }
                 string email = payload.Email; string name = payload.Name ?? email.Split('@')[0]; 
                 _logger.LogInformation($"Google login for: {email}"); 
-                var account = await _repo.GetAccountByEmail(email); if (account == null) 
+                var account = await _repo.GetAccountByEmail(email); 
+                if (account == null) 
                 { 
                     _logger.LogInformation($"Creating new account: {email}"); 
                     account = new Account 
