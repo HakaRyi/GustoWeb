@@ -126,7 +126,7 @@ function BookingHistory() {
                     const bookingId = booking.bookingId;
                     const createdAt = booking.createdAt ?? '';
                     const restaurant = booking.restaurant ?? {};
-                    const bookingStatus = booking.status ?? ''; // ex: "Confirmed"
+                    const bookingStatus = booking.status ?? '';
 
                     // For UI we show each order inside booking (một booking có thể có nhiều orders)
                     const orders = Array.isArray(booking.orders) ? booking.orders : [];
@@ -157,8 +157,6 @@ function BookingHistory() {
                                         const orderId = order.orderId;
                                         const orderStatus = order.status ?? '';
                                         const totalPrice = (order.totalPrice ?? 0) + 3000;
-
-                                        // derive whether booking/order already has foodReviews (global location is booking.foodReviews)
                                         const reviewFoodIds = new Set(
                                             (order.foodReviews ?? [])
                                                 .map((r) => r.foodId ?? r.food?.foodId)
@@ -272,7 +270,62 @@ function BookingHistory() {
                                                                             <div className={style.dishQty}>
                                                                                 Số lượng: {qty}
                                                                             </div>
+                                                                            {Array.isArray(d.optionals) &&
+                                                                                d.optionals.length > 0 && (
+                                                                                    <div
+                                                                                        className={style.optionalsBlock}
+                                                                                    >
+                                                                                        <div
+                                                                                            className={
+                                                                                                style.optionalTitle
+                                                                                            }
+                                                                                        >
+                                                                                            Toppings:
+                                                                                        </div>
+                                                                                        <ul
+                                                                                            className={
+                                                                                                style.optionalsList
+                                                                                            }
+                                                                                        >
+                                                                                            {d.optionals.map((op) => (
+                                                                                                <li
+                                                                                                    key={op.id}
+                                                                                                    className={
+                                                                                                        style.optionalItem
+                                                                                                    }
+                                                                                                >
+                                                                                                    {op.title}
+                                                                                                    {op.price > 0
+                                                                                                        ? ` (+${formatCurrency(
+                                                                                                              op.price,
+                                                                                                          )})`
+                                                                                                        : ''}
+                                                                                                </li>
+                                                                                            ))}
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                )}
                                                                         </div>
+                                                                        {Array.isArray(d.tastes) &&
+                                                                            d.tastes.length > 0 && (
+                                                                                <div className={style.tastesBlock}>
+                                                                                    <div className={style.tasteTitle}>
+                                                                                        Hương vị:
+                                                                                    </div>
+                                                                                    <ul className={style.tastesList}>
+                                                                                        {d.tastes.map((t) => (
+                                                                                            <li
+                                                                                                key={t.id}
+                                                                                                className={
+                                                                                                    style.tasteItem
+                                                                                                }
+                                                                                            >
+                                                                                                {t.taste1}
+                                                                                            </li>
+                                                                                        ))}
+                                                                                    </ul>
+                                                                                </div>
+                                                                            )}
                                                                         <div className={style.dishPrice}>
                                                                             {formatCurrency(subtotal)}
                                                                         </div>

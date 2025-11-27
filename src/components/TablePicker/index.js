@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux'; // ✅ added: lấy user hiện tại
 import style from './TablePicker.module.scss';
 import dayjs from 'dayjs';
@@ -31,16 +31,24 @@ function TablePicker({ restaurantId, visible, onClose, onSelectTable, usageTime 
     const [result, setResult] = useState({ visible: false, success: false, message: '' });
 
     const [tables, setTables] = useState([]);
-    const [selectedDate, setSelectedDate] = useState(
-        currentBooking ? dayjs(currentBooking.startTime).format('YYYY-MM-DD') : '',
-    );
+    const initialDate =
+        currentBooking && dayjs(currentBooking.startTime).isValid()
+            ? dayjs(currentBooking.startTime).format('YYYY-MM-DD')
+            : '';
+
+    const [selectedDate, setSelectedDate] = useState(initialDate);
     const [bookings, setBookings] = useState([]);
     const currentUser = useSelector((state) => state.auth?.user || null);
     const currentUserId = currentUser?.id ?? currentUser?.userId ?? null;
 
-    const [selectedTime, setSelectedTime] = useState(
-        currentBooking ? dayjs(currentBooking.startTime).format('HH:mm') : '',
-    );
+    const initialTime =
+        currentBooking && dayjs(currentBooking.startTime).isValid()
+            ? dayjs(currentBooking.startTime).format('HH:mm')
+            : '';
+
+    const [selectedTime, setSelectedTime] = useState(initialTime);
+    const dateRef = useRef(null);
+    const timeRef = useRef(null);
 
     // -------------------------
     // Fetch tables when modal opens
@@ -59,7 +67,6 @@ function TablePicker({ restaurantId, visible, onClose, onSelectTable, usageTime 
                     return;
                 }
                 const data = await res.json();
-                // normalize: ensure each table has tableId and name (some APIs use id/name)
                 setTables(Array.isArray(data) ? data : []);
             } catch (err) {
                 setResult({ visible: true, success: false, message: 'Không thể tải danh sách bàn 😢' });
@@ -299,9 +306,13 @@ function TablePicker({ restaurantId, visible, onClose, onSelectTable, usageTime 
 
                 {/* === Date + Time Picker === */}
                 <div className={style.dateTimeBox}>
-                    <div className={style.datePicker}>
-                        <label>📅 Ngày đặt:</label>
+                    {/* Nút chọn ngày */}
+                    <div className={style.dateSelectContainer}>
+                        <label className={style.labelStrong}>📅 Ngày đặt</label>
+
+                        {/* Input thật – ẩn */}
                         <input
+                            ref={dateRef}
                             type="date"
                             value={selectedDate}
                             onChange={(e) => {
@@ -310,18 +321,45 @@ function TablePicker({ restaurantId, visible, onClose, onSelectTable, usageTime 
                             }}
                             min={dayjs().format('YYYY-MM-DD')}
                             max={dayjs().add(30, 'day').format('YYYY-MM-DD')}
+                            className={style.hiddenInput}
                         />
+
+                        {/* Button đẹp */}
+                        <button
+                            className={`${style.selectBtn} ${!selectedDate ? style.selectBtnHighlight : ''}`}
+                            onClick={() => dateRef.current?.showPicker()}
+                        >
+                            {selectedDate ? selectedDate : 'Nhấn để chọn ngày'}
+                        </button>
                     </div>
 
-                    <div className={style.datePicker}>
-                        <label>🕒 Giờ bắt đầu:</label>
+                    {/* Nút chọn giờ */}
+                    <div className={style.dateSelectContainer}>
+                        <label className={style.labelStrong}>🕒 Giờ bắt đầu</label>
+
+                        {/* Input thật – ẩn */}
                         <input
+                            ref={timeRef}
                             type="time"
                             value={selectedTime}
                             onChange={(e) => setSelectedTime(e.target.value)}
                             step="1800"
                             disabled={!selectedDate}
+                            className={style.hiddenInput}
                         />
+
+                        {/* Button đẹp */}
+                        <button
+                            className={`${style.selectBtn} ${
+                                selectedDate && !selectedTime ? style.selectBtnHighlight : ''
+                            }`}
+                            onClick={() => {
+                                if (!selectedDate) return;
+                                timeRef.current?.showPicker();
+                            }}
+                        >
+                            {selectedTime ? selectedTime : 'Nhấn để chọn giờ'}
+                        </button>
                     </div>
                 </div>
 
@@ -335,22 +373,27 @@ function TablePicker({ restaurantId, visible, onClose, onSelectTable, usageTime 
                 {/* === Danh sách bàn === */}
                 <div className={style.wrapper} style={{ marginTop: 16 }}>
                     {bookingsByTable.map((table) => {
-                        const badge = getTableBadge(table);
+                        const disabled = !selectedDate || !selectedTime;
+                        const badge = !disabled ? getTableBadge(table) : { type: 'none' };
+
                         return (
                             <motion.div
                                 key={table.tableId ?? table.id}
-                                className={`${style.tableItem} ${badge.type === 'self' ? style.selectedTable : ''}`}
-                                whileHover={{ scale: 1.02 }}
-                                whileTap={{ scale: 0.98 }}
-                                onClick={() => handleSelectTable(table)}
+                                className={`
+                    ${style.tableItem}
+                    ${disabled ? style.tableDisabled : ''}
+                    ${badge.type === 'self' ? style.selectedTable : ''}
+                `}
+                                whileHover={!disabled ? { scale: 1.02 } : {}}
+                                whileTap={!disabled ? { scale: 0.98 } : {}}
+                                onClick={() => !disabled && handleSelectTable(table)}
                             >
+                                {/* Overlay mờ khi chưa chọn ngày/giờ */}
+                                {disabled && <div className={style.disabledOverlay}>Hãy chọn ngày và giờ</div>}
+
                                 <div className={style.tableHeader}>
-                                    <div className={style.tableName}>
-                                        {table.name ?? `Bàn ${table.tableId}`}
-                                        {badge.type === 'self' && (
-                                            <span className={style.greenTag}> (bạn đã chọn)</span>
-                                        )}
-                                    </div>
+                                    <div className={style.tableName}>{table.name ?? `Bàn ${table.tableId}`}</div>
+
                                     {badge.type === 'other' && <span className={style.badgeRed}>Đã có người đặt</span>}
                                     {badge.type === 'self' && <span className={style.badgeGreen}>Của bạn</span>}
                                 </div>
@@ -358,34 +401,17 @@ function TablePicker({ restaurantId, visible, onClose, onSelectTable, usageTime 
                                 <div className={style.tableDesc}>{table.position ?? table.description}</div>
                                 <div className={style.tablePerson}>👥 {table.personNumber ?? table.capacity} người</div>
 
-                                {/* Slot thời gian */}
                                 <div className={style.tableOption}>
                                     <span>Khung giờ đã đặt:</span>
                                     <div className={style.slotBox}>
                                         {table.reservedSlots.length === 0 ? (
                                             <div className={style.free}>Tất cả khung giờ trống 🌿</div>
                                         ) : (
-                                            table.reservedSlots.map((s, i) => {
-                                                const isSelf =
-                                                    (currentBooking &&
-                                                        s.bookingId &&
-                                                        currentBooking.bookingId &&
-                                                        String(s.bookingId) === String(currentBooking.bookingId)) ||
-                                                    (currentUserId &&
-                                                        s.userId &&
-                                                        String(s.userId) === String(currentUserId));
-                                                return (
-                                                    <div
-                                                        key={i}
-                                                        className={`${style.slot} ${
-                                                            isSelf ? style.selfSlot : style.otherSlot
-                                                        }`}
-                                                    >
-                                                        {s.start} - {s.end}
-                                                        {isSelf && <span style={{ marginLeft: 6 }}>(của bạn)</span>}
-                                                    </div>
-                                                );
-                                            })
+                                            table.reservedSlots.map((s, i) => (
+                                                <div key={i} className={style.slot}>
+                                                    {s.start} - {s.end}
+                                                </div>
+                                            ))
                                         )}
                                     </div>
                                 </div>
