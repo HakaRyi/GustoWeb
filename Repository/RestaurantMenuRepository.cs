@@ -22,7 +22,7 @@ namespace Repository
         public async Task<List<RestaurantMenu>> GetByRestaurantId(int id)
         {
             return await context.RestaurantMenus
-                .Where(r=>r.AccountId == id)
+                .Where(r=>r.AccountId == id && r.Status == true)
                 .ToListAsync();
         }
         public async Task<RestaurantMenu> GetByIdAsync(int id)
@@ -42,6 +42,7 @@ namespace Repository
                 .Include(r => r.Account)
                 .Include(r => r.FoodReviews)
                 .Include(r => r.OrderDetails)
+                .OrderByDescending(r => r.FoodId)
                 .ToListAsync();
         }
         //-----------------------------------------------------

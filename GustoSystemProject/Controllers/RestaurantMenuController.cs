@@ -65,6 +65,7 @@ namespace GustoSystemProject.Controllers
             return Ok(item);
         }
         [HttpGet("getByMyRestaurant")]
+        [Authorize]
         public async Task<IActionResult> GetByMyRestaurant()
         {
             var restaurantID = User.FindFirst("AccountID")?.Value;

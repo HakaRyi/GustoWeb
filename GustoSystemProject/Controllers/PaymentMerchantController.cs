@@ -48,11 +48,12 @@ namespace GustoSystemProject.Controllers
 
         // PUT api/<PaymentMerchantController>/5
         [HttpPut("{id}")]
-        public async Task<int> Put([FromRoute]short id)
+        public async Task<int> Put([FromRoute]short id, PaymentMerchant request)
         {
             var accountId = User?.FindFirst("AccountID")?.Value;
-            return await service.Update(id, short.Parse(accountId));
+            return await service.Update(id, short.Parse(accountId),request);
         }
+
 
         // DELETE api/<PaymentMerchantController>/5
         [HttpDelete("{id}")]

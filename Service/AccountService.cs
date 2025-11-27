@@ -238,16 +238,16 @@ namespace Service
             {
 
                 var result = await _repo.GetAccountByUserName(request.UserName);
-                if (result.RoleId != 1 && result != null)
-                {
-                    if (result.Password == request.Password)
-                    {
+                //if (result.RoleId != 1 && result != null)
+                //{
+                //    if (result.Password == request.Password)
+                //    {
                             
-                       await GenerateTokens(result);
+                //       await GenerateTokens(result);
  
-                    }
-                    return true;
-                }
+                //    }
+                //    return true;
+                //}
 
                 if (result != null)
                 {
