@@ -157,16 +157,16 @@ builder.Services.AddCors(options =>
         policy =>
         {
             policy.WithOrigins(
-                      "http://localhost:3000",
-                      "https://localhost:3000",
-                      "https://gustoweb.site", 
-                      "https://www.gustoweb.site", 
-                      "https://gustoweb.onrender.com") 
-                      "https://gusto-web.vercel.app",
-                      )
-                  .AllowAnyHeader()
-                  .AllowAnyMethod()
-                  .AllowCredentials();
+                    "http://localhost:3000",
+                    "https://localhost:3000",
+                    "https://gustoweb.site",
+                    "https://www.gustoweb.site",
+                    "https://gustoweb.onrender.com",
+                    "https://gusto-web.vercel.app"
+                )
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials();
         });
 });
 
