@@ -159,10 +159,11 @@ builder.Services.AddCors(options =>
             policy.WithOrigins(
                       "http://localhost:3000",
                       "https://localhost:3000",
+                      "https://gustoweb.site", 
+                      "https://www.gustoweb.site", 
+                      "https://gustoweb.onrender.com") 
                       "https://gusto-web.vercel.app",
-                      "https://gustoweb.site", // Tên mi?n g?c ?ã tr?
-                      "https://www.gustoweb.site" // Subdomain www ?ã tr?
-                      ) // Swagger UI domain
+                      )
                   .AllowAnyHeader()
                   .AllowAnyMethod()
                   .AllowCredentials();
