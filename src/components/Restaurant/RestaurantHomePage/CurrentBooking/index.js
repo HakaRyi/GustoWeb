@@ -99,7 +99,21 @@ const CurrentBooking = () => {
                                         style={{ cursor: 'pointer' }}
                                     >
                                         <div className={styles.info}>
-                                            <div className={styles.avatar}>{b.diner.avatarUrl}</div>
+                                            <div className={styles.avatar}>
+                                                {b.diner?.avatarUrl ? (
+                                                    <img
+                                                        src={b.diner.avatarUrl}
+                                                        alt={b.diner.fullName}
+                                                        className={styles.avatarImg}
+                                                    />
+                                                ) : (
+                                                    <img
+                                                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/500px-Unknown_person.jpg"
+                                                        alt="Avatar mặc định"
+                                                        className={styles.avatarImg}
+                                                    />
+                                                )}
+                                            </div>
                                             <div className={styles.details}>
                                                 <div className={styles.topRow}>
                                                     <span className={styles.name}>{b.diner.fullName}</span>
