@@ -31,12 +31,17 @@ namespace Repository
             return await context.Bookings
                 .Include(b => b.Restaurant)
                 .Include(b => b.Orders)
-                .ThenInclude(o => o.OrderDetails)
+                    .ThenInclude(x => x.OrderDetails)
+                        .ThenInclude(x => x.Optionals)
+                .Include(b => b.Orders)
+                    .ThenInclude(x => x.OrderDetails)
+                        .ThenInclude(x => x.Tastes)
+                .Include(b => b.Orders).ThenInclude(x => x.OrderDetails)
                 .ThenInclude(d => d.Food)
                 .Include(b => b.Diner)
                 .Include(b => b.Table)
                 .Include(b => b.Transaction)
-                .Where(b => b.RestaurantId == id)
+                .Where(b => b.RestaurantId == id && b.Status != "Pending")
                 .ToListAsync();
         }
         public async Task<Booking> GetBookingAsync(int id)
@@ -44,6 +49,11 @@ namespace Repository
             return await context.Bookings
                 .Include(b => b.Restaurant)
                 .Include(b => b.Orders)
+                    .ThenInclude(x => x.OrderDetails)
+                        .ThenInclude(x => x.Optionals)
+                .Include(b => b.Orders)
+                    .ThenInclude(x => x.OrderDetails)
+                        .ThenInclude(x => x.Tastes)
                 .Include(b => b.Diner)
                 .Include(b => b.Table)
                 .Include(b => b.Transaction)
