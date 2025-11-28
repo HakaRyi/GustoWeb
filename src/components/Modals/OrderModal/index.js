@@ -50,7 +50,7 @@ const OrderModal = ({
     // compute total
     const total = useMemo(() => {
         if (!order?.orderDetails || !Array.isArray(order.orderDetails)) return 0;
-        return order.orderDetails.reduce((s, it) => s + Number(it.foodPrice || 0), 0) + 3000; // + them 3k phi dich vu cua app
+        return order.orderDetails.reduce((s, it) => s + Number(it.foodPrice || 0), 0); // + them 3k phi dich vu cua app
     }, [order]);
 
     if (!isOpen) return null;
@@ -176,6 +176,37 @@ const OrderModal = ({
                                 <div key={it.orderDetailId} className={styles.itemRow}>
                                     <div className={styles.itemName}>
                                         <div className={styles.itemTitle}>{it.food.name}</div>
+
+                                        {/* Hiển thị vị (nếu có) */}
+                                        {it.tastes && Array.isArray(it.tastes) && it.tastes.length > 0 && (
+                                            <div className={styles.itemOption}>
+                                                {' '}
+                                                {it.tastes.map((taste, i) => (
+                                                    <span key={taste.id || i}>
+                                                        {taste.taste1} {/* ← đúng field là taste1 */}
+                                                        {i < it.tastes.length - 1 && ', '}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        )}
+
+                                        {/* Hiển thị tùy chọn thêm + giá */}
+                                        {it.optionals && Array.isArray(it.optionals) && it.optionals.length > 0 && (
+                                            <div className={styles.itemOption}>
+                                                {it.optionals.map((opt, i) => (
+                                                    <div key={i}>
+                                                        {opt.title}
+                                                        {opt.price > 0 && (
+                                                            <small> ({opt.price.toLocaleString()}đ)</small>
+                                                        )}{' '}
+                                                        {i < it.optionals.length - 1 && ' '}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
+
+                                        {/* Ghi chú */}
+                                        {it.note && <div className={styles.itemNote}>Ghi chú: {it.note}</div>}
                                         {/* {it.note && <div className={styles.itemNote}>Note: {it.note}</div>} */}
                                     </div>
                                     <div className={styles.itemPrice}>
