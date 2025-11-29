@@ -89,7 +89,7 @@ namespace Service
             {
                 await client.ConnectAsync(_smtpSettings.Host, _smtpSettings.Port, MailKit.Security.SecureSocketOptions.Auto);
 
-                await client.AuthenticateAsync(_smtpSettings.User, _smtpSettings.Password);
+                await client.AuthenticateAsync(string.Empty, _smtpSettings.Password);
 
                 await client.SendAsync(message);
 
