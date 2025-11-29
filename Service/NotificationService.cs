@@ -76,7 +76,7 @@ namespace Service
         {
 
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("Gusto - Say it, Savor it", _smtpSettings.User));
+            message.From.Add(new MailboxAddress("Gusto - Say it, Savor it", "haxuankhang194@gmail.com"));
             message.To.Add(new MailboxAddress(request.ReceiverName, request.ReceiverMail));
             message.Subject = request.Subject;
 
