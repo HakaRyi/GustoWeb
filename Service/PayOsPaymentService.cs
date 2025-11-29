@@ -10,6 +10,7 @@ using Net.payOS.Types;
 using Repository;
 using Repository.Models;
 using Service.Config;
+using Service.DTO.Request;
 using Transaction = Repository.Models.Transaction;
 
 namespace Service
@@ -19,13 +20,14 @@ namespace Service
         private readonly PayOS _payOs;
         private readonly OrderRepository _orderRepo;
         private readonly TransactionService _transactionService;
-
-        public PayOsPaymentService(IOptions<PayOsSettings> settings, OrderRepository orderRepo, TransactionService transactionService)
+        private readonly NotificationService _notificationService;
+        public PayOsPaymentService(IOptions<PayOsSettings> settings, OrderRepository orderRepo, TransactionService transactionService, NotificationService notificationService)
         {
             var config = settings.Value;
             _payOs = new PayOS(config.ClientId, config.ApiKey, config.ChecksumKey);
             _orderRepo = orderRepo;
             _transactionService = transactionService;
+            _notificationService = notificationService;
         }
 
         /// <summary>
@@ -115,7 +117,50 @@ namespace Service
             };
             await _transactionService.Create(transaction);
             await _orderRepo.UpdateAsync(order);
+            try
+            {
+                var diner = order.Booking.Diner;
+                if (string.IsNullOrEmpty(diner.Email))
+                {
+                    Console.WriteLine("Không có email khách hàng, bỏ qua gửi mail");
+                }
+                else
+                {
+                    var emailRequest = new SendEmailRequest
+                    {
+                        ReceiverName = diner.FullName ?? "Khách hàng",
+                        ReceiverMail = diner.Email,
+                        Subject = "Thanh toán thành công – Gusto",
+                        Messenger = $@"Chào {diner.FullName},
 
+                    Cảm ơn bạn đã thanh toán thành công tại Gusto!
+
+                    THÔNG TIN GIAO DỊCH
+                    • Mã đơn: #{order.OrderId}
+                    • Nhà hàng: {order.Booking.Restaurant.FullName}
+                    • Bàn: {order.Booking.Table.Name}
+                    • Thời gian: {order.Booking.StartTime:dd/MM/yyyy HH:mm}
+                    • Số tiền: {order.FinalPrice:N0} VND
+
+                    Thực đơn đang được chuẩn bị
+                    Chúng tôi sẽ gọi bạn khi sẵn sàng!
+
+                    Xem chi tiết: https://gustoweb.site/profile/bkh
+
+                    Trân trọng,
+                    Gusto Team – Say it, Savor it
+                    https://gustoweb.site"
+                    };
+
+                    await _notificationService.SendEmailAsync(emailRequest);
+                    Console.WriteLine($"Đã gửi email thành công đến: {diner.Email}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Gửi email thất bại (không ảnh hưởng webhook): {ex.Message}");
+                // Không throw → webhook vẫn trả 200 OK
+            }
             Console.WriteLine($"Order {orderId} marked as Paid");
             Console.WriteLine($"Webhook xử lý thành công cho orderId {orderId}");
 

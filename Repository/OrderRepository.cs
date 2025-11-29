@@ -66,6 +66,7 @@ namespace Repository
                 .Include(o => o.OrderDetails)
                 .Include(o => o.Booking).ThenInclude(o => o.Restaurant)
                  .Include(o => o.Booking).ThenInclude(o => o.Table)
+                  .Include(o => o.Booking).ThenInclude(o => o.Diner)
                 .Include(o => o.FoodReviews)
                 .Include(o => o.Promotion)
                 .Include(o => o.Table)
