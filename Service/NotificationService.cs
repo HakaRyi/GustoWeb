@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MailKit;
 using MailKit.Net.Smtp;
+using MailKit.Security;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MimeKit;
@@ -76,7 +77,7 @@ namespace Service
         {
 
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("Gusto - Say it, Savor it", "haxuankhang194@gmail.com"));
+            message.From.Add(new MailboxAddress("Gusto - Say it, Savor it", _smtpSettings.User));
             message.To.Add(new MailboxAddress(request.ReceiverName, request.ReceiverMail));
             message.Subject = request.Subject;
 
@@ -87,9 +88,9 @@ namespace Service
 
             using (var client = new SmtpClient())
             {
-                await client.ConnectAsync(_smtpSettings.Host, _smtpSettings.Port, MailKit.Security.SecureSocketOptions.SslOnConnect);
+                await client.ConnectAsync(_smtpSettings.Host, _smtpSettings.Port, SecureSocketOptions.SslOnConnect);
 
-                await client.AuthenticateAsync(string.Empty, _smtpSettings.Password);
+                await client.AuthenticateAsync(_smtpSettings.User ,_smtpSettings.Password);
 
                 await client.SendAsync(message);
 
