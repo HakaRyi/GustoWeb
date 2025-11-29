@@ -152,7 +152,7 @@ namespace Service
                     https://gustoweb.site"
                     };
 
-                    await _notificationService.SendEmailAsync(emailRequest);
+                    await _notificationService.SendEmailAsync2(emailRequest);
                     Console.WriteLine($"Đã gửi email thành công đến: {diner.Email}");
                 }
             }
