@@ -49,6 +49,16 @@ namespace Repository
             return await context.Bookings
                 .Include(b => b.Restaurant)
                 .Include(b => b.Orders)
+                .Include(b => b.Diner)
+                .Include(b => b.Table)
+                .Include(b => b.Transaction)
+                .FirstOrDefaultAsync(b=>b.BookingId==id);
+        }
+        public async Task<Booking> GetBookingByIdAsync(int id)
+        {
+            return await context.Bookings
+                .Include(b => b.Restaurant)
+                .Include(b => b.Orders)
                     .ThenInclude(x => x.OrderDetails)
                         .ThenInclude(x => x.Optionals)
                 .Include(b => b.Orders)
@@ -60,7 +70,7 @@ namespace Repository
                 .Include(b => b.Diner)
                 .Include(b => b.Table)
                 .Include(b => b.Transaction)
-                .FirstOrDefaultAsync(b=>b.BookingId==id);
+                .FirstOrDefaultAsync(b => b.BookingId == id);
         }
         public async Task<Booking> GetBookingByMeAndResAsync(short dinerId, short resId)
         {

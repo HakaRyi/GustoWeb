@@ -46,7 +46,7 @@ namespace Service
         {
             try
             {
-                return await repo.GetBookingAsync(id);
+                return await repo.GetBookingByIdAsync(id);
             }
             catch (Exception ex)
             {
@@ -212,7 +212,7 @@ namespace Service
         {
             try
             {
-                var booking = await GetBooking(bookingId);
+                var booking = await repo.GetBookingAsync(bookingId);
 
                 if (booking.DinerId == dinnerId && booking != null)
                 {
