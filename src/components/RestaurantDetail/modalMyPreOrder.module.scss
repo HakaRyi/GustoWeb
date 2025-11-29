@@ -418,13 +418,16 @@
     font-size: 14px;
     background: linear-gradient(90deg, #41c345, #83ff87);
     border-radius: 8px;
+    font-weight: 400 !important;
     padding: 8px 10px;
     color: #333;
     line-height: 1.4;
+    font-family: 'Poppins', sans-serif;
 
     @media (max-width: 576px) {
         font-size: 12px;
         padding: 6px 8px;
+        font-weight: 400 !important;
     }
 }
 
