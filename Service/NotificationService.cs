@@ -87,7 +87,7 @@ namespace Service
 
             using (var client = new SmtpClient())
             {
-                await client.ConnectAsync(_smtpSettings.Host, _smtpSettings.Port, MailKit.Security.SecureSocketOptions.Auto);
+                await client.ConnectAsync(_smtpSettings.Host, _smtpSettings.Port, MailKit.Security.SecureSocketOptions.SslOnConnect);
 
                 await client.AuthenticateAsync(string.Empty, _smtpSettings.Password);
 
