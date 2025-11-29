@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Text.Json;
+using AutoMapper;
 using MailKit;
 using MailKit.Net.Smtp;
 using MailKit.Security;
@@ -8,6 +9,7 @@ using MimeKit;
 using Repository;
 using Repository.ModelExtensions;
 using Repository.Models;
+using RestSharp;
 using Service.DTO.Request;
 using Service.DTO.Response;
 using Service.Settings;
@@ -95,6 +97,46 @@ namespace Service
                 await client.SendAsync(message);
 
                 await client.DisconnectAsync(true);
+            }
+        }
+        public async Task SendEmailAsync2(SendEmailRequest request)
+        {
+            try
+            {
+                var client = new RestClient("https://api.brevo.com/v3/smtp/email");
+
+                var body = new
+                {
+                    sender = new
+                    {
+                        name = "Gusto - Say it, Savor it",
+                        email = "haxuankhang194@gmail.com"
+                    },
+                    to = new[]
+                    {
+                        new { email = request.ReceiverMail, name = request.ReceiverName }
+                    },
+                    subject = request.Subject,
+                    htmlContent = $"<p>{request.Messenger}</p>"
+                };
+
+                var restRequest = new RestRequest("", Method.Post);
+                restRequest.AddHeader("api-key", _smtpSettings.ApiKey);
+                restRequest.AddHeader("Content-Type", "application/json");
+                restRequest.AddStringBody(JsonSerializer.Serialize(body), DataFormat.Json);
+
+                var response = await client.ExecuteAsync(restRequest);
+
+                if (!response.IsSuccessful)
+                {
+                    _logger.LogError("Brevo API Error: " + response.Content);
+                    throw new Exception("Cannot send email: " + response.Content);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error sending email via Brevo API");
+                throw;
             }
         }
     }
