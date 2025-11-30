@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux';
 import { loginSuccess } from '~/redux/authSlice';
 import { GoogleLogin } from '@react-oauth/google';
 import { customFetch } from '~/config/customFetch';
+import { jwtDecode } from 'jwt-decode';
 const cx = className.bind(styles);
 
 function LoginForm() {
@@ -64,39 +65,80 @@ function LoginForm() {
             setResult({ visible: true, success: false, message: loginError });
         }
     };
+    // const handleGoogleSuccess = async (credentialResponse) => {
+    //     try {
+    //         setLoadingVisible(true);
+    //         console.log('🔐 Google Success:', credentialResponse);
+
+    //         const response = await customFetch('https://gustoweb.onrender.com/api/Account/google-login', {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             credentials: 'include',
+    //             body: JSON.stringify({
+    //                 idToken: credentialResponse.credential,
+    //             }),
+    //         });
+    //         console.log('Credential:', credentialResponse.credential);
+    //         if (response.ok) {
+    //             console.log('✅ Google login thành công!');
+
+    //             // Lấy thông tin user từ Google (hoặc từ API response)
+    //             const googleUser = JSON.parse(atob(credentialResponse.credential.split('.')[1]));
+
+    //             const userData = {
+    //                 username: googleUser.email,
+    //                 email: googleUser.email,
+    //                 fullName: googleUser.name,
+    //             };
+
+    //             dispatch(loginSuccess({ user: userData }));
+    //             setLoadingVisible(false);
+    //             navigate(routes.home);
+    //         } else {
+    //             throw new Error('Google login failed');
+    //         }
+    //     } catch (error) {
+    //         console.error('Google login error:', error);
+    //         console.log('Credential:', credentialResponse.credential);
+    //         setLoadingVisible(false);
+    //         setResult({
+    //             visible: true,
+    //             success: false,
+    //             message: 'Đăng nhập Google thất bại!',
+    //         });
+    //     }
+    // };
     const handleGoogleSuccess = async (credentialResponse) => {
         try {
             setLoadingVisible(true);
-            console.log('🔐 Google Success:', credentialResponse);
 
             const response = await customFetch('https://gustoweb.onrender.com/api/Account/google-login', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
                 body: JSON.stringify({
                     idToken: credentialResponse.credential,
                 }),
             });
 
-            if (response.ok) {
-                console.log('✅ Google login thành công!');
-
-                // Lấy thông tin user từ Google (hoặc từ API response)
-                const googleUser = JSON.parse(atob(credentialResponse.credential.split('.')[1]));
-                const userData = {
-                    username: googleUser.email,
-                    email: googleUser.email,
-                    fullName: googleUser.name,
-                };
-
-                dispatch(loginSuccess({ user: userData }));
-                setLoadingVisible(false);
-                navigate(routes.home);
-            } else {
+            if (!response.ok) {
                 throw new Error('Google login failed');
             }
+
+            // Giải mã token an toàn
+            const googleUser = jwtDecode(credentialResponse.credential);
+
+            const userData = {
+                username: googleUser.email,
+                email: googleUser.email,
+                fullName: googleUser.name,
+            };
+
+            dispatch(loginSuccess({ user: userData }));
+            setLoadingVisible(false);
+            navigate(routes.home);
         } catch (error) {
             console.error('Google login error:', error);
             setLoadingVisible(false);
@@ -122,13 +164,13 @@ function LoginForm() {
                     <label className={styles.label} htmlFor="userName">
                         Username
                     </label>
-                    <Field type="text" id="userName" name="userName" />
+                    <Field type="text" id="userName" name="userName" className={cx('input-control')} />
                     <ErrorMessage name="userName" component="div" className={cx('error')} />
                     <br />
                     <label className={styles.label} htmlFor="password">
                         Password
                     </label>
-                    <Field type="password" id="password" name="password" />
+                    <Field type="password" id="password" name="password" className={cx('input-control')} />
                     <ErrorMessage name="password" component="div" className={cx('error')} />
                     <br />
                     <button type="submit">Login</button>

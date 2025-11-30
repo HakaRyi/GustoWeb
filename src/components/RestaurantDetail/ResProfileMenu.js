@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { customFetch } from '~/config/customFetch';
-import { FaStar, FaMapMarkedAlt, FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import { FaStar, FaMapMarkedAlt, FaChevronDown, FaChevronUp, FaHeart } from 'react-icons/fa';
 import DirectionMap from '../Maps/DirectionMap';
 import styles from './ResProfileMenu.module.scss';
 import ModalMyPreOrder from '~/components/RestaurantDetail/modalMyPreOrder';
@@ -13,6 +13,7 @@ const MAP_BG_IMAGE = 'https://media.wired.com/photos/59269cd37034dc5f91dec26e/ma
 function ResProfileMenu({ id }) {
     const [profile, setProfile] = useState(null);
     const [showModal, setShowModal] = useState(false);
+    const [isLiked, setIsLiked] = useState(false);
     const [orders, setOrders] = useState([
         {
             id: 1,
@@ -45,13 +46,39 @@ function ResProfileMenu({ id }) {
         setOrders(orders.filter((o) => o.id !== id));
     };
 
-    const handleLikeClick = () => {
+    const handleLikeClick = async () => {
         if (!isAuthenticated) {
             navigate('/login');
             return;
         }
-        // Logic cho hành động "Like" sẽ được thêm sau
-        console.log('Like button clicked');
+
+        try {
+            if (!isLiked) {
+                // LIKE
+                const response = await customFetch('https://gustoweb.onrender.com/api/Favourite', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ restaurantId: id }),
+                });
+
+                if (response.ok) {
+                    setIsLiked(true);
+                }
+            } else {
+                // UNLIKE
+                const response = await customFetch(`https://gustoweb.onrender.com/api/Favourite/${id}`, {
+                    method: 'DELETE',
+                    credentials: 'include',
+                });
+
+                if (response.ok) {
+                    setIsLiked(false);
+                }
+            }
+        } catch (err) {
+            console.log('Like error:', err);
+        }
     };
 
     const handlePreOrderClick = () => {
@@ -68,7 +95,20 @@ function ResProfileMenu({ id }) {
             const data = await response.json();
             setProfile(data);
         };
+        const fetchIsLiked = async () => {
+            try {
+                const response = await customFetch(`https://gustoweb.onrender.com/api/Favourite/isLiked/${id}`, {
+                    method: 'GET',
+                    credentials: 'include',
+                });
+                const data = await response.json();
+                setIsLiked(data.result);
+            } catch (err) {
+                console.log('Error checking liked:', err);
+            }
+        };
         fetchProfile();
+        fetchIsLiked();
     }, [id]);
 
     if (!profile) return <div>Loading...</div>;
@@ -98,7 +138,8 @@ function ResProfileMenu({ id }) {
 
                         <div className={styles.profileActions}>
                             <button className={styles.likeButton} onClick={handleLikeClick}>
-                                ❤ Thích
+                                <FaHeart className={`${styles.heartIcon} ${isLiked ? styles.liked : ''}`} />
+                                <span className={styles.likeText}>{isLiked ? 'Đã thích' : 'Thích'}</span>
                             </button>
                             <button className={styles.preOrderButton} onClick={handlePreOrderClick}>
                                 Xem đơn hàng của bạn

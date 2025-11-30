@@ -89,7 +89,12 @@
 .likeButton {
     background-color: #e67e22;
     color: #fff;
-    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px; // tạo khoảng cách icon – text
+    min-width: 150px;
+    padding: 10px 20px;
     border: none;
     border-radius: 6px;
     cursor: pointer;
@@ -98,6 +103,9 @@
 
     &:hover {
         background-color: #ca6f1e;
+    }
+    &.liked:hover {
+        color: #ff002f;
     }
 }
 
@@ -245,5 +253,32 @@
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+.heartIcon {
+    font-size: 20px;
+    margin-right: 6px;
+    color: #ffffff; /* Trắng khi chưa thích */
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.liked {
+    color: #ff1640 !important; /* Đỏ khi đã thích */
+    transform: scale(1.2); /* nhẹ khi nhấn */
+    animation: heartbeat 0.3s ease;
+}
+
+@keyframes heartbeat {
+    0% {
+        transform: scale(1);
+    }
+    30% {
+        transform: scale(1.25);
+    }
+    60% {
+        transform: scale(0.9);
+    }
+    100% {
+        transform: scale(1);
     }
 }
