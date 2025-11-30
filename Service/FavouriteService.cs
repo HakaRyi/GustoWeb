@@ -37,6 +37,18 @@ namespace Service
                 RestaurantName = fav.Restaurant?.FullName
             };
         }
+        public async Task<bool> IsResLiked(short dinerId, short resId)
+        {
+            var fav = await _repository.GetMyFavorate(dinerId,resId);
+            if (fav == null) {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
+        }
 
         public async Task AddAsync(FavouriteRequest request)
         {

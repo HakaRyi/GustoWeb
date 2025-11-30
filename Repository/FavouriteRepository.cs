@@ -27,6 +27,12 @@ namespace Repository
                 .Include(f => f.Restaurant)
                 .FirstOrDefaultAsync(f => f.Id == id);
         }
+        public async Task<Favourite?> GetMyFavorate(short dinerId, short resId)
+        {
+            return await _context.Favourites
+                .AsNoTracking()
+                .FirstOrDefaultAsync(f => f.DinerId == dinerId && f.RestaurantId == resId);
+        }
 
         public async Task AddAsync(Favourite favourite)
         {

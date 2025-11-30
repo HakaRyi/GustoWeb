@@ -36,6 +36,21 @@ namespace GustoSystemProject.Controllers
             if (result == null) return NotFound();
             return Ok(result);
         }
+        [HttpGet("isLiked/{resId}")]
+        public async Task<IActionResult> IsLiked(short resId)
+        {
+            var dinerId = User.FindFirst("AccountID")?.Value;
+            var result = await _service.IsResLiked(short.Parse(dinerId),resId);
+            if (result == false)
+            {
+                return Ok(new { result = result });
+            }
+            else
+            {
+                return Ok(new { result = result });
+            }
+                
+        }
 
         [HttpPost]
         public async Task<IActionResult> Add(FavouriteRequest request)
