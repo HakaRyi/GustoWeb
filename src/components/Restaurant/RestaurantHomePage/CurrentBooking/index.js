@@ -56,8 +56,8 @@ const CurrentBooking = () => {
     };
 
     const columns = [
-        { title: 'Booked', status: 'booked', actionLabel: 'Ready', next: 'Available' },
-        { title: 'Available', status: 'available', actionLabel: 'Done', next: 'Done' },
+        { title: 'Đã đặt', status: 'booked', actionLabel: 'Ready', next: 'Available' },
+        { title: 'Có thể dùng', status: 'available', actionLabel: 'Done', next: 'Done' },
     ];
 
     //Xử lý cho modal:

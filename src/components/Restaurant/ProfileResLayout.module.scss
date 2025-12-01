@@ -335,3 +335,141 @@
         gap: 10px;
     }
 }
+/* Nút "Xem người đã thích" */
+.likersBtn {
+    margin-top: 16px;
+    background: transparent;
+    border: 2px solid #e91e63;
+    color: #e91e63;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background: #e91e6311;
+        transform: translateY(-1px);
+    }
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+}
+
+.heartIcon {
+    font-size: 18px;
+    animation: heartbeat 2s infinite;
+}
+
+@keyframes heartbeat {
+    0%,
+    100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+/* Modal người thích */
+.likersOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+}
+
+.likersModal {
+    background: white;
+    border-radius: 16px;
+    width: 400px;
+    max-width: 92%;
+    max-height: 80vh;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    animation: modalSlideUp 0.35s ease-out;
+}
+
+@keyframes modalSlideUp {
+    from {
+        transform: translateY(60px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.likersHeader {
+    padding: 18px 24px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+}
+
+.closeModalBtn {
+    background: none;
+    border: none;
+    font-size: 32px;
+    cursor: pointer;
+    color: #aaa;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s;
+
+    &:hover {
+        background: #f0f0f0;
+        color: #666;
+    }
+}
+
+.likersList {
+    max-height: 60vh;
+    overflow-y: auto;
+    padding: 8px 0;
+}
+
+.likerItem {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 24px;
+    transition: background 0.2s;
+
+    &:hover {
+        background: #f8f9fa;
+    }
+}
+
+.likerAvatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #eee;
+}
+
+.likerName {
+    font-weight: 600;
+    color: #333;
+    font-size: 15px;
+}

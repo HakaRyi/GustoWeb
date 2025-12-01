@@ -48,13 +48,13 @@ function RestaurantHomePage() {
                         className={`${style.navBtn} ${activeTab === 'current' ? style.active : ''}`}
                         onClick={() => setActiveTab('current')}
                     >
-                        Current
+                        Đơn gần đây
                     </div>
                     <div
                         className={`${style.navBtn} ${activeTab === 'history' ? style.active : ''}`}
                         onClick={() => setActiveTab('history')}
                     >
-                        History
+                        Lịch Sử
                     </div>
                 </div>
             </div>

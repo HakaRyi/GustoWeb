@@ -151,7 +151,7 @@ const OrderModal = ({
                 </div>
 
                 <div className={styles.meta}>
-                    <div className={styles.orderCode}>Order : {order?.orderId || '—'}</div>
+                    <div className={styles.orderCode}>Đơn : #{order?.orderId || '—'}</div>
                     <div className={styles.customer}>
                         <div className={styles.customerName}>{booking.diner.fullName || 'Khách'}</div>
                         {phone ? (
@@ -223,6 +223,7 @@ const OrderModal = ({
                         )}
                     </div>
                 </div>
+                <div className={styles.orderCode}>Ghi chú : {order?.note || 'Không có'}</div>
 
                 <div className={styles.footer}>
                     <div className={styles.footerLeft}>
@@ -237,7 +238,7 @@ const OrderModal = ({
                         )}
                     </div>
                     <div className={styles.footerRight}>
-                        <div className={styles.totalLabel}>Total:</div>
+                        <div className={styles.totalLabel}>Tổng cộng:</div>
                         <div className={styles.totalValue}>{total.toLocaleString('vi-VN')} VND</div>
                         {/* Optional Done button (if you want separate Done action) */}
                         {booking.status === 'Available' && (
