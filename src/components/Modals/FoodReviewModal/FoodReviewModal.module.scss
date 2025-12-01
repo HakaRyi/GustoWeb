@@ -198,9 +198,9 @@ $empty-star: #bdc3c7;
     }
 }
 
-.noReviewsMessage {
+.noReviewsMessage p {
     text-align: center;
-    color: $secondary-color;
+    color: black !important;
     font-size: 0.9rem;
     padding: 20px 0;
 }
