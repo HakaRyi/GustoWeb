@@ -22,6 +22,20 @@ namespace Service
 
             return favs.Select(f => f.Restaurant).ToList();
         }
+        public async Task<List<Favourite>> GetAccountsLikeRes(short resId)
+        {
+            try
+            {
+                return await _repository.GetAccountsLikeRes(resId);
+            }
+            catch 
+            {
+
+            }
+            return new List<Favourite>();
+            
+
+        }
 
         public async Task<FavouriteResponse?> GetByIdAsync(short id)
         {

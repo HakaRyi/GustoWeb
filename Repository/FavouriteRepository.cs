@@ -17,7 +17,16 @@ namespace Repository
         {
             return await _context.Favourites
                 .Include(f => f.Restaurant)
+                .Include(f => f.Diner)
                 .Where(f => f.DinerId == dinerId)
+                .ToListAsync();
+        }
+        public async Task<List<Favourite>> GetAccountsLikeRes(short resId)
+        {
+            return await _context.Favourites
+                .Include(f => f.Restaurant)
+                .Include(f => f.Diner)
+                .Where(f => f.RestaurantId == resId)
                 .ToListAsync();
         }
 
@@ -25,8 +34,10 @@ namespace Repository
         {
             return await _context.Favourites
                 .Include(f => f.Restaurant)
+                .Include(f=>f.Diner)
                 .FirstOrDefaultAsync(f => f.Id == id);
         }
+
         public async Task<Favourite?> GetMyFavorate(short dinerId, short resId)
         {
             return await _context.Favourites

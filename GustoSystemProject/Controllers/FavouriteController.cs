@@ -28,6 +28,16 @@ namespace GustoSystemProject.Controllers
             var result = await _service.GetByDinerIdAsync(short.Parse(id));
             return Ok(result);
         }
+        [HttpGet("GetAccountsLikeRes")]
+        public async Task<ActionResult> GetAccountsLikeRes()
+        {
+            var id = User.FindFirst("AccountID")?.Value;
+
+            if (id == null)
+                return Unauthorized(new { message = "Không tìm thấy thông tin người dùng trong token" });
+            var result = await _service.GetAccountsLikeRes(short.Parse(id));
+            return Ok(result);
+        }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<FavouriteResponse>> GetById(short id)
