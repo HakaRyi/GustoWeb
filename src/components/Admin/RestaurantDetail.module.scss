@@ -1,0 +1,720 @@
+// --- VARIABLES (KHAI BÁO BIẾN MÀU) ---
+$primary-color: #007bff; // Xanh dương (Lưu)
+$text-dark: #2c3e50;
+$text-gray: #6c757d;
+$bg-light: #f8f9fa;
+$border-color: #dee2e6;
+$shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.05);
+$shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
+$border-radius: 12px;
+
+// Màu chức năng
+$success-color: #28a745; // Thêm (Xanh lá)
+$info-color: #17a2b8; // Xem (Xanh ngọc)
+$warning-color: #f39c12; // Sửa (Cam)
+$danger-color: #dc3545; // Xóa (Đỏ)
+$price-color: #e67e22; // Màu giá tiền (Cam đậm)
+
+.container {
+    padding: 30px;
+    background-color: #f4f6f9; // Nền xám xanh nhẹ
+    min-height: 100vh;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    position: relative;
+}
+
+// Nút quay lại
+.backButton {
+    background: white;
+    border: 1px solid $border-color;
+    padding: 10px 24px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 600;
+    color: $text-gray;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 25px;
+    box-shadow: $shadow-soft;
+    transition: all 0.2s ease;
+
+    &:hover {
+        color: $primary-color;
+        border-color: $primary-color;
+        transform: translateX(-5px);
+        box-shadow: $shadow-hover;
+    }
+}
+
+.loading,
+.error {
+    text-align: center;
+    padding: 40px;
+    font-size: 1.2rem;
+    background: white;
+    border-radius: $border-radius;
+    box-shadow: $shadow-soft;
+    margin: 30px auto;
+    max-width: 600px;
+}
+
+.error {
+    color: $danger-color;
+    border: 1px solid lighten($danger-color, 30%);
+}
+
+// --- KHỐI SECTION CHUNG ---
+.section {
+    background: white;
+    padding: 30px;
+    border-radius: $border-radius;
+    box-shadow: $shadow-soft;
+    border: 1px solid rgba(0, 0, 0, 0.02);
+    transition: transform 0.2s, box-shadow 0.2s;
+
+    &:hover {
+        box-shadow: $shadow-hover;
+    }
+}
+
+// --- HEADER SECTION ---
+.sectionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid $bg-light;
+
+    .title {
+        margin: 0;
+        padding: 0;
+        border: none;
+    }
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: $text-dark;
+
+    svg {
+        color: $primary-color;
+        filter: drop-shadow(0 2px 4px rgba(0, 123, 255, 0.2));
+    }
+}
+
+// Nút Thêm Mới
+.addBtn {
+    background-color: $success-color;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);
+    transition: all 0.2s;
+
+    &:hover {
+        background-color: darken($success-color, 5%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(40, 167, 69, 0.4);
+    }
+}
+
+// --- PROFILE SECTION ---
+.profileContent {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+.avatarSection {
+    flex-shrink: 0;
+}
+
+.avatarImg,
+.placeholderAvatar {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid white;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.placeholderAvatar {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 50px;
+    color: #fff;
+}
+
+.infoSection {
+    flex-grow: 1;
+
+    h3.resName {
+        margin: 0 0 15px 0;
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: $text-dark;
+        letter-spacing: -0.5px;
+    }
+
+    p {
+        margin: 8px 0;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: $text-gray;
+
+        svg {
+            color: $primary-color;
+        }
+
+        strong {
+            color: $text-dark;
+            min-width: 100px;
+        }
+    }
+}
+
+// --- GRID CONTAINER ---
+.gridContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-top: 30px;
+
+    @media (max-width: 1200px) {
+        gap: 20px;
+    }
+
+    @media (max-width: 992px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+// --- TABLE STYLES ---
+.listContainer {
+    overflow-x: auto;
+    border-radius: 8px;
+    border: 1px solid $border-color;
+}
+
+.dataTable {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+
+    thead th {
+        background-color: #f8f9fa;
+        color: #495057;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 0.5px;
+        padding: 16px;
+        border-bottom: 2px solid $border-color;
+        text-align: left;
+        white-space: nowrap;
+    }
+
+    tbody tr {
+        border-bottom: 1px solid $border-color;
+        transition: background 0.15s;
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        &:hover {
+            background-color: #f1f5f9;
+        }
+
+        td {
+            padding: 14px 16px;
+            color: $text-dark;
+            font-size: 0.95rem;
+            vertical-align: middle;
+        }
+    }
+}
+
+// Cột hành động
+.actionCol {
+    width: 160px; // Đủ rộng cho 3 nút
+    text-align: center;
+}
+
+// Canh giữa các nút trong cột cuối
+td:last-child {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-start;
+    align-items: center;
+    border-bottom: none;
+}
+
+// --- BUTTON ICONS (Sửa/Xóa/Xem) ---
+.iconBtnEdit,
+.iconBtnDelete,
+.iconBtnView {
+    border: none;
+    background: white;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-size: 14px;
+}
+
+// Nút Xem (Con mắt - Màu Cyan)
+.iconBtnView {
+    color: $info-color;
+    background: lighten($info-color, 45%);
+
+    &:hover {
+        background: $info-color;
+        color: white;
+    }
+}
+
+// Nút Sửa (Bút chì - Màu Cam)
+.iconBtnEdit {
+    color: $warning-color;
+    background: lighten($warning-color, 45%);
+
+    &:hover {
+        background: $warning-color;
+        color: white;
+    }
+}
+
+// Nút Xóa (Thùng rác - Màu Đỏ)
+.iconBtnDelete {
+    color: $danger-color;
+    background: lighten($danger-color, 40%);
+
+    &:hover {
+        background: $danger-color;
+        color: white;
+    }
+}
+
+// --- MENU SPECIFIC STYLES ---
+.menuName {
+    font-weight: 600;
+    color: $text-dark;
+    white-space: nowrap;
+}
+
+.menuPrice {
+    color: $price-color;
+    font-weight: 700;
+    font-family: 'Roboto Mono', monospace; // Font số đơn lập
+    font-size: 1rem;
+}
+
+.menuOldPrice {
+    text-decoration: line-through;
+    color: #adb5bd;
+    font-size: 0.85rem;
+    margin-left: 8px;
+}
+
+.descCell {
+    max-width: 180px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: $text-gray;
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+// Tags Trạng thái
+.tagGreen,
+.tagRed {
+    padding: 6px 12px;
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    display: inline-block;
+}
+
+.tagGreen {
+    color: #0f9d58;
+    background: #e6f4ea;
+}
+
+.tagRed {
+    color: $danger-color;
+    background: #fce8e6;
+}
+
+// --- MODAL STYLES (Popup) ---
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+    animation: fadeIn 0.2s;
+}
+
+.modalContent {
+    background: white;
+    width: 550px;
+    max-width: 95%;
+    border-radius: 16px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh;
+    animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modalHeader {
+    padding: 20px 30px;
+    background: linear-gradient(135deg, $primary-color 0%, darken($primary-color, 10%) 100%);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+
+    h3 {
+        margin: 0;
+        font-size: 1.25rem;
+        font-weight: 600;
+    }
+
+    button {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: white;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+    }
+}
+
+.modalBody {
+    padding: 30px;
+    overflow-y: auto;
+}
+
+// Style cho Form nhập liệu
+.formGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+
+    @media (max-width: 600px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.formGroup {
+    margin-bottom: 20px;
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: $text-dark;
+        font-size: 0.9rem;
+    }
+
+    input,
+    textarea,
+    select {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ced4da;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.2s;
+        font-family: inherit;
+
+        &:focus {
+            outline: none;
+            border-color: $primary-color;
+            box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1);
+        }
+    }
+
+    textarea {
+        resize: vertical;
+    }
+}
+
+// --- FILE UPLOAD STYLES (MỚI) ---
+.fileUploadWrapper {
+    margin-bottom: 10px;
+}
+
+.fileInput {
+    display: none;
+}
+
+.fileLabel {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: white;
+    border: 1px dashed $primary-color;
+    color: $primary-color;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+    width: 100%;
+    justify-content: center;
+
+    &:hover {
+        background-color: lighten($primary-color, 45%);
+        transform: translateY(-2px);
+    }
+
+    // Animation xoay cho icon loading
+    .spinner {
+        animation: spin 1s linear infinite;
+    }
+}
+
+.imagePreview {
+    width: 100%;
+    height: 180px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f9fa;
+    position: relative;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.loadingOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $text-dark;
+    font-weight: bold;
+    z-index: 2;
+}
+
+// --- VIEW DETAIL STYLES (Style cho chế độ Xem) ---
+.viewDetailContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.detailItem {
+    display: flex;
+    padding: 12px;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    align-items: center;
+    border: 1px solid #eee;
+
+    &[style*="flex-direction: column"] {
+        align-items: flex-start;
+        gap: 8px;
+    }
+}
+
+.label {
+    width: 130px;
+    font-weight: 700;
+    color: $text-gray;
+    flex-shrink: 0;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.value {
+    color: $text-dark;
+    font-weight: 500;
+    font-size: 1.05rem;
+    word-break: break-word;
+}
+
+.descText {
+    margin: 0;
+    line-height: 1.6;
+    color: #555;
+    font-style: italic;
+}
+
+// --- MODAL FOOTER ---
+.modalFooter {
+    padding: 20px 30px;
+    background-color: #f8f9fa;
+    border-top: 1px solid $border-color;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+}
+
+.btnCancel {
+    background: white;
+    border: 1px solid #ced4da;
+    padding: 10px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    color: $text-gray;
+    transition: all 0.2s;
+
+    &:hover {
+        background: #e2e6ea;
+        color: $text-dark;
+    }
+}
+
+.btnSave {
+    background: $primary-color;
+    border: none;
+    padding: 10px 28px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+    transition: all 0.2s;
+
+    &:hover {
+        background: darken($primary-color, 8%);
+        transform: translateY(-2px);
+    }
+
+    // Khi đang upload thì mờ đi
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+    }
+}
+
+.searchWrapper {
+    margin: 20px 0; // Cách trên dưới
+    position: relative;
+    max-width: 600px; // Giới hạn chiều rộng
+}
+
+.searchInput {
+    width: 100%;
+    padding: 12px 15px 12px 45px; // Padding trái lớn để chứa icon
+    border: 1px solid #e0e0e0;
+    border-radius: 50px; // Bo tròn viên thuốc
+    font-size: 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+    transition: all 0.3s ease;
+    outline: none;
+
+    &:focus {
+        border-color: $primary-color;
+        box-shadow: 0 4px 15px rgba(0, 123, 255, 0.15);
+    }
+}
+
+.searchIcon {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: $text-gray;
+    font-size: 1.1rem;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

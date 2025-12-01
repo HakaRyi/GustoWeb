@@ -8,7 +8,6 @@ import preorder from '../assets/preorder.png';
 import tracking from '../assets/tracking.png';
 
 
-
 function Home() {
   useEffect(() => {
     // 👇 Hiệu ứng fade-in / fade-out khi cuộn

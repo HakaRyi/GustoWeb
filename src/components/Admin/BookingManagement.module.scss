@@ -1,0 +1,89 @@
+$primary: #0d6efd;
+$dark: #343a40;
+$light-bg: #f8f9fa;
+$border-color: #dee2e6;
+$shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+.container {
+    padding: 30px;
+    background-color: #f4f6f9;
+    min-height: 100vh;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+.header {
+    margin-bottom: 25px;
+
+    .title {
+        font-weight: 700;
+        color: $dark;
+        font-size: 1.75rem;
+    }
+}
+
+.searchBar {
+    margin-bottom: 25px;
+    max-width: 500px;
+    box-shadow: $shadow-soft;
+    border-radius: 8px;
+    overflow: hidden;
+
+    input {
+        border: 1px solid $border-color;
+        padding: 12px 15px;
+
+        &:focus {
+            box-shadow: none;
+            border-color: $primary;
+        }
+    }
+}
+
+.tableWrapper {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: $shadow-soft;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+
+    thead th {
+        background-color: #f8f9fa;
+        color: #495057;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        padding: 15px;
+        border-bottom: 2px solid $border-color;
+    }
+
+    tbody td {
+        padding: 15px;
+        font-size: 0.95rem;
+        vertical-align: middle;
+    }
+}
+
+.paginationContainer {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+
+    :global(.page-link) {
+        color: $dark;
+        border: none;
+        margin: 0 3px;
+        border-radius: 8px;
+        font-weight: 600;
+
+        &:hover {
+            background-color: #e9ecef;
+            color: $primary;
+        }
+    }
+
+    :global(.page-item.active .page-link) {
+        background-color: $primary;
+        color: white;
+        box-shadow: 0 4px 10px rgba(13, 110, 253, 0.3);
+    }
+}

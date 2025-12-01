@@ -1,0 +1,562 @@
+// --- VARIABLES (KHAI BÁO BIẾN MÀU) ---
+$primary: #007bff;
+$dark: #2c3e50;
+$gray: #6c757d;
+$light-bg: #f8f9fa;
+$danger: #dc3545;
+$success: #28a745;
+$border-color: #dee2e6;
+$shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.05);
+$shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+.container {
+    padding: 30px;
+    background-color: #f4f6f9;
+    min-height: 100vh;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+// HEADER
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+
+    .titleWrapper {
+        h2 {
+            margin: 0;
+            color: $dark;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .subtitle {
+            margin: 5px 0 0 0;
+            color: $gray;
+            font-size: 0.9rem;
+        }
+    }
+
+    .addBtn {
+        background: $success;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 50px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);
+        transition: all 0.2s;
+
+        &:hover {
+            background: darken($success, 5%);
+            transform: translateY(-2px);
+        }
+    }
+}
+
+// SEARCH BAR (Dùng chung cho cả List và MenuManager)
+.searchWrapper {
+    margin-bottom: 30px;
+    position: relative;
+    max-width: 600px;
+}
+
+.searchInput {
+    width: 100%;
+    padding: 12px 15px 12px 45px;
+    border: 1px solid $border-color;
+    border-radius: 50px;
+    font-size: 1rem;
+    box-shadow: $shadow-soft;
+    transition: all 0.3s ease;
+    outline: none;
+
+    &:focus {
+        border-color: $primary;
+        box-shadow: 0 4px 15px rgba(0, 123, 255, 0.15);
+    }
+}
+
+.searchIcon {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: $gray;
+    font-size: 1.1rem;
+}
+
+// GRID LAYOUT
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+// CARD STYLE
+.card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: $shadow-soft;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    display: flex;
+    flex-direction: column; // Để nội dung giãn đều
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: $shadow-hover;
+
+        .overlay {
+            opacity: 1;
+        }
+
+        .cardImg {
+            transform: scale(1.05);
+        }
+    }
+
+    .cardImgWrapper {
+        height: 160px;
+        position: relative;
+        overflow: hidden;
+        background: #e9ecef;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .cardImg {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .placeholderImg {
+            font-size: 3rem;
+            color: #adb5bd;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+
+            span {
+                color: white;
+                font-weight: 600;
+                border: 1px solid white;
+                padding: 8px 16px;
+                border-radius: 20px;
+                backdrop-filter: blur(4px);
+            }
+        }
+    }
+
+    .cardBody {
+        padding: 20px;
+        flex-grow: 1; // Để đẩy nút bấm xuống đáy nếu nội dung ngắn
+        display: flex;
+        flex-direction: column;
+
+        .cardTitle {
+            margin-bottom: 10px;
+
+            h3 {
+                margin: 0 0 5px 0;
+                font-size: 1.2rem;
+                color: $dark;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            p {
+                margin: 0;
+                font-size: 0.9rem;
+                color: $gray;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+
+        // Nút xem chi tiết (Dành riêng cho MenuManager)
+        button {
+            margin-top: auto; // Đẩy nút xuống đáy card
+            width: 100%;
+            padding: 10px;
+            background-color: $primary;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+
+            &:hover {
+                background-color: darken($primary, 8%);
+            }
+        }
+
+        // Info rows cho RestaurantList
+        .resName {
+            margin: 0 0 10px 0;
+            font-size: 1.2rem;
+            color: $dark;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .infoRow {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            color: $gray;
+            font-size: 0.9rem;
+
+            svg {
+                color: $primary;
+                flex-shrink: 0;
+            }
+
+            span {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+    }
+}
+
+// MODAL STYLES
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+    animation: fadeIn 0.2s;
+}
+
+.modal {
+    background: white;
+    width: 900px;
+    max-width: 95%;
+    border-radius: 16px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh;
+    animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modalHeader {
+    padding: 20px 30px;
+    background: linear-gradient(135deg, $primary 0%, darken($primary, 10%) 100%);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+
+    h3 {
+        margin: 0;
+        font-size: 1.4rem;
+        font-weight: 600;
+    }
+
+    .closeBtn {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        cursor: pointer;
+        transition: background 0.2s;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+    }
+}
+
+.modalContent {
+    padding: 30px;
+    overflow-y: auto;
+}
+
+// FORM STYLES
+.formSection {
+    // Cho form signup
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.formGroup {
+    margin-bottom: 20px;
+
+    label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: $dark;
+        font-size: 0.95rem;
+    }
+
+    input,
+    textarea {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ced4da;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border 0.2s;
+
+        &:focus {
+            outline: none;
+            border-color: $primary;
+            box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1);
+        }
+    }
+}
+
+.formRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+
+    @media (max-width: 600px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+// UPDATE FORM LAYOUT
+.updateForm {
+    display: flex;
+    gap: 40px;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+    }
+
+    .leftCol {
+        width: 250px;
+        flex-shrink: 0;
+        border-right: 1px solid #eee;
+        padding-right: 30px;
+
+        @media (max-width: 768px) {
+            width: 100%;
+            border-right: none;
+            padding-right: 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+    }
+
+    .rightCol {
+        flex-grow: 1;
+    }
+}
+
+// AVATAR UPLOAD
+.avatarUpload {
+    text-align: center;
+    margin-bottom: 20px;
+
+    .avatarPreview {
+        width: 160px;
+        height: 160px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin: 0 auto 15px;
+        border: 5px solid #fff;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        position: relative;
+        background: #eee;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .avatarPlaceholder {
+            font-size: 3rem;
+            color: #adb5bd;
+        }
+
+        .uploadingOverlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .spin {
+                animation: spin 1s linear infinite;
+                font-size: 2rem;
+                color: $primary;
+            }
+        }
+    }
+
+    .uploadBtn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #e9ecef;
+        color: $dark;
+        padding: 10px 20px;
+        border-radius: 30px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+
+        &:hover {
+            background: darken(#e9ecef, 5%);
+            transform: translateY(-2px);
+        }
+    }
+}
+
+.modalFooter {
+    padding: 20px 30px;
+    background-color: #f8f9fa;
+    border-top: 1px solid $border-color;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+
+    button {
+        padding: 10px 24px;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        border: none;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.2s;
+    }
+
+    .saveBtn {
+        background: $primary;
+        color: white;
+
+        &:hover {
+            background: darken($primary, 5%);
+            transform: translateY(-1px);
+        }
+
+        &:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+    }
+
+    .deleteBtn {
+        background: #fff0f1;
+        color: $danger;
+        border: 1px solid lighten($danger, 30%);
+
+        &:hover {
+            background: #ffe3e5;
+        }
+    }
+
+    .cancelBtn {
+        background: white;
+        border: 1px solid #ced4da;
+        color: $gray;
+
+        &:hover {
+            background: #e9ecef;
+            color: $dark;
+        }
+    }
+}
+
+.note {
+    font-size: 0.85rem;
+    color: $gray;
+    font-style: italic;
+    margin-top: 15px;
+    text-align: center;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

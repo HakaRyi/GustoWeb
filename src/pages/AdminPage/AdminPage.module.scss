@@ -1,0 +1,42 @@
+.adminContainer {
+    display: flex;
+    background-color: #f8f9fd;
+    min-height: 100vh;
+    font-family: "Poppins", sans-serif;
+}
+
+.mainContent {
+    flex: 1;
+    padding: 20px 30px;
+    overflow-y: auto;
+}
+
+.dashboard {
+    h1 {
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 25px;
+    }
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.chartSection {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+}
+
+.tableSection {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
