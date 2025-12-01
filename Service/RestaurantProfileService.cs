@@ -10,6 +10,7 @@ using Repository;
 using Repository.Models;
 using Service.DTO.Request;
 using Service.DTO.Response;
+using Repository.DBContext; 
 
 namespace Service
 {
@@ -18,11 +19,13 @@ namespace Service
         private readonly RestaurantProfileRepository repository;
         private readonly AccountRepository accRepo;
         private readonly FoodReviewRepository foodReviewRepository;
-        public RestaurantProfileService(RestaurantProfileRepository repository, AccountRepository accRepo, FoodReviewRepository foodReviewRepository)
+        private readonly GustoSystemContext _context;
+        public RestaurantProfileService(RestaurantProfileRepository repository, AccountRepository accRepo, FoodReviewRepository foodReviewRepository, GustoSystemContext context)
         {
             this.repository = repository;
             this.accRepo = accRepo;
             this.foodReviewRepository = foodReviewRepository;
+            _context = context;
         }
         public async Task<List<RestaurantProfile>> GetAllAsync1()
         {
@@ -222,23 +225,33 @@ namespace Service
 
         public async Task<int> AdminUpdateProfileAsync(int profileId, RestaurantProfileRequest request)
         {
-            var item = await repository.GetByIdAsync(profileId);
+            _context.ChangeTracker.Clear();
+
+            var item = await _context.RestaurantProfiles
+                                     .FirstOrDefaultAsync(x => x.AccountId == profileId);
+
             if (item == null)
                 throw new Exception($"Profile with ID {profileId} not found.");
 
-            item.Address = request.Address;
-            item.AvatarUrl = request.AvatarUrl;
-            item.Email = request.Email;
-            item.FacebookUrl = request.FacebookUrl; 
-            item.Phone = request.Phone;
+            item.FullName = request.FullName?.Trim();
+            item.Phone = request.Phone?.Trim();
+            item.Address = request.Address?.Trim();
+            item.Email = request.Email?.Trim();
+
             item.OpenAt = request.OpenAt;
             item.CloseAt = request.CloseAt;
-            item.TiktokUrl = request.TiktokUrl;
-            item.Description = request.Description;
-            item.FullName = request.FullName;
-            item.Duration = request.Duration;
-            item.CreateAt = DateTime.UtcNow;
-            return await repository.UpdateAsync(item);
+
+            item.Description = request.Description?.Trim();
+            item.FacebookUrl = request.FacebookUrl?.Trim();
+            item.TiktokUrl = request.TiktokUrl?.Trim();
+            item.AvatarUrl = request.AvatarUrl?.Trim();
+
+            if (request.Duration.HasValue) item.Duration = request.Duration.Value;
+
+            _context.Attach(item);
+            _context.Entry(item).State = EntityState.Modified;
+
+            return await _context.SaveChangesAsync();
         }
 
         public async Task<int> AdminDeleteProfileAsync(int profileId)

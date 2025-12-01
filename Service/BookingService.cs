@@ -275,5 +275,33 @@ namespace Service
 
         }
 
+        //Admin
+        public async Task<List<Booking>> GetAllBookingsForAdmin()
+        {
+            return await repo.GetAllForAdminAsync();
+        }
+
+        public async Task<bool> AdminCancelBooking(int bookingId)
+        {
+            var booking = await repo.GetBookingAsync(bookingId);
+            if (booking == null) return false;
+
+            booking.Status = "Cancelled"; 
+            await repo.Update(booking);
+            return true;
+        }
+
+        public async Task<bool> AdminUpdateBookingAsync(int bookingId, AdminUpdateBookingRequest request)
+        {
+            var booking = await repo.GetBookingAsync(bookingId);
+            if (booking == null) return false;
+
+            booking.BookingTime = request.BookingTime;
+            booking.Status = request.Status;
+            booking.TableId = request.TableId;
+
+            await repo.Update(booking);
+            return true;
+        }
     }
 }

@@ -27,6 +27,7 @@ builder.Services.AddControllers()
     {
         options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
         options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.Never;
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
 
 // Swagger
@@ -123,6 +124,8 @@ builder.Services.Configure<PayOsSettings>(
     builder.Configuration.GetSection("PayOS")
     );
 builder.Services.AddScoped<PromotionService>();
+builder.Services.AddScoped<DashboardService>();
+
 
 builder.Services.AddScoped<AccountRepository>();
 builder.Services.AddScoped<RoleRepository>();
@@ -142,6 +145,7 @@ builder.Services.AddScoped<OptionalRepository>();
 builder.Services.AddScoped<ContactRepository>();
 builder.Services.AddScoped<TransactionRepository>();
 builder.Services.AddScoped<PromotionRepository>();
+builder.Services.AddScoped<DashboardRepository>();
 
 
 builder.Services.AddSingleton<SpeedSmsService>();

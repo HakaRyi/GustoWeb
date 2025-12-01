@@ -154,5 +154,15 @@ namespace Repository
             return false;
         }
 
+        public async Task<List<Booking>> GetAllForAdminAsync()
+        {
+            return await context.Bookings
+                .Include(b => b.Diner)       
+                .Include(b => b.Restaurant)  
+                .Include(b => b.Table)       
+                .OrderByDescending(b => b.BookingTime) 
+                .ToListAsync();
+        }
+
     }
 }

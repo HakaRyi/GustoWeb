@@ -16,7 +16,11 @@ namespace Repository
         public async Task<List<Transaction>> GetAll()
         {
             return await context.Transactions
-                .Include(t=>t.Booking)
+                .Include(t => t.Booking)
+                    .ThenInclude(b => b.Diner)      
+                .Include(t => t.Booking)
+                    .ThenInclude(b => b.Restaurant) 
+                .OrderByDescending(t => t.Timestamp) 
                 .ToListAsync();
         }
         public async Task<Transaction> GetById(short id)

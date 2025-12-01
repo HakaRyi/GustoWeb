@@ -88,5 +88,31 @@ namespace Service
         {
             return await _repository.DeleteAsync(reviewId, dinerId);
         }
+
+        // Admin
+        public async Task<List<FoodReviewResponse>> AdminGetAllAsync()
+        {
+            var reviews = await _repository.AdminGetAllAsync();
+
+            return reviews.Select(r => new FoodReviewResponse
+            {
+                ReviewId = r.ReviewId,
+                FoodId = r.FoodId,
+                DinerId = r.DinerId,
+                Rating = r.Rating ?? 0,
+                Description = r.Description,
+                ImageUrl = r.ImageUrl,
+                IsAnonymous = r.IsAnonymous ?? false,
+                Date = r.Date,
+ 
+                DinerName = r.IsAnonymous == true ? "Ẩn danh" : (r.Diner?.FullName ?? "Unknown"),
+                FoodName = r.Food?.Name ?? "Unknown Food"
+            }).ToList();
+        }
+
+        public async Task<bool> AdminDeleteAsync(short reviewId)
+        {
+            return await _repository.AdminDeleteAsync(reviewId);
+        }
     }
 }
