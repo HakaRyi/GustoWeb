@@ -1,0 +1,581 @@
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.55);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    animation: fadeIn 0.3s ease;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.modalContent {
+    background: #fffdf6;
+    border: 0px solid #424921 !important;
+    border-radius: 12px;
+    padding: 20px 28px 20px 20px;
+    width: 100%;
+    max-width: 1000px;
+    height: auto;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    scrollbar-gutter: stable;
+    animation: modalAppear 0.35s ease;
+
+    &::-webkit-scrollbar {
+        width: 10px;
+    }
+    &::-webkit-scrollbar-track {
+        border-radius: 8px;
+        margin: 4px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: #a7a7a7;
+        border-radius: 5px;
+        transition: background 0.3s;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+        background: #d3d3d3;
+    }
+
+    h3 {
+        color: #424921 !important;
+        font-size: 1.5rem;
+        margin: 0 0 20px;
+        text-align: center;
+    }
+}
+
+.closeBtn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 30;
+    font-size: 30px;
+    color: #424921;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.25s ease, color 0.25s ease;
+
+    &:hover {
+        color: #6a7636;
+        transform: rotate(90deg);
+    }
+}
+
+.formGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.formGroup {
+    margin-bottom: 15px;
+
+    label {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        color: #424921;
+        font-size: 1rem;
+        font-weight: 500;
+    }
+
+    &.fullWidth {
+        grid-column: span 2;
+    }
+}
+
+.formInput {
+    padding: 10px;
+    border: 1px solid #424921 !important;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #424921 !important;
+    background: #fffdf6;
+    transition: border-color 0.3s;
+
+    &:focus {
+        outline: none;
+        background: #fffdf6;
+        border-color: #6a7636;
+    }
+
+    &[type='textarea'] {
+        resize: vertical;
+        min-height: 100px;
+        background: #fffdf6;
+    }
+}
+
+.checkbox {
+    width: 20px;
+    height: 20px;
+}
+
+.imagePreview {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+
+    .previewImage {
+        width: 100%;
+        max-width: 200px;
+        height: 100px;
+        border-radius: 8px;
+        border: 0px solid #424921;
+        object-fit: contain;
+    }
+}
+
+.uploadBtn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #424921;
+    color: #fff !important;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+        background: #6a7636;
+    }
+
+    input {
+        display: none;
+    }
+}
+
+.submitBtn {
+    width: 100%;
+    padding: 10px;
+    background: #424921 !important;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-family: Verdana, Geneva, Tahoma, sans-serif !important;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-top: 20px;
+
+    &:hover {
+        background: #6a7636 !important;
+        transform: translateY(-2px);
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+.tasteInputWrapper,
+.optionalInputWrapper {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.addTasteBtn,
+.addOptionalBtn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #6a7636;
+    color: #fff;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+
+    &:hover {
+        background: #9caf47;
+        transform: translateY(-2px);
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+.tasteList,
+.optionalList {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f5f5e6;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tasteListTitle,
+.optionalListTitle {
+    color: #424921;
+    font-size: 1.2rem;
+    margin: 0 0 10px;
+    text-align: center;
+}
+
+.tasteGrid,
+.optionalGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+}
+
+.cardTaste,
+.cardOptional {
+    background: #fff;
+    border: 1px solid #d1d1b4;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: default;
+    min-height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        background: #fffbe9;
+    }
+
+    .tasteName,
+    .optionalName {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #424921;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .tasteActions,
+    .optionalActions {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 10px;
+    }
+}
+
+.editTasteWrapper,
+.editOptionalWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    input {
+        width: 100%;
+    }
+}
+
+.editTasteBtn,
+.deleteTasteBtn,
+.saveTasteBtn,
+.cancelTasteBtn,
+.editOptionalBtn,
+.deleteOptionalBtn,
+.saveOptionalBtn,
+.cancelOptionalBtn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.editTasteBtn,
+.editOptionalBtn {
+    background: #424921;
+    color: #fff;
+
+    &:hover {
+        background: #6a7636;
+        transform: translateY(-1px);
+    }
+}
+
+.deleteTasteBtn,
+.deleteOptionalBtn {
+    background: #ff4d4d;
+    color: #fff;
+
+    &:hover {
+        background: #e63939;
+        transform: translateY(-1px);
+    }
+}
+
+.saveTasteBtn,
+.saveOptionalBtn {
+    background: #28a745;
+    color: #fff;
+
+    &:hover {
+        background: #218838;
+        transform: translateY(-1px);
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+.cancelTasteBtn,
+.cancelOptionalBtn {
+    background: #6c757d;
+    color: #fff;
+
+    &:hover {
+        background: #5a6268;
+        transform: translateY(-1px);
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+.openTasteBtn,
+.openOptionalBtn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #dcdad0;
+    color: #424921;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    width: 100%;
+    justify-content: center;
+
+    &:hover {
+        background: #ece9da;
+        transform: translateY(-2px);
+    }
+}
+
+.tasteSection,
+.optionalSection {
+    margin-top: 15px;
+    padding: 15px;
+    background: #f5f5e6;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    animation: tasteSectionAppear 0.3s ease forwards;
+    position: relative;
+    max-height: 300px;
+    overflow-y: auto;
+
+    &.closing {
+        animation: tasteSectionDisappear 0.3s ease forwards;
+    }
+}
+
+.closeTasteBtn,
+.closeOptionalBtn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    color: #424921;
+    font-size: 20px;
+    cursor: pointer;
+    transition: color 0.3s;
+
+    &:hover {
+        color: #78872f;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes modalAppear {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes tasteSectionAppear {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes tasteSectionDisappear {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
+@media (max-width: 1024px) {
+    .closeBtn {
+        right: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .modalContent {
+        width: 90%;
+        padding: 15px 22px 15px 15px;
+        height: auto;
+        max-height: 80vh;
+        animation: modalAppear 0.35s ease;
+
+        h3 {
+            font-size: 1.3rem;
+        }
+    }
+
+    .formGrid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .imagePreview .previewImage {
+        width: 100%;
+        height: 150px;
+    }
+
+    .closeBtn {
+        top: 20px;
+        right: 25px;
+    }
+
+    .tasteSection,
+    .optionalSection {
+        padding: 10px;
+        max-height: 200px;
+    }
+
+    .openTasteBtn,
+    .openOptionalBtn {
+        padding: 8px 12px;
+    }
+
+    .tasteGrid,
+    .optionalGrid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 8px;
+    }
+
+    .tasteInputWrapper,
+    .optionalInputWrapper {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .addTasteBtn,
+    .addOptionalBtn,
+    .editTasteBtn,
+    .deleteTasteBtn,
+    .saveTasteBtn,
+    .cancelTasteBtn,
+    .editOptionalBtn,
+    .deleteOptionalBtn,
+    .saveOptionalBtn,
+    .cancelOptionalBtn {
+        padding: 8px 12px;
+    }
+
+    .cardTaste,
+    .cardOptional {
+        min-height: 70px;
+    }
+}
+
+@media (max-width: 480px) {
+    .modalContent {
+        padding: 10px 18px 10px 10px;
+        max-height: 75vh;
+    }
+
+    .imagePreview .previewImage {
+        height: 120px;
+    }
+
+    .tasteSection,
+    .optionalSection {
+        max-height: 150px;
+    }
+
+    .tasteGrid,
+    .optionalGrid {
+        grid-template-columns: 1fr;
+        gap: 5px;
+    }
+
+    .cardTaste,
+    .cardOptional {
+        padding: 8px;
+        min-height: 60px;
+    }
+
+    .editTasteWrapper,
+    .editOptionalWrapper {
+        input {
+            font-size: 0.9rem;
+        }
+    }
+
+    .tasteActions,
+    .optionalActions {
+        flex-direction: column;
+        gap: 4px;
+        margin-top: 8px;
+    }
+}

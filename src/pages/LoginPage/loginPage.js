@@ -1,92 +1,65 @@
-import React, { useState } from 'react'
-import axios from 'axios'
-import className from 'classnames/bind'
-import styles from './loginPage.module.scss'
-import routes from '~/config/route'
+import React, { useState } from 'react';
+import className from 'classnames/bind';
+import styles from './loginPage.module.scss';
+import routes from '~/config/route';
+import LoginForm from '../../components/Forms/LoginForm';
+import { Link, useNavigate } from 'react-router-dom';
+import ForgotPasswordModal from '~/components/Modals/ForgotPasswordModal';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
-//Components:
-import LoginForm from '../../components/Forms/LoginForm'
-import { Link, useNavigate } from 'react-router-dom'
-
-
-const cx = className.bind(styles)
-
+const cx = className.bind(styles);
 
 function LoginPage() {
-  const nav = useNavigate();
+    const nav = useNavigate();
+    const [showForgotModal, setShowForgotModal] = useState(false);
+    const GOOGLE_CLIENT_ID = '920991502317-22vj9rj4iki2cd963qbr4kqjj911dfrd.apps.googleusercontent.com';
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await axios.post("https://localhost:7176/api/Auth/login", {
-        userName: username,
-        password: password
-      });
-
-      if (res.status === 200) {
-        localStorage.setItem("token", res.data.token);
-        localStorage.setItem("role", res.data.role);
-        alert("Đăng nhập thành công!");
-
-        if (res.data.role === "Admin") nav('/admin');
-        else nav(routes.home);
-      }
-    } catch (err) {
-      alert(err.response?.data?.message || "Đăng nhập thất bại!");
-    }
-  };
-
-  return (
-    <div className={cx("wrapper")}>
-      <div className={cx("overlay")}>
-        <div className={cx("container")}>
-          <div onClick={() => nav(routes.home)} className={cx("header")}>
-            <h2>Welcome to <span>Gusto</span></h2>
-          </div>
-          <div className={cx("content")}>
-
-            <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-              <div className={cx("input-group")}>
-                <input
-                  type="text"
-                  placeholder="Username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #ddd' }}
-                />
-              </div>
-              <div className={cx("input-group")}>
-                <input
-                  type="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #ddd' }}
-                />
-              </div>
-              <button type="submit" style={{ padding: '12px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '8px', fontWeight: 'bold', marginTop: '10px' }}>
-                Login
-              </button>
-            </form>
-
-            <div className={cx("links")}>
-              <p><a href="#" className={cx("forgot")}>Forgot Password</a></p>
-              <div className={cx("google")}>
-                <p>
-                  This is your first time?{" "}
-                  <div onClick={() => nav(routes.register)} className={cx("register")}>Register</div>
-                </p>
-                Or continue with <span className={cx("google-icon")}>G</span>
-              </div>
+    return (
+        <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+            <div className={cx('wrapper')}>
+                <div className={cx('overlay')}>
+                    <div className={cx('container')}>
+                        <div onClick={() => nav(routes.home)} className={cx('header')}>
+                            <h2>
+                                Welcome to <span>Gusto</span>
+                            </h2>
+                        </div>
+                        <div className={cx('content')}>
+                            <LoginForm />
+                            <div className={cx('links')}>
+                                <div>
+                                    <div
+                                        className={cx('forgot')}
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            setShowForgotModal(true);
+                                        }}
+                                        style={{ cursor: 'pointer' }}
+                                    >
+                                        Forgot Password
+                                    </div>
+                                </div>
+                                <div className={cx('google')}>
+                                    <div>
+                                        This is your first time?{' '}
+                                        <div onClick={() => nav(routes.register)} className={cx('register')}>
+                                            Register
+                                        </div>
+                                    </div>
+                                    {/* ✅ THÊM GOOGLE BUTTON VÀO ĐÂY */}
+                                    {/* <div style={{ marginTop: '12px' }}>
+                                        Or continue with{' '}
+                                        <span style={{ color: '#ea4335', fontWeight: 'bold' }}>Google</span>
+                                    </div> */}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ForgotPasswordModal isOpen={showForgotModal} onClose={() => setShowForgotModal(false)} />
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+        </GoogleOAuthProvider>
+    );
 }
 
-export default LoginPage
+export default LoginPage;

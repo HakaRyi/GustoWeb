@@ -1,45 +1,49 @@
+/* 🌊 Wrapper toàn trang */
 .wrapper {
-    height: 89vh;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     background: linear-gradient(90deg, #007cf0, #00dfd8, #007cf0);
-    animation: flowingWater 5s linear infinite;
+    animation: flowingWater 6s linear infinite;
     background-size: 200%;
     padding: 40px;
+    overflow: hidden;
 }
 
-/* Khung chính */
+/* 🧩 Khung chính */
 .infor-container {
     display: flex;
     width: 90%;
     max-width: 1100px;
-    height: 80vh;
-    border-radius: 20px;
+    height: 95vh;
+    border-radius: 22px;
     overflow: hidden;
     background: #fff;
-    border: 3px solid rgba(0, 124, 240, 0.3);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    border: 2px solid rgba(0, 124, 240, 0.3);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.15);
     font-family: 'Poppins', sans-serif;
+    transition: all 0.4s ease;
 }
 
-/* Bên trái: hình + mô tả */
+/* 🌅 Bên trái - ảnh + mô tả */
 .overlay {
     flex: 1;
-    background: url("../../assets/imgs/register_bg.jpg") center/cover no-repeat;
+    background: url('../../assets/imgs/register_bg.jpg') center/cover no-repeat;
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     padding: 50px;
-    color: white;
+    color: #fff;
+    overflow: hidden;
 
     &::before {
         content: '';
         position: absolute;
         inset: 0;
-        backdrop-filter: blur(6px);
-        background: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(8px);
+        background: rgba(0, 0, 0, 0.45);
         animation: shimmer 6s infinite linear alternate;
     }
 
@@ -52,51 +56,52 @@
     h3 {
         font-weight: 700;
         font-size: 22px;
-        margin-bottom: 6px;
+        margin-bottom: 10px;
     }
 
     p {
-        font-size: 14px;
-        line-height: 1.5;
-        margin-bottom: 20px;
+        font-size: 15px;
+        line-height: 1.6;
         opacity: 0.9;
     }
 }
 
+/* ✨ Hiệu ứng mờ nhấp nháy */
 @keyframes shimmer {
     0% {
-        background: rgba(0, 0, 0, 0.4);
+        background: rgba(0, 0, 0, 0.35);
     }
-
     100% {
         background: rgba(0, 0, 0, 0.6);
     }
 }
 
-/* Bên phải: form */
+/* 📝 Bên phải - form */
 .form-container {
-    flex: 1;
-    background: white;
+    flex: 1.1;
+    background: #ffffff;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 50px;
+    padding: 60px 50px;
     box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.05);
+    position: relative;
+    transition: all 0.3s ease;
 }
 
+/* 🧠 Tiêu đề form */
 .form-title {
     font-family: 'Poppins', sans-serif;
     font-weight: 800;
-    font-size: 48px;
+    font-size: 46px;
     color: #000;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     background: linear-gradient(90deg, #007cf0, #00dfd8, #007cf0);
     background-size: 200%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: flowingWater 5s linear infinite;
-    cursor: pointer;
     transition: transform 0.3s ease;
 
     &:hover {
@@ -104,42 +109,123 @@
     }
 }
 
+/* 🌈 Hiệu ứng nền chuyển động */
 @keyframes flowingWater {
     0% {
         background-position: 0% 50%;
     }
-
     100% {
         background-position: 200% 50%;
     }
 }
 
+/* 📖 Mô tả nhỏ */
 .formDescription {
     text-align: center;
     color: #666;
     max-width: 380px;
     font-size: 14px;
     font-weight: 500;
+    margin-bottom: 20px;
+    line-height: 1.5;
 }
 
+/* 🔘 Nút đăng ký */
 .register-btn {
     position: absolute;
-    top: 72px;
-    right: 230px;
+    top: 5%;
+    right: 8%;
     background: linear-gradient(90deg, #00dfd8, #007cf0);
     color: #000;
-    font-weight: bold;
-    font-size: 18px;
+    font-weight: 700;
+    font-size: 17px;
     border: none;
-    padding: 5px 30px;
+    padding: 8px 28px;
     border-radius: 30px;
     cursor: pointer;
     transition: all 0.3s ease;
-    margin-top: 10px;
 
     &:hover {
         background: linear-gradient(90deg, #007cf0, #00dfd8);
-        transform: scale(1.05);
+        transform: translateY(-2px);
         color: #fff;
+    }
+}
+
+/* 💻 Tablet */
+@media (max-width: 992px) {
+    .infor-container {
+        flex-direction: column;
+        height: auto;
+        width: 95%;
+    }
+    .input {
+        width: 100%;
+        padding: 0.9rem; // rộng hơn
+        font-size: 1rem; // chữ rõ hơn
+    }
+    .form-container {
+        width: 100%;
+        padding: 0; // bỏ padding
+        box-shadow: none; // bỏ viền trong
+    }
+
+    .overlay {
+        height: 240px;
+        padding: 30px 25px;
+        text-align: center;
+
+        h3 {
+            font-size: 20px;
+        }
+
+        p {
+            font-size: 13px;
+        }
+    }
+
+    .form-title {
+        font-size: 34px;
+    }
+
+    .register-btn {
+        position: static;
+        margin: 25px auto 0;
+        display: block;
+    }
+}
+
+/* 📱 Mobile nhỏ */
+@media (max-width: 480px) {
+    .overlay {
+        display: none; /* Ẩn ảnh */
+    }
+    .form-container {
+        width: 100%;
+        padding: 0; // bỏ padding
+        box-shadow: none; // bỏ viền trong
+    }
+
+    .input {
+        width: 100vw; // full màn
+        margin-left: -20px; // nếu cần kéo ra thoát container
+        border-radius: 14px;
+        padding: 1.2rem;
+    }
+    .infor-container {
+        height: auto;
+    }
+
+    .form-title {
+        font-size: 28px;
+    }
+
+    .formDescription {
+        font-size: 12px;
+        max-width: 300px;
+    }
+
+    .wrapper {
+        padding: 16px;
     }
 }

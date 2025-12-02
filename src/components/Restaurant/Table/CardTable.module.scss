@@ -1,0 +1,68 @@
+.cardTable {
+  width: 310px;
+  height: 260px;
+  background-color: #fffdf6;
+  border: 0px solid #424921;
+  border-radius: 8px;
+   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.tableInfo {
+  flex: 1;
+}
+
+.tableInfo h4 {
+  font-size: 20px;
+  color: #424921;
+  margin-bottom: 10px;
+  margin-left: 10px;
+}
+
+.tableInfo p {
+  margin: 5px 14px;
+  color: #6a7636 !important;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.menu {
+  position: relative;
+}
+
+.menuBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #424921;
+}
+
+.menuDropdown {
+  position: absolute;
+  right: 0;
+  background-color: white;
+  border: 1px solid #424921;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+
+.menuDropdown button {
+  display: block;
+  width: 100px;
+  padding: 10px;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.menuDropdown button:hover {
+  background-color: #6a7636;
+  color: white;
+}

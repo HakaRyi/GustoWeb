@@ -1,0 +1,39 @@
+.tableResLayoutContainer {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+ 
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header h3 {
+  font-size: 24px;
+  color: #424921;
+}
+
+.createBtn {
+  display: flex;
+  align-items: center;
+  background-color: #424921;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.createBtn:hover {
+  background-color: #6a7636;
+}
+
+.btnIcon {
+  margin-right: 8px;
+}

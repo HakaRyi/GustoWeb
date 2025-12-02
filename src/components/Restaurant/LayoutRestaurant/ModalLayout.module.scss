@@ -1,0 +1,163 @@
+.modalOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    padding: 20px; /* tránh modal dính mép màn hình */
+    overflow-y: auto; /* Nếu modal lớn hơn viewport */
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.modalContent {
+    background: #fffdf6;
+    border: 2px solid #424921 !important;
+    border-radius: 12px;
+    width: 700px;
+    max-width: 90%;
+    max-height: 80vh;
+    position: relative;
+    padding: 25px 20px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    animation: fadeIn 0.25s ease;
+
+    h3 {
+        color: #424921 !important;
+        font-size: 1.6rem;
+        margin: 0 0 20px;
+        text-align: center;
+    }
+}
+
+.closeBtn {
+    position: absolute; /* để nằm trong modal, không bị mất */
+    top: 12px;
+    right: 12px;
+    font-size: 30px;
+    color: #424921;
+    border: none;
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2100;
+    transition: all 0.3s ease;
+
+    &:hover {
+        color: #6a7636;
+        transform: rotate(90deg);
+    }
+}
+
+.formGroup {
+    margin-bottom: 16px;
+
+    label {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        color: #424921;
+        font-weight: 500;
+    }
+}
+
+.formInput {
+    padding: 10px;
+    border: 1px solid #424921 !important;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #424921 !important;
+    background: #fffdf6;
+    resize: none;
+    transition: border-color 0.3s ease;
+
+    &:focus {
+        outline: none;
+        border-color: #6a7636;
+        background: #fffdf6;
+    }
+}
+
+.imagePreview {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+
+    .previewImage {
+        width: 200px;
+        height: 100px;
+        border-radius: 8px;
+        border: 0px solid #424921;
+        object-fit: contain;
+    }
+}
+
+.uploadBtn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #424921 !important;
+    color: #fff !important;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+
+    &:hover {
+        background: #6a7636 !important;
+    }
+}
+
+.submitBtn {
+    width: 100%;
+    padding: 12px;
+    background: #424921 !important;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.25s ease;
+
+    &:hover {
+        background: #6a7636 !important;
+        transform: translateY(-2px);
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+/* Hiệu ứng mở */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .modalContent {
+        width: 95%;
+        padding: 15px;
+        max-height: 85vh;
+    }
+
+    .imagePreview .previewImage {
+        width: 100%;
+        height: 160px;
+    }
+}

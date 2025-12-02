@@ -1,0 +1,69 @@
+.listMenuContainer {
+    width: 100%;
+    // max-width: 1200px; /* Đã comment, giữ nguyên */
+    padding: 10px; /* Giảm padding từ 20px xuống 10px để sát mép hơn */
+    // overflow-y: auto; /* Đã comment, giữ nguyên */
+    // max-height: 80vh; /* Đã comment, giữ nguyên */
+
+    .loading {
+        font-size: 1.2rem;
+        color: #424921;
+        text-align: center;
+        padding: 30px;
+    }
+}
+
+.menuGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px; /* Giảm gap từ 20px xuống 10px */
+    justify-items: center; /* Giữ căn giữa */
+    margin-top: 20px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+    gap: 10px;
+
+    button {
+        background: #424921;
+        color: #fff;
+        border: none;
+        padding: 6px 10px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: 0.3s;
+
+        &:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        &:hover:not(:disabled) {
+            background: #6a7636;
+        }
+    }
+
+    span {
+        color: #424921;
+        font-size: 0.95rem;
+    }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .menuGrid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px; /* Giảm gap hơn nữa trên màn hình nhỏ */
+    }
+}
+
+@media (max-width: 768px) {
+    .menuGrid {
+        grid-template-columns: repeat(1, 1fr);
+        gap: 5px; /* Gap nhỏ hơn trên mobile để tiết kiệm không gian */
+    }
+}

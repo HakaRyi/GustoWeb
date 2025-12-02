@@ -1,162 +1,236 @@
 .homeContainer {
-  scroll-behavior: smooth;
-  font-weight: bold;
-  font-family: Kanit, Verdana, Geneva, Tahoma, sans-serif;
+    scroll-behavior: smooth;
+    font-weight: bold;
+    font-family: Kanit, Verdana, Geneva, Tahoma, sans-serif;
 }
 
 /* ========== HERO SECTION ========== */
 .heroSection {
-  height: 100vh;
-  width: 100%;
-  background-size: cover;
-  background-position: center 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-  transition: background-position 0.1s ease-out;
-
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
+    height: 100vh;
     width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-  }
+    background-size: cover;
+    background-position: center 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: background-position 0.1s ease-out;
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+    }
 }
 
 .heroContent {
-  position: relative;
-  z-index: 2;
-  animation: fadeIn 2s ease-in-out;
-  font-weight: bold;
-  text-align: center;
-
-  h1 {
-    font-size: 8rem;
+    position: relative;
+    z-index: 2;
+    animation: fadeIn 2s ease-in-out;
     font-weight: bold;
-    color: #fff9d6;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
-    margin-bottom: 20px; 
-    line-height: 1;      /* 👈 giúp chữ GUSTO và dòng dưới khít hơn */
-  }
+    text-align: center;
 
-  p {
-    font-size: 1.5rem;
-    margin: 5px 0 20px;  /* 👈 giảm khoảng cách trên, giữ khoảng dưới */
-    font-weight: bold;
-    color: #f5de87;
-  }
+    h1 {
+        font-size: 8rem;
+        font-weight: bold;
+        color: #fff9d6;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+        margin-bottom: 20px;
+        line-height: 1; /* 👈 giúp chữ GUSTO và dòng dưới khít hơn */
+    }
+
+    p {
+        font-size: 1.5rem;
+        margin: 5px 0 20px; /* 👈 giảm khoảng cách trên, giữ khoảng dưới */
+        font-weight: bold;
+        color: #fff9d6;
+    }
 }
 
 .heroBtn {
-  margin-top: 30px;
-  font-size: 18px;
-  font-weight: bold;
-  padding: 12px 30px;
-  border-radius: 30px;
-  transition: all 0.3s ease;
+    margin-top: 30px;
+    background-color: #f8f8f0;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 12px 30px;
+    border-radius: 30px;
+    transition: all 0.3s ease;
 
-  &:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 15px #f5de87;
-  }
+    &:hover {
+        transform: scale(1.05);
+        background-color: #f5de87;
+        box-shadow: 0 0 5px #f5de87;
+    }
 }
 
 /* ========== FEATURES SECTION ========== */
 .featuresSection {
-  background-color: #f8f8f0;
-  text-align: center;
-  padding: 80px 40px;
+    background-color: #f8f8f0;
+    text-align: center;
+    padding: 80px 40px;
 
-  h2 {
-    font-size: 36px;
-    color: #4b5320;
-    margin-bottom: 40px;
-  }
+    h2 {
+        font-size: 36px;
+        color: #4b5320;
+        margin-bottom: 40px;
+    }
 }
 
 .featuresGrid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
 }
 
 .featureCard {
-  background: #fff;
-  border-radius: 20px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-  padding: 30px;
-  width: 280px;
-  cursor: pointer;
-  transition: all 0.3s ease;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 280px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    h3 {
+        color: #4b5320;
+        margin-bottom: 15px;
+    }
+    p {
+        color: rgb(59, 65, 26) !important;
+        font-size: 15px;
+        line-height: 1.5;
+        font-weight: 500;
+    }
+    &:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+    }
 
-  &:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
-  }
-
-  img {
-    width: 90px;
-    height: 90px;
-    margin-bottom: 20px;
-  }
+    img {
+        width: 90px;
+        height: 90px;
+        margin-bottom: 20px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
 
 /* ========== CTA SECTION ========== */
 .ctaSection {
-  background-color: #4b5320;
-  color: #fff9d6;
-  text-align: center;
-  padding: 100px 30px;
+    background-color: #4b5320;
+    color: #fff9d6;
+    text-align: center;
+    padding: 100px 30px;
 
-  h2 {
-    font-size: 40px;
-    margin-bottom: 15px;
-  }
+    h2 {
+        font-size: 40px;
+        margin-bottom: 15px;
+    }
+    p {
+        font-size: 1.5rem;
+        margin: 5px 0 20px; /* 👈 giảm khoảng cách trên, giữ khoảng dưới */
+        font-weight: bold;
+        color: #fff9d6;
+    }
 }
 
 .ctaBtn {
-  margin-top: 25px;
-  padding: 12px 40px;
-  border-radius: 25px;
-  font-weight: bold;
-  font-size: 18px;
-  transition: 0.3s ease;
-
-  &:hover {
-    background-color: #f5de87;
-    color: #4b5320;
+    margin-top: 25px;
+    padding: 12px 40px;
+    border-radius: 25px;
     font-weight: bold;
-    transform: scale(1.05);
-  }
+    font-size: 18px;
+    transition: 0.3s ease;
+    background-color: #ffffff;
+
+    &:hover {
+        background-color: #f5de87;
+        color: #4b5320;
+        font-weight: bold;
+        transform: scale(1.05);
+    }
 }
 
 /* ========== FADE ANIMATIONS ========== */
 .fadeSection {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
 
-  &.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
+    &.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+/* ========== MOBILE RESPONSIVE ========== */
+@media (max-width: 768px) {
+    .heroSection {
+        height: 70vh;
+        background-position: center;
+    }
+
+    .heroContent h1 {
+        font-size: 3.5rem;
+    }
+
+    .heroContent p {
+        font-size: 1.2rem;
+    }
+
+    .heroBtn {
+        font-size: 16px;
+        padding: 10px 24px;
+    }
+
+    .featuresSection {
+        padding: 50px 20px;
+    }
+
+    .featuresGrid {
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    .featureCard {
+        width: 90%;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .ctaSection {
+        padding: 60px 20px;
+    }
+
+    .ctaSection h2 {
+        font-size: 28px;
+    }
+
+    .ctaSection p {
+        font-size: 1.2rem;
+    }
+
+    .ctaBtn {
+        width: 80%;
+        font-size: 16px;
+        padding: 10px 25px;
+    }
 }

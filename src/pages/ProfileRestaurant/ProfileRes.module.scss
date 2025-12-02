@@ -1,0 +1,76 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column; // Xếp dọc: Header > mainArea > Footer
+  margin-top: 70px;
+}
+
+.mainArea {
+  display: flex; // Flex row cho sidebar (trái) + content (phải)
+  flex: 1; // Chiếm không gian còn lại giữa Header và Footer
+  min-height: 0; // Cho phép content co giãn đúng
+}
+
+.sidebar {
+  width: 250px; // Chiều rộng cố định cho sidebar
+  background-color: #f8f9fa;
+  border-right: 1px solid #dee2e6;
+  padding: 20px;
+  flex-shrink: 0; // Không cho sidebar co lại
+  overflow-y: auto; // Scroll nếu sidebar dài
+}
+
+.content {
+  flex: 1; // Chiếm hết không gian còn lại
+  padding: 20px;
+  background-color: #fffdf6 !important;
+  overflow-y: auto; // Scroll nội dung nếu dài
+  min-height: 100%; // Đầy đủ chiều cao của mainArea
+}
+
+// Các style khác cho menuItem, active, icon, logoutBtn (giữ nguyên từ trước)
+.menuItem {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 10px;
+  color: #333;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+.menuItem.active {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.icon {
+  margin-right: 10px;
+}
+
+.logoutBtn {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px; // Khoảng cách với các menu item
+}
+
+.logoutBtn:hover {
+  background-color: #c82333;
+}
+
+// Nếu Header là fixed (top: 0, position: fixed), thêm class này vào Header CSS riêng
+// .header-fixed {
+//   position: fixed;
+//   top: 0;
+//   width: 100%;
+//   z-index: 1000;
+// }
+
+// Nếu cần, thêm vào .mainArea: margin-top: 80px; (chiều cao Header)

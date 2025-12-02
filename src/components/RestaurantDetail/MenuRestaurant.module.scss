@@ -1,0 +1,83 @@
+.menuRestaurant {
+    background-color: #fff8e1;
+    padding: 30px 60px;
+    border-radius: 10px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.menuTitle {
+    font-size: 80px;
+    text-align: center;
+    color: #424921;
+    margin-bottom: 30px;
+    font-weight: bold;
+    letter-spacing: -2px;
+}
+
+.menuCategories {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.menuCategory {
+    .categoryTitle {
+        font-size: 30px;
+        color: #798636;
+        font-weight: bolder;
+        margin-bottom: 15px;
+        margin-left: 20px;
+    }
+
+    .categoryItems {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: flex-start;
+        margin-left: 40px;
+    }
+}
+/* ============ RESPONSIVE ============ */
+@media (max-width: 768px) {
+    .menuRestaurant {
+        padding: 20px;
+    }
+
+    .menuTitle {
+        font-size: 48px;
+        margin-bottom: 20px;
+    }
+
+    .menuCategory {
+        .categoryTitle {
+            font-size: 22px;
+            margin-left: 0;
+            text-align: center;
+        }
+
+        .categoryItems {
+            margin-left: 0;
+            justify-content: center; // căn giữa khi mobile
+            gap: 15px;
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .menuRestaurant {
+        padding: 15px;
+    }
+
+    .menuTitle {
+        font-size: 36px;
+        margin-bottom: 15px;
+    }
+
+    .menuCategory .categoryTitle {
+        font-size: 18px;
+    }
+
+    .menuCategory .categoryItems {
+        gap: 10px;
+    }
+}

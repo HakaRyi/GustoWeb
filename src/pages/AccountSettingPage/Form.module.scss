@@ -1,0 +1,86 @@
+.form {
+    max-width: 500px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-field {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    color: black;
+
+    &:focus {
+        outline: none;
+        border-color: #6a7636;
+        box-shadow: 0 0 0 3px rgba(106, 118, 54, 0.2);
+    }
+}
+
+label {
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #444;
+}
+
+.error-message {
+    color: #d93025;
+    font-size: 0.875rem;
+    margin-top: 5px;
+}
+
+.submit-button {
+    background-color: #6a7636;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 28px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+
+    &:hover:not(:disabled) {
+        background-color: darken(#6a7636, 5%);
+        transform: translateY(-2px);
+    }
+
+    &:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+}
+
+.danger-button {
+    background-color: #d93025;
+
+    &:hover:not(:disabled) {
+        background-color: darken(#d93025, 10%);
+    }
+}
+
+// Styles cho checkbox
+.checkbox-group {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.checkbox {
+    margin-top: 5px;
+    width: 18px;
+    height: 18px;
+}
+
+.checkbox-label {
+    font-weight: normal;
+    color: #555;
+    line-height: 1.5;
+}

@@ -1,0 +1,233 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    display: flex;
+    justify-content: flex-end;
+    z-index: 2000;
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+}
+
+.drawer {
+    width: 550px;
+    max-width: 95%;
+    height: 100vh;
+    background: #f5f3f3;
+    box-shadow: -6px 0 30px rgba(0, 0, 0, 0.25);
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+}
+.foodImage {
+    width: 80px; // Nhỏ lại, vừa đủ nhìn rõ
+    height: 80px; // Vuông đẹp
+    border-radius: 10px;
+    margin: 10px 0 8px 0;
+    object-fit: cover;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+    border: 1px solid #eee;
+    flex-shrink: 0;
+}
+
+.placeholderImage {
+    width: 80px;
+    height: 80px;
+    background: #f5f5f5;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #aaa;
+    font-size: 12px;
+    border: 2px dashed #ddd;
+    margin: 10px 0 8px 0;
+}
+/* Header */
+.header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.titleBlock {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.tableName {
+    font-size: 36px;
+    font-weight: 800;
+    color: #000;
+}
+
+.dateBlock {
+    text-align: right;
+    color: #333;
+}
+
+.date {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.time {
+    font-size: 12px;
+    color: #6b6b6b;
+}
+
+.closeBtn {
+    background: transparent;
+    border: none;
+    color: #d24b4b;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* meta */
+.meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.orderCode {
+    font-weight: 700;
+    color: #222;
+}
+
+.customer {
+    text-align: right;
+}
+
+.customerName {
+    font-weight: 700;
+}
+
+.phone {
+    color: #2e7d32;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* items */
+.itemsWrapper {
+    background: transparent;
+    border-radius: 12px;
+    padding: 10px 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.itemsHeader {
+    display: grid;
+    grid-template-columns: 0.8fr 80px 80px 80px;
+    gap: 12px;
+    padding: 10px;
+    background: #fff;
+    border-radius: 12px;
+    font-weight: 700;
+    color: #333;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03);
+}
+
+.itemsList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 8px;
+    overflow-y: auto;
+    padding-right: 6px;
+}
+
+/* each item */
+.itemRow {
+    display: grid;
+    grid-template-columns: 0.7fr 80px 70px 80px;
+    gap: 12px;
+    background: #fff;
+    border-radius: 10px;
+    padding: 12px;
+    align-items: start;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.itemName {
+    font-size: 14px;
+}
+
+.itemTitle {
+    font-weight: 600;
+}
+
+.itemNote {
+    margin-top: 6px;
+    font-size: 12px;
+    color: #999;
+}
+
+.itemPrice,
+.itemQty,
+.itemTotal {
+    font-size: 14px;
+    text-align: right;
+}
+
+/* footer */
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.primaryBtn {
+    background: white;
+    color: #2e7d32;
+    border: 2px solid #2e7d32;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.primaryBtn:hover {
+    background: #e8f5e9;
+}
+
+.disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
+.footerRight {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.totalLabel {
+    font-weight: 700;
+}
+
+.totalValue {
+    font-weight: 800;
+    font-size: 16px;
+}
+
+/* small messages */
+.resultOk {
+    color: #2e7d32;
+    font-weight: 600;
+}
+
+.resultError {
+    color: #d23a3a;
+    font-weight: 600;
+}

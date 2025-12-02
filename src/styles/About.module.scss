@@ -93,8 +93,8 @@
   transition: all 0.4s ease;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 
-  width: 240px;      // cố định chiều ngang
-  height: 250px;     // cố định chiều cao
+  width: 280px !important;      // cố định chiều ngang
+  height: 270px !important;     // cố định chiều cao
   text-align: center;
   display: flex;
   flex-direction: column;

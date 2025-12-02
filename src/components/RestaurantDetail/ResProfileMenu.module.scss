@@ -1,0 +1,284 @@
+.resProfileMenu {
+    background-color: #f9e79f;
+    padding: 25px 40px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    display: flex;
+    justify-content: center;
+}
+
+.profileHeader {
+    display: flex;
+    align-items: center;
+    gap: 55px;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.profileAvatar {
+    width: 420px;
+    height: 250px;
+    border-radius: 10px;
+    object-fit: cover;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s;
+
+    &:hover {
+        transform: scale(1.05);
+    }
+}
+
+.profileInfo {
+    flex: 1;
+    color: #424921 !important;
+}
+
+.profileName {
+    font-size: 28px;
+    font-weight: 700;
+    color: #424921;
+}
+
+/* ⭐ Rating section - giống hệt ProfileResLayout */
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 8px 0;
+
+    .starIcon {
+        font-size: 1.5rem;
+        transition: color 0.3s;
+    }
+
+    .filledStar {
+        color: #ffc107; // Vàng
+    }
+
+    .emptyStar {
+        color: #ccc; // Xám nhạt
+    }
+
+    .ratingText {
+        margin-left: 6px;
+        font-weight: 600;
+        color: #424921;
+        font-size: 1.1rem;
+    }
+}
+
+.profileAddress {
+    color: #424921 !important;
+    font-size: 16px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.profileDescription {
+    font-size: 15px;
+    color: #424921 !important;
+    margin-bottom: 15px;
+    max-width: 700px;
+    text-align: left;
+}
+
+.profileActions {
+    display: flex;
+    gap: 12px;
+}
+
+.likeButton {
+    background-color: #e67e22;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px; // tạo khoảng cách icon – text
+    min-width: 150px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s;
+
+    &:hover {
+        background-color: #ca6f1e;
+    }
+    &.liked:hover {
+        color: #ff002f;
+    }
+}
+
+.preOrderButton {
+    background-color: #424921;
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s;
+
+    &:hover {
+        background-color: #5b652b;
+    }
+}
+/* ============ RESPONSIVE ============ */
+@media (max-width: 768px) {
+    .resProfileMenu {
+        padding: 15px 20px;
+        justify-content: flex-start;
+    }
+
+    .profileHeader {
+        flex-direction: column;
+        gap: 20px;
+        margin-top: 70px;
+        align-items: center;
+    }
+
+    .profileAvatar {
+        width: 100%;
+        max-width: 350px;
+        height: 200px;
+    }
+
+    .profileName {
+        font-size: 22px;
+        text-align: center;
+    }
+
+    .rating {
+        justify-content: center;
+    }
+
+    .profileAddress,
+    .profileDescription {
+        text-align: center;
+        max-width: 100%;
+    }
+
+    .profileActions {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .likeButton,
+    .preOrderButton {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .profileAvatar {
+        max-width: 280px;
+        height: 160px;
+    }
+
+    .profileName {
+        font-size: 18px;
+    }
+
+    .profileDescription {
+        font-size: 14px;
+    }
+}
+
+.mapButtonWrapper {
+    position: relative;
+    width: 50%;
+    height: 100px;
+    margin: 20px 0;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #eee;
+    transition: transform 0.2s;
+
+    &:hover {
+        transform: translateX(-50%) scale(1.01);
+    }
+}
+
+.mapBackground {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-size: cover;
+    background-position: center;
+    filter: blur(3px); /* Làm mờ hình nền */
+    transform: scale(1.1); /* Phóng to nhẹ để tránh viền trắng do blur */
+    z-index: 1;
+}
+
+.mapOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3); /* Lớp phủ tối màu */
+    z-index: 2;
+}
+
+.mapContent {
+    position: relative;
+    z-index: 3;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    gap: 10px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.mapContainer {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.heartIcon {
+    font-size: 20px;
+    margin-right: 6px;
+    color: #ffffff; /* Trắng khi chưa thích */
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.liked {
+    color: #ff1640 !important; /* Đỏ khi đã thích */
+    transform: scale(1.2); /* nhẹ khi nhấn */
+    animation: heartbeat 0.3s ease;
+}
+
+@keyframes heartbeat {
+    0% {
+        transform: scale(1);
+    }
+    30% {
+        transform: scale(1.25);
+    }
+    60% {
+        transform: scale(0.9);
+    }
+    100% {
+        transform: scale(1);
+    }
+}

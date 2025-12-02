@@ -1,0 +1,140 @@
+.cardLayout {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: #fffdf6;
+    border-radius: 10px;
+    padding: 15px;
+    width: 100%;
+    max-width: 1000px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: relative;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease; // hiệu ứng mượt khi hover
+
+    // 🟢 Hiệu ứng hover
+    &:hover {
+        transform: translateY(-5px) scale(1.02);
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+        background: #fffbe9;
+    }
+
+    .layoutImage {
+        width: 150px;
+        height: 100px;
+        border-radius: 6px;
+        object-fit: contain;
+        transition: transform 0.3s ease;
+
+        // phóng ảnh nhẹ khi hover card
+        .cardLayout:hover & {
+            transform: scale(1.05);
+        }
+    }
+
+    .layoutInfo {
+        flex: 1;
+        h4 {
+            margin-top: -40px;
+            font-size: 1.2rem;
+            color: #424921;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        p {
+            margin: 5px 0 0;
+            color: #6a7636 !important;
+            font-size: 15px;
+            text-align: left;
+            transition: color 0.3s ease;
+        }
+
+        // đổi màu chữ khi hover
+        .cardLayout:hover & h4 {
+            color: #6a7636;
+        }
+    }
+
+    .menu {
+        position: relative;
+    }
+
+    .menuBtn {
+        color: #424921;
+        border: none;
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+
+        &:hover {
+            color: #69742f;
+        }
+    }
+
+    .menuDropdown {
+        position: absolute;
+        top: 40px;
+        right: 0;
+        background: #fffdf6;
+        border: 2px solid #424921;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        z-index: 10;
+        min-width: 120px;
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: none;
+            border: none;
+            color: #424921;
+            font-size: 0.9rem;
+            text-align: left;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s;
+
+            &:hover {
+                background: #424921;
+                color: #fff;
+            }
+        }
+    }
+}
+
+// Responsive
+@media (max-width: 768px) {
+    .cardLayout {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+
+        .layoutImage {
+            width: 100%;
+            height: 150px;
+        }
+
+        .layoutInfo {
+            h4 {
+                font-size: 1.2rem;
+            }
+            p {
+                font-size: 0.9rem;
+            }
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .cardLayout {
+        .layoutImage {
+            height: 120px;
+        }
+    }
+}

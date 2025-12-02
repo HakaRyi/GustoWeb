@@ -16,7 +16,7 @@ function Footer() {
         <div className={styles.footerLinks}>
           <a href="/about">Về chúng tôi</a>
           <a href="/contact">Liên hệ</a>
-          <a href="/privacy">Điều khoản pháp lý</a>
+          <a href="/terms">Điều khoản pháp lý</a>
         </div>
         <div className={styles.footerCopy}>
           <p>&copy; {new Date().getFullYear()} Gusto. Tất cả quyền được bảo lưu.</p>

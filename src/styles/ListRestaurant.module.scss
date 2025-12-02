@@ -1,0 +1,62 @@
+/* --- Restaurant List Container --- */
+.restList_container {
+    max-height: 50vh; /* Giảm chiều cao để dễ kiểm tra thanh cuộn */
+    width: 800px;
+    overflow-y: scroll; /* Buộc hiển thị thanh cuộn dọc */
+    padding-right: 0px; /* Khoảng cách để thanh cuộn không che nội dung */
+
+    flex-direction: column;
+    gap: 20px; /* Khoảng cách giữa các card nhà hàng */
+    margin-left: 260px;
+    overflow-x: hidden;
+    /* Tùy chỉnh thanh cuộn */
+    &::-webkit-scrollbar {
+        width: 8px; /* Chiều rộng thanh cuộn */
+    }
+
+    &::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1); /* Nền thanh cuộn */
+        border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: #ffd369; /* Màu thanh cuộn */
+        border-radius: 10px;
+        transition: background 0.3s ease;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background: #ffdd00; /* Màu khi hover thanh cuộn */
+    }
+}
+p {
+    color: white !important;
+}
+
+/* --- Responsive --- */
+@media (max-width: 900px) {
+    .restList_container {
+        max-height: 400px;
+        padding-right: 5px;
+    }
+}
+
+/* --- Mobile < 768px --- */
+@media (max-width: 768px) {
+    .restList_container {
+        width: 100%;
+        margin-left: 0;
+        max-height: none; /* không giới hạn chiều cao nữa */
+        overflow-y: visible; /* bỏ thanh scroll nội tại */
+        padding: 0 10px; /* tạo khoảng cách 2 bên */
+        gap: 16px;
+    }
+}
+
+/* --- Mobile nhỏ < 480px --- */
+@media (max-width: 480px) {
+    .restList_container {
+        padding: 0 6px;
+        gap: 12px;
+    }
+}
