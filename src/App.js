@@ -1,43 +1,76 @@
-import { Fragment } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Fragment, useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'; // ✅ Đã thêm Navigate
 import FoodChatBot from './components/ChatBox/FoodChatBox';
+import { publicRoutes, privateRoutes } from '~/routes'; 
 
-import { publicRoutes } from '~/routes';
-import { useState, useEffect } from 'react';
 function App() {
-    const [token, setToken] = useState(localStorage.getItem('token') || null);
-    const [isAdmin, setIsAdmin] = useState(false);
+    const isAdmin = localStorage.getItem("role") === "Admin";
+
     return (
         <Router>
             <div className="App">
                 <FoodChatBot />
                 <Routes>
+                    {/* 1. PUBLIC ROUTES */}
                     {publicRoutes.map((route, index) => {
-                        let Layout = Fragment; // ở đây mình set default layout nè, tức là layout có sẵn Header và Footer
+                        let Layout = Fragment; 
+                        
                         if (route.layout) {
-                            Layout = route.layout; //ở đây nó kiểm tra xem cái page nào đó nó có layout riêng không, nếu có thì nó sẽ
-                            //sài của của riêng nó ở đây
+                            Layout = route.layout;
+                        } else if (route.component === undefined) {
+                            Layout = Fragment; 
+                        } else {
+                            Layout = Fragment; 
                         }
 
-                        const DefaultComponent = route.children?.[0]?.component; //thằng này nó kiểm tra xem route đó có con hay không, nếu có thì nó lấy cái page đầu tiên làm mặc định nha
-                        const Page = route.component;
-                        //Khúc dưới hoạt động sao hỏi chat GPT nhan, giờ tui tạo Layout có Header với Footer cho Đôn, còn page con Đôn dô routes Đôn cấu hình giúp tui
+                        const Page = route.component || Fragment;
+
                         return (
                             <Route
+                                key={index}
                                 path={route.path}
                                 element={
-                                    <Layout>
-                                        <Page />
-                                    </Layout>
+                                    <Page />
                                 }
-                                key={index}
                             >
-                                {DefaultComponent && <Route index element={<DefaultComponent />} />}
-                                {route.children?.map((child, i) => {
+                                {route.children && route.children.map((child, i) => {
                                     const ChildPage = child.component;
-                                    return <Route path={child.path} element={<ChildPage />} key={i} />;
+                                    return (
+                                        <Route 
+                                            key={i} 
+                                            path={child.path} 
+                                            index={child.index} 
+                                            element={<ChildPage />} 
+                                        />
+                                    );
                                 })}
                             </Route>
+                        );
+                    })}
+
+                    {/* 2. PRIVATE ROUTES */}
+                    {privateRoutes.map((route, index) => {
+                        const Page = route.component;
+                        let Layout = Fragment;
+
+                        if (route.layout) {
+                            Layout = route.layout;
+                        }
+
+                        return (
+                            <Route
+                                key={index + publicRoutes.length}
+                                path={route.path}
+                                element={
+                                    isAdmin ? (
+                                        <Layout>
+                                            <Page />
+                                        </Layout>
+                                    ) : (
+                                        <Navigate to="/login" replace /> 
+                                    )
+                                }
+                            />
                         );
                     })}
                 </Routes>

@@ -56,6 +56,25 @@ function LoginForm() {
             if (loginResponse.ok) {
                 const data = await loginResponse.json(); 
 
+             console.log('✅ Server Response:', data);
+
+                // 👇👇👇 XỬ LÝ ĐẶC BIỆT KHI SERVER TRẢ VỀ TRUE 👇👇👇
+                if (data === true && values.userName === 'admin') {
+                    console.log("🔥 Đăng nhập Admin thành công (Mode: Hardcode)");
+                    
+                    // Tự tạo dữ liệu giả lập cho Admin
+                    localStorage.setItem("token", "fake-admin-token"); 
+                    localStorage.setItem("role", "Admin");
+                    localStorage.setItem("userName", values.userName);
+                    
+                    dispatch(loginSuccess({ user: { username: values.userName, role: "Admin" } }));
+                    
+                    setLoadingVisible(false);
+                    navigate('/admin'); // ✈️ Chuyển thẳng Admin
+                    return; // Dừng hàm tại đây
+                }
+                // 👆👆👆 KẾT THÚC XỬ LÝ ĐẶC BIỆT 👆👆👆
+
                 console.log('Đăng nhập thành công với user:', values.userName);
                 
                 dispatch(loginSuccess({ user: { username: values.userName } }));
@@ -66,9 +85,11 @@ function LoginForm() {
 
                 setLoadingVisible(false);
 
-                if (data.role === 3) {
-                    navigate(routes.admin);
+                if (data.role === "Admin" || data.role === "admin" || data.role === 3) {
+                    console.log("✈️ Role hợp lệ -> Chuyển sang ADMIN");
+                    navigate('/admin');
                 } else {
+                  console.log("🏠 GO TO HOME PAGE");
                     navigate(routes.home);
                 }
             } else {
@@ -163,7 +184,7 @@ function LoginForm() {
                     text="sign_in_with"
                     shape="rectangular"
                     logo_alignment="left"
-                    width="100%"
+                    width="300"
                     type="standard"
                 />
             </div>

@@ -3,7 +3,7 @@ import styles from "./RestaurantList.module.scss";
 import ErrorModal from "./ErrorModal";
 import axios from "axios";
 import {
-    FaPlus, FaSearch, FaStore, FaPhone, FaEnvelope, FaClock,
+    FaPlus, FaSearch, FaStore, FaPhone, FaClock,
     FaEdit, FaTrash, FaCloudUploadAlt, FaSpinner, FaTimes, FaMapMarkerAlt,
     FaFacebook, FaTiktok
 } from "react-icons/fa";
