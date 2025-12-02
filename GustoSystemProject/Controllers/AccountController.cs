@@ -67,25 +67,17 @@ namespace GustoSystemProject.Controllers
         }
 
         [HttpPost("signIn")]
-        public async Task<IActionResult> SignIn([FromBody] SignInRequest value)
+        public async Task<bool> SignIn([FromBody] SignInRequest value)
         {
             try
             {
-                var result = await _service.SignInAsync(value);
 
-                return Ok(new
-                {
-                    success = true,
-                    message = "Đăng nhập thành công"
-                });
+                return await _service.SignInAsync(value);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return Unauthorized(new
-                {
-                    success = false,
-                    message = ex.Message
-                });
+
+                return false;
             }
         }
         [HttpPost("google-login")] 
