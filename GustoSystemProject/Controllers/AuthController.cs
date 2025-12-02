@@ -39,7 +39,7 @@ namespace GustoSystemProject.Controllers
             if (request.UserName == adminUser && request.Password == adminPass)
             {
                 // 3. Tạo Token quyền Admin
-                var tokenString = GenerateJwtToken(adminUser, "Admin", "1"); // ID giả định là 1
+                var tokenString = GenerateJwtToken(adminUser, "Admin", "3"); // ID giả định là 3
 
                 return Ok(new
                 {
