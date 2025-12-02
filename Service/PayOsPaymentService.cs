@@ -131,28 +131,62 @@ namespace Service
                         ReceiverName = diner.FullName ?? "Khách hàng",
                         ReceiverMail = diner.Email,
                         Subject = "Thanh toán thành công – Gusto",
-                        Messenger = $@"Chào {diner.FullName},
+                        Messenger = $@"
+<!DOCTYPE html>
+<html>
+<body style=""font-family: Arial, sans-serif; color: #333; line-height: 1.6; margin: 0; padding: 20px; background: #f9f9f9;"">
+    <div style=""max-width: 600px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1);"">
+        <!-- Header xanh olive -->
+        <div style=""background: linear-gradient(135deg, #6a7636, #5a662e); padding: 30px; text-align: center; color: white;"">
+            <h1 style=""margin: 0; font-size: 28px;"">Thanh toán thành công!</h1>
+            <p style=""margin: 10px 0 0; font-size: 16px;"">Cảm ơn bạn đã tin tưởng Gusto</p>
+        </div>
+        
+        <div style=""padding: 30px;"">
+            <h2 style=""color: #2c3e50;"">Chào {diner.FullName ?? "bạn"},</h2>
+            
+            <!-- Khối thông tin giao dịch -->
+            <div style=""background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 25px 0; border-left: 5px solid #6a7636;"">
+                <h3 style=""margin: 0 0 15px 0; color: #2c3e50;"">Chi tiết giao dịch</h3>
+                <table style=""width: 100%; font-size: 15px;"">
+                    <tr><td style=""padding: 8px 0;""><strong>Mã đơn:</strong></td><td>#{order.OrderId}</td></tr>
+                    <tr><td style=""padding: 8px 0;""><strong>Nhà hàng:</strong></td><td>{order.Booking.Restaurant.FullName}</td></tr>
+                    <tr><td style=""padding: 8px 0;""><strong>Bàn:</strong></td><td>{order.Booking.Table.Name}</td></tr>
+                    <tr><td style=""padding: 8px 0;""><strong>Thời gian:</strong></td><td>{order.Booking.StartTime:dd/MM/yyyy HH:mm}</td></tr>
+                    <tr><td style=""padding: 8px 0;""><strong>Số tiền:</strong></td>
+                        <td style=""color: #6a7636; font-size: 18px; font-weight: bold;"">{order.FinalPrice:N0} VND</td></tr>
+                </table>
+            </div>
 
-                    Cảm ơn bạn đã thanh toán thành công tại Gusto!
+            <p style=""font-size: 16px;"">
+                Thực đơn đang được chuẩn bị<br/>
+                <strong>Chúng tôi sẽ gọi bạn khi sẵn sàng!</strong>
+            </p>
 
-                    THÔNG TIN GIAO DỊCH
-                    • Mã đơn: #{order.OrderId}
-                    • Nhà hàng: {order.Booking.Restaurant.FullName}
-                    • Bàn: {order.Booking.Table.Name}
-                    • Thời gian: {order.Booking.StartTime:dd/MM/yyyy HH:mm}
-                    • Số tiền: {order.FinalPrice:N0} VND
+            <!-- Nút CTA xanh olive -->
+            <div style=""text-align: center; margin: 35px 0;"">
+                <a href=""https://gustoweb.site/profile/bkh""
+                   style=""background: #6a7636; color: white; padding: 14px 32px; text-decoration: none; border-radius: 50px; 
+                          font-weight: bold; font-size: 16px; display: inline-block; box-shadow: 0 4px 15px rgba(106,118,54,0.3);"">
+                   Xem chi tiết đặt chỗ
+                </a>
+            </div>
 
-                    Thực đơn đang được chuẩn bị
-                    Chúng tôi sẽ gọi bạn khi sẵn sàng!
+            <hr style=""border: 0; border-top: 1px solid #eee; margin: 40px 0;""/>
 
-                    Xem chi tiết: https://gustoweb.site/profile/bkh
-
-                    Trân trọng,
-                    Gusto Team – Say it, Savor it
-                    https://gustoweb.site"
+            <p style=""text-align: center; color: #7f8c8d;"">
+                Trân trọng,<br/>
+                <strong style=""color: #2c3e50;"">Gusto Team</strong> – <em>Say it, Savor it</em><br/>
+                <a href=""https://gustoweb.site"" style=""color: #6a7636;"">gustoweb.site</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>"
+.Trim()
                     };
 
-                    await _notificationService.SendEmailAsync(emailRequest);
+                    await _notificationService.SendEmailAsync2(emailRequest);
                     Console.WriteLine($"Đã gửi email thành công đến: {diner.Email}");
                 }
             }

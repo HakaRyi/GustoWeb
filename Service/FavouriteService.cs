@@ -22,6 +22,20 @@ namespace Service
 
             return favs.Select(f => f.Restaurant).ToList();
         }
+        public async Task<List<Favourite>> GetAccountsLikeRes(short resId)
+        {
+            try
+            {
+                return await _repository.GetAccountsLikeRes(resId);
+            }
+            catch 
+            {
+
+            }
+            return new List<Favourite>();
+            
+
+        }
 
         public async Task<FavouriteResponse?> GetByIdAsync(short id)
         {
@@ -36,6 +50,18 @@ namespace Service
                 CreatedAt = fav.CreatedAt,
                 RestaurantName = fav.Restaurant?.FullName
             };
+        }
+        public async Task<bool> IsResLiked(short dinerId, short resId)
+        {
+            var fav = await _repository.GetMyFavorate(dinerId,resId);
+            if (fav == null) {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
         }
 
         public async Task AddAsync(FavouriteRequest request)

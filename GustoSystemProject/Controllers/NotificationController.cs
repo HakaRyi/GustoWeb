@@ -95,7 +95,7 @@ namespace GustoSystemProject.Controllers
         {
             try
             {
-                await _service.SendEmailAsync(request);
+                await _service.SendEmailAsync2(request);
                 return Ok(new { Message = "Email sent successfully" });
             }
             catch (Exception ex)
