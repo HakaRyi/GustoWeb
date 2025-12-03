@@ -250,9 +250,9 @@ namespace Service
                     // Tự tạo Claims cho Admin
                     var claims = new[]
                     {
-                        new Claim("AccountID", "1"), // ID giả định là 1
+                        new Claim("AccountID", "3"), // ID giả định là 1
                         new Claim(JwtRegisteredClaimNames.Sub, adminUser),
-                        new Claim(ClaimTypes.NameIdentifier, "1"),
+                        new Claim(ClaimTypes.NameIdentifier, "3"),
                         new Claim(ClaimTypes.Role, "Admin") // Role Admin cứng
                     };
 

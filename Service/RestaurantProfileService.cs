@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 using Org.BouncyCastle.Ocsp;
 using Repository;
+using Repository.DBContext; 
 using Repository.Models;
 using Service.DTO.Request;
 using Service.DTO.Response;
-using Repository.DBContext; 
 
 namespace Service
 {
@@ -20,12 +20,14 @@ namespace Service
         private readonly AccountRepository accRepo;
         private readonly FoodReviewRepository foodReviewRepository;
         private readonly GustoSystemContext _context;
-        public RestaurantProfileService(RestaurantProfileRepository repository, AccountRepository accRepo, FoodReviewRepository foodReviewRepository, GustoSystemContext context)
+        private readonly BookingRepository bookingRepository;
+        public RestaurantProfileService(RestaurantProfileRepository repository, AccountRepository accRepo, FoodReviewRepository foodReviewRepository, GustoSystemContext context, BookingRepository bookingRepository)
         {
             this.repository = repository;
             this.accRepo = accRepo;
             this.foodReviewRepository = foodReviewRepository;
             _context = context;
+            this.bookingRepository = bookingRepository;
         }
         public async Task<List<RestaurantProfile>> GetAllAsync1()
         {
@@ -221,6 +223,33 @@ namespace Service
             return await repository.DeleteAsync(profileId);
         }
 
+        public async Task<decimal> RevenueByMonth(short profileId, int month, int year)
+        {
+            var res = await GetByIdAsync(profileId);
+            if (res != null) 
+            {
+                var bookings = await bookingRepository.GetCompletedOrdersByMonthAsync(profileId,month,year);
+                if (!bookings.Any())
+                    return 0m;
+                decimal totalRevenue = bookings.Sum(o => o.FinalPrice!.Value);
+                decimal platformFee = bookings.Count * 3000m;
+                return totalRevenue - platformFee;
+            }
+            else
+            {
+                return 0m;
+            }
+        }
+        public async Task<string> BestSeller(short profileId)
+        {
+            var restaurant = await GetByIdAsync(profileId);
+            if (restaurant == null)
+                return "Không tìm thấy nhà hàng";
+
+            var bestSellerName = await bookingRepository.GetBestSellerFoodName(profileId);
+
+            return bestSellerName ?? "Chưa có đơn hàng nào";
+        }
         // ===== ADMIN CRUD =====
 
         public async Task<int> AdminUpdateProfileAsync(int profileId, RestaurantProfileRequest request)
