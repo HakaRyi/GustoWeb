@@ -184,7 +184,7 @@ $price-color: #e67e22; // Màu giá tiền (Cam đậm)
         display: flex;
         align-items: center;
         gap: 12px;
-        color: $text-gray;
+        color: $text-gray !important;
 
         svg {
             color: $primary-color;
@@ -574,7 +574,7 @@ td:last-child {
     align-items: center;
     border: 1px solid #eee;
 
-    &[style*="flex-direction: column"] {
+    &[style*='flex-direction: column'] {
         align-items: flex-start;
         gap: 8px;
     }
