@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Table, Badge, Spinner, InputGroup, FormControl, Pagination } from "react-bootstrap";
-import { FaSearch, FaCalendarAlt, FaUser, FaStore, FaHashtag } from "react-icons/fa";
-import styles from "./TransactionHistory.module.scss";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Table, Badge, Spinner, InputGroup, FormControl, Pagination } from 'react-bootstrap';
+import { FaSearch, FaCalendarAlt, FaUser, FaStore, FaHashtag } from 'react-icons/fa';
+import styles from './TransactionHistory.module.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 // 👇 Link API trỏ vào Controller vừa tạo
-const API_URL = "https://localhost:7176/api/admin/AdminTransaction";
+const API_URL = 'https://gustoweb.onrender.com/api/admin/AdminTransaction';
 const ITEMS_PER_PAGE = 8;
 
 const TransactionHistory = () => {
     const [transactions, setTransactions] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [searchTerm, setSearchTerm] = useState("");
+    const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
 
     useEffect(() => {
@@ -25,14 +25,14 @@ const TransactionHistory = () => {
             const res = await axios.get(API_URL);
             setTransactions(res.data);
         } catch (error) {
-            console.error("Lỗi tải giao dịch:", error);
+            console.error('Lỗi tải giao dịch:', error);
         } finally {
             setLoading(false);
         }
     };
 
     // --- SEARCH LOGIC ---
-    const filteredData = transactions.filter(t => {
+    const filteredData = transactions.filter((t) => {
         if (!searchTerm) return true;
         const lower = searchTerm.toLowerCase();
 
@@ -53,7 +53,7 @@ const TransactionHistory = () => {
     };
 
     const formatDate = (dateString) => {
-        if (!dateString) return "-";
+        if (!dateString) return '-';
         return new Date(dateString).toLocaleString('vi-VN');
     };
 
@@ -71,7 +71,10 @@ const TransactionHistory = () => {
                     <FormControl
                         placeholder="Tìm theo Mã GD, Khách hàng, Nhà hàng..."
                         value={searchTerm}
-                        onChange={(e) => { setSearchTerm(e.target.value); setCurrentPage(1); }}
+                        onChange={(e) => {
+                            setSearchTerm(e.target.value);
+                            setCurrentPage(1);
+                        }}
                         className="border-start-0 shadow-none"
                     />
                 </InputGroup>
@@ -79,7 +82,9 @@ const TransactionHistory = () => {
 
             <div className={styles.tableWrapper}>
                 {loading ? (
-                    <div className="text-center my-5"><Spinner animation="border" variant="primary" /></div>
+                    <div className="text-center my-5">
+                        <Spinner animation="border" variant="primary" />
+                    </div>
                 ) : (
                     <Table hover responsive className="align-middle mb-0">
                         <thead className="table-light">
@@ -103,31 +108,35 @@ const TransactionHistory = () => {
                                         <td>
                                             <div className="d-flex align-items-center gap-2">
                                                 <FaUser className="text-secondary" />
-                                                <span className="fw-medium">{t.booking?.diner?.fullName || "Khách vãng lai"}</span>
+                                                <span className="fw-medium">
+                                                    {t.booking?.diner?.fullName || 'Khách vãng lai'}
+                                                </span>
                                             </div>
                                         </td>
                                         <td>
                                             <div className="d-flex align-items-center gap-2">
                                                 <FaStore className="text-info" />
-                                                <span>{t.booking?.restaurant?.fullName || "---"}</span>
+                                                <span>{t.booking?.restaurant?.fullName || '---'}</span>
                                             </div>
                                         </td>
-                                        <td className="fw-bold text-success">
-                                            {formatCurrency(t.totalAmount)}
-                                        </td>
+                                        <td className="fw-bold text-success">{formatCurrency(t.totalAmount)}</td>
                                         <td>
                                             <div className="text-muted small">
                                                 <FaCalendarAlt className="me-1" /> {formatDate(t.timestamp)}
                                             </div>
                                         </td>
                                         <td className="text-center">
-                                            <Badge bg="success" className="px-3 py-2 rounded-pill">Thành công</Badge>
+                                            <Badge bg="success" className="px-3 py-2 rounded-pill">
+                                                Thành công
+                                            </Badge>
                                         </td>
                                     </tr>
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan="6" className="text-center py-5 text-muted">Không tìm thấy giao dịch nào.</td>
+                                    <td colSpan="6" className="text-center py-5 text-muted">
+                                        Không tìm thấy giao dịch nào.
+                                    </td>
                                 </tr>
                             )}
                         </tbody>
@@ -138,13 +147,23 @@ const TransactionHistory = () => {
             {totalPages > 1 && (
                 <div className={styles.paginationContainer}>
                     <Pagination className="justify-content-center mt-4">
-                        <Pagination.Prev onClick={() => setCurrentPage(p => Math.max(1, p - 1))} disabled={currentPage === 1} />
+                        <Pagination.Prev
+                            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                            disabled={currentPage === 1}
+                        />
                         {[...Array(totalPages)].map((_, i) => (
-                            <Pagination.Item key={i} active={currentPage === i + 1} onClick={() => setCurrentPage(i + 1)}>
+                            <Pagination.Item
+                                key={i}
+                                active={currentPage === i + 1}
+                                onClick={() => setCurrentPage(i + 1)}
+                            >
                                 {i + 1}
                             </Pagination.Item>
                         ))}
-                        <Pagination.Next onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))} disabled={currentPage === totalPages} />
+                        <Pagination.Next
+                            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                            disabled={currentPage === totalPages}
+                        />
                     </Pagination>
                 </div>
             )}

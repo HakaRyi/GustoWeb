@@ -50,25 +50,26 @@ function LoginForm() {
                     Accept: '*/*',
                     'Content-Type': 'application/json',
                 },
+                credentials: 'include',
                 body: JSON.stringify(loginData),
             });
 
             if (loginResponse.ok) {
-                const data = await loginResponse.json(); 
+                const data = await loginResponse.json();
 
-             console.log('✅ Server Response:', data);
+                console.log('✅ Server Response:', data);
 
                 // 👇👇👇 XỬ LÝ ĐẶC BIỆT KHI SERVER TRẢ VỀ TRUE 👇👇👇
                 if (data === true && values.userName === 'admin') {
-                    console.log("🔥 Đăng nhập Admin thành công (Mode: Hardcode)");
-                    
+                    console.log('🔥 Đăng nhập Admin thành công (Mode: Hardcode)');
+
                     // Tự tạo dữ liệu giả lập cho Admin
-                    localStorage.setItem("token", "fake-admin-token"); 
-                    localStorage.setItem("role", "Admin");
-                    localStorage.setItem("userName", values.userName);
-                    
-                    dispatch(loginSuccess({ user: { username: values.userName, role: "Admin" } }));
-                    
+                    localStorage.setItem('token', 'fake-admin-token');
+                    localStorage.setItem('role', 'Admin');
+                    localStorage.setItem('userName', values.userName);
+
+                    dispatch(loginSuccess({ user: { username: values.userName, role: 'Admin' } }));
+
                     setLoadingVisible(false);
                     navigate('/admin'); // ✈️ Chuyển thẳng Admin
                     return; // Dừng hàm tại đây
@@ -76,20 +77,20 @@ function LoginForm() {
                 // 👆👆👆 KẾT THÚC XỬ LÝ ĐẶC BIỆT 👆👆👆
 
                 console.log('Đăng nhập thành công với user:', values.userName);
-                
+
                 dispatch(loginSuccess({ user: { username: values.userName } }));
 
-                localStorage.setItem("token", data.token);
-                localStorage.setItem("role", data.role);
-                localStorage.setItem("userName", values.userName);
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('role', data.role);
+                localStorage.setItem('userName', values.userName);
 
                 setLoadingVisible(false);
 
-                if (data.role === "Admin" || data.role === "admin" || data.role === 3) {
-                    console.log("✈️ Role hợp lệ -> Chuyển sang ADMIN");
+                if (data.role === 'Admin' || data.role === 'admin' || data.role === 3) {
+                    console.log('✈️ Role hợp lệ -> Chuyển sang ADMIN');
                     navigate('/admin');
                 } else {
-                  console.log("🏠 GO TO HOME PAGE");
+                    console.log('🏠 GO TO HOME PAGE');
                     navigate(routes.home);
                 }
             } else {
@@ -118,7 +119,6 @@ function LoginForm() {
             if (!response.ok) {
                 throw new Error('Google login failed');
             }
-
 
             const googleUser = jwtDecode(credentialResponse.credential);
 
@@ -170,7 +170,7 @@ function LoginForm() {
                     <button type="submit">Login</button>
                 </Form>
             </Formik>
-            
+
             <div className={cx('google-login-divider')}>
                 <span>OR</span>
             </div>
@@ -188,7 +188,7 @@ function LoginForm() {
                     type="standard"
                 />
             </div>
-            
+
             <LoadingModal visible={loadingVisible} message="Đang đăng nhập..." />
             <ResultModal
                 visible={result.visible}

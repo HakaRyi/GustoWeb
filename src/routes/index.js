@@ -1,4 +1,3 @@
-
 // Config
 import routes from '~/config/route';
 
@@ -31,7 +30,7 @@ import TableResLayout from '~/components/Restaurant/Table/TableResLayout';
 import IntegratePaymentAccount from '~/components/Restaurant/IntegratePaymentAccount/IntegratePaymentAccount';
 import RestaurantDetail from '~/components/RestaurantDetail/RestaurantDetail';
 import RestaurantHomePage from '~/components/Restaurant/RestaurantHomePage';
-
+import ProfileRestaurantLayout from '~/components/Restaurant/ProfileRestaurantLayout';
 // Payment Pages
 import PaymentMerchantRequest from '~/pages/PaymentMerchant';
 import PreviewBeforePay from '~/pages/PreviewBeforePay/PreviewBeforePay';
@@ -75,8 +74,8 @@ const publicRoutes = [
         component: ProfileRestaurant,
         children: [
             { index: true, component: RestaurantHomePage },
-            // { path: routes.restaurantHome, component: ProfileRestaurantLayout }, 
-            
+            { path: routes.restaurantHome, component: ProfileRestaurantLayout },
+
             { path: 'layout', component: LayoutRestaurant },
             { path: 'menu', component: MenuLayout },
             { path: 'table', component: TableResLayout },
@@ -92,8 +91,6 @@ const publicRoutes = [
 ];
 
 // 6. Private Routes (Chỉ Admin mới vào được)
-const privateRoutes = [
-    { path: '/admin', component: AdminPage, role: 'Admin' },
-];
+const privateRoutes = [{ path: '/admin', component: AdminPage, role: 'Admin' }];
 
 export { publicRoutes, privateRoutes };

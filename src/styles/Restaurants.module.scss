@@ -58,21 +58,21 @@
         width: 700px;
         padding: 14px 25px 14px 20px;
 
-        border-radius: 12px;
+        border-radius: 12px !important;
         border: 2px solid #eaeaea;
         outline: none;
         font-size: 1rem;
 
-        color: #ffd369 !important;
-        backdrop-filter: blur(6px);
+        color: #ffffff !important;
+
         transition: 0.3s;
 
         &::placeholder {
-            color: #ddd;
+            color: #ddd !important;
         }
 
         &:focus-visible {
-            border: 2px solid #ffd369 !important;
+            border: 2px solid #ffffff !important;
         }
     }
 

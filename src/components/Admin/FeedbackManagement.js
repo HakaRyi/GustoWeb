@@ -1,31 +1,22 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import {
-    Table,
-    Button,
-    InputGroup,
-    FormControl,
-    Spinner,
-    Badge,
-    Modal,
-    Pagination
-} from "react-bootstrap";
-import { FaSearch, FaTrashAlt, FaStar, FaUserSecret, FaUser, FaUtensils, FaComments } from "react-icons/fa";
-import styles from "./FeedbackManagement.module.scss";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Table, Button, InputGroup, FormControl, Spinner, Badge, Modal, Pagination } from 'react-bootstrap';
+import { FaSearch, FaTrashAlt, FaStar, FaUserSecret, FaUser, FaUtensils, FaComments } from 'react-icons/fa';
+import styles from './FeedbackManagement.module.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 // 👇 API ADMIN MỚI
-const API_URL = "https://localhost:7176/api/admin/AdminFoodReview";
+const API_URL = 'https://gustoweb.onrender.com/api/admin/AdminFoodReview';
 const ITEMS_PER_PAGE = 7;
 
 const FeedbackManagement = () => {
     const [reviews, setReviews] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [searchTerm, setSearchTerm] = useState("");
-    
+    const [searchTerm, setSearchTerm] = useState('');
+
     // State cho Modal xem ảnh
     const [showImageModal, setShowImageModal] = useState(false);
-    const [previewImage, setPreviewImage] = useState("");
+    const [previewImage, setPreviewImage] = useState('');
 
     // State phân trang
     const [currentPage, setCurrentPage] = useState(1);
@@ -41,7 +32,7 @@ const FeedbackManagement = () => {
             const res = await axios.get(API_URL); // Gọi API GetAll của Admin
             setReviews(res.data);
         } catch (error) {
-            console.error("Lỗi tải đánh giá:", error);
+            console.error('Lỗi tải đánh giá:', error);
         } finally {
             setLoading(false);
         }
@@ -49,20 +40,20 @@ const FeedbackManagement = () => {
 
     // --- XÓA REVIEW ---
     const handleDelete = async (reviewId) => {
-        if (!window.confirm("Bạn có chắc chắn muốn xóa đánh giá này không? Hành động này không thể hoàn tác.")) return;
+        if (!window.confirm('Bạn có chắc chắn muốn xóa đánh giá này không? Hành động này không thể hoàn tác.')) return;
 
         try {
             await axios.delete(`${API_URL}/${reviewId}`);
-            alert("Đã xóa thành công!");
+            alert('Đã xóa thành công!');
             fetchAllReviews(); // Load lại danh sách
         } catch (error) {
-            console.error("Lỗi xóa:", error);
-            alert("Xóa thất bại!");
+            console.error('Lỗi xóa:', error);
+            alert('Xóa thất bại!');
         }
     };
 
     // --- LOGIC LỌC (Tìm theo Tên món, Tên người dùng, Nội dung) ---
-    const filteredReviews = reviews.filter(r => {
+    const filteredReviews = reviews.filter((r) => {
         if (!searchTerm) return true;
         const lowerTerm = searchTerm.toLowerCase();
         return (
@@ -80,14 +71,16 @@ const FeedbackManagement = () => {
     // Helper: Render sao
     const renderStars = (rating) => {
         return [...Array(5)].map((_, index) => (
-            <FaStar key={index} color={index < rating ? "#ffc107" : "#e4e5e9"} size={14} />
+            <FaStar key={index} color={index < rating ? '#ffc107' : '#e4e5e9'} size={14} />
         ));
     };
 
     // Helper: Format ngày
     const formatDate = (dateString) => {
-        if (!dateString) return "---";
-        return new Date(dateString).toLocaleDateString("vi-VN") + " " + new Date(dateString).toLocaleTimeString("vi-VN");
+        if (!dateString) return '---';
+        return (
+            new Date(dateString).toLocaleDateString('vi-VN') + ' ' + new Date(dateString).toLocaleTimeString('vi-VN')
+        );
     };
 
     return (
@@ -105,7 +98,10 @@ const FeedbackManagement = () => {
                     <FormControl
                         placeholder="Tìm theo món ăn, người dùng hoặc nội dung..."
                         value={searchTerm}
-                        onChange={(e) => { setSearchTerm(e.target.value); setCurrentPage(1); }}
+                        onChange={(e) => {
+                            setSearchTerm(e.target.value);
+                            setCurrentPage(1);
+                        }}
                         className="border-start-0 shadow-none"
                     />
                 </InputGroup>
@@ -117,7 +113,9 @@ const FeedbackManagement = () => {
             {/* BẢNG DỮ LIỆU */}
             <div className={styles.tableWrapper}>
                 {loading ? (
-                    <div className="text-center my-5"><Spinner animation="border" variant="primary" /></div>
+                    <div className="text-center my-5">
+                        <Spinner animation="border" variant="primary" />
+                    </div>
                 ) : (
                     <Table hover responsive className="align-middle mb-0">
                         <thead className="table-light">
@@ -137,13 +135,19 @@ const FeedbackManagement = () => {
                                     <tr key={r.reviewId}>
                                         <td className="text-muted">#{r.reviewId}</td>
                                         <td>
-                                            <div className="fw-bold text-primary"><FaUtensils className="me-1 mb-1"/> {r.foodName}</div>
+                                            <div className="fw-bold text-primary">
+                                                <FaUtensils className="me-1 mb-1" /> {r.foodName}
+                                            </div>
                                             <small className="text-muted">{formatDate(r.date)}</small>
                                         </td>
                                         <td>
                                             <div className="d-flex align-items-center gap-2">
-                                                {r.isAnonymous ? <FaUserSecret size={18} /> : <FaUser size={18} className="text-info"/>}
-                                                <span>{r.isAnonymous ? "Ẩn danh" : r.dinerName}</span>
+                                                {r.isAnonymous ? (
+                                                    <FaUserSecret size={18} />
+                                                ) : (
+                                                    <FaUser size={18} className="text-info" />
+                                                )}
+                                                <span>{r.isAnonymous ? 'Ẩn danh' : r.dinerName}</span>
                                             </div>
                                         </td>
                                         <td>
@@ -151,20 +155,33 @@ const FeedbackManagement = () => {
                                             <small className="text-muted fw-bold">{r.rating}/5</small>
                                         </td>
                                         <td>
-                                            <p className={styles.comment}>{r.description || <span className="text-muted fst-italic">Không có nội dung</span>}</p>
+                                            <p className={styles.comment}>
+                                                {r.description || (
+                                                    <span className="text-muted fst-italic">Không có nội dung</span>
+                                                )}
+                                            </p>
                                         </td>
                                         <td>
                                             {r.imageUrl ? (
-                                                <img 
-                                                    src={r.imageUrl} 
-                                                    alt="review" 
-                                                    className={styles.reviewThumb} 
-                                                    onClick={() => { setPreviewImage(r.imageUrl); setShowImageModal(true); }}
+                                                <img
+                                                    src={r.imageUrl}
+                                                    alt="review"
+                                                    className={styles.reviewThumb}
+                                                    onClick={() => {
+                                                        setPreviewImage(r.imageUrl);
+                                                        setShowImageModal(true);
+                                                    }}
                                                 />
-                                            ) : <span className="text-muted small">-</span>}
+                                            ) : (
+                                                <span className="text-muted small">-</span>
+                                            )}
                                         </td>
                                         <td className="text-center">
-                                            <Button variant="outline-danger" size="sm" onClick={() => handleDelete(r.reviewId)}>
+                                            <Button
+                                                variant="outline-danger"
+                                                size="sm"
+                                                onClick={() => handleDelete(r.reviewId)}
+                                            >
                                                 <FaTrashAlt />
                                             </Button>
                                         </td>
@@ -172,7 +189,9 @@ const FeedbackManagement = () => {
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan="7" className="text-center py-5 text-muted">Không tìm thấy đánh giá nào.</td>
+                                    <td colSpan="7" className="text-center py-5 text-muted">
+                                        Không tìm thấy đánh giá nào.
+                                    </td>
                                 </tr>
                             )}
                         </tbody>
@@ -184,13 +203,23 @@ const FeedbackManagement = () => {
             {totalPages > 1 && (
                 <div className={styles.paginationContainer}>
                     <Pagination>
-                        <Pagination.Prev onClick={() => setCurrentPage(p => Math.max(1, p - 1))} disabled={currentPage === 1} />
+                        <Pagination.Prev
+                            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                            disabled={currentPage === 1}
+                        />
                         {[...Array(totalPages)].map((_, i) => (
-                            <Pagination.Item key={i} active={currentPage === i + 1} onClick={() => setCurrentPage(i + 1)}>
+                            <Pagination.Item
+                                key={i}
+                                active={currentPage === i + 1}
+                                onClick={() => setCurrentPage(i + 1)}
+                            >
                                 {i + 1}
                             </Pagination.Item>
                         ))}
-                        <Pagination.Next onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))} disabled={currentPage === totalPages} />
+                        <Pagination.Next
+                            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                            disabled={currentPage === totalPages}
+                        />
                     </Pagination>
                 </div>
             )}

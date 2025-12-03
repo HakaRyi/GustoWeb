@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Table, Button, Modal, Form, Badge, Spinner, InputGroup, FormControl, Pagination } from "react-bootstrap";
-import { FaTrashAlt, FaReply, FaSearch, FaEnvelope, FaEnvelopeOpenText } from "react-icons/fa";
-import styles from "./ContactManagement.module.scss";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Table, Button, Modal, Form, Badge, Spinner, InputGroup, FormControl, Pagination } from 'react-bootstrap';
+import { FaTrashAlt, FaReply, FaSearch, FaEnvelope, FaEnvelopeOpenText } from 'react-icons/fa';
+import styles from './ContactManagement.module.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const API_URL = "https://localhost:7176/api/admin/AdminContact";
+const API_URL = 'https://gustoweb.onrender.com/api/admin/AdminContact';
 const ITEMS_PER_PAGE = 7;
 
 const ContactManagement = () => {
     const [contacts, setContacts] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [searchTerm, setSearchTerm] = useState("");
+    const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
 
     // State cho Modal xem chi tiết & trả lời
     const [showModal, setShowModal] = useState(false);
     const [selectedContact, setSelectedContact] = useState(null);
-    const [replyMessage, setReplyMessage] = useState("");
+    const [replyMessage, setReplyMessage] = useState('');
 
     useEffect(() => {
         fetchContacts();
@@ -29,14 +29,14 @@ const ContactManagement = () => {
             const res = await axios.get(API_URL);
             setContacts(res.data);
         } catch (error) {
-            console.error("Lỗi tải liên hệ:", error);
+            console.error('Lỗi tải liên hệ:', error);
         } finally {
             setLoading(false);
         }
     };
 
     // --- LOGIC LỌC ---
-    const filteredContacts = contacts.filter(c => {
+    const filteredContacts = contacts.filter((c) => {
         if (!searchTerm) return true;
         const lower = searchTerm.toLowerCase();
         return (
@@ -53,29 +53,29 @@ const ContactManagement = () => {
 
     // --- XÓA ---
     const handleDelete = async (id) => {
-        if (!window.confirm("Bạn có chắc muốn xóa tin nhắn này không?")) return;
+        if (!window.confirm('Bạn có chắc muốn xóa tin nhắn này không?')) return;
         try {
             await axios.delete(`${API_URL}/${id}`);
-            alert("Đã xóa thành công!");
+            alert('Đã xóa thành công!');
             fetchContacts();
             if (showModal) setShowModal(false);
         } catch (error) {
-            console.error("Lỗi xóa:", error);
-            alert("Xóa thất bại!");
+            console.error('Lỗi xóa:', error);
+            alert('Xóa thất bại!');
         }
     };
 
     // --- MỞ MODAL XEM CHI TIẾT ---
     const handleViewDetail = (contact) => {
         setSelectedContact(contact);
-        setReplyMessage(""); // Reset form trả lời
+        setReplyMessage(''); // Reset form trả lời
         setShowModal(true);
     };
 
     // --- GỬI TRẢ LỜI (Giả lập hoặc gọi API gửi mail) ---
     const handleSendReply = () => {
         if (!replyMessage.trim()) {
-            alert("Vui lòng nhập nội dung trả lời!");
+            alert('Vui lòng nhập nội dung trả lời!');
             return;
         }
 
@@ -88,7 +88,7 @@ const ContactManagement = () => {
 
     // Helper: Format ngày
     const formatDate = (dateString) => {
-        if (!dateString) return "-";
+        if (!dateString) return '-';
         return new Date(dateString).toLocaleString('vi-VN');
     };
 
@@ -107,7 +107,10 @@ const ContactManagement = () => {
                     <FormControl
                         placeholder="Tìm theo tên, email, nội dung..."
                         value={searchTerm}
-                        onChange={(e) => { setSearchTerm(e.target.value); setCurrentPage(1); }}
+                        onChange={(e) => {
+                            setSearchTerm(e.target.value);
+                            setCurrentPage(1);
+                        }}
                         className="border-start-0 shadow-none"
                     />
                 </InputGroup>
@@ -125,7 +128,9 @@ const ContactManagement = () => {
             {/* Bảng dữ liệu */}
             <div className={styles.tableWrapper}>
                 {loading ? (
-                    <div className="text-center my-5"><Spinner animation="border" variant="primary" /></div>
+                    <div className="text-center my-5">
+                        <Spinner animation="border" variant="primary" />
+                    </div>
                 ) : (
                     <Table hover responsive className="align-middle mb-0">
                         <thead className="table-light">
@@ -143,12 +148,10 @@ const ContactManagement = () => {
                                 currentContacts.map((c) => (
                                     <tr key={c.id} onClick={() => handleViewDetail(c)} style={{ cursor: 'pointer' }}>
                                         <td className="text-muted">#{c.id}</td>
-                                        <td className="fw-bold">{c.fullName || "Ẩn danh"}</td>
+                                        <td className="fw-bold">{c.fullName || 'Ẩn danh'}</td>
                                         <td className="text-primary">{c.email}</td>
                                         <td>
-                                            <div className={styles.messagePreview}>
-                                                {c.content}
-                                            </div>
+                                            <div className={styles.messagePreview}>{c.content}</div>
                                         </td>
                                         <td className="text-muted small">{formatDate(c.timestamp)}</td>
                                         <td className="text-center" onClick={(e) => e.stopPropagation()}>
@@ -174,7 +177,9 @@ const ContactManagement = () => {
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan="6" className="text-center py-5 text-muted">Hộp thư trống.</td>
+                                    <td colSpan="6" className="text-center py-5 text-muted">
+                                        Hộp thư trống.
+                                    </td>
                                 </tr>
                             )}
                         </tbody>
@@ -186,13 +191,23 @@ const ContactManagement = () => {
             {totalPages > 1 && (
                 <div className={styles.paginationContainer}>
                     <Pagination className="justify-content-center mt-4">
-                        <Pagination.Prev onClick={() => setCurrentPage(p => Math.max(1, p - 1))} disabled={currentPage === 1} />
+                        <Pagination.Prev
+                            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                            disabled={currentPage === 1}
+                        />
                         {[...Array(totalPages)].map((_, i) => (
-                            <Pagination.Item key={i} active={currentPage === i + 1} onClick={() => setCurrentPage(i + 1)}>
+                            <Pagination.Item
+                                key={i}
+                                active={currentPage === i + 1}
+                                onClick={() => setCurrentPage(i + 1)}
+                            >
                                 {i + 1}
                             </Pagination.Item>
                         ))}
-                        <Pagination.Next onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))} disabled={currentPage === totalPages} />
+                        <Pagination.Next
+                            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                            disabled={currentPage === totalPages}
+                        />
                     </Pagination>
                 </div>
             )}
@@ -210,16 +225,22 @@ const ContactManagement = () => {
                         <>
                             <div className="mb-4 p-3 bg-light rounded border">
                                 <div className="d-flex justify-content-between mb-2">
-                                    <strong>Từ: {selectedContact.fullName} &lt;{selectedContact.email}&gt;</strong>
+                                    <strong>
+                                        Từ: {selectedContact.fullName} &lt;{selectedContact.email}&gt;
+                                    </strong>
                                     <span className="text-muted small">{formatDate(selectedContact.timestamp)}</span>
                                 </div>
                                 <hr className="my-2" />
-                                <p className="mb-0" style={{ whiteSpace: 'pre-wrap' }}>{selectedContact.content}</p>
+                                <p className="mb-0" style={{ whiteSpace: 'pre-wrap' }}>
+                                    {selectedContact.content}
+                                </p>
                             </div>
 
                             <Form>
                                 <Form.Group className="mb-3">
-                                    <Form.Label className="fw-bold text-primary"><FaReply className="me-1" /> Phản hồi lại:</Form.Label>
+                                    <Form.Label className="fw-bold text-primary">
+                                        <FaReply className="me-1" /> Phản hồi lại:
+                                    </Form.Label>
                                     <Form.Control
                                         as="textarea"
                                         rows={5}

@@ -1,24 +1,24 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom"; // 👈 1. Import useNavigate
-import routes from "~/config/route"; // 👈 2. Import routes để lấy đường dẫn login
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // 👈 1. Import useNavigate
+import routes from '~/config/route'; // 👈 2. Import routes để lấy đường dẫn login
 
-import styles from "./AdminPage.module.scss";
-import Sidebar from "../../components/Admin/Sidebar";
-import DashboardCard from "~/components/Admin/DashboardCard";
-import FoodTable from "~/components/Admin/FoodTable";
-import Chart from "~/components/Admin/Chart";
-import RestaurantList from "~/components/Admin/RestaurantList";
-import DinerProfileManagement from "~/components/Admin/DinerProfileManagement";
-import RestaurantMenuManager from "~/components/Admin/RestaurantMenuManager";
-import FeedbackManagement from "~/components/Admin/FeedbackManagement";
-import TransactionHistory from "~/components/Admin/TransactionHistory";
-import { FaUtensils, FaStore, FaClipboardList, FaComments } from "react-icons/fa";
+import styles from './AdminPage.module.scss';
+import Sidebar from '../../components/Admin/Sidebar';
+import DashboardCard from '~/components/Admin/DashboardCard';
+import FoodTable from '~/components/Admin/FoodTable';
+import Chart from '~/components/Admin/Chart';
+import RestaurantList from '~/components/Admin/RestaurantList';
+import DinerProfileManagement from '~/components/Admin/DinerProfileManagement';
+import RestaurantMenuManager from '~/components/Admin/RestaurantMenuManager';
+import FeedbackManagement from '~/components/Admin/FeedbackManagement';
+import TransactionHistory from '~/components/Admin/TransactionHistory';
+import { FaUtensils, FaStore, FaClipboardList, FaComments } from 'react-icons/fa';
 
-const API_DASHBOARD = "https://localhost:7176/api/admin/AdminDashboard";
+const API_DASHBOARD = 'https://gustoweb.onrender.com/api/admin/AdminDashboard';
 
 const AdminPage = () => {
-    const [activeMenu, setActiveMenu] = useState("dashboard");
+    const [activeMenu, setActiveMenu] = useState('dashboard');
     const navigate = useNavigate(); // 👈 3. Khởi tạo navigate
 
     const [dashboardData, setDashboardData] = useState({
@@ -27,11 +27,11 @@ const AdminPage = () => {
         pendingOrders: 0,
         todayReviews: 0,
         revenueChart: [],
-        topSellingFoods: []
+        topSellingFoods: [],
     });
 
     useEffect(() => {
-        if (activeMenu === "dashboard") {
+        if (activeMenu === 'dashboard') {
             fetchDashboardData();
         }
     }, [activeMenu]);
@@ -41,20 +41,20 @@ const AdminPage = () => {
             const res = await axios.get(API_DASHBOARD);
             setDashboardData(res.data);
         } catch (error) {
-            console.error("Lỗi tải Dashboard:", error);
+            console.error('Lỗi tải Dashboard:', error);
         }
     };
 
     // 👇👇 4. HÀM XỬ LÝ MENU & LOGOUT 👇👇
     const handleMenuChange = (id) => {
-        if (id === "logout") {
+        if (id === 'logout') {
             // Xử lý đăng xuất
-            const confirmLogout = window.confirm("Bạn có chắc muốn đăng xuất không?");
+            const confirmLogout = window.confirm('Bạn có chắc muốn đăng xuất không?');
             if (confirmLogout) {
                 // Xóa token
-                localStorage.removeItem("token");
-                localStorage.removeItem("role");
-                localStorage.removeItem("AccountID"); // Xóa hết những gì đã lưu
+                localStorage.removeItem('token');
+                localStorage.removeItem('role');
+                localStorage.removeItem('AccountID'); // Xóa hết những gì đã lưu
 
                 // Chuyển về trang login
                 navigate(routes.login);
@@ -71,7 +71,7 @@ const AdminPage = () => {
             <Sidebar onMenuChange={handleMenuChange} />
 
             <div className={styles.mainContent}>
-                {activeMenu === "dashboard" && (
+                {activeMenu === 'dashboard' && (
                     <div className={styles.dashboard}>
                         <h1>🍽️ GUSTO Admin Dashboard</h1>
 
@@ -114,11 +114,11 @@ const AdminPage = () => {
                     </div>
                 )}
 
-                {activeMenu === "restaurants" && <RestaurantList />}
-                {activeMenu === "users" && <DinerProfileManagement />}
-                {activeMenu === "menu-tables" && <RestaurantMenuManager />}
-                {activeMenu === "feedback" && <FeedbackManagement />}
-                {activeMenu === "transactions" && <TransactionHistory />}
+                {activeMenu === 'restaurants' && <RestaurantList />}
+                {activeMenu === 'users' && <DinerProfileManagement />}
+                {activeMenu === 'menu-tables' && <RestaurantMenuManager />}
+                {activeMenu === 'feedback' && <FeedbackManagement />}
+                {activeMenu === 'transactions' && <TransactionHistory />}
             </div>
         </div>
     );

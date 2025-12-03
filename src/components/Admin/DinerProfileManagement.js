@@ -1,23 +1,12 @@
 // src/components/Admin/DinerProfileManagement.js
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import {
-    Button,
-    Modal,
-    Form,
-    Table,
-    Pagination,
-    Spinner,
-    Row,
-    Col,
-    InputGroup,
-    FormControl
-} from "react-bootstrap";
-import { FaUserPlus, FaTrashAlt, FaSearch } from "react-icons/fa";
-import styles from "./DinerProfileManagement.module.scss";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Button, Modal, Form, Table, Pagination, Spinner, Row, Col, InputGroup, FormControl } from 'react-bootstrap';
+import { FaUserPlus, FaTrashAlt, FaSearch } from 'react-icons/fa';
+import styles from './DinerProfileManagement.module.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const API_URL = "https://localhost:7176/api/DinerProfile";
+const API_URL = 'https://gustoweb.onrender.com/api/DinerProfile';
 const ITEMS_PER_PAGE = 5;
 
 const DinerProfileManagement = () => {
@@ -28,21 +17,21 @@ const DinerProfileManagement = () => {
 
     // State cho phân trang & tìm kiếm
     const [currentPage, setCurrentPage] = useState(1);
-    const [searchTerm, setSearchTerm] = useState("");
+    const [searchTerm, setSearchTerm] = useState('');
 
     const initialForm = {
-        accountId: "",
-        fullName: "",
-        phone: "",
-        age: "",
-        avatarUrl: "",
-        job: "",
-        email: "",
-        gender: "",
-        address: "",
-        tiktokUrl: "",
-        description: "",
-        facebookUrl: "",
+        accountId: '',
+        fullName: '',
+        phone: '',
+        age: '',
+        avatarUrl: '',
+        job: '',
+        email: '',
+        gender: '',
+        address: '',
+        tiktokUrl: '',
+        description: '',
+        facebookUrl: '',
     };
 
     const [formData, setFormData] = useState(initialForm);
@@ -57,7 +46,7 @@ const DinerProfileManagement = () => {
             const res = await axios.get(API_URL);
             setProfiles(res.data);
         } catch (error) {
-            console.error("❌ Lỗi khi lấy danh sách:", error);
+            console.error('❌ Lỗi khi lấy danh sách:', error);
         }
         setLoading(false);
     };
@@ -87,22 +76,21 @@ const DinerProfileManagement = () => {
 
     const handleClose = () => setShowModal(false);
 
-    const handleChange = (e) =>
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+    const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
     const handleSave = async () => {
         try {
             if (!formData.fullName.trim()) {
-                alert("Họ tên không được để trống!");
+                alert('Họ tên không được để trống!');
                 return;
             }
 
             const payload = {
                 ...formData,
                 age: formData.age ? Number(formData.age) : null,
-                avatarUrl: formData.avatarUrl?.trim() || "https://cdn-icons-png.flaticon.com/512/1077/1077012.png",
-                tiktokUrl: formData.tiktokUrl?.trim() || "https://tiktok.com/",
-                facebookUrl: formData.facebookUrl?.trim() || "https://facebook.com/",
+                avatarUrl: formData.avatarUrl?.trim() || 'https://cdn-icons-png.flaticon.com/512/1077/1077012.png',
+                tiktokUrl: formData.tiktokUrl?.trim() || 'https://tiktok.com/',
+                facebookUrl: formData.facebookUrl?.trim() || 'https://facebook.com/',
             };
 
             if (!editMode) {
@@ -118,20 +106,20 @@ const DinerProfileManagement = () => {
             fetchProfiles();
             handleClose();
         } catch (error) {
-            console.error("❌ Lỗi khi lưu:", error.response || error);
+            console.error('❌ Lỗi khi lưu:', error.response || error);
             if (error.response?.data?.errors) {
-                console.log("📛 Chi tiết lỗi validation:", error.response.data.errors);
+                console.log('📛 Chi tiết lỗi validation:', error.response.data.errors);
             }
         }
     };
 
     const handleDelete = async (id) => {
-        if (window.confirm("Bạn có chắc muốn xóa hồ sơ này không?")) {
+        if (window.confirm('Bạn có chắc muốn xóa hồ sơ này không?')) {
             try {
                 await axios.delete(`${API_URL}/${id}`);
                 fetchProfiles();
             } catch (error) {
-                console.error("❌ Lỗi khi xóa:", error);
+                console.error('❌ Lỗi khi xóa:', error);
             }
         }
     };
@@ -197,7 +185,7 @@ const DinerProfileManagement = () => {
                                             <img
                                                 src={
                                                     p.avatarUrl ||
-                                                    "https://cdn-icons-png.flaticon.com/512/1077/1077012.png"
+                                                    'https://cdn-icons-png.flaticon.com/512/1077/1077012.png'
                                                 }
                                                 alt="avatar"
                                                 className={styles.avatar}
@@ -222,7 +210,7 @@ const DinerProfileManagement = () => {
                             ) : (
                                 <tr>
                                     <td colSpan="8" className="text-center text-muted py-4">
-                                        {searchTerm ? "Không tìm thấy kết quả phù hợp" : "Không có dữ liệu"}
+                                        {searchTerm ? 'Không tìm thấy kết quả phù hợp' : 'Không có dữ liệu'}
                                     </td>
                                 </tr>
                             )}
@@ -234,10 +222,7 @@ const DinerProfileManagement = () => {
             {totalPages > 1 && (
                 <div className={styles.paginationContainer}>
                     <Pagination>
-                        <Pagination.Prev
-                            onClick={() => setCurrentPage((p) => p - 1)}
-                            disabled={currentPage === 1}
-                        />
+                        <Pagination.Prev onClick={() => setCurrentPage((p) => p - 1)} disabled={currentPage === 1} />
                         {[...Array(totalPages)].map((_, index) => (
                             <Pagination.Item
                                 key={index}
@@ -265,9 +250,7 @@ const DinerProfileManagement = () => {
                 className={styles.customModal}
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>
-                        {editMode ? "✏️ Cập nhật hồ sơ" : "➕ Thêm hồ sơ mới"}
-                    </Modal.Title>
+                    <Modal.Title>{editMode ? '✏️ Cập nhật hồ sơ' : '➕ Thêm hồ sơ mới'}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
@@ -334,11 +317,7 @@ const DinerProfileManagement = () => {
                                 </Form.Group>
                                 <Form.Group className="mb-3">
                                     <Form.Label>Giới tính</Form.Label>
-                                    <Form.Select
-                                        name="gender"
-                                        value={formData.gender}
-                                        onChange={handleChange}
-                                    >
+                                    <Form.Select name="gender" value={formData.gender} onChange={handleChange}>
                                         <option value="">-- Chọn giới tính --</option>
                                         <option value="Male">Nam</option>
                                         <option value="Female">Nữ</option>
@@ -372,7 +351,7 @@ const DinerProfileManagement = () => {
                                 as="textarea"
                                 rows={3}
                                 name="description"
-                                value={formData.description || ""}
+                                value={formData.description || ''}
                                 onChange={handleChange}
                                 placeholder="Giới thiệu ngắn về bạn..."
                             />
@@ -382,7 +361,7 @@ const DinerProfileManagement = () => {
                             <Form.Label>Facebook URL</Form.Label>
                             <Form.Control
                                 name="facebookUrl"
-                                value={formData.facebookUrl || ""}
+                                value={formData.facebookUrl || ''}
                                 onChange={handleChange}
                                 placeholder="https://facebook.com/username"
                             />
