@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { customFetch } from '../../config/customFetch';
 import styles from './ModalChooseOrder.module.scss';
 
-function ModalChooseOrder({ menuId, restaurantId, onClose }) {
+function ModalChooseOrder({ menuId, restaurantId, onClose, showToast }) {
     const [foodDetail, setFoodDetail] = useState(null);
     const [quantity, setQuantity] = useState(1);
     const [selectedTaste, setSelectedTaste] = useState('');
@@ -12,7 +12,7 @@ function ModalChooseOrder({ menuId, restaurantId, onClose }) {
     const [animateClose, setAnimateClose] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
+    const [isAdding, setIsAdding] = useState(false);
     const { isAuthenticated } = useSelector((state) => state.auth);
     const navigate = useNavigate();
 
@@ -73,7 +73,9 @@ function ModalChooseOrder({ menuId, restaurantId, onClose }) {
             navigate('/login');
             return;
         }
-
+        if (isAdding) return;
+        setIsAdding(true); // Bắt đầu loading
+        setError(null);
         try {
             // Kiểm tra restaurantId
             if (!restaurantId) {
@@ -197,12 +199,14 @@ function ModalChooseOrder({ menuId, restaurantId, onClose }) {
                     errorData.message || `Failed to create order detail (status: ${orderDetailRes.status})`,
                 );
             }
-
+            showToast(`Đã thêm thành công!`);
             // Đóng modal sau khi thành công
             handleClose();
         } catch (err) {
             console.error('Error processing order:', err);
             setError(err.message || 'Không thể thêm món vào đơn hàng. Vui lòng thử lại.');
+        } finally {
+            setIsAdding(false); // Luôn bật lại nút, dù thành công hay thất bại
         }
     };
 
@@ -302,8 +306,13 @@ function ModalChooseOrder({ menuId, restaurantId, onClose }) {
                         <span>{quantity}</span>
                         <button onClick={() => setQuantity(quantity + 1)}>+</button>
                     </div>
-                    <button className={styles.addButton} onClick={handleAddOrderDetail}>
-                        THÊM - {totalPrice.toLocaleString()}đ
+                    <button
+                        className={styles.addButton}
+                        onClick={handleAddOrderDetail}
+                        disabled={isAdding} // ← Quan trọng: vô hiệu hóa khi đang thêm
+                        style={isAdding ? { opacity: 0.7, cursor: 'not-allowed' } : {}}
+                    >
+                        {isAdding ? 'Đang thêm...' : `THÊM - ${totalPrice.toLocaleString()}đ`}
                     </button>
                 </div>
             </div>

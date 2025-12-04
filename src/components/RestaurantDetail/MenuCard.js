@@ -4,7 +4,7 @@ import ModalChooseOrder from '../RestaurantDetail/ModalChooseOrder';
 import ReviewModal from '../Modals/FoodReviewModal';
 import { customFetch } from '~/config/customFetch';
 
-function MenuCard({ item, restaurantId }) {
+function MenuCard({ item, restaurantId, showToast }) {
     const [selectedItem, setSelectedItem] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [food, setSelectedFood] = useState(null);
@@ -59,7 +59,12 @@ function MenuCard({ item, restaurantId }) {
             </div>
 
             {selectedItem && (
-                <ModalChooseOrder menuId={selectedItem.foodId} restaurantId={restaurantId} onClose={closeModal} />
+                <ModalChooseOrder
+                    menuId={selectedItem.foodId}
+                    restaurantId={restaurantId}
+                    onClose={closeModal}
+                    showToast={showToast}
+                />
             )}
             <ReviewModal isOpen={isModalOpen} onClose={handleCloseModal} foodItem={food} />
         </>
