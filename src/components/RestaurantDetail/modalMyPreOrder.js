@@ -105,9 +105,15 @@ function ModalMyPreOrder({ isOpen, onClose, restaurantId }) {
                     setPendingOrderId(orderData.data.orderId); // ✅ Lưu orderId
                     setSelectedTableInfo({
                         table: orderData.data.booking.table,
-                        date: dayjs(orderData.data.booking.startTime).format('YYYY-MM-DD'),
-                        startTime: dayjs(orderData.data.booking.startTime).format('HH:mm'),
-                        endTime: dayjs(orderData.data.booking.endTime).format('HH:mm'),
+                        date: orderData.data.booking.startTime
+                            ? dayjs(orderData.data.booking.startTime).format('YYYY-MM-DD')
+                            : '',
+                        startTime: orderData.data.booking.startTime
+                            ? dayjs(orderData.data.booking.startTime).format('HH:mm')
+                            : 'bắt đầu',
+                        endTime: orderData.data.booking.endTime
+                            ? dayjs(orderData.data.booking.endTime).format('HH:mm')
+                            : 'kết thúc',
                     });
                     setBooking(orderData.data.booking);
                 } else {
