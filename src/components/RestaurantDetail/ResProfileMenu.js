@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { customFetch } from '~/config/customFetch';
-import { FaStar, FaMapMarkedAlt, FaChevronDown, FaChevronUp, FaHeart } from 'react-icons/fa';
+import { FaStar, FaMapMarkedAlt, FaChevronDown, FaChevronUp, FaHeart, FaShoppingCart } from 'react-icons/fa';
 import DirectionMap from '../Maps/DirectionMap';
 import styles from './ResProfileMenu.module.scss';
 import ModalMyPreOrder from '~/components/RestaurantDetail/modalMyPreOrder';
@@ -142,7 +142,7 @@ function ResProfileMenu({ id }) {
                                 <span className={styles.likeText}>{isLiked ? 'Đã thích' : 'Thích'}</span>
                             </button>
                             <button className={styles.preOrderButton} onClick={handlePreOrderClick}>
-                                Xem đơn hàng của bạn
+                                <FaShoppingCart className={styles.cartIcon} />
                             </button>
                         </div>
                         <ModalMyPreOrder
