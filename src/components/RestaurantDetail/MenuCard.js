@@ -4,7 +4,7 @@ import ModalChooseOrder from '../RestaurantDetail/ModalChooseOrder';
 import ReviewModal from '../Modals/FoodReviewModal';
 import { customFetch } from '~/config/customFetch';
 
-function MenuCard({ item, restaurantId, showToast }) {
+function MenuCard({ item, restaurantId, showToast, onAddedToCart }) {
     const [selectedItem, setSelectedItem] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [food, setSelectedFood] = useState(null);
@@ -44,7 +44,7 @@ function MenuCard({ item, restaurantId, showToast }) {
                 <div className={styles.menuInfo}>
                     <div className={styles.textGroup}>
                         <h4 className={styles.menuName}>{item.name}</h4>
-                        <p className={styles.menuPrice}>{item.price.toLocaleString()} VND</p>
+                        <p className={styles.menuPrice}>{item.price.toLocaleString()} VNĐ</p>
                     </div>
                     <button
                         className={styles.viewReviewsButton}
@@ -53,7 +53,7 @@ function MenuCard({ item, restaurantId, showToast }) {
                             handleOpenReviewModal(item);
                         }}
                     >
-                        View Reviews
+                        Xem đánh giá
                     </button>
                 </div>
             </div>
@@ -64,6 +64,7 @@ function MenuCard({ item, restaurantId, showToast }) {
                     restaurantId={restaurantId}
                     onClose={closeModal}
                     showToast={showToast}
+                    onAddedToCart={onAddedToCart}
                 />
             )}
             <ReviewModal isOpen={isModalOpen} onClose={handleCloseModal} foodItem={food} />

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { customFetch } from '../../config/customFetch';
 import styles from './ModalChooseOrder.module.scss';
 
-function ModalChooseOrder({ menuId, restaurantId, onClose, showToast }) {
+function ModalChooseOrder({ menuId, restaurantId, onClose, showToast, onAddedToCart }) {
     const [foodDetail, setFoodDetail] = useState(null);
     const [quantity, setQuantity] = useState(1);
     const [selectedTaste, setSelectedTaste] = useState('');
@@ -199,7 +199,9 @@ function ModalChooseOrder({ menuId, restaurantId, onClose, showToast }) {
                     errorData.message || `Failed to create order detail (status: ${orderDetailRes.status})`,
                 );
             }
-            showToast(`Đã thêm thành công!`);
+            showToast(`Đã thêm thành công!`, true);
+            if (onAddedToCart) onAddedToCart();
+            setIsAdding(false);
             // Đóng modal sau khi thành công
             handleClose();
         } catch (err) {
@@ -257,7 +259,7 @@ function ModalChooseOrder({ menuId, restaurantId, onClose, showToast }) {
                     {foodDetail.tastes?.length > 0 && (
                         <div className={styles.section}>
                             <h4>
-                                Khẩu vị <span>Pick 1</span>
+                                Khẩu vị <span>Chọn 1</span>
                             </h4>
                             <div className={styles.options}>
                                 {foodDetail.tastes.map((taste) => (
@@ -280,7 +282,7 @@ function ModalChooseOrder({ menuId, restaurantId, onClose, showToast }) {
                     {foodDetail.optionals?.length > 0 && (
                         <div className={styles.section}>
                             <h4>
-                                Thêm <span>Optional</span>
+                                Thêm <span>Chọn nhiều</span>
                             </h4>
                             <div className={styles.options}>
                                 {foodDetail.optionals.map((topping) => (

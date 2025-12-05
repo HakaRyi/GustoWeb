@@ -59,18 +59,18 @@ const ReviewModal = ({ isOpen, onClose, foodItem }) => {
         <div className={styles.modalOverlay} onClick={onClose}>
             <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
                 <div className={styles.modalHeader}>
-                    <h2 className={styles.modalTitle}>Reviews: {foodItem.name}</h2>
+                    <h2 className={styles.modalTitle}>Đánh giá: {foodItem.name}</h2>
                     <button onClick={onClose} className={styles.closeButton}>
-                        Exit
+                        Thoát
                     </button>
                 </div>
                 <div className={styles.modalBody}>
                     <div className={styles.filterSection}>
-                        <label htmlFor="filter">Filter</label>
+                        <label htmlFor="filter">Lọc</label>
                         <select id="filter" className={styles.reviewFilter}>
-                            <option value="latest">Latest</option>
-                            <option value="highest">Highest Rating</option>
-                            <option value="lowest">Lowest Rating</option>
+                            <option value="latest">Gần nhất</option>
+                            <option value="highest">Đánh giá cao</option>
+                            <option value="lowest">Đánh giá thấp</option>
                         </select>
                     </div>
 

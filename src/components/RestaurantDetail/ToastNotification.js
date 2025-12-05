@@ -1,4 +1,3 @@
-// src/components/common/ToastNotification.jsx
 import React, { useEffect, useState } from 'react';
 import styles from './ToastNotification.module.scss';
 import { FaCheckCircle } from 'react-icons/fa';

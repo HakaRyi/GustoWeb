@@ -3,7 +3,7 @@ import MenuCard from '~/components/RestaurantDetail/MenuCard';
 import { customFetch } from '~/config/customFetch';
 import styles from './MenuRestaurant.module.scss';
 
-function MenuRestaurant({ id, showToast }) {
+function MenuRestaurant({ id, showToast, onAddedToCart }) {
     const [menuItems, setMenuItems] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -76,7 +76,13 @@ function MenuRestaurant({ id, showToast }) {
                             </h3>
                             <div className={styles.categoryItems}>
                                 {itemsInCategory.map((item) => (
-                                    <MenuCard key={item.foodId} item={item} restaurantId={id} showToast={showToast} />
+                                    <MenuCard
+                                        key={item.foodId}
+                                        item={item}
+                                        restaurantId={id}
+                                        showToast={showToast}
+                                        onAddedToCart={onAddedToCart}
+                                    />
                                 ))}
                             </div>
                         </div>

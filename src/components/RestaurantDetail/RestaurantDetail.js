@@ -9,12 +9,17 @@ function RestaurantDetail() {
     const location = useLocation();
     const { id } = location.state || {};
     const [toast, setToast] = useState({ show: false, message: '' });
-    const showToast = (message) => {
-        setToast({ show: true, message });
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth',
-        });
+    const [triggerShake, setTriggerShake] = useState(0);
+
+    const handleAddedToCart = () => {
+        setTriggerShake((prev) => prev + 1);
+    };
+    const showToast = (message, highlight = false) => {
+        setToast({ show: true, message, highlight });
+        // window.scrollTo({
+        //     top: 0,
+        //     behavior: 'smooth',
+        // });
     };
 
     const hideToast = () => {
@@ -24,10 +29,15 @@ function RestaurantDetail() {
 
     return (
         <>
-            <ToastNotification isVisible={toast.show} message={toast.message} onHide={hideToast} />
+            <ToastNotification
+                isVisible={toast.show}
+                message={toast.message}
+                onHide={hideToast}
+                highlight={toast.highlight}
+            />
             <div className={styles.restaurantDetailContainer}>
-                <ResProfileMenu id={id} showToast={showToast} />
-                <MenuRestaurant id={id} showToast={showToast} />
+                <ResProfileMenu id={id} showToast={showToast} shakeKey={triggerShake} />
+                <MenuRestaurant id={id} showToast={showToast} onAddedToCart={handleAddedToCart} />
             </div>
         </>
     );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { customFetch } from '~/config/customFetch';
@@ -10,10 +10,12 @@ const logo = process.env.PUBLIC_URL + '/LOGOGUSTO2.png';
 
 const MAP_BG_IMAGE = 'https://media.wired.com/photos/59269cd37034dc5f91dec26e/master/pass/GoogleMapTA.jpg';
 
-function ResProfileMenu({ id }) {
+function ResProfileMenu({ id, shakeKey }) {
     const [profile, setProfile] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
+    const [isShaking, setIsShaking] = useState(false);
+    const cartButtonRef = useRef(null);
     const [orders, setOrders] = useState([
         {
             id: 1,
@@ -110,7 +112,18 @@ function ResProfileMenu({ id }) {
         fetchProfile();
         fetchIsLiked();
     }, [id]);
+    useEffect(() => {
+        if (shakeKey > 0) {
+            setIsShaking(true); // Bắt đầu lắc
 
+            // Tự động tắt lắc sau khi animation kết thúc (0.8s)
+            const timer = setTimeout(() => {
+                setIsShaking(false);
+            }, 2000); // 800ms là thời gian animation
+
+            return () => clearTimeout(timer);
+        }
+    }, [shakeKey]);
     if (!profile) return <div>Loading...</div>;
 
     return (
@@ -141,7 +154,12 @@ function ResProfileMenu({ id }) {
                                 <FaHeart className={`${styles.heartIcon} ${isLiked ? styles.liked : ''}`} />
                                 <span className={styles.likeText}>{isLiked ? 'Đã thích' : 'Thích'}</span>
                             </button>
-                            <button className={styles.preOrderButton} onClick={handlePreOrderClick}>
+                            <button
+                                ref={cartButtonRef}
+                                // Loại bỏ key={shakeKey} nếu bạn dùng isShaking để kiểm soát class
+                                className={`${styles.preOrderButton3} ${isShaking ? styles.shakeActive : ''}`}
+                                onClick={handlePreOrderClick}
+                            >
                                 <FaShoppingCart className={styles.cartIcon} />
                             </button>
                         </div>
