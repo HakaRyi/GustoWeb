@@ -31,6 +31,11 @@ namespace Repository
                 .Include(r => r.PaymentMerchant)
                 .ToListAsync();
         }
+        public async Task<List<RestaurantProfile>> GetAllAsync2()
+        {
+            return await context.RestaurantProfiles
+                .ToListAsync();
+        }
         public async Task<RestaurantProfile> GetByIdAsync(int id)
         {
             return await context.RestaurantProfiles
