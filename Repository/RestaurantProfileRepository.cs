@@ -64,6 +64,7 @@ namespace Repository
         public async Task<RestaurantProfile> GetByIdAsync3(int id)
         {
             return await context.RestaurantProfiles
+                .Include(r => r.Account)
                 .FirstOrDefaultAsync(r => r.AccountId == id);
 
             // LOẠI BỎ TẤT CẢ Include về Layouts, Menus, Tables, Promotions, Bookings, Orders, Favourites!
