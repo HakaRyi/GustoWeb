@@ -54,6 +54,13 @@ namespace Repository
                 .Include(r => r.PaymentMerchant)
                 .FirstOrDefaultAsync(r => r.AccountId == id);
         }
+        public async Task<RestaurantProfile> GetProfileBaseInfoAsync(int id)
+        {
+            return await context.RestaurantProfiles
+                .FirstOrDefaultAsync(r => r.AccountId == id);
+
+            // LOẠI BỎ TẤT CẢ Include về Layouts, Menus, Tables, Promotions, Bookings, Orders, Favourites!
+        }
         public async Task<RestaurantProfile> GetByIdToUpdate(int id)
         {
             return await context.RestaurantProfiles
