@@ -172,6 +172,20 @@ namespace Service
                 return new AccountResponse();
             }
         }
+        public async Task<AccountResponse> GetAccountByIdAsync2(short id)
+        {
+            try
+            {
+                var account = await _repo.GetAccountById2(id);
+                var res = _mapper.Map<AccountResponse>(account);
+                return res;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error in GetAccountByIdAsync");
+                return new AccountResponse();
+            }
+        }
         //Update Account
         public async Task<AccountResponse> UpdateAccountAsync(UpdateAccountRequest request)
         {

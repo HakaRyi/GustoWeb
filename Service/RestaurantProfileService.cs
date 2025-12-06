@@ -53,6 +53,18 @@ namespace Service
             }
             return new RestaurantProfile();
         }
+        public async Task<RestaurantProfile> GetByIdAsync3(int id)
+        {
+            try
+            {
+                return await repository.GetByIdAsync3(id);
+
+            }
+            catch (Exception ex)
+            {
+            }
+            return new RestaurantProfile();
+        }
         public async Task<List<RestaurantProfileResponse>> GetAllAsync2()
         {
             try
@@ -131,7 +143,7 @@ namespace Service
         {
             try
             {
-                var item = await repository.GetByIdAsync(accId);
+                var item = await repository.GetProfileBaseInfoAsync(accId);
                 if (item == null) return new RestaurantProfileResponse();
 
                 double avgRating = await foodReviewRepository.GetAverageRatingByRestaurantIdAsync(accId);
