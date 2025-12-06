@@ -249,7 +249,7 @@ namespace GustoSystemProject.Controllers
             }
             else if (role == 2) //Restaurant
             {
-                var result = await _restaurantProfileService.GetByIdAsync2(id);
+                var result = await _restaurantProfileService.GetByIdAsync3(id);
                 if (result == null)
                 {
                     return Ok(new RestaurantProfile());
