@@ -237,7 +237,7 @@ namespace Service
 
         public async Task<decimal> RevenueByMonth(short profileId, int month, int year)
         {
-            var res = await GetByIdAsync(profileId);
+            var res = await repository.GetProfileBaseInfoAsync(profileId);
             if (res != null) 
             {
                 var bookings = await bookingRepository.GetCompletedOrdersByMonthAsync(profileId,month,year);
@@ -254,7 +254,7 @@ namespace Service
         }
         public async Task<string> BestSeller(short profileId)
         {
-            var restaurant = await GetByIdAsync(profileId);
+            var restaurant = await repository.GetProfileBaseInfoAsync(profileId);
             if (restaurant == null)
                 return "Không tìm thấy nhà hàng";
 
