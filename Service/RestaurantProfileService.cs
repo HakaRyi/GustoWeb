@@ -70,7 +70,7 @@ namespace Service
             try
             {
       
-                var restaurantProfiles = await repository.GetAllAsync();
+                var restaurantProfiles = await repository.GetAllAsync2();
 
                 var result = new List<RestaurantProfileResponse>();
 
