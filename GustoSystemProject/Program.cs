@@ -15,19 +15,21 @@ using Service.Exceptions;
 using Service.Settings;
 
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(new WebApplicationOptions());
 if (!builder.Environment.IsDevelopment())
 {
-    builder.Host.ConfigureAppConfiguration((hostingContext, config) =>
-    {      
+    builder.Host.ConfigureHostConfiguration(config =>
+    {
         config.Sources.Clear();
-        config.SetBasePath(Directory.GetCurrentDirectory())
-              .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)           
-              .AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: false)
-              .AddEnvironmentVariables();
+        config.AddEnvironmentVariables();
     });
 }
-
+builder.Host.ConfigureAppConfiguration((hostingContext, config) =>
+{
+    config.SetBasePath(Directory.GetCurrentDirectory())
+          .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
+          .AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: false);
+});
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
