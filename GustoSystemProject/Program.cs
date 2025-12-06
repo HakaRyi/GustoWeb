@@ -16,11 +16,17 @@ using Service.Settings;
 
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Configuration
-    .SetBasePath(Directory.GetCurrentDirectory())
-    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
-    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true ,reloadOnChange: false)
-    .AddEnvironmentVariables();
+if (!builder.Environment.IsDevelopment())
+{
+    builder.Host.ConfigureAppConfiguration((hostingContext, config) =>
+    {      
+        config.Sources.Clear();
+        config.SetBasePath(Directory.GetCurrentDirectory())
+              .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)           
+              .AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: false)
+              .AddEnvironmentVariables();
+    });
+}
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
