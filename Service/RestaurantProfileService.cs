@@ -97,7 +97,7 @@ namespace Service
         {
             try
             {
-                var item = await repository.GetByIdAsync(id);
+                var item = await repository.GetProfileBaseInfoAsync(id);
                 if (item == null) return new RestaurantProfileResponse();
 
                 double avgRating = await foodReviewRepository.GetAverageRatingByRestaurantIdAsync(id);
