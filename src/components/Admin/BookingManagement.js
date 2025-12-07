@@ -187,12 +187,21 @@ const BookingManagement = () => {
                                             </div>
                                         </td>
                                         <td>{b.table?.name || <span className="text-muted">-</span>}</td>
+                                        
+                                        {/* 👇👇 ĐÃ SỬA LẠI PHẦN THỜI GIAN TẠI ĐÂY 👇👇 */}
                                         <td>
-                                            <div className="text-muted small">
-                                                <FaCalendarAlt className="me-1" />{' '}
-                                                {new Date(b.bookingTime).toLocaleString('vi-VN')}
+                                            <div className="d-flex flex-column" style={{ minWidth: '110px' }}>
+                                                <span className="fw-bold text-dark">
+                                                    {new Date(b.bookingTime).toLocaleTimeString('vi-VN', {hour: '2-digit', minute:'2-digit'})}
+                                                </span>
+                                                <span className="text-muted small">
+                                                    <FaCalendarAlt className="me-1" />
+                                                    {new Date(b.bookingTime).toLocaleDateString('vi-VN')}
+                                                </span>
                                             </div>
                                         </td>
+                                        {/* 👆👆 KẾT THÚC PHẦN SỬA 👆👆 */}
+
                                         <td>{getStatusBadge(b.status)}</td>
                                         <td className="text-center">
                                             {/* Nút Sửa */}

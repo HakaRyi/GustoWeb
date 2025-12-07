@@ -13,6 +13,8 @@ import DinerProfileManagement from '~/components/Admin/DinerProfileManagement';
 import RestaurantMenuManager from '~/components/Admin/RestaurantMenuManager';
 import FeedbackManagement from '~/components/Admin/FeedbackManagement';
 import TransactionHistory from '~/components/Admin/TransactionHistory';
+import BookingManagement from '~/components/Admin/BookingManagement'; 
+import ContactManagement from '~/components/Admin/ContactManagement';
 import { FaUtensils, FaStore, FaClipboardList, FaComments } from 'react-icons/fa';
 
 const API_DASHBOARD = 'https://gustoweb.onrender.com/api/admin/AdminDashboard';
@@ -119,6 +121,9 @@ const AdminPage = () => {
                 {activeMenu === 'menu-tables' && <RestaurantMenuManager />}
                 {activeMenu === 'feedback' && <FeedbackManagement />}
                 {activeMenu === 'transactions' && <TransactionHistory />}
+                {activeMenu === 'booking' && <BookingManagement />}            
+                {activeMenu === 'contact' && <ContactManagement />}
+                
             </div>
         </div>
     );

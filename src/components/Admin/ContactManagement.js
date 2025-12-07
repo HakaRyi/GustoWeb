@@ -215,7 +215,7 @@ const ContactManagement = () => {
             {/* MODAL CHI TIẾT & TRẢ LỜI */}
             <Modal show={showModal} onHide={() => setShowModal(false)} size="lg" centered>
                 <Modal.Header closeButton className="bg-light">
-                    <Modal.Title>
+                    <Modal.Title className="text-dark"> {/* Thêm text-dark cho tiêu đề */}
                         <FaEnvelopeOpenText className="me-2 text-primary" />
                         Chi tiết tin nhắn #{selectedContact?.id}
                     </Modal.Title>
@@ -223,15 +223,17 @@ const ContactManagement = () => {
                 <Modal.Body>
                     {selectedContact && (
                         <>
-                            <div className="mb-4 p-3 bg-light rounded border">
+                            {/* 👇 SỬA Ở ĐÂY: Thêm text-dark để ép chữ màu đen trên nền xám */}
+                            <div className="mb-4 p-3 bg-light rounded border text-dark">
                                 <div className="d-flex justify-content-between mb-2">
-                                    <strong>
+                                    <strong className="text-dark">
                                         Từ: {selectedContact.fullName} &lt;{selectedContact.email}&gt;
                                     </strong>
                                     <span className="text-muted small">{formatDate(selectedContact.timestamp)}</span>
                                 </div>
                                 <hr className="my-2" />
-                                <p className="mb-0" style={{ whiteSpace: 'pre-wrap' }}>
+                                {/* 👇 Thêm text-dark vào thẻ p nội dung */}
+                                <p className="mb-0 text-dark" style={{ whiteSpace: 'pre-wrap' }}>
                                     {selectedContact.content}
                                 </p>
                             </div>
@@ -248,6 +250,7 @@ const ContactManagement = () => {
                                         value={replyMessage}
                                         onChange={(e) => setReplyMessage(e.target.value)}
                                         autoFocus
+                                        className="text-dark" // Đảm bảo chữ khi gõ cũng màu đen
                                     />
                                 </Form.Group>
                             </Form>

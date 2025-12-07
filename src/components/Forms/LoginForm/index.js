@@ -61,7 +61,7 @@ function LoginForm() {
 
                 // 👇👇👇 XỬ LÝ ĐẶC BIỆT KHI SERVER TRẢ VỀ TRUE 👇👇👇
                 if (data === true && values.userName === 'admin') {
-                    console.log('🔥 Đăng nhập Admin thành công (Mode: Hardcode)');
+                    console.log('🔥 Đăng nhập Admin thành công');
 
                     // Tự tạo dữ liệu giả lập cho Admin
                     localStorage.setItem('token', 'fake-admin-token');
