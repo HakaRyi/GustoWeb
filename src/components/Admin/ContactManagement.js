@@ -73,18 +73,26 @@ const ContactManagement = () => {
     };
 
     // --- GỬI TRẢ LỜI (Giả lập hoặc gọi API gửi mail) ---
-    const handleSendReply = () => {
-        if (!replyMessage.trim()) {
-            alert('Vui lòng nhập nội dung trả lời!');
-            return;
-        }
+    const handleSendReply = async () => {
+    if (!replyMessage.trim()) {
+        alert('Vui lòng nhập nội dung trả lời!');
+        return;
+    }
 
-        // Tại đây bạn có thể gọi API gửi mail (nếu Backend hỗ trợ)
-        // Ví dụ: axios.post(`${API_URL}/reply`, { email: selectedContact.email, message: replyMessage })
+    try {
+        await axios.post(`${API_URL}/reply`, {
+            email: selectedContact.email, // Lấy email khách từ contact đang chọn
+            subject: `[GUSTO Support] Phản hồi về: ${selectedContact.content.substring(0, 20)}...`, // Tiêu đề mail
+            message: replyMessage // mọe cái này đại đại:)))
+        });
 
-        alert(`Đã gửi phản hồi đến: ${selectedContact.email}\nNội dung: ${replyMessage}`);
+        alert(`Đã gửi phản hồi thành công đến: ${selectedContact.email}`);
         setShowModal(false);
-    };
+    } catch (error) {
+        console.error('Lỗi gửi mail:', error);
+        alert('Gửi mail thất bại! Vui lòng kiểm tra lại server.');
+    }
+};
 
     // Helper: Format ngày
     const formatDate = (dateString) => {
@@ -240,7 +248,7 @@ const ContactManagement = () => {
 
                             <Form>
                                 <Form.Group className="mb-3">
-                                    <Form.Label className="fw-bold text-primary">
+                                    {/* <Form.Label className="fw-bold text-primary">
                                         <FaReply className="me-1" /> Phản hồi lại:
                                     </Form.Label>
                                     <Form.Control
@@ -251,7 +259,7 @@ const ContactManagement = () => {
                                         onChange={(e) => setReplyMessage(e.target.value)}
                                         autoFocus
                                         className="text-dark" // Đảm bảo chữ khi gõ cũng màu đen
-                                    />
+                                    /> */}
                                 </Form.Group>
                             </Form>
                         </>
@@ -265,9 +273,9 @@ const ContactManagement = () => {
                         <Button variant="secondary" onClick={() => setShowModal(false)} className="me-2">
                             Đóng
                         </Button>
-                        <Button variant="primary" onClick={handleSendReply}>
+                        {/* <Button variant="primary" onClick={handleSendReply}>
                             <FaReply className="me-1" /> Gửi phản hồi
-                        </Button>
+                        </Button> */}
                     </div>
                 </Modal.Footer>
             </Modal>
