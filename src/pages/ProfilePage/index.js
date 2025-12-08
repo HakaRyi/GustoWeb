@@ -229,7 +229,7 @@ function ProfilePage() {
     return (
         <>
             <div className={cx('wrapper')}>
-                <h1 className={cx('title')}>Profile</h1>
+                <h1 className={cx('title')}>Hồ sơ</h1>
                 <div className={cx('body-container')}>
                     <div className={cx('avt-wrapper')}>
                         <input
@@ -247,7 +247,7 @@ function ProfilePage() {
                             onClick={handleUpdateClick}
                             style={{ visibility: isEditing ? 'visible' : 'hidden' }}
                         >
-                            Update Img
+                            Cập nhật ảnh đại diện
                         </div>
                         <input
                             type="file"
@@ -258,7 +258,7 @@ function ProfilePage() {
                         />
                     </div>
                     <div className={cx('infor-wrapper')}>
-                        <div className={cx('infor-title')}>Bio and other information</div>
+                        <div className={cx('infor-title')}>Thông tin chi tiết</div>
                         <FontAwesomeIcon
                             className={cx('edit-icon')}
                             icon={faUserPen}

@@ -113,7 +113,7 @@ function BookingHistory() {
     return (
         <div className={style.container}>
             <div className={style.header}>
-                <div className={style.title}>Booking History</div>
+                <div className={style.title}>Lịch sử đặt hàng</div>
                 <div className={style.logout}>
                     <FontAwesomeIcon icon={faCaretSquareLeft} />
                 </div>

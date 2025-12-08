@@ -88,13 +88,13 @@ function UpdateUserForm({ initialValues, onProfileReload, isEditing, imgFile }) 
                     <Form className={cx('form')}>
                         <div className={cx('form-row')}>
                             <div className={cx('form-group')}>
-                                <label htmlFor="phone">📞 Phone</label>
+                                <label htmlFor="phone">📞 Số điện thoại</label>
                                 <Field id="phone" name="phone" type="text" />
                                 <ErrorMessage name="phone" component="div" className={cx('error')} />
                             </div>
 
                             <div className={cx('form-group')}>
-                                <label htmlFor="age">🎂 Age</label>
+                                <label htmlFor="age">🎂 Tuổi</label>
                                 <Field id="age" name="age" type="number" />
                                 <ErrorMessage name="age" component="div" className={cx('error')} />
                             </div>
@@ -102,15 +102,15 @@ function UpdateUserForm({ initialValues, onProfileReload, isEditing, imgFile }) 
 
                         <div className={cx('form-row')}>
                             <div className={cx('form-group')}>
-                                <label htmlFor="address">🏠 Address</label>
+                                <label htmlFor="address">🏠 Địa chỉ</label>
                                 <Field id="address" name="address" type="text" />
                                 <ErrorMessage name="address" component="div" className={cx('error')} />
                             </div>
 
                             <div className={cx('form-group')}>
-                                <label htmlFor="gender">⚧ Gender</label>
+                                <label htmlFor="gender">⚧ Giới tính</label>
                                 <Field as="select" id="gender" name="gender">
-                                    <option value="">-- Select gender --</option>
+                                    <option value="">-- Chọn giới tính --</option>
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
                                     <option value="Other">Other</option>
@@ -127,14 +127,14 @@ function UpdateUserForm({ initialValues, onProfileReload, isEditing, imgFile }) 
                             </div>
 
                             <div className={cx('form-group')}>
-                                <label htmlFor="job">💼 Job</label>
+                                <label htmlFor="job">💼 Nghề nghiệp</label>
                                 <Field id="job" name="job" type="text" />
                                 <ErrorMessage name="job" component="div" className={cx('error')} />
                             </div>
                         </div>
 
                         <div className={cx('form-group')}>
-                            <label htmlFor="description">📝 Description</label>
+                            <label htmlFor="description">📝 Mô tả bản thân</label>
                             <Field
                                 as="textarea"
                                 id="description"
