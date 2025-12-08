@@ -57,8 +57,13 @@ function RegisterForm() {
                     }
                 } catch (loginError) {
                     setResult({ visible: true, success: false, message: loginError });
-                    navigate(routes.login);
+                    // navigate(routes.login);
                 }
+            } else {
+                const errorData = await response.json();
+                const message = errorData?.error?.message || 'Đăng ký thất bại';
+                setResult({ visible: true, success: false, message: message });
+                setLoadingVisible(false);
             }
         } catch (error) {
             setLoadingVisible(false);
