@@ -471,17 +471,34 @@ td:last-child {
     select {
         width: 100%;
         padding: 12px 15px;
-        border: 1px solid #ced4da;
-        border-radius: 8px;
-        font-size: 1rem;
-        transition: all 0.2s;
-        font-family: inherit;
 
-        &:focus {
-            outline: none;
-            border-color: $primary-color;
-            box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1);
-        }
+        // ✅ viền xanh luôn hiển thị từ đầu
+        border: 2px solid $primary-color;
+
+        border-radius: 10px;
+        font-size: 1rem;
+        transition: all 0.2s ease;
+        font-family: inherit;
+        background-color: #fff;
+        color: $text-dark;
+
+        // ✅ bóng nhẹ mặc định
+        box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.05);
+    }
+
+    input:hover,
+    textarea:hover,
+    select:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.12);
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+        outline: none;
+        border-color: darken($primary-color, 5%);
+        box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.2);
     }
 
     textarea {
