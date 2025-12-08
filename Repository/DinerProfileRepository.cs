@@ -71,6 +71,13 @@ namespace Repository
                 .FirstOrDefaultAsync(x => x.AccountId == id);
         }
 
+        public async Task<DinerProfile?> GetById2Async(short id)
+        {
+            return await _context.DinerProfiles
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.AccountId == id);
+        }
+
         public async Task AddAsync(DinerProfile entity)
         {
             await _context.DinerProfiles.AddAsync(entity);

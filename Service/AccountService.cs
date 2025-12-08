@@ -73,7 +73,7 @@ namespace Service
                 account.CreateAt = DateTime.Now;
                 account.Status = AccountStatus.ACTIVE.ToString();
 
-                Role role = await _roleRepository.GetRoleById(request.RoleId);
+                //Role role = await _roleRepository.GetRoleById(request.RoleId);
                 account.RoleId = request.RoleId;
 
                 await _repo.CreateAccount(account);

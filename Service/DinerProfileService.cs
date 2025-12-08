@@ -55,7 +55,7 @@ namespace Service
 
         public async Task<bool> UpdateAsync(short id, DinerProfileRequest request)
         {
-            var entity = await _repository.GetByIdAsync(id);
+            var entity = await _repository.GetById2Async(id);
             if (entity == null) return false;
 
             entity.AvatarUrl = request.AvatarUrl;
@@ -70,8 +70,14 @@ namespace Service
             entity.FacebookUrl = request.FacebookUrl;
             entity.TiktokUrl = request.TiktokUrl;
             entity.RewardPoints = request.RewardPoints;
+            try
+            {
+                await _repository.UpdateAsync(entity);
+            }catch (Exception ex)
+            {
 
-            await _repository.UpdateAsync(entity);
+            }
+            
             return true;
         }
 
