@@ -130,6 +130,7 @@ builder.Services.Configure<PayOsSettings>(
     );
 builder.Services.AddScoped<PromotionService>();
 builder.Services.AddScoped<DashboardService>();
+builder.Services.AddScoped<EmailService>();
 
 
 builder.Services.AddScoped<AccountRepository>();
