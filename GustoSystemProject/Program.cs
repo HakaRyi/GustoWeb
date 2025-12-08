@@ -16,17 +16,23 @@ using Service.Settings;
 
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Configuration
-    .SetBasePath(Directory.GetCurrentDirectory())
-    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true ,reloadOnChange: true)
-    .AddEnvironmentVariables();
-
+if (!builder.Environment.IsDevelopment())
+{
+    builder.Host.ConfigureAppConfiguration((hostingContext, config) =>
+    {
+        config.Sources.Clear(); 
+        config.SetBasePath(Directory.GetCurrentDirectory())
+              .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
+              .AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: false)
+              .AddEnvironmentVariables();
+    });
+}
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
         options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
         options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.Never;
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
 
 // Swagger
@@ -123,6 +129,8 @@ builder.Services.Configure<PayOsSettings>(
     builder.Configuration.GetSection("PayOS")
     );
 builder.Services.AddScoped<PromotionService>();
+builder.Services.AddScoped<DashboardService>();
+
 
 builder.Services.AddScoped<AccountRepository>();
 builder.Services.AddScoped<RoleRepository>();
@@ -142,6 +150,7 @@ builder.Services.AddScoped<OptionalRepository>();
 builder.Services.AddScoped<ContactRepository>();
 builder.Services.AddScoped<TransactionRepository>();
 builder.Services.AddScoped<PromotionRepository>();
+builder.Services.AddScoped<DashboardRepository>();
 
 
 builder.Services.AddSingleton<SpeedSmsService>();

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Repository.DBContext;
 using Repository.Models;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Repository
 {
@@ -25,6 +26,35 @@ namespace Repository
                 .Include(b => b.Table)
                 .Include(b => b.Transaction)
                 .ToListAsync();
+        }
+        public async Task<List<Order>> GetCompletedOrdersByMonthAsync(short restaurantId, int month, int year)
+        {
+            return await context.Orders
+                .Include(o => o.Booking)
+                .AsNoTracking()
+                .Where(o => o.Booking.RestaurantId == restaurantId
+                            && o.Booking.BookingTime.Month == month
+                            && o.Booking.BookingTime.Year == year
+                            && o.FinalPrice.HasValue
+                            && o.Status != "Pending") // hoặc "Paid", "Success" tùy bạn định nghĩa
+                .ToListAsync();
+        }
+        public async Task<string?> GetBestSellerFoodName(short restaurantId)
+        {
+            var bestSeller = await context.OrderDetails
+                .Include(od => od.Food)
+                .Where(od => od.Order.Booking.RestaurantId == restaurantId
+                             && od.Order.Status != "Pending"
+                             && od.Food != null)
+                .GroupBy(od => od.Food.Name)
+                .Select(g => new {
+                    FoodName = g.Key,
+                    TotalQuantity = g.Sum(od => od.NumberOfFood)
+                })
+                .OrderByDescending(x => x.TotalQuantity)
+                .FirstOrDefaultAsync();
+
+            return bestSeller?.FoodName;
         }
         public async Task<List<Booking>> GetAllByResAsync(short id)
         {
@@ -152,6 +182,16 @@ namespace Repository
                 return true;
             }
             return false;
+        }
+
+        public async Task<List<Booking>> GetAllForAdminAsync()
+        {
+            return await context.Bookings
+                .Include(b => b.Diner)       
+                .Include(b => b.Restaurant)  
+                .Include(b => b.Table)       
+                .OrderByDescending(b => b.BookingTime) 
+                .ToListAsync();
         }
 
     }

@@ -59,6 +59,28 @@ namespace GustoSystemProject.Controllers
             }
             return Ok(item);
         }
+        [HttpGet("getMyRevenue/{month}/{year}")]
+        public async Task<IActionResult> GetMyRevenue([FromRoute] int month, int year)
+        {
+            var restaurantID = User.FindFirst("AccountID")?.Value;
+            var item = await service.RevenueByMonth(short.Parse(restaurantID),month,year);
+            if (item == null)
+            {
+                return Ok(new { revenue = "co loi r" });
+            }
+            return Ok(new {revenue = item});
+        }
+        [HttpGet("getBestSeller")]
+        public async Task<IActionResult> GetBestSeller()
+        {
+            var restaurantID = User.FindFirst("AccountID")?.Value;
+            var item = await service.BestSeller(short.Parse(restaurantID));
+            if (item == null)
+            {
+                return Ok(new { revenue = "co loi r" });
+            }
+            return Ok(new { revenue = item });
+        }
         [HttpPost("create")]
         [Authorize]
         public async Task<IActionResult> CreateProfile([FromBody] RestaurantProfileRequest request)

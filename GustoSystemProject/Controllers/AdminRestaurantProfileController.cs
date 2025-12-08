@@ -37,6 +37,7 @@ namespace GustoSystemProject.Controllers
         }
 
         [HttpPost("{accId}")]
+        [AllowAnonymous]
         public async Task<IActionResult> Create(short accId, [FromBody] RestaurantProfileRequest request)
         {
             if (!ModelState.IsValid)
@@ -58,14 +59,15 @@ namespace GustoSystemProject.Controllers
         [HttpPut("{profileId}")]
         public async Task<IActionResult> Update(int profileId, [FromBody] RestaurantProfileRequest request)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            if (!ModelState.IsValid) return BadRequest(ModelState);
 
             try
             {
                 var result = await _service.AdminUpdateProfileAsync(profileId, request);
-                if (result > 0)
+
+                if (result >= 0)
                     return Ok("Restaurant profile updated successfully.");
+
                 return BadRequest("Failed to update restaurant profile.");
             }
             catch (Exception ex)
@@ -93,7 +95,7 @@ namespace GustoSystemProject.Controllers
         //CreateResProfile
 
         [HttpPost("create")]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> CreateProfile([FromBody] SignUpRequest request)
         {
             try

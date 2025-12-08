@@ -172,6 +172,20 @@ namespace Service
                 return new AccountResponse();
             }
         }
+        public async Task<AccountResponse> GetAccountByIdAsync2(short id)
+        {
+            try
+            {
+                var account = await _repo.GetAccountById2(id);
+                var res = _mapper.Map<AccountResponse>(account);
+                return res;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error in GetAccountByIdAsync");
+                return new AccountResponse();
+            }
+        }
         //Update Account
         public async Task<AccountResponse> UpdateAccountAsync(UpdateAccountRequest request)
         {
@@ -236,6 +250,55 @@ namespace Service
         {
             try
             {
+
+                var adminUser = configuration["AdminSettings:UserName"];
+                var adminPass = configuration["AdminSettings:Password"];
+
+                // Nếu user nhập vào khớp với config
+                if (!string.IsNullOrEmpty(adminUser) &&
+                    request.UserName == adminUser &&
+                    request.Password == adminPass)
+                {
+                    _logger.LogInformation("Đăng nhập bằng Admin Config (Bypass DB)");
+
+                    // Tự tạo Claims cho Admin
+                    var claims = new[]
+                    {
+                        new Claim("AccountID", "3"), // ID giả định là 1
+                        new Claim(JwtRegisteredClaimNames.Sub, adminUser),
+                        new Claim(ClaimTypes.NameIdentifier, "3"),
+                        new Claim(ClaimTypes.Role, "Admin") // Role Admin cứng
+                    };
+
+                    // Tạo Key và Sign Token
+                    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecretKey));
+                    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                    var accessTokenExpiry = DateTime.UtcNow.AddMinutes(_jwtSettings.ExpiryInMinutes);
+
+                    var token = new JwtSecurityToken(
+                        issuer: _jwtSettings.Issuer,
+                        audience: _jwtSettings.Audience,
+                        claims: claims,
+                        expires: accessTokenExpiry,
+                        signingCredentials: creds);
+
+                    var accessToken = new JwtSecurityTokenHandler().WriteToken(token);
+
+                    var httpContext = _httpContextAccessor.HttpContext;
+                    if (httpContext != null)
+                    {
+                        httpContext.Response.Cookies.Append("AccessToken", accessToken, new CookieOptions
+                        {
+                            HttpOnly = true,
+                            Secure = true,
+                            SameSite = SameSiteMode.None,
+                            Expires = accessTokenExpiry,
+                        });
+
+                    }
+
+                    return true; // Đăng nhập thành công ngay lập tức
+                }
 
                 var result = await _repo.GetAccountByUserName(request.UserName);
                 //if (result.RoleId != 1 && result != null)

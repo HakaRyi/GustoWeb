@@ -31,6 +31,11 @@ namespace Repository
                 .Include(r => r.PaymentMerchant)
                 .ToListAsync();
         }
+        public async Task<List<RestaurantProfile>> GetAllAsync2()
+        {
+            return await context.RestaurantProfiles
+                .ToListAsync();
+        }
         public async Task<RestaurantProfile> GetByIdAsync(int id)
         {
             return await context.RestaurantProfiles
@@ -53,6 +58,21 @@ namespace Repository
                 .Include(r => r.Favourites)
                 .Include(r => r.PaymentMerchant)
                 .FirstOrDefaultAsync(r => r.AccountId == id);
+        }
+        public async Task<RestaurantProfile> GetProfileBaseInfoAsync(int id)
+        {
+            return await context.RestaurantProfiles
+                .FirstOrDefaultAsync(r => r.AccountId == id);
+
+            // LOẠI BỎ TẤT CẢ Include về Layouts, Menus, Tables, Promotions, Bookings, Orders, Favourites!
+        }
+        public async Task<RestaurantProfile> GetByIdAsync3(int id)
+        {
+            return await context.RestaurantProfiles
+                .Include(r => r.Account)
+                .FirstOrDefaultAsync(r => r.AccountId == id);
+
+            // LOẠI BỎ TẤT CẢ Include về Layouts, Menus, Tables, Promotions, Bookings, Orders, Favourites!
         }
         public async Task<RestaurantProfile> GetByIdToUpdate(int id)
         {

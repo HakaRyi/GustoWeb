@@ -69,7 +69,16 @@ namespace GustoSystemProject.Controllers
         [HttpPost("signIn")]
         public async Task<bool> SignIn([FromBody] SignInRequest value)
         {
-            return await _service.SignInAsync(value);
+            try
+            {
+
+                return await _service.SignInAsync(value);
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
         }
         [HttpPost("google-login")] 
         public async Task<IActionResult> GoogleLogin([FromBody] GoogleLoginRequestDto request) 
@@ -223,7 +232,7 @@ namespace GustoSystemProject.Controllers
 
             var id = short.Parse(accountIdClaim);
 
-            var account = await _service.GetAccountByIdAsync(id);
+            var account = await _service.GetAccountByIdAsync2(id);
             if (account == null)
             {
                 return NotFound(new { message = "Tài khoản không tồn tại" });
@@ -240,7 +249,7 @@ namespace GustoSystemProject.Controllers
             }
             else if (role == 2) //Restaurant
             {
-                var result = await _restaurantProfileService.GetByIdAsync(id);
+                var result = await _restaurantProfileService.GetByIdAsync3(id);
                 if (result == null)
                 {
                     return Ok(new RestaurantProfile());

@@ -98,6 +98,29 @@ namespace Repository
          
             return Math.Round(ratings.Average(), 1);
         }
+
+        //ADMIN
+        public async Task<List<FoodReview>> AdminGetAllAsync()
+        {
+            return await _context.FoodReviews
+                .Include(r => r.Diner)       
+                .Include(r => r.Food)        
+                .OrderByDescending(r => r.Date) 
+                .ToListAsync();
+        }
+
+        
+        public async Task<bool> AdminDeleteAsync(short reviewId)
+        {
+            var review = await _context.FoodReviews
+                .FirstOrDefaultAsync(r => r.ReviewId == reviewId);
+
+            if (review == null) return false;
+
+            _context.FoodReviews.Remove(review);
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }
 

@@ -50,6 +50,12 @@ namespace Repository
                 .Include(a => a.Role)
                 .FirstOrDefaultAsync(a => a.Id == id);
         }
+        public async Task<Account> GetAccountById2(short id)
+        {
+            return await _context.Accounts
+                .Include(a => a.Role)
+                .FirstOrDefaultAsync(a => a.Id == id);
+        }
 
         public async Task<Account> GetAccountByUserName(string username)
         {
