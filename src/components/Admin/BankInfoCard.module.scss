@@ -1,0 +1,175 @@
+$primary: #0d6efd;
+$dark: #343a40;
+$gray: #6c757d;
+$border-color: #dee2e6;
+$bg-gradient: linear-gradient(135deg, #ffffff 0%, #f1f3f5 100%);
+
+.card {
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 16px;
+  background: $bg-gradient;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  position: relative;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    border-color: rgba($primary, 0.2);
+  }
+
+  // Một cái vạch màu trang trí bên trái cho đẹp
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background-color: $primary;
+  }
+}
+
+.cardBody {
+  padding: 20px 25px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+
+  h6 {
+    margin: 0;
+    color: $gray;
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  svg {
+    color: $primary;
+  }
+}
+
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+
+  .label {
+    font-size: 0.85rem;
+    color: $gray;
+  }
+
+  .value {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: $dark;
+    
+    &.highlight {
+      color: $primary;
+    }
+    
+    &.uppercase {
+      text-transform: uppercase;
+    }
+  }
+}
+
+// Khung chứa số tài khoản riêng biệt
+.accountBox {
+  background-color: white;
+  border: 1px solid $border-color;
+  border-radius: 10px;
+  padding: 12px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+  transition: border-color 0.2s;
+
+  &:hover {
+    border-color: $primary;
+  }
+
+  .accLabel {
+    display: block;
+    font-size: 0.7rem;
+    color: #adb5bd;
+    margin-bottom: 2px;
+    text-transform: uppercase;
+  }
+
+  .accNumber {
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace; // Font kiểu code/máy tính
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: $dark;
+    letter-spacing: 1.5px;
+  }
+
+  .copyBtn {
+    background: #f8f9fa;
+    border: 1px solid $border-color;
+    border-radius: 8px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $gray;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      background-color: $primary;
+      border-color: $primary;
+      color: white;
+    }
+
+    &.copied {
+      background-color: #198754; // Màu xanh lá khi copy xong
+      border-color: #198754;
+      color: white;
+    }
+  }
+}
+
+.footer {
+  text-align: right;
+  margin-top: 15px;
+  font-size: 0.7rem;
+  font-style: italic;
+  color: #adb5bd;
+}
+
+// Style cho thông báo lỗi/trống
+.alertBox {
+  padding: 15px;
+  background-color: #fff3cd;
+  border: 1px solid #ffecb5;
+  color: #856404;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  
+  strong {
+    display: block;
+  }
+}
+
+.loadingBox {
+    text-align: center;
+    padding: 20px;
+    color: $gray;
+    font-size: 0.9rem;
+}

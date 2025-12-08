@@ -18,6 +18,7 @@ import {
     FaTiktok,
 } from 'react-icons/fa';
 
+import BankInfoCard from './BankInfoCard';
 // 👇 THÔNG TIN CLOUDINARY
 const CLOUD_NAME = 'dpgieqwpt';
 const UPLOAD_PRESET = 'gusto_app';
@@ -606,6 +607,9 @@ const RestaurantList = () => {
                                                     })
                                                 }
                                             ></textarea>
+                                        </div>
+                                        <div className={styles.bankSection}>
+                                            <BankInfoCard restaurantId={selectedRestaurant.accountId} />
                                         </div>
                                     </div>
                                 </div>
