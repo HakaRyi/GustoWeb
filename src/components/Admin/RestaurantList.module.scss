@@ -323,44 +323,62 @@ $shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
     margin: 0 auto;
 }
 
+// === FORM ELEMENTS (ĐÃ SỬA: CÓ KHUNG VIỀN RÕ RÀNG) ===
 .formGroup {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 
-    label {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        margin-bottom: 8px;
-        font-weight: 600;
-        color: $dark;
-        font-size: 0.95rem;
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 700;
+    color: $dark;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  // Input & Textarea
+  input, textarea {
+    width: 100%;
+    padding: 12px 15px;
+
+    // 👇👇👇 THAY ĐỔI Ở ĐÂY 👇👇👇
+    // Đặt viền màu xanh dương chủ đạo ngay trạng thái bình thường
+    border: 1px solid $primary; 
+    // Nếu bạn thấy xanh này đậm quá, có thể dùng xanh nhạt hơn: border: 1px solid #8ecae6;
+
+    background-color: #ffffff; // Nền trắng để làm nổi bật viền xanh
+    
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: $dark;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05); // Thêm chút bóng nhẹ cho nổi
+
+    // Khi di chuột vào: Thêm chút hiệu ứng nổi lên
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba($primary, 0.1);
     }
 
-    input,
-    textarea {
-        width: 100%;
-        padding: 12px 15px;
-        border: 1px solid #ced4da;
-        border-radius: 8px;
-        font-size: 1rem;
-        transition: border 0.2s;
-
-        &:focus {
-            outline: none;
-            border-color: $primary;
-            box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1);
-        }
+    // Khi click vào (Focus): Vẫn giữ hiệu ứng tỏa sáng cũ
+    &:focus {
+      outline: none;
+      // Viền có thể đậm hơn 1 chút khi focus
+      border-width: 2px; 
+      box-shadow: 0 0 0 4px rgba($primary, 0.15); // Hiệu ứng tỏa sáng
     }
-}
 
-.formRow {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-
-    @media (max-width: 600px) {
-        grid-template-columns: 1fr;
+    &::placeholder {
+      color: #adb5bd;
     }
+  }
+  
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
 }
 
 // UPDATE FORM LAYOUT

@@ -5,7 +5,7 @@ import { FaUniversity, FaCopy, FaCheck, FaExclamationTriangle } from 'react-icon
 
 import styles from './BankInfoCard.module.scss';
 
-const ADMIN_BANK_API = 'https://localhost:7176/api/admin/AdminPaymentMerchant/get-by-restaurant';
+const ADMIN_BANK_API = 'https://gustoweb.onrender.com/api/admin/AdminPaymentMerchant/get-by-restaurant';
 
 const BankInfoCard = ({ restaurantId }) => {
     const [bankInfo, setBankInfo] = useState(null);
