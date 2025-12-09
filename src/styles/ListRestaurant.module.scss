@@ -1,32 +1,31 @@
 /* --- Restaurant List Container --- */
 .restList_container {
-    max-height: 50vh; /* Giảm chiều cao để dễ kiểm tra thanh cuộn */
-    width: 800px;
-    overflow-y: scroll; /* Buộc hiển thị thanh cuộn dọc */
-    padding-right: 0px; /* Khoảng cách để thanh cuộn không che nội dung */
+    display: flex; /* Bật flexbox */
+    align-items: center; /* Căn giữa theo chiều dọc (nội dung bên trong) */
+    justify-content: center; /* Căn giữa theo chiều ngang (nội dung bên trong) */
+    max-height: 74vh;
+    width: 800px; /* Giữ width cố định cho container */
+    overflow-y: scroll;
+    padding-right: 0px; /* Sử dụng margin: 0 auto để căn container (restList_container) này vào giữa của phần tử cha (ListRestaurant) */
+    margin: 0 auto; /* <--- THAY THẾ */
 
-    flex-direction: column;
-    gap: 20px; /* Khoảng cách giữa các card nhà hàng */
-    margin-left: 260px;
-    overflow-x: hidden;
-    /* Tùy chỉnh thanh cuộn */
+    flex-direction: column; /* Quan trọng: để các card xếp chồng lên nhau */
+    gap: 20px;
+    overflow-x: hidden; /* Tùy chỉnh thanh cuộn */
     &::-webkit-scrollbar {
-        width: 8px; /* Chiều rộng thanh cuộn */
+        width: 8px;
     }
-
     &::-webkit-scrollbar-track {
-        background: rgba(255, 255, 255, 0.1); /* Nền thanh cuộn */
+        background: rgba(255, 255, 255, 0.1);
         border-radius: 10px;
     }
-
     &::-webkit-scrollbar-thumb {
-        background: #ffd369; /* Màu thanh cuộn */
+        background: #ffd369;
         border-radius: 10px;
         transition: background 0.3s ease;
     }
-
     &::-webkit-scrollbar-thumb:hover {
-        background: #ffdd00; /* Màu khi hover thanh cuộn */
+        background: #ffdd00;
     }
 }
 p {
