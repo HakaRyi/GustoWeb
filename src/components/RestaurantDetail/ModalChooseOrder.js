@@ -69,146 +69,69 @@ function ModalChooseOrder({ menuId, restaurantId, onClose, showToast, onAddedToC
 
     // Xử lý thêm Booking và OrderDetail
     const handleAddOrderDetail = async () => {
-        if (!isAuthenticated) {
-            navigate('/login');
-            return;
-        }
+        if (!isAuthenticated) return navigate('/login');
         if (isAdding) return;
-        setIsAdding(true); // Bắt đầu loading
+        setIsAdding(true);
         setError(null);
+
         try {
-            // Kiểm tra restaurantId
-            if (!restaurantId) {
-                throw new Error('Vui lòng chọn nhà hàng');
-            }
+            if (!restaurantId || !menuId) throw new Error('Thiếu thông tin');
 
-            // let payload = { restaurantId: restaurantId, bookingDate : };
-
-            // Bước 1: Gọi API tạo Booking
-            const bookingRes = await customFetch(`https://gustoweb.onrender.com/api/Booking/${restaurantId}`, {
+            // Bước 1: Tạo booking (để đảm bảo có booking)
+            await customFetch(`https://gustoweb.onrender.com/api/Booking/${restaurantId}`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
             });
 
-            let bookingData;
-            if (!bookingRes.ok) {
-                bookingData = await bookingRes.json();
-                throw new Error(bookingData.message || `Failed to create booking (status: ${bookingRes.status})`);
+            // Bước 2: LUÔN lấy orderId từ API pending — đây là nguồn tin cậy duy nhất!
+            const pendingRes = await customFetch(`https://gustoweb.onrender.com/api/Booking/pending/${restaurantId}`);
+
+            if (!pendingRes.ok) {
+                const err = await pendingRes.json();
+                throw new Error(err.message || 'Không thể lấy giỏ hàng');
             }
 
-            bookingData = await bookingRes.json();
-            console.log('Booking response:', bookingData);
+            const pendingData = await pendingRes.json();
 
-            let orderId;
-
-            // Bước 2: Xử lý response từ API Booking
-            if (bookingData.result === -1) {
-                // Booking đã tồn tại
-                if (!bookingData.orderId) {
-                    // Nếu không có orderId, gọi API pending
-                    const pendingRes = await customFetch(
-                        `https://gustoweb.onrender.com/api/Booking/pending/${restaurantId}`,
-                        {
-                            method: 'GET',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                        },
-                    );
-
-                    if (!pendingRes.ok) {
-                        const errorData = await pendingRes.json();
-                        throw new Error(
-                            errorData.message || `Failed to fetch pending booking (status: ${pendingRes.status})`,
-                        );
-                    }
-
-                    const pendingData = await pendingRes.json();
-                    console.log('Pending booking response:', pendingData);
-                    if (!pendingData || !pendingData.orderId) {
-                        throw new Error('No pending booking found');
-                    }
-                    orderId = pendingData.orderId;
-                } else {
-                    orderId = bookingData.orderId;
-                }
-            } else if (bookingData.result === 1) {
-                // Booking mới được tạo
-                if (!bookingData.orderId) {
-                    // Nếu không có orderId, gọi API pending
-                    const pendingRes = await customFetch(
-                        `https://gustoweb.onrender.com/api/Booking/pending/${restaurantId}`,
-                        {
-                            method: 'GET',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                        },
-                    );
-
-                    if (!pendingRes.ok) {
-                        const errorData = await pendingRes.json();
-                        throw new Error(
-                            errorData.message || `Failed to fetch pending booking (status: ${pendingRes.status})`,
-                        );
-                    }
-
-                    const pendingData = await pendingRes.json();
-                    console.log('Pending booking response:', pendingData);
-                    if (!pendingData || !pendingData.orderId) {
-                        throw new Error('No pending booking found after creation');
-                    }
-                    orderId = pendingData.orderId;
-                } else {
-                    orderId = bookingData.orderId;
-                }
-            } else {
-                throw new Error(`Unexpected booking response: ${JSON.stringify(bookingData)}`);
+            // Nếu không có pending → lỗi nghiêm trọng
+            if (!pendingData.orderId) {
+                throw new Error('Không tìm thấy giỏ hàng đang chờ. Vui lòng thử lại.');
             }
 
-            // Bước 3: Tạo payload cho OrderDetail
+            const orderId = pendingData.orderId; // CHẮC CHẮN đúng, không thể sai
+
+            // Bước 3: Tạo payload
             const payload = {
                 foodId: menuId,
                 optionalIds: selectedToppings
-                    .map((title) => foodDetail.optionals.find((o) => o.title === title)?.id)
-                    .filter((id) => id !== undefined),
+                    .map((t) => foodDetail.optionals.find((o) => o.title === t)?.id)
+                    .filter(Boolean),
                 tasteIds: selectedTaste
-                    ? [foodDetail.tastes.find((t) => t.taste1 === selectedTaste)?.id].filter((id) => id !== undefined)
+                    ? [foodDetail.tastes.find((t) => t.taste1 === selectedTaste)?.id].filter(Boolean)
                     : [],
-                quantity: quantity,
+                quantity,
             };
-            console.log('OrderDetail payload:', payload); // Debug payload
 
-            // Bước 4: Gọi API tạo OrderDetail
-            const orderDetailRes = await customFetch(
-                `https://gustoweb.onrender.com/orders/${orderId}/${menuId}/details`,
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(payload),
-                },
-            );
+            // Bước 4: Thêm vào giỏ
+            const res = await customFetch(`https://gustoweb.onrender.com/orders/${orderId}/${menuId}/details`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+            });
 
-            if (!orderDetailRes.ok) {
-                const errorData = await orderDetailRes.json();
-                throw new Error(
-                    errorData.message || `Failed to create order detail (status: ${orderDetailRes.status})`,
-                );
+            if (!res.ok) {
+                const err = await res.json();
+                throw new Error(err.message || 'Thêm món thất bại');
             }
-            showToast(`Đã thêm thành công!`, true);
-            if (onAddedToCart) onAddedToCart();
-            setIsAdding(false);
-            // Đóng modal sau khi thành công
+
+            showToast('Đã thêm vào giỏ hàng!', true);
+            onAddedToCart?.();
             handleClose();
         } catch (err) {
-            console.error('Error processing order:', err);
-            setError(err.message || 'Không thể thêm món vào đơn hàng. Vui lòng thử lại.');
+            setError(err.message || 'Có lỗi xảy ra');
+            console.error(err);
         } finally {
-            setIsAdding(false); // Luôn bật lại nút, dù thành công hay thất bại
+            setIsAdding(false);
         }
     };
 
