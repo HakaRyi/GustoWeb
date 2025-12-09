@@ -92,7 +92,7 @@ namespace GustoSystemProject.Controllers
             {
                 return NotFound(new { message = "No pending booking found" });
             }
-            var order = await orderService.GetMyOrderPending2(booking.DinerId);
+            var order = await orderService.GetMyOrderPending(booking.DinerId, restaurantId);
             return Ok(new { bookingId = booking.BookingId, orderId = order?.OrderId });
         }
         [HttpGet("undone")]
